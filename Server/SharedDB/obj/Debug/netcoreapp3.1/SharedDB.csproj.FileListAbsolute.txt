@@ -1,0 +1,54 @@
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.deps.json
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.runtimeconfig.json
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.runtimeconfig.dev.json
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.dll
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.pdb
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.csproj.AssemblyReference.cache
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.GeneratedMSBuildEditorConfig.editorconfig
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.AssemblyInfoInputs.cache
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.AssemblyInfo.cs
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.csproj.CoreCompileInputs.cache
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.dll
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.pdb
+E:\바탕화면\Study\MMO_Game\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.genruntimeconfig.cache
+E:\GitHub\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.deps.json
+E:\GitHub\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.runtimeconfig.json
+E:\GitHub\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.runtimeconfig.dev.json
+E:\GitHub\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.dll
+E:\GitHub\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.pdb
+E:\GitHub\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.csproj.AssemblyReference.cache
+E:\GitHub\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.GeneratedMSBuildEditorConfig.editorconfig
+E:\GitHub\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.AssemblyInfoInputs.cache
+E:\GitHub\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.AssemblyInfo.cs
+E:\GitHub\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.csproj.CoreCompileInputs.cache
+E:\GitHub\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.dll
+E:\GitHub\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.pdb
+E:\GitHub\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.genruntimeconfig.cache
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.deps.json
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.runtimeconfig.json
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.runtimeconfig.dev.json
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.pdb
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.csproj.AssemblyReference.cache
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.AssemblyInfoInputs.cache
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.AssemblyInfo.cs
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.csproj.CoreCompileInputs.cache
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.sourcelink.json
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.pdb
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.genruntimeconfig.cache
+C:\Git\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.deps.json
+C:\Git\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.runtimeconfig.json
+C:\Git\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.runtimeconfig.dev.json
+C:\Git\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.dll
+C:\Git\MMO_Maple\Server\SharedDB\bin\Debug\netcoreapp3.1\SharedDB.pdb
+C:\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.csproj.AssemblyReference.cache
+C:\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.AssemblyInfoInputs.cache
+C:\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.AssemblyInfo.cs
+C:\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.csproj.CoreCompileInputs.cache
+C:\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.sourcelink.json
+C:\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.dll
+C:\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.pdb
+C:\Git\MMO_Maple\Server\SharedDB\obj\Debug\netcoreapp3.1\SharedDB.genruntimeconfig.cache

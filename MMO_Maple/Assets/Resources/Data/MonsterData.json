@@ -1,0 +1,25 @@
+{
+  "monsters": [
+    {
+      "id": "1",
+      "name": "스켈레톤",
+      "stat": {
+        "level": "1",
+        "hp": "30",
+        "maxHp": "30",
+        "maxAttack": "5",
+        "minAttack": "1",
+        "speed": "3.5",
+        "exp": "2",
+        "str": "0",
+        "dex": "0",
+        "int": "0",
+        "luk": "0",
+        "defense": "1",
+        "mp": "0",
+        "maxMp": "0",
+        "statPoint" : "0"
+      }
+    }
+  ]
+} 

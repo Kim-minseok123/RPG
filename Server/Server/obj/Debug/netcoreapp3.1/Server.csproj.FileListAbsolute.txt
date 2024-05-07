@@ -1,0 +1,335 @@
+C:\Rookiss\MMO_Server\Server\bin\Debug\netcoreapp3.1\Server.exe
+C:\Rookiss\MMO_Server\Server\bin\Debug\netcoreapp3.1\Server.deps.json
+C:\Rookiss\MMO_Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.json
+C:\Rookiss\MMO_Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.dev.json
+C:\Rookiss\MMO_Server\Server\bin\Debug\netcoreapp3.1\Server.dll
+C:\Rookiss\MMO_Server\Server\bin\Debug\netcoreapp3.1\Server.pdb
+C:\Rookiss\MMO_Server\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache
+C:\Rookiss\MMO_Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfoInputs.cache
+C:\Rookiss\MMO_Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfo.cs
+C:\Rookiss\MMO_Server\Server\obj\Debug\netcoreapp3.1\Server.dll
+C:\Rookiss\MMO_Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
+C:\Rookiss\MMO_Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CoreCompileInputs.cache
+C:\Rookiss\MMO_Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
+C:\Rookiss\MMO_Server\Server\bin\Debug\netcoreapp3.1\ServerCore.dll
+C:\Rookiss\MMO_Server\Server\bin\Debug\netcoreapp3.1\ServerCore.pdb
+C:\Rookiss\MMO_Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CopyComplete
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Server.exe
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Server.deps.json
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.json
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.dev.json
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Server.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Server.pdb
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Google.Protobuf.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\ServerCore.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\ServerCore.pdb
+C:\Rookiss\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache
+C:\Rookiss\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfoInputs.cache
+C:\Rookiss\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfo.cs
+C:\Rookiss\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CopyComplete
+C:\Rookiss\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.dll
+C:\Rookiss\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
+C:\Rookiss\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Memory.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.Security.Permissions.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Configuration.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Console.dll
+C:\Rookiss\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+C:\Rookiss\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CoreCompileInputs.cache
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Server.exe
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Server.deps.json
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.json
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.dev.json
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Server.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Server.pdb
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Google.Protobuf.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Memory.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Configuration.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Console.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\System.Security.Permissions.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\ServerCore.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\ServerCore.pdb
+E:\바탕화면\Study\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.AssemblyReference.cache
+E:\바탕화면\Study\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.GeneratedMSBuildEditorConfig.editorconfig
+E:\바탕화면\Study\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfoInputs.cache
+E:\바탕화면\Study\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfo.cs
+E:\바탕화면\Study\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CoreCompileInputs.cache
+E:\바탕화면\Study\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CopyComplete
+E:\바탕화면\Study\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
+E:\바탕화면\Study\MMO_Game\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\SharedDB.dll
+E:\바탕화면\Study\MMO_Game\Server\Server\bin\Debug\netcoreapp3.1\SharedDB.pdb
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.exe
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.deps.json
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.json
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.dev.json
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.pdb
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Google.Protobuf.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Configuration.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Console.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Security.Permissions.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\ServerCore.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\SharedDB.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\ServerCore.pdb
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\SharedDB.pdb
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.AssemblyReference.cache
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfoInputs.cache
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfo.cs
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CoreCompileInputs.cache
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.sourcelink.json
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.Up2Date
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.dll
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
+C:\Users\chaos\OneDrive\바탕 화면\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.exe
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.deps.json
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.json
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.dev.json
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.pdb
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Google.Protobuf.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Memory.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Configuration.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Console.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Security.Permissions.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\ServerCore.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\SharedDB.dll
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\ServerCore.pdb
+E:\GitHub\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\SharedDB.pdb
+E:\GitHub\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.AssemblyReference.cache
+E:\GitHub\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.GeneratedMSBuildEditorConfig.editorconfig
+E:\GitHub\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfoInputs.cache
+E:\GitHub\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfo.cs
+E:\GitHub\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CoreCompileInputs.cache
+E:\GitHub\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CopyComplete
+E:\GitHub\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.dll
+E:\GitHub\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
+E:\GitHub\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.exe
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.deps.json
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.json
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.dev.json
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Server.pdb
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Google.Protobuf.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Memory.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Configuration.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Console.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\System.Security.Permissions.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\ServerCore.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\SharedDB.dll
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\ServerCore.pdb
+C:\Git\MMO_Maple\Server\Server\bin\Debug\netcoreapp3.1\SharedDB.pdb
+C:\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.AssemblyReference.cache
+C:\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfoInputs.cache
+C:\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfo.cs
+C:\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CoreCompileInputs.cache
+C:\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.sourcelink.json
+C:\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.Up2Date
+C:\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.dll
+C:\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
+C:\Git\MMO_Maple\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
