@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Threading;
 
 namespace Server.Game
 {
@@ -257,7 +258,14 @@ namespace Server.Game
 			if(Stat.Hp > 0)
 			{
 				Target = attacker;
-				// 추격으로 변환
+                // 추격으로 변환
+                S_StopMove resStopMovePacket = new S_StopMove();
+                resStopMovePacket.ObjectId = Info.ObjectId;
+                resStopMovePacket.PosOk = true;
+                resStopMovePacket.Rotate = PosInfo.Rotate;
+                resStopMovePacket.Pos = Pos;
+                Room.Broadcast(resStopMovePacket);
+                State = CreatureState.Skill;
 			}
         }
     }

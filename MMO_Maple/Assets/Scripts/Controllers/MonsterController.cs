@@ -115,7 +115,7 @@ public class MonsterController : CreatureController
                 Managers.Network.Send(checkPosPacket);
                 PrevPos = transform.position;
             }
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSecondsRealtime(0.2f);
         }
     }
 #endif

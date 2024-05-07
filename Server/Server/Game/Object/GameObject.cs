@@ -55,6 +55,19 @@ namespace Server.Game
 			get { return PosInfo.State; }
 			set { PosInfo.State = value; }
 		}
+		public Vector3 Forward
+		{
+			get
+			{
+                Quaternion vQuat = new Quaternion(0, 0, 1, 0);
+				Quaternion q = Utils.RotationToQuaternion(Ratate);
+                // 쿼터니언 곱셈: q * v * q^(-1)
+                Quaternion qConjugate = Quaternion.Conjugate(q);
+                Quaternion qv = q * vQuat;
+                Quaternion qvq = qv * qConjugate;
+                return new Vector3(qvq.X, qvq.Y, qvq.Z);
+            }
+		}
 
 		public GameObject()
 		{
