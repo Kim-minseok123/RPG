@@ -41,10 +41,10 @@ class PacketManager
 		_handler.Add((ushort)MsgId.SMove, PacketHandler.S_MoveHandler);		
 		_onRecv.Add((ushort)MsgId.SStopMove, MakePacket<S_StopMove>);
 		_handler.Add((ushort)MsgId.SStopMove, PacketHandler.S_StopMoveHandler);		
-		_onRecv.Add((ushort)MsgId.SMeleeAttack, MakePacket<S_MeleeAttack>);
-		_handler.Add((ushort)MsgId.SMeleeAttack, PacketHandler.S_MeleeAttackHandler);		
 		_onRecv.Add((ushort)MsgId.SChangeHp, MakePacket<S_ChangeHp>);
-		_handler.Add((ushort)MsgId.SChangeHp, PacketHandler.S_ChangeHpHandler);
+		_handler.Add((ushort)MsgId.SChangeHp, PacketHandler.S_ChangeHpHandler);		
+		_onRecv.Add((ushort)MsgId.SSkillMotion, MakePacket<S_SkillMotion>);
+		_handler.Add((ushort)MsgId.SSkillMotion, PacketHandler.S_SkillMotionHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

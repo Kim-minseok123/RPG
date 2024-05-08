@@ -38,7 +38,9 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.CCheckPos, MakePacket<C_CheckPos>);
 		_handler.Add((ushort)MsgId.CCheckPos, PacketHandler.C_CheckPosHandler);		
 		_onRecv.Add((ushort)MsgId.CMeleeAttack, MakePacket<C_MeleeAttack>);
-		_handler.Add((ushort)MsgId.CMeleeAttack, PacketHandler.C_MeleeAttackHandler);
+		_handler.Add((ushort)MsgId.CMeleeAttack, PacketHandler.C_MeleeAttackHandler);		
+		_onRecv.Add((ushort)MsgId.CSkillMotion, MakePacket<C_SkillMotion>);
+		_handler.Add((ushort)MsgId.CSkillMotion, PacketHandler.C_SkillMotionHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

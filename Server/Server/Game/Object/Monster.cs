@@ -13,7 +13,9 @@ namespace Server.Game
 	{
 		public bool isMoving = false;
 		public int TemplateId { get; private set; }
-		public GameObject Target { get; private set; }
+		public GameObject Target { get; protected set; }
+		public bool isCanAttack = false;
+		public Vector3 forwardMonster = new Vector3 (0, 0, 0);
 		public Monster()
 		{
 			ObjectType = GameObjectType.Monster;
@@ -50,15 +52,11 @@ namespace Server.Game
 					UpdateDead();
 					break;
 			}
-
-			// 5프레임 (0.2초마다 한번씩 Update)
-			if (Room != null)
+            // 5프레임 (0.2초마다 한번씩 Update)
+            if (Room != null)
 				_job = Room.PushAfter(200, Update);
 		}
-
-		Player _target;
-		int _chaseCellDist = 20;
-		Positions nextPos = new Positions();
+		protected Positions nextPos = new Positions();
 		public long _nextSearchTick = 0;
 		protected virtual void UpdateIdle()
 		{
@@ -134,7 +132,7 @@ namespace Server.Game
 			BroadcastMove();
 		}
 
-		void BroadcastMove()
+		protected void BroadcastMove()
 		{
 			// 다른 플레이어한테도 알려준다
 			isMoving = true;
@@ -145,54 +143,33 @@ namespace Server.Game
 			nextPosinfo.MergeFrom(PosInfo);
 			nextPosinfo.Pos = nextPos;
 			movePacket.DestPosInfo = nextPosinfo;
-			movePacket.TargetId = -1;
+			if(Target == null)
+				movePacket.TargetId = -1;
+			else movePacket.TargetId = Target.Id;
             Room.Broadcast(movePacket);
         }
 
-        long _coolTick = 0;
+        protected long _coolTick = 0;
+        protected long _checkDisTick = 0;
 		protected virtual void UpdateSkill()
 		{
-			if (_coolTick == 0)
+           
+            if (_coolTick == 0)
 			{
-				// 유효한 타겟인지
-				if (_target == null || _target.Room != Room)
+                if (_checkDisTick > Environment.TickCount64)
+                    return;
+                _checkDisTick = Environment.TickCount64 + 1000;
+                // 유효한 타겟인지
+                if (Target == null || Target.Room != Room)
 				{
-					_target = null;
-					State = CreatureState.Moving;
-					BroadcastMove();
+                    Target = null;
+					State = CreatureState.Idle;
 					return;
 				}
-
-				// 스킬이 아직 사용 가능한지
-				Vector2Int dir = (_target.CellPos - CellPos);
-				int dist = dir.cellDistFromZero;
-				bool canUseSkill = (dist <= _skillRange && (dir.x == 0 || dir.y == 0));
-				if (canUseSkill == false)
-				{
-					State = CreatureState.Moving;
-					BroadcastMove();
-					return;
-				}
-
-				// 타게팅 방향 주시
-				MoveDir lookDir = GetDirFromVec(dir);
-				/*if (Dir != lookDir)
-				{
-					Dir = lookDir;
-					BroadcastMove();
-				}*/
 
 				Skill skillData = null;
-				DataManager.SkillDict.TryGetValue(1, out skillData);
+				DataManager.SkillDict.TryGetValue(4, out skillData);
 
-				// 데미지 판정
-				//_target.OnDamaged(this, skillData.damage + TotalAttack);
-
-				// 스킬 사용 Broadcast
-				S_Skill skill = new S_Skill() { Info = new SkillInfo() };
-				skill.ObjectId = Id;
-				skill.Info.SkillId = skillData.id;
-				Room.Broadcast(CellPos, skill);
 
 				// 스킬 쿨타임 적용
 				int coolTick = (int)(1000 * skillData.cooldown);

@@ -36,23 +36,12 @@ public class MyPlayerController : PlayerController
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
-            StartCoroutine(CoMakeSkillPacket(3));
-        }
-    }
-    IEnumerator CoMakeSkillPacket(int skillId)
-    {
-        Skill skill = null;
-        if (Managers.Data.SkillDict.TryGetValue(skillId, out skill) == false) yield break;
-        for (int i = 0; i < skill.skillDatas.Count; i++)
-        {
-            C_MeleeAttack meleeAttack = new C_MeleeAttack() { Info = new SkillInfo(), Forward = new Positions() };
-            meleeAttack.Info.SkillId = skillId;
-            meleeAttack.Forward = Util.Vector3ToPositions(transform.forward);
-            meleeAttack.Time = i;
-            Managers.Network.Send(meleeAttack);
-            State = CreatureState.Wait;
-            if (i == skill.skillDatas.Count - 1) yield break;
-            yield return new WaitForSeconds(skill.skillDatas[i].attackTime);
+            Skill skill = null;
+            if (Managers.Data.SkillDict.TryGetValue(3, out skill) == false) return;
+            C_SkillMotion skillMotion = new C_SkillMotion() { Info = new SkillInfo() };
+            skillMotion.Info.SkillId = skill.id;
+            Managers.Network.Send(skillMotion);
+            StartCoroutine(CoAttackTimeWait(skill, true));
         }
     }
     public void OnClickMouseInputEvent()
@@ -97,12 +86,15 @@ public class MyPlayerController : PlayerController
             }
             else
             {
-                C_MeleeAttack meleeAttack = new C_MeleeAttack() { Info = new SkillInfo(), Forward = new Positions() };
-                meleeAttack.Info.SkillId = attackRand;
-                meleeAttack.Forward = Util.Vector3ToPositions(transform.forward);
-                meleeAttack.Time = 0;
-                Managers.Network.Send(meleeAttack);
+                Debug.Log(attackRand);
+                Skill skill = null;
+                if (Managers.Data.SkillDict.TryGetValue(attackRand, out skill) == false) return;
+                C_SkillMotion skillMotion = new C_SkillMotion() { Info = new SkillInfo() };
+                skillMotion.Info.SkillId = attackRand;
+                skillMotion.IsMonster = false;
+                Managers.Network.Send(skillMotion);
                 State = CreatureState.Wait;
+                StartCoroutine(CoAttackTimeWait(skill));
             }
         }
     }
@@ -121,6 +113,22 @@ public class MyPlayerController : PlayerController
                 PrevPos = transform.position;
             }
             yield return new WaitForSecondsRealtime(0.2f);
+        }
+    }
+
+    public IEnumerator CoAttackTimeWait(Skill skill, bool isContinual = false)
+    {
+        for (int i = 0; i < skill.skillDatas.Count; i++)
+        {
+            yield return new WaitForSeconds(skill.skillDatas[i].attackTime);
+            C_MeleeAttack meleeAttack = new C_MeleeAttack() { Info = new SkillInfo(), Forward = new Positions() };
+            meleeAttack.Info.SkillId = skill.id;
+            meleeAttack.Forward = Util.Vector3ToPositions(transform.forward);
+            meleeAttack.IsMonster = false;
+            meleeAttack.ObjectId = Id;
+            if (isContinual) { meleeAttack.Time = i; }
+            else { meleeAttack.Time = 0; }
+            Managers.Network.Send(meleeAttack);
         }
     }
 }

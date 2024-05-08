@@ -21,8 +21,9 @@ enum MsgId {
   S_STOP_MOVE = 14;
   C_CHECK_POS = 15;
   C_MELEE_ATTACK = 16;
-  S_MELEE_ATTACK = 17;
-  S_CHANGE_HP = 18;
+  S_CHANGE_HP = 17;
+  C_SKILL_MOTION = 18;
+  S_SKILL_MOTION = 19;
 }
 
 enum CreatureState {
@@ -166,15 +167,21 @@ message S_Skill {
   int32 objectId = 1;
   SkillInfo info = 2;
 }
+message C_SkillMotion{
+  SkillInfo info = 1;
+  int32 objectId = 2;
+  bool isMonster =3;
+}
+message S_SkillMotion{
+  SkillInfo info = 1;
+  int32 objectId = 2;
+}
 message C_MeleeAttack {
   SkillInfo info = 1;
   Positions forward = 2;
-  int32 time =3;
-}
-message S_MeleeAttack {
-  int32 objectId = 1;
-  SkillInfo info = 2;
-  int32 time =3;
+  int32 time = 3;
+  bool isMonster = 4;
+  int32 objectId = 5;
 }
 message S_ChangeHp {
   int32 objectId = 1;

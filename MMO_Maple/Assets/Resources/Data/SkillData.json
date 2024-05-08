@@ -53,12 +53,30 @@
           }
         },
         {
-          "attackTime": "1.35",
+          "attackTime": "0.5",
           "damage": "10",
           "range": {
             "width": "2.2",
             "depth": "3",
             "nonDepth": "0.7",
+            "height": "1.5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "스켈레톤일반공격",
+      "cooldown": "3.2",
+      "skillType": "SkillMeleeAttack",
+      "skillDatas": [
+        {
+          "attackTime": "1",
+          "damage": "5",
+          "range": {
+            "width": "1.5",
+            "depth": "2.5",
+            "nonDepth": "0.4",
             "height": "1.5"
           }
         }

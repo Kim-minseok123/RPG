@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+using System.Threading;
 
 namespace Server.Game
 {
@@ -101,36 +102,63 @@ namespace Server.Game
 
             return false;
         }
+		public void HandleSkillMotion(Player player, C_SkillMotion skillMotion)
+		{
+            if (player == null)
+                return;
+			if(skillMotion.IsMonster == false)
+			{
+                S_SkillMotion skillMotionServer = new S_SkillMotion() { Info = new SkillInfo() };
+                skillMotionServer.ObjectId = player.Id;
+                skillMotionServer.Info.SkillId = skillMotion.Info.SkillId;
+                Broadcast(skillMotionServer);
+            }
+            else
+			{
+				Monster monster = null;
+                _monsters.TryGetValue(skillMotion.ObjectId, out monster);
+                if (monster == null) return;
+                S_SkillMotion skillMotionServer = new S_SkillMotion() { Info = new SkillInfo() };
+                skillMotionServer.ObjectId = player.Id;
+                skillMotionServer.Info.SkillId = skillMotion.Info.SkillId;
+                Broadcast(skillMotionServer);
+            }
+        }
         public void HandleMeleeAttack(Player player, C_MeleeAttack meleeAttack)
 		{
             if (player == null)
                 return;
-            ObjectInfo info = player.Info;
-            if (info.PosInfo.State != CreatureState.Idle)
-                return;
-            info.PosInfo.State = CreatureState.Skill;
-			S_MeleeAttack meleeAttackServer = new S_MeleeAttack() { Info = new SkillInfo() };
-			meleeAttackServer.ObjectId = player.Id;
-			meleeAttackServer.Info.SkillId = meleeAttack.Info.SkillId;
-			meleeAttackServer.Time = meleeAttack.Time;
-			Broadcast(meleeAttackServer);
-			// 실제로는 데미지 입힌 후 idle로 변환해야함
-			Skill skill = null;
-			if (DataManager.SkillDict.TryGetValue(meleeAttack.Info.SkillId, out skill) == false) return;
-
-			foreach (Monster monster in _monsters.Values)
+			if (meleeAttack.IsMonster == false)
 			{
-				Vector3 a = Utils.PositionsToVector3(player.Pos);
-				Vector3 b = Utils.PositionsToVector3(monster.Pos);
-				Vector3 forward = Utils.PositionsToVector3(meleeAttack.Forward);
-				if (IsObjectInRange(a, b, forward, skill.skillDatas[meleeAttack.Time].range) == true)
-				{
-					Console.WriteLine("hp 감소");
-					monster.OnDamaged(player, skill.skillDatas[meleeAttack.Time].damage + player.Attack);
-				}
+                ObjectInfo info = player.Info;
+                if (info.PosInfo.State != CreatureState.Idle)
+                    return;
+                info.PosInfo.State = CreatureState.Skill;
+
+                Skill skill = null;
+                if (DataManager.SkillDict.TryGetValue(meleeAttack.Info.SkillId, out skill) == false) return;
+
+                foreach (Monster monster in _monsters.Values)
+                {
+                    Vector3 a = Utils.PositionsToVector3(player.Pos);
+                    Vector3 b = Utils.PositionsToVector3(monster.Pos);
+                    Vector3 forward = Utils.PositionsToVector3(meleeAttack.Forward);
+                    if (IsObjectInRange(a, b, forward, skill.skillDatas[meleeAttack.Time].range) == true)
+                    {
+                        monster.OnDamaged(player, skill.skillDatas[meleeAttack.Time].damage + player.Attack);
+                    }
+                }
+
+                info.PosInfo.State = CreatureState.Idle;
             }
-				
-            info.PosInfo.State = CreatureState.Idle;
+			else
+			{
+                Monster monster = null;
+                _monsters.TryGetValue(meleeAttack.ObjectId, out monster);
+                if (monster == null) return;
+				monster.forwardMonster = Utils.PositionsToVector3(meleeAttack.Forward);
+				monster.isCanAttack = true;
+            }
         }
         public void HandleSkill(Player player, C_Skill skillPacket)
 		{

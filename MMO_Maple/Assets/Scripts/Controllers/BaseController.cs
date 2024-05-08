@@ -65,7 +65,7 @@ public class BaseController : MonoBehaviour
     {
 		yield return null;
     }
-	public virtual void OnAttack(SkillInfo info, int time) { }
+	public virtual void OnAttack(SkillInfo info) { }
 	public virtual void ChangeHp(int hp, bool isHeal, int damage)
 	{
 

@@ -76,7 +76,7 @@ public class MonsterController : CreatureController
         if (transform.rotation != targetRotation)
             transform.DORotate(receivedEuler, 0.1f);
     }
-    IEnumerator OnMove(Vector3 target)
+    public virtual IEnumerator OnMove(Vector3 target)
     {
         _agent.ResetPath();
         _agent.SetDestination(target);
@@ -84,17 +84,21 @@ public class MonsterController : CreatureController
 #if UNITY_SERVER
         while (true)
         {
-            if (Vector3.Distance(_agent.destination, transform.position) < 0.3f)
+            if(TargetObj == null)
             {
-                C_StopMove moveStopPacket = new C_StopMove() { PosInfo = new PositionInfo() };
-                moveStopPacket.PosInfo.Pos = new Positions() { PosX = transform.position.x, PosY = transform.position.y, PosZ = transform.position.z };
-                Vector3 rotationEuler = transform.rotation.eulerAngles;
-                moveStopPacket.PosInfo.Rotate = new RotateInfo() { RotateX = rotationEuler.x, RotateY = rotationEuler.y, RotateZ = rotationEuler.z };
-                moveStopPacket.IsMonster = true;
-                moveStopPacket.ObjectId = Id;
-                Managers.Network.Send(moveStopPacket);
-                break;
+                if (Vector3.Distance(_agent.destination, transform.position) < 0.3f)
+                {
+                    C_StopMove moveStopPacket = new C_StopMove() { PosInfo = new PositionInfo() };
+                    moveStopPacket.PosInfo.Pos = new Positions() { PosX = transform.position.x, PosY = transform.position.y, PosZ = transform.position.z };
+                    Vector3 rotationEuler = transform.rotation.eulerAngles;
+                    moveStopPacket.PosInfo.Rotate = new RotateInfo() { RotateX = rotationEuler.x, RotateY = rotationEuler.y, RotateZ = rotationEuler.z };
+                    moveStopPacket.IsMonster = true;
+                    moveStopPacket.ObjectId = Id;
+                    Managers.Network.Send(moveStopPacket);
+                    break;
+                }
             }
+            
             yield return null;
         }
 #endif

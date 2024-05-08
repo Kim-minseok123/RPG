@@ -118,18 +118,7 @@ class PacketHandler
             new Vector3(stopMovePacket.Pos.PosX, stopMovePacket.Pos.PosY, stopMovePacket.Pos.PosZ)
             );
     }
-    public static void S_MeleeAttackHandler(PacketSession session, IMessage packet)
-    {
-        S_MeleeAttack meleeAttackPacket = (S_MeleeAttack)packet;
 
-        GameObject go = Managers.Object.FindById(meleeAttackPacket.ObjectId);
-        if (go == null)
-            return;
-        BaseController bc = go.GetComponent<BaseController>();
-        if (bc == null)
-            return;
-        bc.OnAttack(meleeAttackPacket.Info, meleeAttackPacket.Time);
-    }
     public static void S_ChangeHpHandler(PacketSession session, IMessage packet)
     {
         S_ChangeHp changeHpPacket = (S_ChangeHp)packet;
@@ -141,6 +130,18 @@ class PacketHandler
         if (bc == null)
             return;
         bc.ChangeHp(changeHpPacket.Hp, changeHpPacket.IsHeal, changeHpPacket.ChangeHp);
+    }
+    public static void S_SkillMotionHandler(PacketSession session, IMessage packet)
+    {
+        S_SkillMotion skillMotionPacket = (S_SkillMotion)packet;   
+
+        GameObject go = Managers.Object.FindById(skillMotionPacket.ObjectId);
+        if (go == null)
+            return;
+        BaseController bc = go.GetComponent<BaseController>();
+        if (bc == null)
+            return;
+        bc.OnAttack(skillMotionPacket.Info);
     }
 }
 

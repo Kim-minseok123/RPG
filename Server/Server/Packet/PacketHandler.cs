@@ -85,6 +85,21 @@ class PacketHandler
 
         room.Push(room.HandleCheckPos, player, checkPosPacket);
     }
+    public static void C_SkillMotionHandler(PacketSession session, IMessage packet)
+    {
+        C_SkillMotion skillMotionPacket = (C_SkillMotion)packet;
+        ClientSession clientSession = (ClientSession)session;
+
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+
+        room.Push(room.HandleSkillMotion, player, skillMotionPacket);
+    }
     public static void C_MeleeAttackHandler(PacketSession session, IMessage packet)
     {
         C_MeleeAttack meleeAttackPacket = (C_MeleeAttack)packet;

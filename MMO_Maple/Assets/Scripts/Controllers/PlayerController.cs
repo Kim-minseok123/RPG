@@ -90,18 +90,17 @@ public class PlayerController : CreatureController
             yield return null;
         }
     }
-    public override void OnAttack(SkillInfo info, int time)
+    public override void OnAttack(SkillInfo info)
     {
         Skill skill = null;
         Managers.Data.SkillDict.TryGetValue(info.SkillId, out skill);
         if (skill == null) return;
-        if(time == 0)
-        {
-            State = CreatureState.Skill;
-            attackNum = info.SkillId;
-            _anim.SetInteger("AttackNum", attackNum);
-            StartCoroutine(CoAttackMotion(skill.cooldown));
-        }
+        
+        State = CreatureState.Skill;
+        attackNum = info.SkillId;
+        _anim.SetInteger("AttackNum", attackNum);
+        StartCoroutine(CoAttackMotion(skill.cooldown));
+        
     }
     public IEnumerator CoAttackMotion(float coolDown)
     {
