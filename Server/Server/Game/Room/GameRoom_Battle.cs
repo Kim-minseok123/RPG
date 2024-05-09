@@ -91,7 +91,6 @@ namespace Server.Game
                 if (monster == null) return;
                 monster.Pos = posPacket.CurPosInfo.Pos;
                 monster.Ratate = posPacket.CurPosInfo.Rotate;
-                Console.WriteLine(monster.Pos.PosX + ", " + monster.Pos.PosZ);
             }
 
         }
@@ -131,6 +130,7 @@ namespace Server.Game
                 Monster monster = null;
                 _monsters.TryGetValue(skillMotion.ObjectId, out monster);
                 if (monster == null) return;
+                if (monster.isMotion) return;
 				monster.isMotion = true;
                 Console.WriteLine("공격 모션");
                 S_SkillMotion skillMotionServer = new S_SkillMotion() { Info = new SkillInfo() };

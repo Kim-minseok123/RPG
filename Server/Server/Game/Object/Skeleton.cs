@@ -40,9 +40,6 @@ namespace Server.Game
                 }
                 else
                 {
-                    if (_MoveTick > Environment.TickCount64)
-                        return;
-                    _MoveTick = Environment.TickCount64 + 1500;
                     if (isMotion) return;
                     if (Target == null || Target.Room != Room)
                     {

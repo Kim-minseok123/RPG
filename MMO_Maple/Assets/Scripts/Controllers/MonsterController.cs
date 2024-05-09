@@ -14,6 +14,8 @@ public class MonsterController : CreatureController
     protected Animator _anim;
     public GameObject TargetObj;
     public Slider hpBar;
+    protected bool isAttackMotion = false;
+
     protected override void Init()
     {
         base.Init();
@@ -56,6 +58,7 @@ public class MonsterController : CreatureController
     }
     public override void MoveTarget(Vector3 target, GameObject targetObj = null)
     {
+        if (isAttackMotion) return;
         TargetObj = targetObj;
         if (_agent == null)
         {

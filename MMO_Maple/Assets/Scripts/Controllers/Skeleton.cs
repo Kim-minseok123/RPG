@@ -13,6 +13,7 @@ public class Skeleton : MonsterController
         if (Managers.Data.MonsterDict.TryGetValue(1, out monster) == false) return;
         MaxHp = monster.stat.Hp;
         Hp = MaxHp;
+        isAttackMotion = false;
     }
 
     public override void OnAttack(SkillInfo info)
@@ -24,14 +25,14 @@ public class Skeleton : MonsterController
         _agent.velocity = Vector3.zero;
         State = CreatureState.Skill;
         _anim.SetTrigger("Attack");
-#if UNITY_SERVER
+        State = CreatureState.Idle;
         StartCoroutine(CoAttackPacket(skill));
-#endif
     }
-#if UNITY_SERVER
+
     public IEnumerator CoAttackPacket(Skill skill)
     {
         yield return new WaitForSeconds(skill.skillDatas[0].attackTime);
+#if UNITY_SERVER
         C_MeleeAttack meleeAttack = new C_MeleeAttack() { Info = new SkillInfo(), Forward = new Positions() };
         meleeAttack.Info.SkillId = skill.id;
         meleeAttack.Forward = Util.Vector3ToPositions(transform.forward);
@@ -39,20 +40,26 @@ public class Skeleton : MonsterController
         meleeAttack.Time = 0;
         meleeAttack.ObjectId = Id;
         Managers.Network.Send(meleeAttack);
-    }
 #endif
+        yield return new WaitForSeconds(skill.cooldown - (int)skill.skillDatas[0].attackTime);
+        isAttackMotion = false;
+    }
+
     public override IEnumerator OnMove(Vector3 target)
     {
+        if (isAttackMotion) yield break;
         _agent.ResetPath();
         _agent.SetDestination(target);
         State = CreatureState.Moving;
-#if UNITY_SERVER
+
         while (true)
         {
             if (TargetObj == null)
             {
+
                 if (Vector3.Distance(_agent.destination, transform.position) < 0.3f)
                 {
+#if UNITY_SERVER
                     C_StopMove moveStopPacket = new C_StopMove() { PosInfo = new PositionInfo() };
                     moveStopPacket.PosInfo.Pos = new Positions() { PosX = transform.position.x, PosY = transform.position.y, PosZ = transform.position.z };
                     Vector3 rotationEuler = transform.rotation.eulerAngles;
@@ -61,24 +68,34 @@ public class Skeleton : MonsterController
                     moveStopPacket.ObjectId = Id;
                     Managers.Network.Send(moveStopPacket);
                     break;
+#else
+                    break;
+#endif
                 }
+
             }
-            else
+                else
             {
-                if (Vector3.Distance(_agent.destination, transform.position) < 1f)
+                if (Vector3.Distance(_agent.destination, transform.position) < 1.2f)
                 {
+#if UNITY_SERVER
                     transform.LookAt(TargetObj.transform);
                     C_SkillMotion skillMotion = new C_SkillMotion() { Info = new SkillInfo() };
                     skillMotion.ObjectId = Id;
                     skillMotion.Info.SkillId = 4;
                     skillMotion.IsMonster = true;
                     Managers.Network.Send(skillMotion);
+                    isAttackMotion = true;
                     break;
+#else
+                    isAttackMotion = true;
+                    break;
+#endif
                 }
             }
             yield return null;
         }
-#endif
+
         yield return null;
     }
 }
