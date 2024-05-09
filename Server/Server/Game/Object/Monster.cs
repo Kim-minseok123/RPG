@@ -15,6 +15,7 @@ namespace Server.Game
 		public int TemplateId { get; private set; }
 		public GameObject Target { get; protected set; }
 		public bool isCanAttack = false;
+		public bool isMotion = false;
 		public Vector3 forwardMonster = new Vector3 (0, 0, 0);
 		public Monster()
 		{
@@ -37,7 +38,9 @@ namespace Server.Game
 		IJob _job;
 		public override void Update()
 		{
-			switch (State)
+            //Console.WriteLine(State);
+
+            switch (State)
 			{
 				case CreatureState.Idle:
 					UpdateIdle();
@@ -61,27 +64,27 @@ namespace Server.Game
 		protected virtual void UpdateIdle()
 		{
 			if (Room.PlayerCount < 1) return;
-
+			if (State != CreatureState.Idle) return;
             if (_nextSearchTick == 0)
                 _nextSearchTick = Environment.TickCount64 + 7000;
             if (_nextSearchTick > Environment.TickCount64)
 				return;
 			_nextSearchTick = Environment.TickCount64 + 7000;
+            _skillTick = Environment.TickCount64;
+
             Random random = new Random();
 			nextPos.PosX = Pos.PosX + random.Next(-5,5);
 			nextPos.PosY = PosInfo.Pos.PosY + 1;
 			nextPos.PosZ = Pos.PosZ + random.Next(-5,5);
-			/*Player target = Room.FindClosestPlayer(CellPos, _searchCellDist);
+            /*Player target = Room.FindClosestPlayer(CellPos, _searchCellDist);
 
 			if (target == null)
 				return;
 
 			_target = target;*/
-			State = CreatureState.Moving;
+            State = CreatureState.Moving;
 		}
 
-		int _skillRange = 1;
-		long _nextMoveTick = 0;
 		protected virtual void UpdateMoving()
 		{
             if (isMoving == true) return;
@@ -151,7 +154,9 @@ namespace Server.Game
 
         protected long _coolTick = 0;
         protected long _checkDisTick = 0;
-		protected virtual void UpdateSkill()
+		protected long _skillTick = 0;
+        protected long _MoveTick = 0;
+        protected virtual void UpdateSkill()
 		{
            
             if (_coolTick == 0)
@@ -242,8 +247,11 @@ namespace Server.Game
                 resStopMovePacket.Rotate = PosInfo.Rotate;
                 resStopMovePacket.Pos = Pos;
                 Room.Broadcast(resStopMovePacket);
+				_skillTick = Environment.TickCount64;
+				_MoveTick = 0;
                 State = CreatureState.Skill;
-			}
+                Console.WriteLine("맞음");
+            }
         }
     }
 }

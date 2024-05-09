@@ -116,6 +116,8 @@ public class MonsterController : CreatureController
                 checkPosPacket.CurPosInfo.Pos = new Positions() { PosX = transform.position.x, PosY = transform.position.y, PosZ = transform.position.z };
                 Vector3 rotationEuler = transform.rotation.eulerAngles;
                 checkPosPacket.CurPosInfo.Rotate = new RotateInfo() { RotateX = rotationEuler.x, RotateY = rotationEuler.y, RotateZ = rotationEuler.z };
+                checkPosPacket.ObjectId = Id;
+                checkPosPacket.IsMonster = true;
                 Managers.Network.Send(checkPosPacket);
                 PrevPos = transform.position;
             }

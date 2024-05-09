@@ -158,6 +158,8 @@ message S_StopMove {
 }
 message C_CheckPos{
 	PositionInfo curPosInfo = 1;
+	bool isMonster = 2;
+	int32 objectId = 3;
 }
 message C_Skill {
   SkillInfo info = 1;

@@ -86,10 +86,10 @@ public class MyPlayerController : PlayerController
             }
             else
             {
-                Debug.Log(attackRand);
                 Skill skill = null;
                 if (Managers.Data.SkillDict.TryGetValue(attackRand, out skill) == false) return;
                 C_SkillMotion skillMotion = new C_SkillMotion() { Info = new SkillInfo() };
+                skillMotion.ObjectId = Id;
                 skillMotion.Info.SkillId = attackRand;
                 skillMotion.IsMonster = false;
                 Managers.Network.Send(skillMotion);
@@ -109,6 +109,8 @@ public class MyPlayerController : PlayerController
                 checkPosPacket.CurPosInfo.Pos = new Positions() { PosX = transform.position.x, PosY = transform.position.y, PosZ = transform.position.z };
                 Vector3 rotationEuler = transform.rotation.eulerAngles;
                 checkPosPacket.CurPosInfo.Rotate = new RotateInfo() { RotateX = rotationEuler.x, RotateY = rotationEuler.y, RotateZ = rotationEuler.z };
+                checkPosPacket.ObjectId = Id;
+                checkPosPacket.IsMonster = false;
                 Managers.Network.Send(checkPosPacket);
                 PrevPos = transform.position;
             }

@@ -14,10 +14,14 @@ public class Skeleton : MonsterController
         MaxHp = monster.stat.Hp;
         Hp = MaxHp;
     }
+
     public override void OnAttack(SkillInfo info)
     {
         Skill skill = null;
         if (Managers.Data.SkillDict.TryGetValue(info.SkillId, out skill) == false) return;
+        transform.LookAt(TargetObj.transform);
+        _agent.ResetPath();
+        _agent.velocity = Vector3.zero;
         State = CreatureState.Skill;
         _anim.SetTrigger("Attack");
 #if UNITY_SERVER
@@ -61,13 +65,15 @@ public class Skeleton : MonsterController
             }
             else
             {
-                if (Vector3.Distance(_agent.destination, transform.position) < 0.3f)
+                if (Vector3.Distance(_agent.destination, transform.position) < 1f)
                 {
-                    transform.forward = TargetObj.transform.forward;
+                    transform.LookAt(TargetObj.transform);
                     C_SkillMotion skillMotion = new C_SkillMotion() { Info = new SkillInfo() };
+                    skillMotion.ObjectId = Id;
                     skillMotion.Info.SkillId = 4;
                     skillMotion.IsMonster = true;
                     Managers.Network.Send(skillMotion);
+                    break;
                 }
             }
             yield return null;

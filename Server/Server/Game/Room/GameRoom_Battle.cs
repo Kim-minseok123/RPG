@@ -75,12 +75,25 @@ namespace Server.Game
                 player.Session.Send(banPacket);
                 return;
             }
-			PositionInfo playerPos = player.PosInfo;
-			if(playerPos.Pos.PosX != posPacket.CurPosInfo.Pos.PosX || playerPos.Pos.PosY != posPacket.CurPosInfo.Pos.PosY || playerPos.Pos.PosZ != posPacket.CurPosInfo.Pos.PosZ)
+			if(posPacket.IsMonster == false)
 			{
-				player.Pos = posPacket.CurPosInfo.Pos;
-				player.Ratate = posPacket.CurPosInfo.Rotate;
-			}
+                PositionInfo playerPos = player.PosInfo;
+                if (playerPos.Pos.PosX != posPacket.CurPosInfo.Pos.PosX || playerPos.Pos.PosY != posPacket.CurPosInfo.Pos.PosY || playerPos.Pos.PosZ != posPacket.CurPosInfo.Pos.PosZ)
+                {
+                    player.Pos = posPacket.CurPosInfo.Pos;
+                    player.Ratate = posPacket.CurPosInfo.Rotate;
+                }
+            }
+            else
+            {
+                Monster monster = null;
+                _monsters.TryGetValue(posPacket.ObjectId, out monster);
+                if (monster == null) return;
+                monster.Pos = posPacket.CurPosInfo.Pos;
+                monster.Ratate = posPacket.CurPosInfo.Rotate;
+                Console.WriteLine(monster.Pos.PosX + ", " + monster.Pos.PosZ);
+            }
+
         }
         
         public bool IsObjectInRange(Vector3 attacker, Vector3 target, Vector3 forward, SKillRange skill)
@@ -115,11 +128,13 @@ namespace Server.Game
             }
             else
 			{
-				Monster monster = null;
+                Monster monster = null;
                 _monsters.TryGetValue(skillMotion.ObjectId, out monster);
                 if (monster == null) return;
+				monster.isMotion = true;
+                Console.WriteLine("공격 모션");
                 S_SkillMotion skillMotionServer = new S_SkillMotion() { Info = new SkillInfo() };
-                skillMotionServer.ObjectId = player.Id;
+                skillMotionServer.ObjectId = monster.Id;
                 skillMotionServer.Info.SkillId = skillMotion.Info.SkillId;
                 Broadcast(skillMotionServer);
             }
@@ -156,7 +171,8 @@ namespace Server.Game
                 Monster monster = null;
                 _monsters.TryGetValue(meleeAttack.ObjectId, out monster);
                 if (monster == null) return;
-				monster.forwardMonster = Utils.PositionsToVector3(meleeAttack.Forward);
+                Console.WriteLine("공격 중 브로드캐스팅 +" + meleeAttack.Info.SkillId);
+                monster.forwardMonster = Utils.PositionsToVector3(meleeAttack.Forward);
 				monster.isCanAttack = true;
             }
         }

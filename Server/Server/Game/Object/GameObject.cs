@@ -150,11 +150,11 @@ namespace Server.Game
 			changePacket.ChangeHp = damage;
 			changePacket.IsHeal = false;
 			Room.Broadcast(changePacket);
-			//Room.Broadcast(CellPos, changePacket);
+            //Room.Broadcast(CellPos, changePacket);
+            Console.WriteLine(attacker +"에 의한 HP 감소");
 
-			if (Stat.Hp <= 0)
+            if (Stat.Hp <= 0)
 			{
-                Console.WriteLine("죽음");
                 //OnDead(attacker);
             }
 		}
