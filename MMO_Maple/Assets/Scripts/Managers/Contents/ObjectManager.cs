@@ -32,6 +32,7 @@ public class ObjectManager
 
                 MyPlayer = go.GetComponent<MyPlayerController>();
                 MyPlayer.Id = info.ObjectId;
+                MyPlayer.SetStat(info.StatInfo);
                 MyPlayer.SetPos(info.PosInfo.Pos, info.PosInfo.Rotate);
                 MyPlayer.GetComponent<NavMeshAgent>().enabled = true;
             }
@@ -55,6 +56,7 @@ public class ObjectManager
 
             MonsterController mc = go.GetComponent<MonsterController>();
             mc.Id = info.ObjectId;
+            mc.SetStat(info.StatInfo);
             mc.SetPos(info.PosInfo.Pos, info.PosInfo.Rotate);
             mc.GetComponent<NavMeshAgent>().enabled = true;
         }

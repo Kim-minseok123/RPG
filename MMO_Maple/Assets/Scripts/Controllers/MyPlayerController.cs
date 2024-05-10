@@ -8,8 +8,6 @@ using UnityEngine.Playables;
 public class MyPlayerController : PlayerController
 {
     Camera cm;
-    protected StatInfo Stat;
-
     private float _moveTime = 0.5f;
     protected override void Init()
     {

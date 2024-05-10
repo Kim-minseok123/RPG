@@ -8,8 +8,6 @@ using UnityEngine.UI;
 
 public class MonsterController : CreatureController
 {
-    protected int MaxHp;
-    protected int Hp;
     protected NavMeshAgent _agent;
     protected Animator _anim;
     public GameObject TargetObj;
