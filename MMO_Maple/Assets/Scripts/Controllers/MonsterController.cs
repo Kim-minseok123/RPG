@@ -133,6 +133,7 @@ public class MonsterController : CreatureController
         }
         else
         {
+            State = CreatureState.Damaged;
             _anim.SetTrigger("Damage");
             // 체력바 등 작업
             Hp = hp;

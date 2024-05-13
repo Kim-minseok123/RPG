@@ -15,7 +15,7 @@ namespace Server.Game
 			get { return Info.ObjectId; }
 			set { Info.ObjectId = value; }
 		}
-		Random random = new Random();
+		protected Random random = new Random();
 		public GameRoom Room { get; set; }
 		public Positions DestPos { get; set; }
 		public ObjectInfo Info { get; set; } = new ObjectInfo();
@@ -23,10 +23,9 @@ namespace Server.Game
 		public Positions myPos { get; private set; } = new Positions();
 		public RotateInfo myRotate { get; private set; } = new RotateInfo();
 		public StatInfo Stat { get; private set; } = new StatInfo();
-
-		public virtual int TotalAttack { get { return Stat.MaxAttack; } }
+		public virtual int TotalAttack { get { return Attack; } }
 		public virtual int TotalDefence { get { return 0; } }
-		public virtual int Attack { get { return random.Next(Stat.MinAttack, Stat.MaxAttack); } }
+		public virtual int Attack { get { return random.Next(1, Stat.Str + 1); } }
 
 		public float Speed
 		{

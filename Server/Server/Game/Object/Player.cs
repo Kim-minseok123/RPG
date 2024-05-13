@@ -19,7 +19,7 @@ namespace Server.Game
 		public int WeaponDamage { get; private set; }
 		public int ArmorDefence { get; private set; }
 
-		public override int TotalAttack { get { return Stat.MaxAttack + WeaponDamage; } }
+		public override int TotalAttack { get { return Stat.Str + WeaponDamage; } }
 		public override int TotalDefence { get { return ArmorDefence; } }
 
 		public Player()

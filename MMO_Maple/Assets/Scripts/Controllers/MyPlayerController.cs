@@ -75,7 +75,6 @@ public class MyPlayerController : PlayerController
                 Managers.Network.Send(moveStopPacket);
                 return;
             }
-            // 작업
             int attackRand = Random.Range(1, 3);
             if (attackRand < 0 || attackRand > 2) 
             {
@@ -84,6 +83,7 @@ public class MyPlayerController : PlayerController
             }
             else
             {
+                // 스킬 모션 발생
                 Skill skill = null;
                 if (Managers.Data.SkillDict.TryGetValue(attackRand, out skill) == false) return;
                 C_SkillMotion skillMotion = new C_SkillMotion() { Info = new SkillInfo() };
@@ -121,14 +121,17 @@ public class MyPlayerController : PlayerController
         for (int i = 0; i < skill.skillDatas.Count; i++)
         {
             yield return new WaitForSeconds(skill.skillDatas[i].attackTime);
-            C_MeleeAttack meleeAttack = new C_MeleeAttack() { Info = new SkillInfo(), Forward = new Positions() };
-            meleeAttack.Info.SkillId = skill.id;
-            meleeAttack.Forward = Util.Vector3ToPositions(transform.forward);
-            meleeAttack.IsMonster = false;
-            meleeAttack.ObjectId = Id;
-            if (isContinual) { meleeAttack.Time = i; }
-            else { meleeAttack.Time = 0; }
-            Managers.Network.Send(meleeAttack);
+            if(State == CreatureState.Skill)
+            {
+                C_MeleeAttack meleeAttack = new C_MeleeAttack() { Info = new SkillInfo(), Forward = new Positions() };
+                meleeAttack.Info.SkillId = skill.id;
+                meleeAttack.Forward = Util.Vector3ToPositions(transform.forward);
+                meleeAttack.IsMonster = false;
+                meleeAttack.ObjectId = Id;
+                if (isContinual) { meleeAttack.Time = i; }
+                else { meleeAttack.Time = 0; }
+                Managers.Network.Send(meleeAttack);
+            }
         }
     }
 }

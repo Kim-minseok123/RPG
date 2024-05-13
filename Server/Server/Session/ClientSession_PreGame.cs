@@ -114,8 +114,15 @@ namespace Server
             LobbyPlayerInfo playerInfo = LobbyPlayers.Find(p => p.Name == enterGamePacket.Name);
             if (playerInfo == null)
                 return;
-
-            MyPlayer = ObjectManager.Instance.Add<Player>();
+			if(playerInfo.ClassType == (int)ClassTypes.Beginner)
+			{
+                MyPlayer = ObjectManager.Instance.Add<Beginner>();
+            }
+			else if (playerInfo.ClassType == (int)ClassTypes.Warrior)
+			{
+                MyPlayer = ObjectManager.Instance.Add<Warrior>();
+            }
+           
             {
                 MyPlayer.PlayerDbId = playerInfo.PlayerDbId;
                 MyPlayer.Info.Name = playerInfo.Name;
@@ -139,8 +146,6 @@ namespace Server
                         MyPlayer.Stat.MaxHp = findPlayerDb.MaxHp;
                         MyPlayer.Stat.Mp = findPlayerDb.Mp;
                         MyPlayer.Stat.MaxMp = findPlayerDb.MaxMp;
-                        MyPlayer.Stat.MaxAttack = findPlayerDb.MaxAttack;
-                        MyPlayer.Stat.MinAttack = findPlayerDb.MinAttack;
                         MyPlayer.Stat.Defense = findPlayerDb.Defense;
                         MyPlayer.Stat.Speed = findPlayerDb.Speed;
                         MyPlayer.Stat.Str = findPlayerDb.Str;
@@ -212,8 +217,6 @@ namespace Server
 						MaxHp = 50,
 						Mp = 5,
 						MaxMp = 5,
-						MaxAttack = 3,
-						MinAttack = 1,
 						Defense = 0,
 						Str = 4,
 						Dex = 4,

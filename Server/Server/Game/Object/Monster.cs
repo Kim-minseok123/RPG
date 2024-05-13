@@ -11,6 +11,7 @@ namespace Server.Game
 {
 	public class Monster : GameObject
 	{
+		protected Vector3 SpawnPos;
 		public bool isMoving = false;
 		public int TemplateId { get; private set; }
 		public GameObject Target { get; protected set; }
@@ -54,6 +55,8 @@ namespace Server.Game
 				case CreatureState.Dead:
 					UpdateDead();
 					break;
+				case CreatureState.Wait:
+					break;
 			}
             // 5프레임 (0.2초마다 한번씩 Update)
             if (Room != null)
@@ -70,18 +73,21 @@ namespace Server.Game
             if (_nextSearchTick > Environment.TickCount64)
 				return;
 			_nextSearchTick = Environment.TickCount64 + 7000;
-            _skillTick = Environment.TickCount64;
-
-            Random random = new Random();
-			nextPos.PosX = Pos.PosX + random.Next(-5,5);
-			nextPos.PosY = PosInfo.Pos.PosY + 1;
-			nextPos.PosZ = Pos.PosZ + random.Next(-5,5);
-            /*Player target = Room.FindClosestPlayer(CellPos, _searchCellDist);
-
-			if (target == null)
-				return;
-
-			_target = target;*/
+			Vector3 curPos = Utils.PositionsToVector3(Pos);
+			/*if(Vector3.Distance(curPos, SpawnPos) > 20)
+			{
+				nextPos.PosX = SpawnPos.x;
+				nextPos.PosY = SpawnPos.y + 1;
+				nextPos.PosZ = SpawnPos.z;
+            }
+			else*/
+			{
+                Random random = new Random();
+                nextPos.PosX = Pos.PosX + random.Next(-5, 5);
+                nextPos.PosY = PosInfo.Pos.PosY + 1;
+                nextPos.PosZ = Pos.PosZ + random.Next(-5, 5);
+            }
+            
             State = CreatureState.Moving;
 		}
 
@@ -89,49 +95,7 @@ namespace Server.Game
 		{
             if (isMoving == true) return;
             if (Room.PlayerCount < 1) return;
-            /*if (_nextMoveTick > Environment.TickCount64)
-				return;
-			//int moveTick = (int)(1000 / Speed);
-			_nextMoveTick = Environment.TickCount64 + 1000;*/
-
-			/*if (_target == null || _target.Room != Room)
-			{
-				_target = null;
-				State = CreatureState.Idle;
-				BroadcastMove();
-				return;
-			}
-
-			Vector2Int dir = _target.CellPos - CellPos;
-			int dist = dir.cellDistFromZero;
-			if (dist == 0 || dist > _chaseCellDist)
-			{
-				_target = null;
-				State = CreatureState.Idle;
-				BroadcastMove();
-				return;
-			}
-
-			List<Vector2Int> path = Room.Map.FindPath(CellPos, _target.CellPos, checkObjects: true);
-			if (path.Count < 2 || path.Count > _chaseCellDist)
-			{
-				_target = null;
-				State = CreatureState.Idle;
-				BroadcastMove();
-				return;
-			}
-
-			// 스킬로 넘어갈지 체크
-			if (dist <= _skillRange && (dir.x == 0 || dir.y == 0))
-			{
-				_coolTick = 0;
-				State = CreatureState.Skill;
-				return;
-			}*/
-
-			// 이동
-			//Dir = GetDirFromVec(path[1] - CellPos);
-			//Room.Map.ApplyMove(this, path[1]);
+            
 			BroadcastMove();
 		}
 
@@ -154,7 +118,6 @@ namespace Server.Game
 
         protected long _coolTick = 0;
         protected long _checkDisTick = 0;
-		protected long _skillTick = 0;
         protected long _MoveTick = 0;
         protected virtual void UpdateSkill()
 		{
@@ -247,11 +210,17 @@ namespace Server.Game
                 resStopMovePacket.Rotate = PosInfo.Rotate;
                 resStopMovePacket.Pos = Pos;
                 Room.Broadcast(resStopMovePacket);
-				_skillTick = Environment.TickCount64;
 				_MoveTick = 0;
-                State = CreatureState.Skill;
+                State = CreatureState.Wait;
                 Console.WriteLine("맞음");
+                isCanAttack = false;
+                isMotion = false;
+                Room.PushAfter(1200, ChangeStateAfterTime, CreatureState.Skill);
             }
         }
+		public void ChangeStateAfterTime(CreatureState state)
+		{
+			State = state;
+		}
     }
 }

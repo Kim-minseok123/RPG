@@ -21,31 +21,36 @@ public class Skeleton : MonsterController
         _agent.velocity = Vector3.zero;
         State = CreatureState.Skill;
         _anim.SetTrigger("Attack");
-        State = CreatureState.Idle;
         StartCoroutine(CoAttackPacket(skill));
+        State = CreatureState.Idle;
     }
 
     public IEnumerator CoAttackPacket(Skill skill)
     {
         yield return new WaitForSeconds(skill.skillDatas[0].attackTime);
 #if UNITY_SERVER
-        C_MeleeAttack meleeAttack = new C_MeleeAttack() { Info = new SkillInfo(), Forward = new Positions() };
-        meleeAttack.Info.SkillId = skill.id;
-        meleeAttack.Forward = Util.Vector3ToPositions(transform.forward);
-        meleeAttack.IsMonster = true;
-        meleeAttack.Time = 0;
-        meleeAttack.ObjectId = Id;
-        Managers.Network.Send(meleeAttack);
+        if(State == CreatureState.Skill)
+        {
+            C_MeleeAttack meleeAttack = new C_MeleeAttack() { Info = new SkillInfo(), Forward = new Positions() };
+            meleeAttack.Info.SkillId = skill.id;
+            meleeAttack.Forward = Util.Vector3ToPositions(transform.forward);
+            meleeAttack.IsMonster = true;
+            meleeAttack.Time = 0;
+            meleeAttack.ObjectId = Id;
+            Managers.Network.Send(meleeAttack);
+        }
 #endif
         yield return new WaitForSeconds(skill.cooldown - (int)skill.skillDatas[0].attackTime);
         isAttackMotion = false;
+        
     }
 
     public override IEnumerator OnMove(Vector3 target)
     {
         if (isAttackMotion) yield break;
         _agent.ResetPath();
-        _agent.SetDestination(target);
+        if (TargetObj != null && Vector3.Distance(target, transform.position) >= 1.2f)
+            _agent.SetDestination(target);
         State = CreatureState.Moving;
 
         while (true)

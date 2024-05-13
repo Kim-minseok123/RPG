@@ -248,18 +248,16 @@ message StatInfo {
   int32 level = 1;
   int32 hp = 2;
   int32 maxHp = 3;
-  int32 maxAttack = 4;
-  int32 minAttack = 5;
-  float speed = 6;
-  int32 exp = 7;
-  int32 str = 8;
-  int32 dex = 9;
-  int32 int = 10;
-  int32 luk = 11;
-  int32 defense = 12;
-  int32 mp = 13;
-  int32 maxMp = 14;
-  int32 statPoint = 15;
+  float speed = 4;
+  int32 exp = 5;
+  int32 str = 6;
+  int32 dex = 7;
+  int32 int = 8;
+  int32 luk = 9;
+  int32 defense = 10;
+  int32 mp = 11;
+  int32 maxMp = 12;
+  int32 statPoint = 13;
 }
 
 message SkillInfo {

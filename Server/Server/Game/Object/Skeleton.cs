@@ -11,15 +11,15 @@ namespace Server.Game
         public override void Init(int templateId)
         {
             base.Init(templateId);
-            PosInfo.Pos.PosX = 340f;
-            PosInfo.Pos.PosY = 7.5f;
-            PosInfo.Pos.PosZ = 340f;
+            SpawnPos = new Vector3(340f, 7.5f, 340f);
+
+            PosInfo.Pos.PosX = SpawnPos.x;
+            PosInfo.Pos.PosY = SpawnPos.y;
+            PosInfo.Pos.PosZ = SpawnPos.z;
         }
         
         protected override void UpdateSkill()
         {
-            if (_skillTick + 1000 > Environment.TickCount64)
-                return;
             if (_coolTick == 0)
             {
                 if (isCanAttack)
@@ -31,7 +31,8 @@ namespace Server.Game
                     Vector3 target = Utils.PositionsToVector3(Target.Pos);
                     if(Room.IsObjectInRange(attacker, target, forwardMonster, skillData.skillDatas[0].range))
                     {
-                        Target.OnDamaged(this, skillData.skillDatas[0].damage + TotalAttack);
+                        if (State == CreatureState.Skill)
+                            Target.OnDamaged(this, skillData.skillDatas[0].damage + TotalAttack);
                     }
                     int coolTick = (int)(1000 * skillData.cooldown);
                     _coolTick = Environment.TickCount64 + coolTick;
