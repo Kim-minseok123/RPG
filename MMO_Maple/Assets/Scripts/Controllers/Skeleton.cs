@@ -22,7 +22,6 @@ public class Skeleton : MonsterController
         State = CreatureState.Skill;
         _anim.SetTrigger("Attack");
         StartCoroutine(CoAttackPacket(skill));
-        State = CreatureState.Idle;
     }
 
     public IEnumerator CoAttackPacket(Skill skill)
@@ -41,15 +40,15 @@ public class Skeleton : MonsterController
         }
 #endif
         yield return new WaitForSeconds(skill.cooldown - (int)skill.skillDatas[0].attackTime);
+        State = CreatureState.Idle;
         isAttackMotion = false;
-        
     }
 
     public override IEnumerator OnMove(Vector3 target)
     {
         if (isAttackMotion) yield break;
         _agent.ResetPath();
-        if (TargetObj != null && Vector3.Distance(target, transform.position) >= 1.2f)
+        if (TargetObj == null || (TargetObj != null && Vector3.Distance(target, transform.position) >= 1.2f))
             _agent.SetDestination(target);
         State = CreatureState.Moving;
 
@@ -75,7 +74,7 @@ public class Skeleton : MonsterController
                 }
 
             }
-                else
+            else
             {
                 if (Vector3.Distance(_agent.destination, transform.position) < 1.2f)
                 {

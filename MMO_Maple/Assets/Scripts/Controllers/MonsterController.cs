@@ -52,6 +52,7 @@ public class MonsterController : CreatureController
     protected override void UpdateMoving()
     {
         if (_anim == null) return;
+        if (isAttackMotion) { _anim.SetFloat("speed", 0); return; }
         _anim.SetFloat("speed", _agent.speed);
     }
     public override void MoveTarget(Vector3 target, GameObject targetObj = null)

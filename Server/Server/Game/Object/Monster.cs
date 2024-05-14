@@ -74,20 +74,19 @@ namespace Server.Game
 				return;
 			_nextSearchTick = Environment.TickCount64 + 7000;
 			Vector3 curPos = Utils.PositionsToVector3(Pos);
-			/*if(Vector3.Distance(curPos, SpawnPos) > 20)
+			if(Math.Abs(curPos.x - SpawnPos.x) > 15 || Math.Abs(curPos.z - SpawnPos.z) > 15)
 			{
 				nextPos.PosX = SpawnPos.x;
 				nextPos.PosY = SpawnPos.y + 1;
 				nextPos.PosZ = SpawnPos.z;
             }
-			else*/
+			else
 			{
                 Random random = new Random();
-                nextPos.PosX = Pos.PosX + random.Next(-5, 5);
+                nextPos.PosX = Pos.PosX + random.Next(-5, 6);
                 nextPos.PosY = PosInfo.Pos.PosY + 1;
-                nextPos.PosZ = Pos.PosZ + random.Next(-5, 5);
+                nextPos.PosZ = Pos.PosZ + random.Next(-5, 6);
             }
-            
             State = CreatureState.Moving;
 		}
 

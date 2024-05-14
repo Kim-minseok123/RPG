@@ -71,7 +71,7 @@
       "skillType": "SkillMeleeAttack",
       "skillDatas": [
         {
-          "attackTime": "1.1",
+          "attackTime": "1.05",
           "damage": "5",
           "range": {
             "width": "1.5",
