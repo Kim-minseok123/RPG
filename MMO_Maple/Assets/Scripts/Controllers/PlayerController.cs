@@ -120,8 +120,6 @@ public class PlayerController : CreatureController
             _anim.SetTrigger("Damage");
             // 체력바 등 작업
             Hp = hp;
-            var value = (float)Hp / MaxHp;
-            value = Mathf.Max(0, value);
             State = CreatureState.Wait;
             StartCoroutine(CoWaitForSecondsToState(0.8f, CreatureState.Idle));
             GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");

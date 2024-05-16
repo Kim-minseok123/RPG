@@ -5,12 +5,19 @@ using UnityEngine;
 
 public class CreatureController : BaseController
 {
-    protected int MaxHp { get { return Stat.MaxHp; }  set { Stat.MaxHp = value; } }
-    protected int Hp { get { return Stat.Hp; } set { Stat.Hp = value; } }
-    protected StatInfo Stat = new StatInfo();
-    protected CreatureState State { get; set; } = CreatureState.Idle;
-    public override void SetStat(StatInfo stat)
+    public virtual int MaxHp { get { return Stat.MaxHp; }  protected set { Stat.MaxHp = value; } }
+    public virtual int MaxMp { get { return Stat.MaxMp; }  protected set { Stat.MaxMp = value; } }
+    public virtual int Hp { get { return Stat.Hp; } protected set { Stat.Hp = value; } }
+    public virtual int Mp { get { return Stat.Mp; } protected set { Stat.Mp = value; } }
+    public ObjectInfo objectInfo { get; protected set; } = new ObjectInfo();
+    public StatInfo Stat 
     {
-        Stat = stat;
+        get { return objectInfo.StatInfo; }
+        protected set { objectInfo.StatInfo = value; }
+    }
+    protected CreatureState State { get; set; } = CreatureState.Idle;
+    public virtual void SetInfo(ObjectInfo info)
+    {
+        objectInfo = info;
     }
 }

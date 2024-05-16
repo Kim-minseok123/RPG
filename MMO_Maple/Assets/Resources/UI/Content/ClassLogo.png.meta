@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7b8c30380e64b3c4185548a895c28f42
+guid: 4942a68b080be4443947987fb8146128
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,10 +69,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,10 +113,10 @@ TextureImporter:
       name: ClassLogo_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 2355.2
-        width: 620
-        height: 588.8
+        x: 15
+        y: 892
+        width: 197
+        height: 197
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4d6b77af082ba04799be7ce332a66ac
-      internalID: -2004957127
+      spriteID: 7d9e89d8304ca6c4f9b4780774221472
+      internalID: 1364861740
       vertices: []
       indices: 
       edges: []
@@ -134,10 +134,10 @@ TextureImporter:
       name: ClassLogo_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1824
-        width: 620
-        height: 589
+        x: 16
+        y: 686
+        width: 197
+        height: 197
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9f997d69d3b22b489325ba49fdea76f
-      internalID: 1852260844
+      spriteID: 38d1c4ae4616567439f81d3b2a849ecc
+      internalID: -1181284794
       vertices: []
       indices: 
       edges: []
@@ -155,10 +155,10 @@ TextureImporter:
       name: ClassLogo_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1261
-        width: 620
-        height: 589
+        x: 18
+        y: 467
+        width: 197
+        height: 197
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 383a78a5b8506d14fb7da0bec167b52c
-      internalID: 1465256123
+      spriteID: 50b74133b7eb9bb468f7cd71e4851774
+      internalID: -2085827286
       vertices: []
       indices: 
       edges: []
@@ -176,10 +176,10 @@ TextureImporter:
       name: ClassLogo_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 675
-        width: 620
-        height: 589
+        x: 18
+        y: 263
+        width: 197
+        height: 197
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d72d737dfdfa2bb4996066816c9946e8
-      internalID: -919464531
+      spriteID: 651d0fa53eacb6444929b20062c2cc6d
+      internalID: 2002674063
       vertices: []
       indices: 
       edges: []
@@ -197,10 +197,10 @@ TextureImporter:
       name: ClassLogo_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 80
-        width: 620
-        height: 589
+        x: 17
+        y: 39
+        width: 197
+        height: 197
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,8 +208,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 595cf3177f7c2ab47a5f90d2dd0172ec
-      internalID: 1965066024
+      spriteID: 856faba2bf4d79c44acceec343ca1ab9
+      internalID: -261940205
       vertices: []
       indices: 
       edges: []
@@ -217,7 +217,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 16708b8e15bdd614a9a337a30d5ce5cb
+    spriteID: bcaa73cf5775eb5409a63a2f364881e6
     internalID: 0
     vertices: []
     indices: 
@@ -225,11 +225,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ClassLogo_0: -2004957127
-      ClassLogo_1: 1852260844
-      ClassLogo_2: 1465256123
-      ClassLogo_3: -919464531
-      ClassLogo_4: 1965066024
+      ClassLogo_0: 1364861740
+      ClassLogo_1: -1181284794
+      ClassLogo_2: -2085827286
+      ClassLogo_3: 2002674063
+      ClassLogo_4: -261940205
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

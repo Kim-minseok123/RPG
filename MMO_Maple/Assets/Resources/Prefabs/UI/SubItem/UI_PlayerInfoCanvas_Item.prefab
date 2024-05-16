@@ -251,9 +251,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 152c398d244a47b48bf851b63b4b9107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Beginner: {fileID: 1465256123, guid: 7b8c30380e64b3c4185548a895c28f42, type: 3}
-  Warrior: {fileID: -2004957127, guid: 7b8c30380e64b3c4185548a895c28f42, type: 3}
-  Archer: {fileID: 1852260844, guid: 7b8c30380e64b3c4185548a895c28f42, type: 3}
+  Beginner: {fileID: -1181284794, guid: 4942a68b080be4443947987fb8146128, type: 3}
+  Warrior: {fileID: 1364861740, guid: 4942a68b080be4443947987fb8146128, type: 3}
+  Archer: {fileID: -2085827286, guid: 4942a68b080be4443947987fb8146128, type: 3}
 --- !u!1 &1406808760351038642
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +358,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1852260844, guid: 7b8c30380e64b3c4185548a895c28f42, type: 3}
+  m_Sprite: {fileID: -1181284794, guid: 4942a68b080be4443947987fb8146128, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

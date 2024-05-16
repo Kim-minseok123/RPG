@@ -138,8 +138,7 @@ public class MonsterController : CreatureController
             _anim.SetTrigger("Damage");
             // 체력바 등 작업
             Hp = hp;
-            var value = (float)Hp / MaxHp;
-            value = Mathf.Max(0, value);
+            var value = Mathf.Max(0f, (float)Hp / MaxHp);
             if (value == 0f)
                 hpBar.gameObject.SetActive(false);
             else

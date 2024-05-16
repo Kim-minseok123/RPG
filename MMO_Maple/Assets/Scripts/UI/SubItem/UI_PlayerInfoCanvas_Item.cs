@@ -78,6 +78,7 @@ public class UI_PlayerInfoCanvas_Item : UI_Base
             C_EnterGame enterGamePacket = new C_EnterGame();
             enterGamePacket.Name = playerInfo.Name;
             Managers.Network.Send(enterGamePacket);
+            Managers.Object.ClassType = playerInfo.ClassType;
             Managers.UI.CloseAllPopupUI();
         });
        

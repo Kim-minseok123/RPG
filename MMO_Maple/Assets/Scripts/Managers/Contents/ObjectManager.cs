@@ -4,10 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 public class ObjectManager 
 {
     public MyPlayerController MyPlayer { get; set; }
+    public int ClassType { get; set; }
     Dictionary<int, GameObject> _objects = new Dictionary<int, GameObject>();
     public static GameObjectType GetObjectTypeById(int id)
     {
@@ -31,10 +33,12 @@ public class ObjectManager
                 _objects.Add(info.ObjectId, go);
 
                 MyPlayer = go.GetComponent<MyPlayerController>();
+                MyPlayer.ClassType = ClassType;
                 MyPlayer.Id = info.ObjectId;
-                MyPlayer.SetStat(info.StatInfo);
+                MyPlayer.SetInfo(info);
                 MyPlayer.SetPos(info.PosInfo.Pos, info.PosInfo.Rotate);
                 MyPlayer.GetComponent<NavMeshAgent>().enabled = true;
+                Managers.UI.ShowSceneUI<UI_GameScene>();
             }
             else
             {
@@ -44,6 +48,7 @@ public class ObjectManager
 
                 PlayerController pc = go.GetComponent<PlayerController>();
                 pc.Id = info.ObjectId;
+                pc.SetInfo(info);
                 pc.SetPos(info.PosInfo.Pos, info.PosInfo.Rotate);
                 pc.GetComponent<NavMeshAgent>().enabled = true;
             }
@@ -56,7 +61,7 @@ public class ObjectManager
 
             MonsterController mc = go.GetComponent<MonsterController>();
             mc.Id = info.ObjectId;
-            mc.SetStat(info.StatInfo);
+            mc.SetInfo(info);
             mc.SetPos(info.PosInfo.Pos, info.PosInfo.Rotate);
             mc.GetComponent<NavMeshAgent>().enabled = true;
         }

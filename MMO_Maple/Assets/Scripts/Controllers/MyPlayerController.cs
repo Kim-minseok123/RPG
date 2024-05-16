@@ -8,7 +8,12 @@ using UnityEngine.Playables;
 public class MyPlayerController : PlayerController
 {
     Camera cm;
+    public int ClassType;
     private float _moveTime = 0.5f;
+    public override int MaxHp { get { return Stat.MaxHp; } protected set { Stat.MaxHp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
+    public override int MaxMp { get { return Stat.MaxMp; } protected set { Stat.MaxMp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
+    public override int Hp { get { return Stat.Hp; } protected set { Stat.Hp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
+    public override int Mp { get { return Stat.Mp; } protected set { Stat.Mp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     protected override void Init()
     {
         base.Init();
