@@ -46,6 +46,21 @@ public class MyPlayerController : PlayerController
             Managers.Network.Send(skillMotion);
             StartCoroutine(CoAttackTimeWait(skill, true));
         }
+        else if(Input.GetKeyDown(KeyCode.I))
+        {
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            UI_Inventory invenUI = gameSceneUI.InvenUI;
+
+            if (invenUI.gameObject.activeSelf)
+            {
+                invenUI.gameObject.SetActive(false);
+            }
+            else
+            {
+                invenUI.gameObject.SetActive(true);
+                invenUI.RefreshUI();
+            }
+        }
     }
     public void OnClickMouseInputEvent()
     {

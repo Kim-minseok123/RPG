@@ -22,6 +22,7 @@ namespace Server.Data
 		{
             SkillDict = LoadJson<Data.SkillData, int, Data.Skill>("SkillData").MakeDict();
             MonsterDict = LoadJson<Data.MonsterLoader, int, Data.MonsterData>("MonsterData").MakeDict();
+			ItemDict = LoadJson<Data.ItemLoader, int, Data.ItemData>("ItemData").MakeDict();
 		}
 
 		static Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>

@@ -143,6 +143,26 @@ class PacketHandler
             return;
         bc.OnAttack(skillMotionPacket.Info);
     }
+    public static void S_AddItemHandler(PacketSession session, IMessage packet)
+    {
+        S_AddItem itemList = (S_AddItem)packet;
+
+        // 메모리에 아이템 정보 적용
+        foreach (ItemInfo itemInfo in itemList.Items)
+        {
+            Item item = Item.MakeItem(itemInfo);
+            Managers.Inven.Add(item);
+        }
+
+        Debug.Log("아이템을 획득했습니다!");
+
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        gameSceneUI.InvenUI.RefreshUI();
+        //gameSceneUI.StatUI.RefreshUI();
+
+        /*if (Managers.Object.MyPlayer != null)
+            Managers.Object.MyPlayer.RefreshAdditionalStat();*/
+    }
 }
 
 

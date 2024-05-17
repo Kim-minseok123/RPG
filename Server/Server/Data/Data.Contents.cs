@@ -76,15 +76,17 @@ namespace Server.Data
 	{
 		public WeaponType weaponType;
 		public int damage;
-	}
+		public int requirementLevel;
+    }
 
 	public class ArmorData : ItemData
 	{
 		public ArmorType armorType;
 		public int defence;
-	}
+        public int requirementLevel;
+    }
 
-	public class ConsumableData : ItemData
+    public class ConsumableData : ItemData
 	{
 		public ConsumableType consumableType;
 		public int maxCount;

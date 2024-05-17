@@ -44,7 +44,9 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.SChangeHp, MakePacket<S_ChangeHp>);
 		_handler.Add((ushort)MsgId.SChangeHp, PacketHandler.S_ChangeHpHandler);		
 		_onRecv.Add((ushort)MsgId.SSkillMotion, MakePacket<S_SkillMotion>);
-		_handler.Add((ushort)MsgId.SSkillMotion, PacketHandler.S_SkillMotionHandler);
+		_handler.Add((ushort)MsgId.SSkillMotion, PacketHandler.S_SkillMotionHandler);		
+		_onRecv.Add((ushort)MsgId.SAddItem, MakePacket<S_AddItem>);
+		_handler.Add((ushort)MsgId.SAddItem, PacketHandler.S_AddItemHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

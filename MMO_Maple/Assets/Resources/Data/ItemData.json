@@ -1,0 +1,47 @@
+{
+  "weapons": [
+    {
+      "id": "1",
+      "name": "낡은 검",
+      "weaponType": "Sword",
+      "damage": "5",
+      "requirementLevel": "1",
+      "iconPath": "Textures/Item/axe"
+    },
+    {
+      "id": "2",
+      "name": "롱소드",
+      "weaponType": "Sword",
+      "damage": "10",
+      "requirementLevel": "5",
+      "iconPath": "Textures/Item/sword"
+    }
+  ],
+  "armors": [
+    {
+      "id": "100",
+      "name": "뼈 갑옷",
+      "armorType": "Armor",
+      "defence": "3",
+      "requirementLevel": "1",
+      "iconPath": "Textures/Item/armor"
+    },
+    {
+      "id": "101",
+      "name": "뼈 투구",
+      "armorType": "Helmet",
+      "defence": "1",
+      "requirementLevel": "1",
+      "iconPath": "Textures/Item/helmets"
+    }
+  ],
+  "consumables": [
+    {
+      "id": "200",
+      "name": "빨간 포션",
+      "consumableType": "Potion",
+      "maxCount": "100",
+      "iconPath": "Textures/Item/hp"
+    }
+  ]
+} 

@@ -45,7 +45,8 @@ namespace Data
     }
 
     #endregion
-    /*#region Item
+
+    #region Item
 	[Serializable]
 	public class ItemData
 	{
@@ -60,16 +61,18 @@ namespace Data
 	{
 		public WeaponType weaponType;
 		public int damage;
-	}
+        public int requirementLevel;
+    }
 
-	[Serializable]
+    [Serializable]
 	public class ArmorData : ItemData
 	{
 		public ArmorType armorType;
 		public int defence;
-	}
+        public int requirementLevel;
+    }
 
-	[Serializable]
+    [Serializable]
 	public class ConsumableData : ItemData
 	{
 		public ConsumableType consumableType;
@@ -105,7 +108,7 @@ namespace Data
 			return dict;
 		}
 	}
-	#endregion*/
+	#endregion
     #region Monster
     [Serializable]
     public class RewardData
