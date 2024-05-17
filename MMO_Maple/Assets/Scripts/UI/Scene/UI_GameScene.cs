@@ -8,10 +8,12 @@ using UnityEngine.UI;
 
 public class UI_GameScene : UI_Scene
 {
+    public UI_Inventory InvenUI { get; private set; }
+
     public Sprite Beginner;
     public Sprite Warrior;
     public Sprite Archer;
-
+    MyPlayerController MyPlayer;
     enum Images
     {
         PlayerImage,
@@ -29,6 +31,7 @@ public class UI_GameScene : UI_Scene
     {
         PlayerClassText,
         PlayerNameText,
+        LevelText,
     }
     enum Sliders
     {
@@ -49,14 +52,21 @@ public class UI_GameScene : UI_Scene
     public override void Init()
     {
         base.Init();
-       
+
+        InvenUI = GetComponentInChildren<UI_Inventory>();
+
+        InvenUI.gameObject.SetActive(false);
+
         BindImage(typeof(Images));
         BindText(typeof(Texts));
         Bind<Slider>(typeof(Sliders));
         BindObject(typeof(GameObjects));
 
-        GetText((int)Texts.PlayerNameText).text = Managers.Object.MyPlayer.objectInfo.Name;
-        switch (Managers.Object.MyPlayer.ClassType)
+        MyPlayer = Managers.Object.MyPlayer;
+
+        GetText((int)Texts.PlayerNameText).text = MyPlayer.Stat.Level.ToString();
+
+        switch (MyPlayer.ClassType)
         {
             case (int)ClassTypes.Beginner:
                 GetText((int)Texts.PlayerClassText).text = "ÃÊº¸ÀÚ";
@@ -71,6 +81,9 @@ public class UI_GameScene : UI_Scene
                 GetImage((int)Images.PlayerClassImage).sprite = Archer;
                 break;
         }
+
+        GetText((int)Texts.LevelText).text = MyPlayer.objectInfo.StatInfo.Level.ToString();
+
         Sprite nullSprite = Managers.Resource.Load<Sprite>("UI/Content/Mini_background"); 
         GetImage((int)Images.QuickSlotIconImageQ).sprite = nullSprite;
         GetImage((int)Images.QuickSlotIconImageW).sprite = nullSprite;
@@ -89,11 +102,10 @@ public class UI_GameScene : UI_Scene
     }
     public void ChangeHpOrMp()
     {
-        MyPlayerController myPlayer = Managers.Object.MyPlayer;
-        int MaxHp = myPlayer.MaxHp;
-        int Hp = myPlayer.Hp;
-        int MaxMp = myPlayer.MaxMp;
-        int Mp = myPlayer.Mp;
+        int MaxHp = MyPlayer.MaxHp;
+        int Hp = MyPlayer.Hp;
+        int MaxMp = MyPlayer.MaxMp;
+        int Mp = MyPlayer.Mp;
 
         float hpRatio = Mathf.Max((float)Hp / MaxHp, 0f);
         float mpRatio = Mathf.Max((float)Mp / MaxMp, 0f);
