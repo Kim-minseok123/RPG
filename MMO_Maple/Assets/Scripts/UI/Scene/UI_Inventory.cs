@@ -6,13 +6,19 @@ using UnityEngine;
 
 public class UI_Inventory : UI_Base
 {
+    enum Buttons
+    {
+        ExitButton
+    }
     public List<UI_InvenSlot> Items { get; } = new List<UI_InvenSlot>();
-
+    public GameObject grid;
     public override void Init()
     {
-        Items.Clear();
+        BindButton(typeof(Buttons));
 
-        GameObject grid = transform.Find("InventoryGrid").gameObject;
+        GetButton((int)Buttons.ExitButton).gameObject.BindEvent((e) => { var ui = Managers.UI.SceneUI as UI_GameScene; ui.CloseUI("Inven"); });
+
+        Items.Clear();
 
         foreach (Transform child in grid.transform)
             Destroy(child.gameObject);

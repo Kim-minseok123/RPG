@@ -9,11 +9,15 @@ using UnityEngine.UI;
 public class UI_GameScene : UI_Scene
 {
     public UI_Inventory InvenUI { get; private set; }
+    public UI_Stat StatUI { get; private set; }
+    List<UI_Base> _playerPopup = new();
+    int _curPopupSortOrder = 1;
 
     public Sprite Beginner;
     public Sprite Warrior;
     public Sprite Archer;
-    MyPlayerController MyPlayer;
+
+    MyPlayerController _myPlayer;
     enum Images
     {
         PlayerImage,
@@ -53,20 +57,27 @@ public class UI_GameScene : UI_Scene
     {
         base.Init();
 
+        _curPopupSortOrder = 1;
+
         InvenUI = GetComponentInChildren<UI_Inventory>();
+        _playerPopup.Add(InvenUI);
+        StatUI = GetComponentInChildren<UI_Stat>();
+        _playerPopup.Add(StatUI);
+        //...//
 
         InvenUI.gameObject.SetActive(false);
+        StatUI.gameObject.SetActive(false);
 
         BindImage(typeof(Images));
         BindText(typeof(Texts));
         Bind<Slider>(typeof(Sliders));
         BindObject(typeof(GameObjects));
 
-        MyPlayer = Managers.Object.MyPlayer;
+        _myPlayer = Managers.Object.MyPlayer;
 
-        GetText((int)Texts.PlayerNameText).text = MyPlayer.Stat.Level.ToString();
+        GetText((int)Texts.PlayerNameText).text = _myPlayer.Stat.Level.ToString();
 
-        switch (MyPlayer.ClassType)
+        switch (_myPlayer.ClassType)
         {
             case (int)ClassTypes.Beginner:
                 GetText((int)Texts.PlayerClassText).text = "ÃÊº¸ÀÚ";
@@ -82,7 +93,7 @@ public class UI_GameScene : UI_Scene
                 break;
         }
 
-        GetText((int)Texts.LevelText).text = MyPlayer.objectInfo.StatInfo.Level.ToString();
+        GetText((int)Texts.LevelText).text = _myPlayer.objectInfo.StatInfo.Level.ToString();
 
         Sprite nullSprite = Managers.Resource.Load<Sprite>("UI/Content/Mini_background"); 
         GetImage((int)Images.QuickSlotIconImageQ).sprite = nullSprite;
@@ -102,15 +113,72 @@ public class UI_GameScene : UI_Scene
     }
     public void ChangeHpOrMp()
     {
-        int MaxHp = MyPlayer.MaxHp;
-        int Hp = MyPlayer.Hp;
-        int MaxMp = MyPlayer.MaxMp;
-        int Mp = MyPlayer.Mp;
+        int MaxHp = _myPlayer.MaxHp;
+        int Hp = _myPlayer.Hp;
+        int MaxMp = _myPlayer.MaxMp;
+        int Mp = _myPlayer.Mp;
 
         float hpRatio = Mathf.Max((float)Hp / MaxHp, 0f);
         float mpRatio = Mathf.Max((float)Mp / MaxMp, 0f);
 
         Get<Slider>((int)Sliders.HpInfoSlider).DOValue(hpRatio, 0.5f).SetEase(Ease.OutExpo);
         Get<Slider>((int)Sliders.MpInfoSlider).DOValue(mpRatio, 0.5f).SetEase(Ease.OutExpo);
+    }
+    public void OpenUI(string uiName = null)
+    {
+        switch(uiName)
+        {
+            case "Inven":
+                InvenUI.gameObject.GetComponent<Canvas>().sortingOrder = _curPopupSortOrder++;
+                InvenUI.gameObject.SetActive(true);
+                InvenUI.RefreshUI();
+                break;
+            case "Stat":
+                StatUI.gameObject.GetComponent<Canvas>().sortingOrder = _curPopupSortOrder++;
+                StatUI.gameObject.SetActive(true);
+                StatUI.RefreshUI();
+                break;
+            case "Skill":
+                break;
+            case "Equip":
+                break;
+        }
+    }
+    public void CloseUI(string uiName = null)
+    {
+        if (_curPopupSortOrder <= 1)
+            return;
+       
+        switch (uiName)
+        {
+            case "Inven":
+                InvenUI.gameObject.GetComponent<Canvas>().sortingOrder = 0;
+                InvenUI.gameObject.SetActive(false);
+                break;
+            case "Stat":
+                StatUI.gameObject.GetComponent<Canvas>().sortingOrder = 0;
+                StatUI.gameObject.SetActive(false);
+                break;
+            case "Skill":
+                break;
+            case "Equip":
+                break;
+            default:
+                GameObject closeObj = _playerPopup[0].gameObject;
+                for (int i = 1; i < _playerPopup.Count; i++)
+                {
+                    if(closeObj.GetComponent<Canvas>().sortingOrder < _playerPopup[i].gameObject.GetComponent<Canvas>().sortingOrder)
+                        closeObj = _playerPopup[i].gameObject;
+                }
+                closeObj.GetComponent<Canvas>().sortingOrder = 0;
+                closeObj.gameObject.SetActive(false);
+                break;
+        }
+        foreach (var ui in _playerPopup)
+        {
+            ui.gameObject.GetComponent<Canvas>().sortingOrder--;
+        }
+        _curPopupSortOrder--;
+        Debug.Log(_curPopupSortOrder);
     }
 }

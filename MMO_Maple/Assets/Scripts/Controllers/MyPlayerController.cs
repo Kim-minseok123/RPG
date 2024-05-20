@@ -3,6 +3,7 @@ using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 
 public class MyPlayerController : PlayerController
@@ -14,6 +15,25 @@ public class MyPlayerController : PlayerController
     public override int MaxMp { get { return Stat.MaxMp; } protected set { Stat.MaxMp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     public override int Hp { get { return Stat.Hp; } protected set { Stat.Hp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     public override int Mp { get { return Stat.Mp; } protected set { Stat.Mp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
+    public int MaxAttack { 
+        get {
+            int damage = (Stat.Str * 4 + Stat.Dex) * WeaponDamage / 100;
+            if (damage < 3)
+                return 3;
+            else
+                return damage; 
+        } 
+    }
+    public int MinAttack { 
+        get {
+            int damage = (int)((Stat.Str * 4 * 0.9 * 0.1 + Stat.Dex) * WeaponDamage / 100);
+            if (damage < 1)
+                return 1;
+            else
+                return damage;
+        } 
+    }
+
     protected override void Init()
     {
         base.Init();
@@ -33,7 +53,16 @@ public class MyPlayerController : PlayerController
         KeyInputEvent();
         base.Update();
     }
-
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current)
+        {
+            position = new Vector2(Input.mousePosition.x, Input.mousePosition.y)
+        };
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
     private void KeyInputEvent()
     {
         if (Input.GetKeyDown(KeyCode.Q))
@@ -53,18 +82,37 @@ public class MyPlayerController : PlayerController
 
             if (invenUI.gameObject.activeSelf)
             {
-                invenUI.gameObject.SetActive(false);
+                gameSceneUI.CloseUI("Inven");
             }
             else
             {
-                invenUI.gameObject.SetActive(true);
-                invenUI.RefreshUI();
+                gameSceneUI.OpenUI("Inven");
             }
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            UI_Stat statUI = gameSceneUI.StatUI;
+
+            if (statUI.gameObject.activeSelf)
+            {
+                gameSceneUI.CloseUI("Stat");
+            }
+            else
+            {
+                gameSceneUI.OpenUI("Stat");
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            gameSceneUI.CloseUI();
         }
     }
     public void OnClickMouseInputEvent()
     {
         _moveTime += Time.deltaTime;
+        if (IsPointerOverUIObject()) return;
         if (Input.GetMouseButton(1) && _moveTime >= 0.3f)
         {
             if (State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
