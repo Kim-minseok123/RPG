@@ -150,18 +150,13 @@ namespace Server.Game
 		{
 			GameObjectType type = ObjectManager.GetObjectTypeById(objectId);
 
-			Vector2Int cellPos;
-
 			if (type == GameObjectType.Player)
 			{
 				Player player = null;
 				if (_players.Remove(objectId, out player) == false)
 					return;
 
-				cellPos = player.CellPos;
-
 				player.OnLeaveGame();
-				Map.ApplyLeave(player);
 				player.Room = null;
 
 				// 본인한테 정보 전송
@@ -176,8 +171,6 @@ namespace Server.Game
 				if (_monsters.Remove(objectId, out monster) == false)
 					return;
 
-				cellPos = monster.CellPos;
-				Map.ApplyLeave(monster);
 				monster.Room = null;
 			}
 			else if (type == GameObjectType.Projectile)
@@ -186,8 +179,6 @@ namespace Server.Game
 				if (_projectiles.Remove(objectId, out projectile) == false)
 					return;
 
-				cellPos = projectile.CellPos;
-				Map.ApplyLeave(projectile);
 				projectile.Room = null;
 			}
 			else
@@ -199,7 +190,7 @@ namespace Server.Game
 			{
 				S_Despawn despawnPacket = new S_Despawn();
 				despawnPacket.ObjectIds.Add(objectId);
-				Broadcast(cellPos, despawnPacket);
+				Broadcast(despawnPacket);
 			}
 		}
 

@@ -7,24 +7,26 @@ enum MsgId {
   S_PING = 0;
   C_PONG = 1;
   S_CONNECTED = 2;
-  C_LOGIN = 3;
-  S_LOGIN = 4;
-  S_BANISH = 5;
-  C_CREATE_PLAYER = 6;
-  S_CREATE_PLAYER = 7;
-  C_ENTER_GAME = 8;
-  S_ENTER_GAME = 9;
-  S_SPAWN = 10;
-  C_MOVE = 11;
-  S_MOVE = 12;
-  C_STOP_MOVE = 13;
-  S_STOP_MOVE = 14;
-  C_CHECK_POS = 15;
-  C_MELEE_ATTACK = 16;
-  S_CHANGE_HP = 17;
-  C_SKILL_MOTION = 18;
-  S_SKILL_MOTION = 19;
-  S_ADD_ITEM = 20;
+  S_LEAVE_GAME = 3;
+  C_LOGIN = 4;
+  S_LOGIN = 5;
+  S_BANISH = 6;
+  C_CREATE_PLAYER = 7;
+  S_CREATE_PLAYER = 8;
+  C_ENTER_GAME = 9;
+  S_ENTER_GAME = 10;
+  S_SPAWN = 11;
+  S_DESPAWN = 12;
+  C_MOVE = 13;
+  S_MOVE = 14;
+  C_STOP_MOVE = 15;
+  S_STOP_MOVE = 16;
+  C_CHECK_POS = 17;
+  C_MELEE_ATTACK = 18;
+  S_CHANGE_HP = 19;
+  C_SKILL_MOTION = 20;
+  S_SKILL_MOTION = 21;
+  S_ADD_ITEM = 22;
 }
 
 enum CreatureState {

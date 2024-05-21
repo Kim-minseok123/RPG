@@ -20,6 +20,11 @@ class PacketHandler
         loginPacket.Token = Managers.Network.Token;
         Managers.Network.Send(loginPacket);
     }
+    public static void S_LeaveGameHandler(PacketSession session, IMessage packet)
+    {
+        S_LeaveGame leaveGameHandler = packet as S_LeaveGame;
+        Managers.Object.Clear();
+    }
     public static void S_LoginHandler(PacketSession session, IMessage packet)
 	{
 		S_Login loginPacket = (S_Login)packet;
@@ -85,6 +90,14 @@ class PacketHandler
         foreach (ObjectInfo obj in spawnPacket.Objects)
         {
             Managers.Object.Add(obj, myPlayer: false);
+        }
+    }
+    public static void S_DespawnHandler(PacketSession session, IMessage packet)
+    {
+        S_Despawn despawnPacket = packet as S_Despawn;
+        foreach (int id in despawnPacket.ObjectIds)
+        {
+            Managers.Object.Remove(id);
         }
     }
     public static void S_MoveHandler(PacketSession session, IMessage packet)
