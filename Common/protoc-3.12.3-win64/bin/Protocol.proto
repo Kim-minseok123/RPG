@@ -73,6 +73,7 @@ enum WeaponType {
   WEAPON_TYPE_NONE = 0;
   WEAPON_TYPE_SWORD = 1;
   WEAPON_TYPE_BOW = 2;
+  WEAPON_TYPE_ASSISTANCE = 3;
 }
 
 enum ArmorType {
@@ -80,6 +81,8 @@ enum ArmorType {
   ARMOR_TYPE_HELMET = 1;
   ARMOR_TYPE_ARMOR = 2;
   ARMOR_TYPE_BOOTS = 3;
+  ARMOR_TYPE_CAPE = 4;
+  ARMOR_TYPE_GLOVES = 5;
 }
 
 enum ConsumableType {

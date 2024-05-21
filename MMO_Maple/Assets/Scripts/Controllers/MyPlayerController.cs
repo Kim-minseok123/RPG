@@ -65,6 +65,7 @@ public class MyPlayerController : PlayerController
     }
     private void KeyInputEvent()
     {
+        // ½ºÅ³
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
@@ -75,6 +76,7 @@ public class MyPlayerController : PlayerController
             Managers.Network.Send(skillMotion);
             StartCoroutine(CoAttackTimeWait(skill, true));
         }
+        // UI
         else if(Input.GetKeyDown(KeyCode.I))
         {
             UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
@@ -101,6 +103,20 @@ public class MyPlayerController : PlayerController
             else
             {
                 gameSceneUI.OpenUI("Stat");
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.U))
+        {
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            UI_Equip equipUI = gameSceneUI.EquipUI;
+
+            if (equipUI.gameObject.activeSelf)
+            {
+                gameSceneUI.CloseUI("Equip");
+            }
+            else
+            {
+                gameSceneUI.OpenUI("Equip");
             }
         }
         else if (Input.GetKeyDown(KeyCode.Escape))

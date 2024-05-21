@@ -6,7 +6,7 @@ using UnityEngine;
 public class InventoryManager 
 {
     public Dictionary<int, Item> Items { get; } = new Dictionary<int, Item>();
-
+    public Item[] EquipItems { get; } = new Item[8];
     public void Add(Item item)
     {
         Items.Add(item.ItemDbId, item);
@@ -30,5 +30,31 @@ public class InventoryManager
     public void Clear()
     {
         Items.Clear();
+    }
+    public void Remove(Item item)
+    {
+        Items.Remove(item.ItemDbId);
+    }
+    public void EquipAdd(int i, Item item)
+    {
+        EquipItems[i] = item;
+    }
+    public Item EquipGet(int i)
+    {
+        if (EquipItems[i] == null)
+            return null;
+        return EquipItems[i];
+    }
+    
+    public void EquipClear()
+    {
+        for (int i = 0; i < EquipItems.Length; i++)
+        {
+            EquipItems[i] = null;
+        }
+    }
+    public void EquipRemove(int i)
+    {
+        EquipItems[i] = null;
     }
 }

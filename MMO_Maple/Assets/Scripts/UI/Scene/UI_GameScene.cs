@@ -10,6 +10,8 @@ public class UI_GameScene : UI_Scene
 {
     public UI_Inventory InvenUI { get; private set; }
     public UI_Stat StatUI { get; private set; }
+    public UI_Equip EquipUI { get; private set; }
+
     List<UI_Base> _playerPopup = new();
     int _curPopupSortOrder = 1;
 
@@ -63,10 +65,13 @@ public class UI_GameScene : UI_Scene
         _playerPopup.Add(InvenUI);
         StatUI = GetComponentInChildren<UI_Stat>();
         _playerPopup.Add(StatUI);
+        EquipUI = GetComponentInChildren<UI_Equip>();
+        _playerPopup.Add(EquipUI);
         //...//
 
         InvenUI.gameObject.SetActive(false);
         StatUI.gameObject.SetActive(false);
+        EquipUI.gameObject.SetActive(false);
 
         BindImage(typeof(Images));
         BindText(typeof(Texts));
@@ -141,6 +146,9 @@ public class UI_GameScene : UI_Scene
             case "Skill":
                 break;
             case "Equip":
+                EquipUI.gameObject.GetComponent<Canvas>().sortingOrder = _curPopupSortOrder++;
+                EquipUI.gameObject.SetActive(true);
+                EquipUI.RefreshUI();
                 break;
         }
     }
@@ -162,6 +170,8 @@ public class UI_GameScene : UI_Scene
             case "Skill":
                 break;
             case "Equip":
+                EquipUI.gameObject.GetComponent<Canvas>().sortingOrder = 0;
+                EquipUI.gameObject.SetActive(false);
                 break;
             default:
                 GameObject closeObj = _playerPopup[0].gameObject;
