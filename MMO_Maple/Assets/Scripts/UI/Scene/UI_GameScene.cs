@@ -111,6 +111,7 @@ public class UI_GameScene : UI_Scene
         GetImage((int)Images.QuickSlotIconImage4).sprite = nullSprite;
 
         Setting();
+        ChangeHpOrMp();
     }
     public void Setting()
     {
@@ -189,6 +190,5 @@ public class UI_GameScene : UI_Scene
             ui.gameObject.GetComponent<Canvas>().sortingOrder--;
         }
         _curPopupSortOrder--;
-        Debug.Log(_curPopupSortOrder);
     }
 }

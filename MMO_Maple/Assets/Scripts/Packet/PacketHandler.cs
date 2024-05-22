@@ -171,10 +171,23 @@ class PacketHandler
 
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         gameSceneUI.InvenUI.RefreshUI();
-        //gameSceneUI.StatUI.RefreshUI();
+        gameSceneUI.StatUI.RefreshUI();
 
         /*if (Managers.Object.MyPlayer != null)
             Managers.Object.MyPlayer.RefreshAdditionalStat();*/
+    }
+    public static void S_DieHandler(PacketSession session, IMessage packet)
+    {
+        S_Die diePakcet = (S_Die)packet;
+
+        GameObject go = Managers.Object.FindById(diePakcet.ObjectId);
+        GameObject attacker = Managers.Object.FindById(diePakcet.AttackerId);
+        if (go == null || attacker == null)
+            return;
+        BaseController bc = go.GetComponent<BaseController>();
+        if (bc == null)
+            return;
+        bc.OnDead(attacker);
     }
 }
 

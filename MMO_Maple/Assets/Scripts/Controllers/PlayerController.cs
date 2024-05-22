@@ -18,6 +18,7 @@ public class PlayerController : CreatureController
         base.Init();
         _agent = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
+        _anim.SetBool("Death", false);
     }
     // Update is called once per frame
     protected virtual void Update()
@@ -35,6 +36,8 @@ public class PlayerController : CreatureController
             case CreatureState.Wait:
                 break;
             case CreatureState.Damaged:
+                break;
+            case CreatureState.Dead:
                 break;
         }
     }
@@ -130,5 +133,11 @@ public class PlayerController : CreatureController
     {
         yield return new WaitForSecondsRealtime(time);
         State = state;
+    }
+    public override void OnDead(GameObject attacker)
+    {
+        State = CreatureState.Dead;
+        _anim.SetBool("Death", true);
+        FinalAttacker = attacker;
     }
 }

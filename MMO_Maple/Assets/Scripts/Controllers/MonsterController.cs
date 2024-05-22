@@ -20,6 +20,7 @@ public class MonsterController : CreatureController
         _agent = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
         hpBar.value = 1f;
+        _anim.SetBool("Death", false);
 #if UNITY_SERVER
         PrevPos = transform.position;
         StopCoroutine(CheckPosInfo());
@@ -41,6 +42,8 @@ public class MonsterController : CreatureController
             case CreatureState.Wait:
                 break;
             case CreatureState.Damaged:
+                break;
+            case CreatureState.Dead:
                 break;
         }
     }
@@ -147,5 +150,11 @@ public class MonsterController : CreatureController
             GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
             damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
         }
+    }
+    public override void OnDead(GameObject attacker)
+    {
+        State = CreatureState.Dead;
+        _anim.SetBool("Death", true);
+        FinalAttacker = attacker;
     }
 }

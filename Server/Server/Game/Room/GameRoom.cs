@@ -68,12 +68,16 @@ namespace Server.Game
 			
 			for (int i = 0; i < 1; i++)
 			{
-				Skeleton skeleton = ObjectManager.Instance.Add<Skeleton>();
-                skeleton.Init(1);
-				EnterGame(skeleton, randomPos: true);
-			}
-		}
+				SpawnMob();
 
+            }
+		}
+		public void SpawnMob()
+		{
+            Skeleton skeleton = ObjectManager.Instance.Add<Skeleton>();
+            skeleton.Init(1);
+            EnterGame(skeleton);
+        }
 		// 누군가 주기적으로 호출해줘야 한다
 		public void Update()
 		{
@@ -81,7 +85,7 @@ namespace Server.Game
 		}
 
 		Random _rand = new Random();
-		public void EnterGame(GameObject gameObject, bool randomPos)
+		public void EnterGame(GameObject gameObject)
 		{
 			if (gameObject == null)
 				return;
@@ -156,7 +160,7 @@ namespace Server.Game
 				if (_players.Remove(objectId, out player) == false)
 					return;
 
-				player.OnLeaveGame();
+				//player.OnLeaveGame();
 				player.Room = null;
 
 				// 본인한테 정보 전송
@@ -172,7 +176,8 @@ namespace Server.Game
 					return;
 
 				monster.Room = null;
-			}
+				if (_monsters.Count <= 0) SpawnMob();
+            }
 			else if (type == GameObjectType.Projectile)
 			{
 				Projectile projectile = null;

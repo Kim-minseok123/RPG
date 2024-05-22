@@ -23,6 +23,12 @@ namespace Server.Game
         {
             if (_coolTick == 0)
             {
+                if(Target.State == CreatureState.Dead)
+                {
+                    State = CreatureState.Idle;
+                    Target = null;
+                    return;
+                }
                 if (isCanAttack)
                 {
                     Console.WriteLine("공격 중에 있음");
@@ -30,9 +36,9 @@ namespace Server.Game
                     DataManager.SkillDict.TryGetValue(4, out skillData);
                     Vector3 attacker = Utils.PositionsToVector3(Pos);
                     Vector3 target = Utils.PositionsToVector3(Target.Pos);
-                    if(Room.IsObjectInRange(attacker, target, forwardMonster, skillData.skillDatas[0].range))
+                    if(Room != null && Room.IsObjectInRange(attacker, target, forwardMonster, skillData.skillDatas[0].range))
                     {
-                        if (State == CreatureState.Skill)
+                        if (Room != null && State == CreatureState.Skill)
                             Target.OnDamaged(this, skillData.skillDatas[0].damage + TotalAttack);
                     }
                     int coolTick = (int)(1000 * skillData.cooldown);
@@ -58,6 +64,18 @@ namespace Server.Game
                 return;
 
             _coolTick = 0;
+        }
+        public override void OnDead(GameObject attacker)
+        {
+            if (Room == null)
+                return;
+
+            S_Die diePacket = new S_Die();
+            diePacket.ObjectId = Id;
+            diePacket.AttackerId = attacker.Id;
+            Room.Broadcast(diePacket);
+
+            Room.PushAfter(5000, DieEvent);
         }
     }
 }

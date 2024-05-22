@@ -162,9 +162,8 @@ namespace Server.Game
 				_job = null;
 			}
 
-			base.OnDead(attacker);
-
-			GameObject owner = attacker.GetOwner();
+           base.OnDead(attacker);
+            /*GameObject owner = attacker.GetOwner();
 			if (owner.ObjectType == GameObjectType.Player)
 			{
 				RewardData rewardData = GetRandomReward();
@@ -173,10 +172,10 @@ namespace Server.Game
 					Player player = (Player)owner;
 					DbTransaction.RewardPlayer(player, rewardData, Room);
 				}
-			}
-		}
+			}*/
+        }
 
-		RewardData GetRandomReward()
+        RewardData GetRandomReward()
 		{
 			MonsterData monsterData = null;
 			DataManager.MonsterDict.TryGetValue(TemplateId, out monsterData);
@@ -198,6 +197,7 @@ namespace Server.Game
 		}
         public override void OnDamaged(GameObject attacker, int damage)
         {
+			if (State == CreatureState.Dead) return;
             base.OnDamaged(attacker, damage);
 			if(Stat.Hp > 0)
 			{

@@ -70,4 +70,8 @@ public class BaseController : MonoBehaviour
 	{
 
 	}
+	public virtual void OnDead(GameObject attacker)
+	{
+
+	}
 }

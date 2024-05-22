@@ -26,7 +26,7 @@ namespace Server.Game
 		{
 			ObjectType = GameObjectType.Player;
 			Vision = new VisionCube(this);
-		}
+        }
 
 		public override void OnDamaged(GameObject attacker, int damage)
 		{
@@ -35,10 +35,23 @@ namespace Server.Game
 
 		public override void OnDead(GameObject attacker)
 		{
-			base.OnDead(attacker);
-		}
+            if (Room == null)
+                return;
 
-		public void OnLeaveGame()
+            S_Die diePacket = new S_Die();
+            diePacket.ObjectId = Id;
+            diePacket.AttackerId = attacker.Id;
+            Room.Broadcast(diePacket);
+
+            Room.PushAfter(1500, DieEvent);
+        }
+        public override void DieEvent()
+        {
+			if (Room == null)
+				return;
+
+        }
+        public void OnLeaveGame()
 		{
 			// TODO
 			// DB 연동?

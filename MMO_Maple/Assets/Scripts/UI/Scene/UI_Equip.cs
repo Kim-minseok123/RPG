@@ -40,7 +40,6 @@ public class UI_Equip : UI_Base
         Item[] items = Managers.Inven.EquipItems;
         for (int i = 0; i < items.Length; i++)
         {
-            Debug.Log(items[i]);
             if (items[i] != null)
             {
                 ItemData itemData = null;

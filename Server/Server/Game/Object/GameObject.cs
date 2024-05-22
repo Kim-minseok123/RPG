@@ -154,7 +154,8 @@ namespace Server.Game
 
             if (Stat.Hp <= 0)
 			{
-                //OnDead(attacker);
+				State = CreatureState.Dead;
+                OnDead(attacker);
             }
 		}
 
@@ -166,17 +167,17 @@ namespace Server.Game
 			S_Die diePacket = new S_Die();
 			diePacket.ObjectId = Id;
 			diePacket.AttackerId = attacker.Id;
-			Room.Broadcast(CellPos, diePacket);
+			Room.Broadcast(diePacket);
 
-			GameRoom room = Room;
-			room.LeaveGame(Id);
-
-			Stat.Hp = Stat.MaxHp;
-			PosInfo.State = CreatureState.Idle;
-			//PosInfo.MoveDir = MoveDir.Down;
-
-			room.EnterGame(this, randomPos: true);
+			Room.PushAfter(1000, DieEvent);
 		}
+		public virtual void DieEvent()
+		{
+            if (Room == null)
+                return;
+            GameRoom room = Room;
+            room.LeaveGame(Id);
+        }
 
 		public virtual GameObject GetOwner()
 		{

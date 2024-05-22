@@ -27,6 +27,7 @@ enum MsgId {
   C_SKILL_MOTION = 20;
   S_SKILL_MOTION = 21;
   S_ADD_ITEM = 22;
+  S_DIE = 23;
 }
 
 enum CreatureState {
