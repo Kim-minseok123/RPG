@@ -189,6 +189,21 @@ class PacketHandler
             return;
         bc.OnDead(attacker);
     }
+    public static void S_ItemListHandler(PacketSession session, IMessage packet)
+    {
+        S_ItemList itemList = (S_ItemList)packet;
+
+        Managers.Inven.Clear();
+
+        // 메모리에 아이템 정보 적용
+        foreach (ItemInfo itemInfo in itemList.Items)
+        {
+            Item item = Item.MakeItem(itemInfo);
+            Managers.Inven.Add(item);
+        }
+        /*if (Managers.Object.MyPlayer != null)
+            Managers.Object.MyPlayer.RefreshAdditionalStat();*/
+    }
 }
 
 

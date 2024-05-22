@@ -76,7 +76,7 @@
           "range": {
             "width": "1.5",
             "depth": "2.5",
-            "nonDepth": "0.4",
+            "nonDepth": "0.1",
             "height": "1.5"
           }
         }

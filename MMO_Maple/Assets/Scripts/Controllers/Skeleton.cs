@@ -14,6 +14,8 @@ public class Skeleton : MonsterController
 
     public override void OnAttack(SkillInfo info)
     {
+        if (State == CreatureState.Dead) return;
+
         Skill skill = null;
         if (Managers.Data.SkillDict.TryGetValue(info.SkillId, out skill) == false) return;
         transform.LookAt(TargetObj.transform);
@@ -27,6 +29,7 @@ public class Skeleton : MonsterController
     public IEnumerator CoAttackPacket(Skill skill)
     {
         yield return new WaitForSeconds(skill.skillDatas[0].attackTime);
+        if (State == CreatureState.Dead) yield break; 
 #if UNITY_SERVER
         if(State == CreatureState.Skill)
         {
@@ -40,12 +43,15 @@ public class Skeleton : MonsterController
         }
 #endif
         yield return new WaitForSeconds(skill.cooldown - (int)skill.skillDatas[0].attackTime);
+        if (State == CreatureState.Dead) yield break;
         State = CreatureState.Idle;
         isAttackMotion = false;
     }
 
     public override IEnumerator OnMove(Vector3 target)
     {
+        if (State == CreatureState.Dead) yield break;
+
         if (isAttackMotion) yield break;
         _agent.ResetPath();
         if (TargetObj == null || (TargetObj != null && Vector3.Distance(target, transform.position) >= 1.2f))

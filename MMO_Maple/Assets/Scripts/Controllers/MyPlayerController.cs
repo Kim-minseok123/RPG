@@ -127,6 +127,8 @@ public class MyPlayerController : PlayerController
     }
     public void OnClickMouseInputEvent()
     {
+        if (State == CreatureState.Dead) return;
+
         _moveTime += Time.deltaTime;
         if (IsPointerOverUIObject()) return;
         if (Input.GetMouseButton(1) && _moveTime >= 0.3f)

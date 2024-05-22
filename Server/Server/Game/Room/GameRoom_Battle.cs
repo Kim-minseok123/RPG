@@ -148,7 +148,7 @@ namespace Server.Game
                 ObjectInfo info = player.Info;
                 if (info.PosInfo.State != CreatureState.Idle)
                     return;
-                info.PosInfo.State = CreatureState.Skill;
+                player.Info.PosInfo.State = CreatureState.Skill;
 
                 Skill skill = null;
                 if (DataManager.SkillDict.TryGetValue(meleeAttack.Info.SkillId, out skill) == false) return;
@@ -164,13 +164,14 @@ namespace Server.Game
                     }
                 }
 
-                info.PosInfo.State = CreatureState.Idle;
+                player.Info.PosInfo.State = CreatureState.Idle;
             }
 			else
 			{
                 Monster monster = null;
                 _monsters.TryGetValue(meleeAttack.ObjectId, out monster);
                 if (monster == null) return;
+                if (monster.State == CreatureState.Dead) return;
                 Console.WriteLine("공격 중 브로드캐스팅 +" + meleeAttack.Info.SkillId);
                 monster.forwardMonster = Utils.PositionsToVector3(meleeAttack.Forward);
 				monster.isCanAttack = true;
@@ -185,8 +186,8 @@ namespace Server.Game
 			if (info.PosInfo.State != CreatureState.Idle)
 				return;
 
-			// TODO : 스킬 사용 가능 여부 체크
-			info.PosInfo.State = CreatureState.Skill;
+            // TODO : 스킬 사용 가능 여부 체크
+            player.Info.PosInfo.State = CreatureState.Skill;
 			S_Skill skill = new S_Skill() { Info = new SkillInfo() };
 			skill.ObjectId = info.ObjectId;
 			skill.Info.SkillId = skillPacket.Info.SkillId;

@@ -156,26 +156,26 @@ namespace Server
                         MyPlayer.Stat.StatPoint = findPlayerDb.StatPoint;
                     }
 
-                    /*List<ItemDb> items = db.Items
-                        .Where(i => i.OwnerDbId == playerInfo.PlayerDbId)
-                        .ToList();
+					List<ItemDb> items = db.Items
+						.Where(i => i.OwnerDbId == playerInfo.PlayerDbId)
+						.ToList();
+					S_ItemList itemListPacket = new S_ItemList();
 
                     foreach (ItemDb itemDb in items)
-                    {
-                        Item item = Item.MakeItem(itemDb);
-                        if (item != null)
-                        {
-                            MyPlayer.Inven.Add(item);
+					{
+						Item item = Item.MakeItem(itemDb);
+						if (item != null)
+						{
+							MyPlayer.Inven.Add(item);
 
-                            ItemInfo info = new ItemInfo();
-                            info.MergeFrom(item.Info);
-                            itemListPacket.Items.Add(info);
+							ItemInfo info = new ItemInfo();
+							info.MergeFrom(item.Info);
+							itemListPacket.Items.Add(info);
 
-                        }
-                    }*/
+						}
+					}
+                    Send(itemListPacket);
                 }
-
-                //Send(itemListPacket);
             }
 			
 

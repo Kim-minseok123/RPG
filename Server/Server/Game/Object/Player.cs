@@ -47,6 +47,7 @@ namespace Server.Game
         }
         public override void DieEvent()
         {
+			PosInfo.State = CreatureState.Dead;
 			if (Room == null)
 				return;
 

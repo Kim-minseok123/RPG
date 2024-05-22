@@ -124,7 +124,8 @@ public class PlayerController : CreatureController
             // 체력바 등 작업
             Hp = hp;
             State = CreatureState.Wait;
-            StartCoroutine(CoWaitForSecondsToState(0.8f, CreatureState.Idle));
+            if(hp > 0 )
+                StartCoroutine(CoWaitForSecondsToState(0.8f, CreatureState.Idle));
             GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
             damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
         }

@@ -27,6 +27,8 @@ namespace Server.Game
                 {
                     State = CreatureState.Idle;
                     Target = null;
+                    isMoving = false;
+                    Console.WriteLine("목표 사망");
                     return;
                 }
                 if (isCanAttack)
@@ -36,10 +38,12 @@ namespace Server.Game
                     DataManager.SkillDict.TryGetValue(4, out skillData);
                     Vector3 attacker = Utils.PositionsToVector3(Pos);
                     Vector3 target = Utils.PositionsToVector3(Target.Pos);
-                    if(Room != null && Room.IsObjectInRange(attacker, target, forwardMonster, skillData.skillDatas[0].range))
+                    if(Room != null && Target != null && Room.IsObjectInRange(attacker, target, forwardMonster, skillData.skillDatas[0].range))
                     {
                         if (Room != null && State == CreatureState.Skill)
+                        {
                             Target.OnDamaged(this, skillData.skillDatas[0].damage + TotalAttack);
+                        }
                     }
                     int coolTick = (int)(1000 * skillData.cooldown);
                     _coolTick = Environment.TickCount64 + coolTick;
@@ -69,7 +73,7 @@ namespace Server.Game
         {
             if (Room == null)
                 return;
-
+            State = CreatureState.Dead;
             S_Die diePacket = new S_Die();
             diePacket.ObjectId = Id;
             diePacket.AttackerId = attacker.Id;
