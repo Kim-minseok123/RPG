@@ -113,6 +113,14 @@ public class PacketHandler
             serverSession.Send(enterGamePacket);
         }
     }
+    public static void S_StopMoveHandler(PacketSession session, IMessage packet)
+    {
+        
+    }
+    public static void S_SkillMotionHandler(PacketSession session, IMessage packet)
+    {
+        
+    }
     public static void S_ItemListHandler(PacketSession session, IMessage packet)
     {
         S_ItemList itemList = (S_ItemList)packet;

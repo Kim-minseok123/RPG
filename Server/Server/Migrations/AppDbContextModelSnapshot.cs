@@ -112,6 +112,9 @@ namespace Server.Migrations
                     b.Property<int>("MinAttack")
                         .HasColumnType("int");
 
+                    b.Property<int>("Money")
+                        .HasColumnType("int");
+
                     b.Property<int>("Mp")
                         .HasColumnType("int");
 

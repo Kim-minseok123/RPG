@@ -79,6 +79,8 @@ namespace Server.Game
             diePacket.AttackerId = attacker.Id;
             Room.Broadcast(diePacket);
 
+            ItemDrop(attacker);
+
             Room.PushAfter(5000, DieEvent);
         }
     }

@@ -206,10 +206,12 @@ message S_Die {
 }
 message S_ItemList {
   repeated ItemInfo items = 1;
+  int32 money = 2;
 }
 
 message S_AddItem {
   repeated ItemInfo items = 1;
+  int32 money = 2;
 }
 
 message C_EquipItem {

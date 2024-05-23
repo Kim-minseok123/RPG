@@ -166,7 +166,8 @@ class PacketHandler
             Item item = Item.MakeItem(itemInfo);
             Managers.Inven.Add(item);
         }
-
+        if (itemList.Money != 0)
+            Managers.Inven.AddMoney(itemList.Money);
         Debug.Log("아이템을 획득했습니다!");
 
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
@@ -201,6 +202,8 @@ class PacketHandler
             Item item = Item.MakeItem(itemInfo);
             Managers.Inven.Add(item);
         }
+        
+        Managers.Inven.Money = itemList.Money;
         /*if (Managers.Object.MyPlayer != null)
             Managers.Object.MyPlayer.RefreshAdditionalStat();*/
     }

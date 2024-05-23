@@ -162,17 +162,24 @@ namespace Server.Game
 				_job = null;
 			}
 
-           base.OnDead(attacker);
-            /*GameObject owner = attacker.GetOwner();
-			if (owner.ObjectType == GameObjectType.Player)
-			{
-				RewardData rewardData = GetRandomReward();
-				if (rewardData != null)
-				{
-					Player player = (Player)owner;
-					DbTransaction.RewardPlayer(player, rewardData, Room);
-				}
-			}*/
+			base.OnDead(attacker);
+			ItemDrop(attacker);
+            
+        }
+		public void ItemDrop(GameObject attacker)
+		{
+            GameObject owner = attacker.GetOwner();
+            if (owner.ObjectType == GameObjectType.Player)
+            {
+                RewardData rewardData = GetRandomReward();
+                if (rewardData != null)
+                {
+                    //Player player = (Player)owner;
+                    //DbTransaction.RewardPlayer(player, rewardData, Room);
+                    // 아이템 드랍
+
+                }
+            }
         }
 
         RewardData GetRandomReward()
@@ -183,7 +190,7 @@ namespace Server.Game
 			int rand = new Random().Next(0, 101);
 
 			int sum = 0;
-			/*foreach (RewardData rewardData in monsterData.rewards)
+			foreach (RewardData rewardData in monsterData.rewards)
 			{
 				sum += rewardData.probability;
 
@@ -192,7 +199,6 @@ namespace Server.Game
 					return rewardData;
 				}
 			}
-*/
 			return null;
 		}
         public override void OnDamaged(GameObject attacker, int damage)

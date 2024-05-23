@@ -45,6 +45,7 @@ namespace Server.DB
 		public float posY { get; set; }
 		public float posZ { get; set; }
 		public float rotateY { get; set; }
+		public int Money { get; set; }
     }
 
     [Table("Item")]

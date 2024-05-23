@@ -21,6 +21,7 @@ namespace Server.Game
 
 		public override int TotalAttack { get { return Stat.Str + WeaponDamage; } }
 		public override int TotalDefence { get { return ArmorDefence; } }
+		public int Money { get; set; }
 
 		public Player()
 		{

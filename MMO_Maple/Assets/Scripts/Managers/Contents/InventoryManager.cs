@@ -7,6 +7,7 @@ public class InventoryManager
 {
     public Dictionary<int, Item> Items { get; } = new Dictionary<int, Item>();
     public Item[] EquipItems { get; } = new Item[8];
+    public int Money { get; set; }
     public void Add(Item item)
     {
         Items.Add(item.ItemDbId, item);
@@ -56,5 +57,9 @@ public class InventoryManager
     public void EquipRemove(int i)
     {
         EquipItems[i] = null;
+    }
+    public void AddMoney(int add)
+    {
+        Money += add;
     }
 }

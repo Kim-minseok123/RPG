@@ -16,8 +16,35 @@
         "defense": "1",
         "mp": "0",
         "maxMp": "0",
-        "statPoint" : "0"
-      }
+        "statPoint": "0"
+      },
+      "rewards": [
+        {
+          "probability": "6",
+          "itemId": "2",
+          "count": "1"
+        },
+        {
+          "probability": "6",
+          "itemId": "3",
+          "count": "1"
+        },
+        {
+          "probability": "8",
+          "itemId": "101",
+          "count": "1"
+        },
+        {
+          "probability": "20",
+          "itemId": "200",
+          "count": "5"
+        },
+        {
+          "probability": "50",
+          "itemId": "1000",
+          "count": "30"
+        }
+      ]
     }
   ]
 } 

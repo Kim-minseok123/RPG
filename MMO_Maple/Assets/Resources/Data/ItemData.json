@@ -6,15 +6,23 @@
       "weaponType": "Sword",
       "damage": "5",
       "requirementLevel": "1",
-      "iconPath": "Textures/Item/axe"
+      "iconPath": "Textures/Item/sword"
     },
     {
       "id": "2",
-      "name": "롱소드",
+      "name": "도끼",
       "weaponType": "Sword",
       "damage": "10",
       "requirementLevel": "5",
-      "iconPath": "Textures/Item/sword"
+      "iconPath": "Textures/Item/axe"
+    },
+    {
+      "id": "3",
+      "name": "나카마키",
+      "weaponType": "Sword",
+      "damage": "10",
+      "requirementLevel": "5",
+      "iconPath": "Textures/Item/nakamaki"
     }
   ],
   "armors": [
@@ -28,11 +36,11 @@
     },
     {
       "id": "101",
-      "name": "뼈 투구",
+      "name": "검은 투구",
       "armorType": "Helmet",
       "defence": "1",
       "requirementLevel": "1",
-      "iconPath": "Textures/Item/helmets"
+      "iconPath": "Textures/Item/helmet"
     }
   ],
   "consumables": [
@@ -41,7 +49,7 @@
       "name": "빨간 포션",
       "consumableType": "Potion",
       "maxCount": "100",
-      "iconPath": "Textures/Item/hp"
+      "iconPath": "Textures/Item/redPotion"
     }
   ]
 } 

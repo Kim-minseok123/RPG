@@ -10,11 +10,16 @@ public class UI_Inventory : UI_Base
     {
         ExitButton
     }
+    enum Texts
+    {
+        CoinText
+    }
     public List<UI_InvenSlot> Items { get; } = new List<UI_InvenSlot>();
     public GameObject grid;
     public override void Init()
     {
         BindButton(typeof(Buttons));
+        BindText(typeof(Texts));
 
         GetButton((int)Buttons.ExitButton).gameObject.BindEvent((e) => { var ui = Managers.UI.SceneUI as UI_GameScene; ui.CloseUI("Inven"); });
 
@@ -47,5 +52,6 @@ public class UI_Inventory : UI_Base
 
             Items[item.Slot].SetItem(item);
         }
+        GetText((int)Texts.CoinText).text = Managers.Inven.Money.ToString("N0");
     }
 }
