@@ -18,7 +18,7 @@ namespace Server.Game
 
 		Dictionary<int, Player> _players = new Dictionary<int, Player>();
 		Dictionary<int, Monster> _monsters = new Dictionary<int, Monster>();
-		Dictionary<int, Projectile> _projectiles = new Dictionary<int, Projectile>();
+		Dictionary<int, DropItem> _dropItem = new Dictionary<int, DropItem>();
 
 		public Zone[,] Zones { get; private set; }
 		public int ZoneCells { get; private set; }
@@ -131,16 +131,15 @@ namespace Server.Game
 				monster.Room = this;
                 monster.Update();
 			}
-			/*
-			else if (type == GameObjectType.Projectile)
+			
+			else if (type == GameObjectType.Dropitem)
 			{
-				Projectile projectile = gameObject as Projectile;
-				_projectiles.Add(gameObject.Id, projectile);
-				projectile.Room = this;
+				DropItem dropItem = gameObject as DropItem;
+				_dropItem.Add(gameObject.Id, dropItem);
+                dropItem.Room = this;
 
-				GetZone(projectile.CellPos).Projectiles.Add(projectile);
-				projectile.Update();
-			}*/
+                dropItem.Update();
+			}
 
 			// 타인한테 정보 전송
 			{
@@ -178,13 +177,13 @@ namespace Server.Game
 				monster.Room = null;
 				if (_monsters.Count <= 0) SpawnMob();
             }
-			else if (type == GameObjectType.Projectile)
+			else if (type == GameObjectType.Dropitem)
 			{
-				Projectile projectile = null;
-				if (_projectiles.Remove(objectId, out projectile) == false)
+				DropItem dropItem = null;
+				if (_dropItem.Remove(objectId, out dropItem) == false)
 					return;
 
-				projectile.Room = null;
+                dropItem.Room = null;
 			}
 			else
 			{

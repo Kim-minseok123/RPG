@@ -215,15 +215,16 @@ namespace Server.Game
 						if (arrow == null)
 							return;
 
-						arrow.Owner = player;
-						arrow.Data = skillData;
-						arrow.PosInfo.State = CreatureState.Moving;
-						//arrow.PosInfo.MoveDir = player.PosInfo.MoveDir;
-						//arrow.PosInfo.PosX = player.PosInfo.PosX;
-						//arrow.PosInfo.PosY = player.PosInfo.PosY;
-						//arrow.Speed = skillData.projectile.speed;
-						
-					}
+                        /*arrow.Owner = player;
+                        arrow.Data = skillData;
+                        arrow.PosInfo.State = CreatureState.Moving;
+                        arrow.PosInfo.MoveDir = player.PosInfo.MoveDir;
+                        arrow.PosInfo.PosX = player.PosInfo.PosX;
+                        arrow.PosInfo.PosY = player.PosInfo.PosY;
+                        arrow.Speed = skillData.projectile.speed;
+                        Push(EnterGame, arrow, false);*/
+
+                    }
 					break;
 			}
 		}

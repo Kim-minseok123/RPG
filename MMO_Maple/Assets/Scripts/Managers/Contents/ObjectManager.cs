@@ -65,18 +65,18 @@ public class ObjectManager
             mc.SetPos(info.PosInfo.Pos, info.PosInfo.Rotate);
             mc.GetComponent<NavMeshAgent>().enabled = true;
         }
-        /*
-        else if (objectType == GameObjectType.Projectile)
+        
+        else if (objectType == GameObjectType.Dropitem)
         {
-            GameObject go = Managers.Resource.Instantiate("Creature/Arrow");
-            go.name = "Arrow";
+            GameObject go = Managers.Resource.Instantiate($"Item/DropItem/{info.Name}");
+            go.name = info.Name;
             _objects.Add(info.ObjectId, go);
 
-            ArrowController ac = go.GetComponent<ArrowController>();
-            ac.PosInfo = info.PosInfo;
-            ac.Stat = info.StatInfo;
-            ac.SyncPos();
-        }*/
+            DropItem dropItem = go.GetComponent<DropItem>();
+            dropItem.Id = info.ObjectId;
+            dropItem.itemName = info.Name;
+            dropItem.SetPos(info.PosInfo.Pos);
+        }
     }
 
     public void Remove(int id)

@@ -11,7 +11,7 @@
     {
       "id": "2",
       "name": "도끼",
-      "weaponType": "Sword",
+      "weaponType": "Axe",
       "damage": "10",
       "requirementLevel": "5",
       "iconPath": "Textures/Item/axe"

@@ -174,10 +174,26 @@ namespace Server.Game
                 RewardData rewardData = GetRandomReward();
                 if (rewardData != null)
                 {
-                    //Player player = (Player)owner;
                     //DbTransaction.RewardPlayer(player, rewardData, Room);
                     // 아이템 드랍
+                    ItemData data = null;
+                    DropItem item = ObjectManager.Instance.Add<DropItem>();
 
+					if (rewardData.itemId != 1000)
+					{
+						if (DataManager.ItemDict.TryGetValue(rewardData.itemId, out data) == false) return;
+                        item.Info.Name = data.name;
+
+                    }
+					else
+					{
+						item.Info.Name = "Coin";
+					}
+                    item.Owner = owner;
+					item._rewardData = rewardData;
+					item.PosInfo.Pos = PosInfo.Pos;
+					item.PosInfo.Pos.PosY = PosInfo.Pos.PosY + 0.5f;
+                    Room.EnterGame(item);
                 }
             }
         }

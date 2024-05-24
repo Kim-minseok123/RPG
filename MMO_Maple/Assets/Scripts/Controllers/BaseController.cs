@@ -49,9 +49,14 @@ public class BaseController : MonoBehaviour
 	{
 
 	}
-	public void SetPos(Positions pos, RotateInfo rotate)
+	public void SetPos(Positions pos, RotateInfo rotate = null)
 	{
-		transform.SetPositionAndRotation(new Vector3(pos.PosX, pos.PosY, pos.PosZ), Quaternion.Euler(rotate.RotateX, rotate.RotateY, rotate.RotateZ));
+		if(rotate != null) 
+			transform.SetPositionAndRotation(new Vector3(pos.PosX, pos.PosY, pos.PosZ), Quaternion.Euler(rotate.RotateX, rotate.RotateY, rotate.RotateZ));
+		else
+		{
+			transform.position = Util.PositionsToVector3(pos);
+		}
 	}
     public virtual void MoveTarget(Vector3 target, GameObject targetObj = null)
     {
