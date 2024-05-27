@@ -6,6 +6,7 @@ using UnityEngine;
 public class UI_Stat : UI_Base
 {
     MyPlayerController myPlayer;
+    bool isInit = false;
     enum Texts
     {
         PlayerStatNameText,
@@ -35,11 +36,14 @@ public class UI_Stat : UI_Base
 
         myPlayer = Managers.Object.MyPlayer;
 
+        isInit = true;
+
         RefreshUI();
     }
 
     public void RefreshUI()
     {
+        if (isInit == false) return;
         GetText((int)Texts.PlayerStatNameText).text = $"´Ð³×ÀÓ : <color=#F3E3AE>{myPlayer.objectInfo.Name}</color>";
         GetText((int)Texts.HpText).text = $"HP\t: <color=#F3E3AE>{myPlayer.Hp}</color> / <color=#F3E3AE>{myPlayer.MaxHp}</color>";
         GetText((int)Texts.MpText).text = $"MP\t: <color=#F3E3AE>{myPlayer.Mp}</color> / <color=#F3E3AE>{myPlayer.MaxMp}</color>";

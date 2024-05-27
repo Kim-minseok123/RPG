@@ -146,5 +146,19 @@ class PacketHandler
 
 		room.Push(room.HandleEquipItem, player, equipPacket);
 	}
+    public static void C_GetDropItemHandler(PacketSession session, IMessage packet)
+    {
+        C_GetDropItem dropItemPacket = (C_GetDropItem)packet;
+        ClientSession clientSession = (ClientSession)session;
 
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+
+        room.Push(room.GetDropItem, player, dropItemPacket);
+    }
 }

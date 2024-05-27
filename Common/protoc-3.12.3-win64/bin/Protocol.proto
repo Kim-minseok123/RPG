@@ -29,6 +29,8 @@ enum MsgId {
   S_ADD_ITEM = 22;
   S_DIE = 23;
   S_ITEM_LIST = 24;
+  C_GET_DROP_ITEM = 25;
+  S_GET_DROP_ITEM_MOTION = 26;
 }
 
 enum CreatureState {
@@ -214,7 +216,12 @@ message S_AddItem {
   repeated ItemInfo items = 1;
   int32 money = 2;
 }
-
+message C_GetDropItem {
+  int32 dropItemId = 1;
+}
+message S_GetDropItemMotion {
+  int32 objectId = 1;
+}
 message C_EquipItem {
   int32 itemDbId = 1;
   bool equipped = 2;

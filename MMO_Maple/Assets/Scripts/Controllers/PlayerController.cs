@@ -141,4 +141,10 @@ public class PlayerController : CreatureController
         _anim.SetBool("Death", true);
         FinalAttacker = attacker;
     }
+    public void PickUpItem()
+    {
+        State = CreatureState.Wait;
+        _anim.SetTrigger("PickUp");
+        StartCoroutine(CoWaitForSecondsToState(1.5f, CreatureState.Idle));
+    }
 }

@@ -140,7 +140,7 @@ namespace Server
                     MyPlayer.Info.PosInfo.Pos.PosX = findPlayerDb.posX;
                     MyPlayer.Info.PosInfo.Pos.PosY = findPlayerDb.posY;
                     MyPlayer.Info.PosInfo.Pos.PosZ = findPlayerDb.posZ;
-					MyPlayer.Money = findPlayerDb.Money;
+					MyPlayer.Inven.Money = findPlayerDb.Money;
                     {
                         MyPlayer.Stat.Level = findPlayerDb.Level;
                         MyPlayer.Stat.Hp = findPlayerDb.Hp;

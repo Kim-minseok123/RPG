@@ -207,6 +207,18 @@ class PacketHandler
         /*if (Managers.Object.MyPlayer != null)
             Managers.Object.MyPlayer.RefreshAdditionalStat();*/
     }
+    public static void S_GetDropItemMotionHandler(PacketSession session, IMessage packet)
+    {
+        S_GetDropItemMotion motionPacket = (S_GetDropItemMotion)packet;
+
+        GameObject go = Managers.Object.FindById(motionPacket.ObjectId);
+        if (go == null)
+            return;
+        PlayerController pc = go.GetComponent<PlayerController>();
+        if (pc == null)
+            return;
+        pc.PickUpItem();
+    }
 }
 
 

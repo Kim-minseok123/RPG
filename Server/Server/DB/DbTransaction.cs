@@ -71,7 +71,7 @@ namespace Server.DB
 		{
 		}
 
-		public static void RewardPlayer(Player player, RewardData rewardData, GameRoom room)
+		public static void GetItemPlayer(Player player, RewardData rewardData, GameRoom room)
 		{
 			if (player == null || rewardData == null || room == null)
 				return;
@@ -89,32 +89,60 @@ namespace Server.DB
 				OwnerDbId = player.PlayerDbId
 			};
 
-			// You
-			Instance.Push(() =>
+            PlayerDb playerDb = new PlayerDb();
+            if (itemDb.TemplateId == 1000)
+			{
+                playerDb.PlayerDbId = player.PlayerDbId;
+                playerDb.Money = player.Inven.Money + rewardData.count;
+            }
+                
+            // You
+            Instance.Push(() =>
 			{
 				using (AppDbContext db = new AppDbContext())
 				{
-					db.Items.Add(itemDb);
-					bool success = db.SaveChangesEx();
-					if (success)
+					if(itemDb.TemplateId == 1000)
 					{
-						// Me
-						room.Push(() =>
-						{
-							Item newItem = Item.MakeItem(itemDb);
-							player.Inven.Add(newItem);
-
-							// Client Noti
+                        db.Entry(playerDb).State = EntityState.Unchanged;
+                        db.Entry(playerDb).Property(nameof(PlayerDb.Money)).IsModified = true;
+                        bool success = db.SaveChangesEx();
+                        if (success)
+                        {
+							room.Push(() =>
 							{
-								S_AddItem itemPacket = new S_AddItem();
-								ItemInfo itemInfo = new ItemInfo();
-								itemInfo.MergeFrom(newItem.Info);
-								itemPacket.Items.Add(itemInfo);
+								if (itemDb.TemplateId == 1000)
+								{
+									player.Inven.Money += itemDb.Count;
+									S_AddItem itemPacket = new S_AddItem();
+									itemPacket.Money = itemDb.Count;
+									player.Session.Send(itemPacket);
+								}
+							});
+                        }
+                    }
+					else
+					{
+                        db.Items.Add(itemDb);
+                        bool success = db.SaveChangesEx();
+                        if (success)
+						{
+                            room.Push(() =>
+                            {
+                                Item newItem = Item.MakeItem(itemDb);
+                                player.Inven.Add(newItem);
+                                // Client Noti
+                                {
+                                    S_AddItem itemPacket = new S_AddItem();
+                                    ItemInfo itemInfo = new ItemInfo();
+                                    itemInfo.MergeFrom(newItem.Info);
+                                    itemPacket.Items.Add(itemInfo);
 
-								player.Session.Send(itemPacket);
-							}
-						});
-					}
+                                    player.Session.Send(itemPacket);
+                                }
+                            });
+                        }
+
+                    }
 				}
 			});
 		}

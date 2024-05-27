@@ -9,6 +9,7 @@ namespace Server.Game
 	{
 		public Dictionary<int, Item> Items { get; } = new Dictionary<int, Item>();
 		public Item[] EquipItems { get; } = new Item[8];
+		public int Money { get; set; }
 		public void Add(Item item)
 		{
 			Items.Add(item.ItemDbId, item);

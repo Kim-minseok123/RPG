@@ -17,7 +17,7 @@ public class CreatureController : BaseController
         get { return objectInfo.StatInfo; }
         protected set { objectInfo.StatInfo = value; }
     }
-    protected CreatureState State { get; set; } = CreatureState.Idle;
+    public CreatureState State { get; set; } = CreatureState.Idle;
     public virtual void SetInfo(ObjectInfo info)
     {
         objectInfo = info;
