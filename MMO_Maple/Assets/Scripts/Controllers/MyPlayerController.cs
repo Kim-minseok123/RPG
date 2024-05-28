@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Playables;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class MyPlayerController : PlayerController
 {
     Camera cm;
     public int ClassType;
     private float _moveTime = 0.5f;
+    public LayerMask layerMask;
     public override int MaxHp { get { return Stat.MaxHp; } protected set { Stat.MaxHp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     public override int MaxMp { get { return Stat.MaxMp; } protected set { Stat.MaxMp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     public override int Hp { get { return Stat.Hp; } protected set { Stat.Hp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
@@ -124,7 +126,37 @@ public class MyPlayerController : PlayerController
             UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.CloseUI();
         }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            FindCloseMob();
+        }
     }
+
+    private void FindCloseMob()
+    {
+        Collider[] colliders;
+        GameObject enemy = null;
+        colliders = Physics.OverlapSphere(transform.position, 1f, layerMask);
+        if (colliders.Length > 0)
+        {
+            float short_distance = 1000f;
+            foreach (Collider col in colliders)
+            {
+                float short_distance2 = Vector3.Distance(transform.position, col.transform.position);
+                if (short_distance > short_distance2)
+                {
+                    short_distance = short_distance2;
+                    enemy = col.gameObject;
+                }
+            }
+        }
+        if (enemy != null)
+        {
+            transform.LookAt(enemy.transform);
+            MakePosPacket();
+        }
+    }
+
     public void OnClickMouseInputEvent()
     {
         if (State == CreatureState.Dead) return;
@@ -189,19 +221,22 @@ public class MyPlayerController : PlayerController
             var offset = transform.position - PrevPos;
             if (offset.sqrMagnitude > 0.01f)
             {
-                C_CheckPos checkPosPacket = new C_CheckPos() { CurPosInfo = new PositionInfo() };
-                checkPosPacket.CurPosInfo.Pos = new Positions() { PosX = transform.position.x, PosY = transform.position.y, PosZ = transform.position.z };
-                Vector3 rotationEuler = transform.rotation.eulerAngles;
-                checkPosPacket.CurPosInfo.Rotate = new RotateInfo() { RotateX = rotationEuler.x, RotateY = rotationEuler.y, RotateZ = rotationEuler.z };
-                checkPosPacket.ObjectId = Id;
-                checkPosPacket.IsMonster = false;
-                Managers.Network.Send(checkPosPacket);
+                MakePosPacket();
                 PrevPos = transform.position;
             }
             yield return new WaitForSecondsRealtime(0.2f);
         }
     }
-
+    public void MakePosPacket()
+    {
+        C_CheckPos checkPosPacket = new C_CheckPos() { CurPosInfo = new PositionInfo() };
+        checkPosPacket.CurPosInfo.Pos = new Positions() { PosX = transform.position.x, PosY = transform.position.y, PosZ = transform.position.z };
+        Vector3 rotationEuler = transform.rotation.eulerAngles;
+        checkPosPacket.CurPosInfo.Rotate = new RotateInfo() { RotateX = rotationEuler.x, RotateY = rotationEuler.y, RotateZ = rotationEuler.z };
+        checkPosPacket.ObjectId = Id;
+        checkPosPacket.IsMonster = false;
+        Managers.Network.Send(checkPosPacket);
+    }
     public IEnumerator CoAttackTimeWait(Skill skill, bool isContinual = false)
     {
         for (int i = 0; i < skill.skillDatas.Count; i++)
