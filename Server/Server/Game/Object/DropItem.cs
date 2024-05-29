@@ -16,7 +16,7 @@ namespace Server.Game
         public override void Update()
         {
             Room.PushAfter(120000, LostOwner);
-            Room.PushAfter(600000, LostOwner);
+            Room.PushAfter(600000, DisappearItem);
         }
         public override GameObject GetOwner()
         {
@@ -28,6 +28,7 @@ namespace Server.Game
         }
         public void DisappearItem()
         {
+            if (Room == null) return;
             Room.LeaveGame(Id);
         }
     }

@@ -249,7 +249,8 @@ namespace Server.Game
             motionPacket.ObjectId = player.Id;
             Broadcast(motionPacket);
 
-            DbTransaction.GetItemPlayer(player, dropItem._rewardData, this);
+            DbTransaction.GetItemPlayer(player, dropItem._rewardData, this, dropItem);
+
         }
 
 	}

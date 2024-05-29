@@ -19,7 +19,6 @@ public class DropItem : BaseController
                 C_GetDropItem getDropItemPacket = new C_GetDropItem();
                 getDropItemPacket.DropItemId = Id;
                 Managers.Network.Send(getDropItemPacket);
-                Managers.Resource.Destroy(gameObject);
             }
         }
     }

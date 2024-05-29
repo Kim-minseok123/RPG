@@ -71,7 +71,7 @@ namespace Server.DB
 		{
 		}
 
-		public static void GetItemPlayer(Player player, RewardData rewardData, GameRoom room)
+		public static void GetItemPlayer(Player player, RewardData rewardData, GameRoom room, DropItem dropItem = null)
 		{
 			if (player == null || rewardData == null || room == null)
 				return;
@@ -116,6 +116,7 @@ namespace Server.DB
 									S_AddItem itemPacket = new S_AddItem();
 									itemPacket.Money = itemDb.Count;
 									player.Session.Send(itemPacket);
+									dropItem?.DisappearItem();
 								}
 							});
                         }
@@ -138,6 +139,7 @@ namespace Server.DB
                                     itemPacket.Items.Add(itemInfo);
 
                                     player.Session.Send(itemPacket);
+                                    dropItem?.DisappearItem();
                                 }
                             });
                         }
