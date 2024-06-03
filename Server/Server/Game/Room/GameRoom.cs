@@ -142,7 +142,7 @@ namespace Server.Game
                                 if (p.Inven.EquipItems[i] != null)
                                     equipItemLists.TemplateIds.Add(p.Inven.EquipItems[i].TemplateId);
                             }
-                            player.Session.Send(equipItemList);
+                            player.Session.Send(equipItemLists);
                         }
 					}
                 }

@@ -9,7 +9,7 @@ public class UI_InvenSlot : UI_Base
 {
     [SerializeField]
     Image _icon;
-
+    ItemData itemData;
     public int ItemDbID { get; private set; }
     public int TemplateId { get; private set; }
     public int Count { get; private set; }
@@ -23,9 +23,6 @@ public class UI_InvenSlot : UI_Base
                 return;
             Debug.Log("Click Item");
 
-            ItemData itemData = null;
-            Managers.Data.ItemDict.TryGetValue(TemplateId, out itemData);
-
             if (itemData == null)
                 return;
             // TODO : C_USE_ITEM
@@ -38,6 +35,16 @@ public class UI_InvenSlot : UI_Base
 
             Managers.Network.Send(equipPacket);*/
         });
+
+        _icon.gameObject.BindEvent((e) =>
+        {
+
+        }, Define.UIEvent.PointerEnter);
+
+        _icon.gameObject.BindEvent((e) =>
+        {
+
+        }, Define.UIEvent.PointerExit);
     }
     public void SetItem(Item item)
     {
@@ -57,8 +64,8 @@ public class UI_InvenSlot : UI_Base
             Count = item.Count;
             Equipped = item.Equipped;
 
-            ItemData itemData = null;
             Managers.Data.ItemDict.TryGetValue(TemplateId, out itemData);
+            if (itemData == null) return;
 
             Sprite icon = Managers.Resource.Load<Sprite>(itemData.iconPath);
             _icon.sprite = icon;
