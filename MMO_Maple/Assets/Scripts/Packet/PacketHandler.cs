@@ -200,7 +200,14 @@ class PacketHandler
         foreach (ItemInfo itemInfo in itemList.Items)
         {
             Item item = Item.MakeItem(itemInfo);
-            Managers.Inven.Add(item);
+            if(item.Equipped == true)
+            {
+                Managers.Inven.EquipAdd(item.Slot, item);
+            }
+            else
+            {
+                Managers.Inven.Add(item);
+            }
         }
         
         Managers.Inven.Money = itemList.Money;
@@ -218,6 +225,20 @@ class PacketHandler
         if (pc == null)
             return;
         pc.PickUpItem();
+    }
+    public static void S_EquipItemListHandler(PacketSession session, IMessage packet)
+    {
+        S_EquipItemList equipItemList = (S_EquipItemList)packet;
+
+        GameObject go = Managers.Object.FindById(equipItemList.ObjectId);
+        if (go == null) return;
+        PlayerController pc = go.GetComponent<PlayerController>();
+        if (pc == null)
+            return;
+        foreach (var id in equipItemList.TemplateIds)
+        {
+            pc.EquipItem(id);
+        }
     }
 }
 

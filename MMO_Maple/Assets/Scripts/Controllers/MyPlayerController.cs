@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Playables;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class MyPlayerController : PlayerController
 {
@@ -136,7 +135,7 @@ public class MyPlayerController : PlayerController
     {
         Collider[] colliders;
         GameObject enemy = null;
-        colliders = Physics.OverlapSphere(transform.position, 1f, layerMask);
+        colliders = Physics.OverlapSphere(transform.position, 5f, layerMask);
         if (colliders.Length > 0)
         {
             float short_distance = 1000f;
@@ -150,6 +149,7 @@ public class MyPlayerController : PlayerController
                 }
             }
         }
+        Debug.Log(enemy);
         if (enemy != null)
         {
             transform.LookAt(enemy.transform);

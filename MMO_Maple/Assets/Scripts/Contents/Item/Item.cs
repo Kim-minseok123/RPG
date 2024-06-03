@@ -7,7 +7,7 @@ using UnityEngine;
 public class Item
 {
     public ItemInfo Info { get; } = new ItemInfo();
-
+    public string Name { get; set; }
     public int ItemDbId
     {
         get { return Info.ItemDbId; }
@@ -73,6 +73,7 @@ public class Item
             item.Count = itemInfo.Count;
             item.Slot = itemInfo.Slot;
             item.Equipped = itemInfo.Equipped;
+            item.Name = itemData.name;
         }
 
         return item;

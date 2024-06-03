@@ -38,7 +38,7 @@ public class InventoryManager
     }
     public void EquipAdd(int i, Item item)
     {
-        EquipItems[i] = item;
+        EquipItems[i - 1] = item;
     }
     public Item EquipGet(int i)
     {

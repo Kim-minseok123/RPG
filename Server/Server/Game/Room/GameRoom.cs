@@ -108,6 +108,14 @@ namespace Server.Game
 					S_EnterGame enterPacket = new S_EnterGame();
 					enterPacket.Player = player.Info;
 					player.Session.Send(enterPacket);
+					S_EquipItemList equipItemList = new S_EquipItemList();
+					equipItemList.ObjectId = player.Id;
+					for (int i = 0; i < player.Inven.EquipItems.Length; i++)
+					{
+						if (player.Inven.EquipItems[i] != null)
+							equipItemList.TemplateIds.Add(player.Inven.EquipItems[i].TemplateId);
+					}
+					player.Session.Send(equipItemList);
 
                     //player.Vision.Update();
 
@@ -116,12 +124,27 @@ namespace Server.Game
                     {
                         if (player != p && !p.Session.Master)
                             spawnPacket.Objects.Add(p.Info);
+                        
                     }
 					foreach (Monster m in _monsters.Values)
 					{
 						spawnPacket.Objects.Add(m.Info);
 					}
                     player.Session.Send(spawnPacket);
+					foreach (Player p in _players.Values)
+					{
+						if (player != p && !p.Session.Master) 
+						{
+                            S_EquipItemList equipItemLists = new S_EquipItemList();
+							equipItemLists.ObjectId = p.Id;
+                            for (int i = 0; i < p.Inven.EquipItems.Length; i++)
+                            {
+                                if (p.Inven.EquipItems[i] != null)
+                                    equipItemLists.TemplateIds.Add(p.Inven.EquipItems[i].TemplateId);
+                            }
+                            player.Session.Send(equipItemList);
+                        }
+					}
                 }
 			}
 			else if (type == GameObjectType.Monster)
@@ -146,7 +169,19 @@ namespace Server.Game
 				S_Spawn spawnPacket = new S_Spawn();
 				spawnPacket.Objects.Add(gameObject.Info);
 				Broadcast(spawnPacket, gameObject.Id);
-			}
+				if (type == GameObjectType.Player)
+				{
+					Player player = gameObject as Player;
+                    S_EquipItemList equipItemList = new S_EquipItemList();
+                    equipItemList.ObjectId = player.Id;
+                    for (int i = 0; i < player.Inven.EquipItems.Length; i++)
+                    {
+                        if (player.Inven.EquipItems[i] != null)
+                            equipItemList.TemplateIds.Add(player.Inven.EquipItems[i].TemplateId);
+                    }
+                    Broadcast(equipItemList, gameObject.Id);
+                }
+            }
 		}
 
 		public void LeaveGame(int objectId)

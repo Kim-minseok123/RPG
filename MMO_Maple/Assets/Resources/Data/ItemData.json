@@ -4,7 +4,7 @@
       "id": "1",
       "name": "낡은 검",
       "weaponType": "Sword",
-      "damage": "5",
+      "damage": "17",
       "requirementLevel": "1",
       "iconPath": "Textures/Item/sword"
     },
@@ -12,7 +12,7 @@
       "id": "2",
       "name": "도끼",
       "weaponType": "Axe",
-      "damage": "10",
+      "damage": "30",
       "requirementLevel": "5",
       "iconPath": "Textures/Item/axe"
     },
@@ -20,7 +20,7 @@
       "id": "3",
       "name": "나카마키",
       "weaponType": "Sword",
-      "damage": "10",
+      "damage": "32",
       "requirementLevel": "5",
       "iconPath": "Textures/Item/nakamaki"
     }

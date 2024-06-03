@@ -80,7 +80,7 @@ public class UI_GameScene : UI_Scene
 
         _myPlayer = Managers.Object.MyPlayer;
 
-        GetText((int)Texts.PlayerNameText).text = _myPlayer.Stat.Level.ToString();
+        GetText((int)Texts.PlayerNameText).text = _myPlayer.objectInfo.Name.ToString();
 
         switch (_myPlayer.ClassType)
         {

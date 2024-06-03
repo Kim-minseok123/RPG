@@ -167,12 +167,17 @@ namespace Server
 						Item item = Item.MakeItem(itemDb);
 						if (item != null)
 						{
-							MyPlayer.Inven.Add(item);
-
-							ItemInfo info = new ItemInfo();
+							if(item.Equipped == true)
+							{
+								MyPlayer.Inven.EquipAdd(item.Slot, item);
+							}
+							else
+							{
+                                MyPlayer.Inven.Add(item);
+                            }
+                            ItemInfo info = new ItemInfo();
 							info.MergeFrom(item.Info);
 							itemListPacket.Items.Add(info);
-
 						}
 					}
 					itemListPacket.Money = findPlayerDb.Money;
@@ -237,6 +242,19 @@ namespace Server
 					db.Players.Add(newPlayerDb);
 					bool success = db.SaveChangesEx();
 					if (success == false)
+						return;
+					ItemDb itemDb = new ItemDb()
+					{
+						TemplateId = 1,
+						Count = 1,
+						Slot = 6,
+						Equipped = true,
+						OwnerDbId = newPlayerDb.PlayerDbId,
+					};
+					db.Items.Add(itemDb);
+					success = db.SaveChangesEx();
+
+					if(success == false)
 						return;
 
 					// 메모리에 추가

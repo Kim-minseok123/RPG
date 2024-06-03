@@ -13,6 +13,13 @@ public class PlayerController : CreatureController
     protected NavMeshAgent _agent;
     protected Animator _anim;
     protected int attackNum = -1;
+    public GameObject RightHand;
+    public GameObject LeftHand;
+    public GameObject Head;
+
+    GameObject curRightWeapon;
+    GameObject curLeftWeapon;
+    GameObject curHeadItem;
     protected override void Init()
     {
         base.Init();
@@ -146,5 +153,44 @@ public class PlayerController : CreatureController
         State = CreatureState.Wait;
         _anim.SetTrigger("PickUp");
         StartCoroutine(CoWaitForSecondsToState(1.5f, CreatureState.Idle));
+    }
+    public void EquipItem(int id)
+    {
+        ItemData data = null;
+        if (Managers.Data.ItemDict.TryGetValue(id, out data) == false) return;
+
+        switch (data.itemType)
+        {
+            case ItemType.Weapon:
+                WeaponData weapon = (WeaponData)data;
+                if(weapon.weaponType == WeaponType.Assistance)
+                {
+                    if (curLeftWeapon != null) Managers.Resource.Destroy(curLeftWeapon);
+                    curLeftWeapon = Managers.Resource.Instantiate($"Item/{data.name}", LeftHand.transform);
+                }
+                else
+                {
+                    if (curRightWeapon != null) Managers.Resource.Destroy(curRightWeapon);
+                    curRightWeapon = Managers.Resource.Instantiate($"Item/{data.name}", RightHand.transform);
+                    if (data.name == "³°Àº °Ë")
+                    {
+                        curRightWeapon.transform.SetLocalPositionAndRotation(new Vector3(0,0,0), Quaternion.identity);
+                    }
+                }
+                break;
+            case ItemType.Armor:
+                ArmorData armor = (ArmorData)data;
+                if(armor.armorType == ArmorType.Helmet)
+                {
+                    if (curHeadItem != null) Managers.Resource.Destroy(curHeadItem);
+                    curHeadItem = Managers.Resource.Instantiate($"Item/{data.name}", Head.transform);
+                }
+                else
+                {
+
+                }
+                break;
+        }
+        
     }
 }
