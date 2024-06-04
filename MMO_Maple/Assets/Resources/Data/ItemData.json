@@ -6,6 +6,7 @@
       "weaponType": "Sword",
       "damage": "17",
       "requirementLevel": "1",
+      "requirementClass": "초보자",
       "iconPath": "Textures/Item/sword"
     },
     {
@@ -14,6 +15,7 @@
       "weaponType": "Axe",
       "damage": "30",
       "requirementLevel": "5",
+      "requirementClass": "초보자",
       "iconPath": "Textures/Item/axe"
     },
     {
@@ -22,6 +24,7 @@
       "weaponType": "Sword",
       "damage": "32",
       "requirementLevel": "5",
+      "requirementClass": "전사",
       "iconPath": "Textures/Item/nakamaki"
     }
   ],
@@ -32,6 +35,7 @@
       "armorType": "Armor",
       "defence": "3",
       "requirementLevel": "1",
+      "requirementClass": "초보자",
       "iconPath": "Textures/Item/armor"
     },
     {
@@ -40,6 +44,7 @@
       "armorType": "Helmet",
       "defence": "1",
       "requirementLevel": "1",
+      "requirementClass": "초보자",
       "iconPath": "Textures/Item/helmet"
     }
   ],
@@ -49,7 +54,9 @@
       "name": "빨간 포션",
       "consumableType": "Potion",
       "maxCount": "100",
-      "iconPath": "Textures/Item/redPotion"
+      "iconPath": "Textures/Item/redPotion",
+      "healHpVal": "50",
+      "description": "누군가 만든지 모르는 영약이다.\n체력을 50만큼 회복한다."
     }
   ]
 } 

@@ -10,13 +10,17 @@ public class UI_InvenSlot : UI_Base
     [SerializeField]
     Image _icon;
     ItemData itemData;
+    GameObject description;
     public int ItemDbID { get; private set; }
     public int TemplateId { get; private set; }
     public int Count { get; private set; }
     public bool Equipped { get; private set; }
 
+
     public override void Init()
     {
+
+
         _icon.gameObject.BindEvent((e) =>
         {
             if (_icon.color.a == 0f)
@@ -38,12 +42,15 @@ public class UI_InvenSlot : UI_Base
 
         _icon.gameObject.BindEvent((e) =>
         {
-
+            if (itemData == null) return;
+            description = Managers.Resource.Instantiate("UI/SubItem/UI_ItemInfoCanvas");
+            description.GetComponent<UI_ItemInfoCanvas>().Setting(itemData);
         }, Define.UIEvent.PointerEnter);
 
         _icon.gameObject.BindEvent((e) =>
         {
-
+            if (description == null) return;
+            Managers.Resource.Destroy(description);
         }, Define.UIEvent.PointerExit);
     }
     public void SetItem(Item item)

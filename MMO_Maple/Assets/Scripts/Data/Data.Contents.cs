@@ -62,6 +62,7 @@ namespace Data
 		public WeaponType weaponType;
 		public int damage;
         public int requirementLevel;
+        public string requirementClass;
     }
 
     [Serializable]
@@ -70,6 +71,7 @@ namespace Data
 		public ArmorType armorType;
 		public int defence;
         public int requirementLevel;
+        public string requirementClass;
     }
 
     [Serializable]
@@ -77,7 +79,9 @@ namespace Data
 	{
 		public ConsumableType consumableType;
 		public int maxCount;
-	}
+        public int healHpVal;
+        public string description;
+    }
 
 
 	[Serializable]

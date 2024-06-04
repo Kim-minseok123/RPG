@@ -77,20 +77,24 @@ namespace Server.Data
 		public WeaponType weaponType;
 		public int damage;
 		public int requirementLevel;
+        public string requirementClass;
     }
 
-	public class ArmorData : ItemData
+    public class ArmorData : ItemData
 	{
 		public ArmorType armorType;
 		public int defence;
         public int requirementLevel;
+        public string requirementClass;
     }
 
     public class ConsumableData : ItemData
 	{
 		public ConsumableType consumableType;
 		public int maxCount;
-	}
+        public int healHpVal;
+        public string description;
+    }
 
 
 	[Serializable]

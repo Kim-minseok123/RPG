@@ -88,8 +88,9 @@ namespace Server.Game
 	{
 		public WeaponType WeaponType { get; private set; }
 		public int Damage { get; private set; }
-
-		public Weapon(int templateId) : base(ItemType.Weapon)
+        public string RequirementClass { get; private set; }
+        public int RequirementLevel { get; private set; }
+        public Weapon(int templateId) : base(ItemType.Weapon)
 		{
 			Init(templateId);
 		}
@@ -108,7 +109,9 @@ namespace Server.Game
 				WeaponType = data.weaponType;
 				Damage = data.damage;
 				Stackable = false;
-			}
+                RequirementClass = data.requirementClass;
+                RequirementLevel = data.requirementLevel;
+            }
 		}
 	}
 
@@ -116,8 +119,9 @@ namespace Server.Game
 	{
 		public ArmorType ArmorType { get; private set; }
 		public int Defence { get; private set; }
-
-		public Armor(int templateId) : base(ItemType.Armor)
+        public string RequirementClass { get; private set; }
+        public int RequirementLevel { get; private set; }
+        public Armor(int templateId) : base(ItemType.Armor)
 		{
 			Init(templateId);
 		}
@@ -136,7 +140,9 @@ namespace Server.Game
 				ArmorType = data.armorType;
 				Defence = data.defence;
 				Stackable = false;
-			}
+                RequirementClass = data.requirementClass;
+                RequirementLevel = data.requirementLevel;
+            }
 		}
 	}
 
@@ -144,8 +150,8 @@ namespace Server.Game
 	{
 		public ConsumableType ConsumableType { get; private set; }
 		public int MaxCount { get; set; }
-
-		public Consumable(int templateId) : base(ItemType.Consumable)
+        public int HealHpVal { get; set; }
+        public Consumable(int templateId) : base(ItemType.Consumable)
 		{
 			Init(templateId);
 		}
@@ -164,6 +170,7 @@ namespace Server.Game
 				MaxCount = data.maxCount;
 				ConsumableType = data.consumableType;
 				Stackable = (data.maxCount > 1);
+				HealHpVal = data.healHpVal;
 			}
 		}
 	}

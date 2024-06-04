@@ -84,6 +84,9 @@ public class Weapon : Item
 {
     public WeaponType WeaponType { get; private set; }
     public int Damage { get; private set; }
+    public string RequirementClass { get; private set; }
+    public int RequirementLevel { get; private set; }
+
 
     public Weapon(int templateId) : base(ItemType.Weapon)
     {
@@ -104,6 +107,8 @@ public class Weapon : Item
             WeaponType = data.weaponType;
             Damage = data.damage;
             Stackable = false;
+            RequirementClass = data.requirementClass;
+            RequirementLevel = data.requirementLevel;
         }
     }
 }
@@ -112,7 +117,8 @@ public class Armor : Item
 {
     public ArmorType ArmorType { get; private set; }
     public int Defence { get; private set; }
-
+    public string RequirementClass { get; private set; }
+    public int RequirementLevel { get; private set; }
     public Armor(int templateId) : base(ItemType.Armor)
     {
         Init(templateId);
@@ -132,6 +138,8 @@ public class Armor : Item
             ArmorType = data.armorType;
             Defence = data.defence;
             Stackable = false;
+            RequirementClass = data.requirementClass;
+            RequirementLevel = data.requirementLevel;
         }
     }
 }
@@ -140,7 +148,7 @@ public class Consumable : Item
 {
     public ConsumableType ConsumableType { get; private set; }
     public int MaxCount { get; set; }
-
+    public int HealHpVal { get; set; }
     public Consumable(int templateId) : base(ItemType.Consumable)
     {
         Init(templateId);
@@ -160,6 +168,7 @@ public class Consumable : Item
             MaxCount = data.maxCount;
             ConsumableType = data.consumableType;
             Stackable = (data.maxCount > 1);
+            HealHpVal = data.healHpVal;
         }
     }
 }
