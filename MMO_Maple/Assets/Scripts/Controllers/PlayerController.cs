@@ -193,4 +193,30 @@ public class PlayerController : CreatureController
         }
         
     }
+    public void Disarm(int index)
+    {
+        if (index < 0) return;
+        switch (index)
+        {
+            case 1:
+                if (curHeadItem != null) Managers.Resource.Destroy(curHeadItem);
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                if (curRightWeapon != null) Managers.Resource.Destroy(curRightWeapon);
+                break;
+            case 7:
+                break;
+            case 8:
+                if (curLeftWeapon != null) Managers.Resource.Destroy(curLeftWeapon);
+                break;
+        }
+    }
 }

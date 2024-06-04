@@ -18,7 +18,8 @@ namespace Server.DB
             ItemDb itemDb = new ItemDb()
             {
                 ItemDbId = item.ItemDbId,
-                Equipped = item.Equipped
+                Equipped = item.Equipped,
+                Slot = item.Slot,
             };
 
             Instance.Push(() => 
@@ -27,6 +28,7 @@ namespace Server.DB
                 {
                     db.Entry(itemDb).State = EntityState.Unchanged;
                     db.Entry(itemDb).Property(nameof(itemDb.Equipped)).IsModified = true;
+                    db.Entry(itemDb).Property(nameof(itemDb.Slot)).IsModified = true;
 
                     bool success = db.SaveChangesEx();
                     if (!success)

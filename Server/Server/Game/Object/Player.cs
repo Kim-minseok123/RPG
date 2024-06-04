@@ -1,10 +1,12 @@
 ﻿using Google.Protobuf.Protocol;
 using Microsoft.EntityFrameworkCore;
+using Server.Data;
 using Server.DB;
 using Server.Game.Room;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Server.Game
 {
@@ -18,9 +20,6 @@ namespace Server.Game
 
 		public int WeaponDamage { get; private set; }
 		public int ArmorDefence { get; private set; }
-
-		public override int TotalAttack { get { return Stat.Str + WeaponDamage; } }
-		public override int TotalDefence { get { return ArmorDefence; } }
 
 		public Player()
 		{
@@ -64,32 +63,35 @@ namespace Server.Game
 			// -- 결과를 받아서 이어서 처리를 해야 하는 경우가 많음.
 			// -- 아이템 생성
 
-			DbTransaction.SavePlayerStatus_Step1(this, Room);
+			//DbTransaction.SavePlayerStatus_Step1(this, Room);
 		}
 
 		public void HandleEquipItem(C_EquipItem equipPacket)
 		{
-			Item item = Inven.Get(equipPacket.ItemDbId);
-			if (item == null)
-				return;
-
-			if (item.ItemType == ItemType.Consumable)
-				return;
-
 			// 착용 요청이라면, 겹치는 부위 해제
 			if (equipPacket.Equipped)
 			{
-				Item unequipItem = null;
+                Item item = Inven.Get(equipPacket.ItemDbId);
+                if (item == null)
+                    return;
+
+                if (item.ItemType == ItemType.Consumable)
+                    return;
+
+                Item unequipItem = null;
 
 				if (item.ItemType == ItemType.Weapon)
 				{
-					unequipItem = Inven.Find(
-						i => i.Equipped && i.ItemType == ItemType.Weapon);
+					WeaponType weaponType = ((Weapon)item).WeaponType;
+					unequipItem = Inven.EquipFind(
+						i => i.Equipped && i.ItemType == ItemType.Weapon
+						&& ((weaponType == WeaponType.Assistance && ((Weapon)i).WeaponType == weaponType)
+						|| (weaponType != WeaponType.Assistance)));
 				}
 				else if (item.ItemType == ItemType.Armor)
 				{
 					ArmorType armorType = ((Armor)item).ArmorType;
-					unequipItem = Inven.Find(
+					unequipItem = Inven.EquipFind(
 						i => i.Equipped && i.ItemType == ItemType.Armor
 							&& ((Armor)i).ArmorType == armorType);
 				}
@@ -97,8 +99,11 @@ namespace Server.Game
 				if (unequipItem != null)
 				{
 					// 메모리 선적용
+					int tempSlot = unequipItem.Slot;
+					Inven.EquipRemove(unequipItem.Slot);
 					unequipItem.Equipped = false;
-
+					unequipItem.Slot = item.Slot;
+					Inven.Add(unequipItem);
 					// DB에 Noti
 					DbTransaction.EquipItemNoti(this, unequipItem);
 
@@ -106,44 +111,113 @@ namespace Server.Game
 					S_EquipItem equipOkItem = new S_EquipItem();
 					equipOkItem.ItemDbId = unequipItem.ItemDbId;
 					equipOkItem.Equipped = unequipItem.Equipped;
-					Session.Send(equipOkItem);
-				}
-			}
+                    equipOkItem.Slot = tempSlot;
+                    equipOkItem.ObjectId = Id;
+                    equipOkItem.TemplateId = item.TemplateId;
+                    Room.Broadcast(equipOkItem);
+                }
+                {
+                    int equipSlot = -1;
+                    if (item.ItemType == ItemType.Weapon)
+                    {
+                        WeaponType weaponType = ((Weapon)item).WeaponType;
+                        if (weaponType == WeaponType.Assistance)
+                        {
+                            equipSlot = 8;
+                        }
+                        else
+                        {
+                            equipSlot = 6;
+                        }
+                    }
+                    else if (item.ItemType == ItemType.Armor)
+                    {
+                        ArmorType armor = ((Armor)item).ArmorType;
+                        switch (armor)
+                        {
+                            case ArmorType.Helmet:
+                                equipSlot = 1;
+                                break;
+                            case ArmorType.Armor:
+                                equipSlot = 2;
+                                break;
+                            case ArmorType.Boots:
+                                equipSlot = 4;
 
+                                break;
+                            case ArmorType.Cape:
+                                equipSlot = 5;
+
+                                break;
+                            case ArmorType.Gloves:
+                                equipSlot = 7;
+                                break;
+                        }
+                    }
+                    // 메모리 선적용
+                    Inven.Remove(item);
+                    item.Slot = equipSlot;
+                    item.Equipped = equipPacket.Equipped;
+                    Inven.EquipAdd(equipSlot, item);
+
+                    // DB에 Noti
+                    DbTransaction.EquipItemNoti(this, item);
+
+                    // 클라에 통보
+                    S_EquipItem equipOkItem = new S_EquipItem();
+                    equipOkItem.ItemDbId = equipPacket.ItemDbId;
+                    equipOkItem.Equipped = equipPacket.Equipped;
+					equipOkItem.Slot = item.Slot;
+                    equipOkItem.ObjectId = Id;
+					equipOkItem.TemplateId = item.TemplateId;
+					Room.Broadcast(equipOkItem);
+                }
+            }
+			else
 			{
-				// 메모리 선적용
-				item.Equipped = equipPacket.Equipped;
+				Item item = Inven.EquipFind(i => i.ItemDbId == equipPacket.ItemDbId);
+				if (item == null) return;
 
-				// DB에 Noti
-				DbTransaction.EquipItemNoti(this, item);
+				int? slot = Inven.GetEmptySlot();
+                if (slot == null)
+                    return;
+				int tempSlot = item.Slot;
+                Inven.EquipRemove(item.Slot);
+				item.Equipped = false;
+				item.Slot = (int)slot;
+				Inven.Add(item);
 
-				// 클라에 통보
-				S_EquipItem equipOkItem = new S_EquipItem();
-				equipOkItem.ItemDbId = equipPacket.ItemDbId;
-				equipOkItem.Equipped = equipPacket.Equipped;
-				Session.Send(equipOkItem);
-			}
+                DbTransaction.EquipItemNoti(this, item);
 
-			RefreshAdditionalStat();
+                S_EquipItem equipOkItem = new S_EquipItem();
+                equipOkItem.ItemDbId = equipPacket.ItemDbId;
+                equipOkItem.Equipped = equipPacket.Equipped;
+				equipOkItem.Slot = tempSlot;
+				equipOkItem.ObjectId = Id;
+                equipOkItem.TemplateId = item.TemplateId;
+                Room.Broadcast(equipOkItem);
+            }
+
+            RefreshAdditionalStat();
 		}
 
 		public void RefreshAdditionalStat()
 		{
 			WeaponDamage = 0;
 			ArmorDefence = 0;
-
-			foreach (Item item in Inven.Items.Values)
+			Item[] items = Inven.EquipItems;
+			for(int i = 0; i < items.Length; i++)
 			{
-				if (item.Equipped == false)
-					continue;
+				if (items[i] == null) continue;
+				if (items[i].Equipped == false) continue;
 
-				switch (item.ItemType)
+				switch (items[i].ItemType)
 				{
 					case ItemType.Weapon:
-						WeaponDamage += ((Weapon)item).Damage;
+						WeaponDamage += ((Weapon)items[i]).Damage;
 						break;
 					case ItemType.Armor:
-						ArmorDefence += ((Armor)item).Defence;
+						ArmorDefence += ((Armor)items[i]).Defence;
 						break;
 				}
 			}

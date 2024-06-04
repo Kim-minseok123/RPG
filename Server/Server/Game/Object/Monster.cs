@@ -14,7 +14,7 @@ namespace Server.Game
 		protected Vector3 SpawnPos;
 		public bool isMoving = false;
 		public int TemplateId { get; private set; }
-		public GameObject Target { get; protected set; }
+		public GameObject Target { get; set; }
 		public bool isCanAttack = false;
 		public bool isMotion = false;
 		public Vector3 forwardMonster = new Vector3 (0, 0, 0);

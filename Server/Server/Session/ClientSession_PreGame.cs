@@ -184,9 +184,10 @@ namespace Server
                     Send(itemListPacket);
                 }
             }
-			
 
-			ServerState = PlayerServerState.ServerStateGame;
+			MyPlayer.RefreshAdditionalStat();
+
+            ServerState = PlayerServerState.ServerStateGame;
 
 			GameLogic.Instance.Push(() =>
 			{

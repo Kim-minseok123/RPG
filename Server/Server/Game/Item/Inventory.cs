@@ -54,11 +54,20 @@ namespace Server.Game
         }
         public Item EquipGet(int i)
         {
-            if (EquipItems[i] == null)
+            if (EquipItems[i - 1] == null)
                 return null;
-            return EquipItems[i];
+            return EquipItems[i - 1];
         }
-
+		public Item EquipFind(Func<Item, bool> condition)
+		{
+			for (int i = 0; i < EquipItems.Length; i++)
+			{
+				if (EquipItems[i] != null)
+					if (condition.Invoke(EquipItems[i]))
+                    return EquipItems[i];
+            }
+			return null;
+        }
         public void EquipClear()
         {
             for (int i = 0; i < EquipItems.Length; i++)
@@ -68,7 +77,7 @@ namespace Server.Game
         }
         public void EquipRemove(int i)
         {
-            EquipItems[i] = null;
+            EquipItems[i - 1] = null;
         }
     }
 }

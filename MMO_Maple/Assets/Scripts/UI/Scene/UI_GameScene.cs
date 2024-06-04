@@ -155,7 +155,6 @@ public class UI_GameScene : UI_Scene
     }
     public void CloseUI(string uiName = null)
     {
-        Debug.Log("prev :" +_curPopupSortOrder);
         if (_curPopupSortOrder <= 1)
             return;
        
@@ -191,6 +190,5 @@ public class UI_GameScene : UI_Scene
             ui.gameObject.GetComponent<Canvas>().sortingOrder--;
         }
         _curPopupSortOrder--;
-        Debug.Log("cur :"+ _curPopupSortOrder);
     }
 }

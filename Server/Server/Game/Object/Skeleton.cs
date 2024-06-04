@@ -23,7 +23,7 @@ namespace Server.Game
         {
             if (_coolTick == 0)
             {
-                if(Target.State == CreatureState.Dead)
+                if(Target != null && Target.State == CreatureState.Dead)
                 {
                     State = CreatureState.Idle;
                     Target = null;

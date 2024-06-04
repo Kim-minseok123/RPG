@@ -193,8 +193,13 @@ namespace Server.Game
 				Player player = null;
 				if (_players.Remove(objectId, out player) == false)
 					return;
-
-				//player.OnLeaveGame();
+				List<Monster> monsters = _monsters.Values.ToList();
+				foreach (var monster in monsters)
+				{
+					if (monster.Target != null && monster.Target == player)
+						monster.Target = null;
+				}
+				player.OnLeaveGame();
 				player.Room = null;
 
 				// 본인한테 정보 전송

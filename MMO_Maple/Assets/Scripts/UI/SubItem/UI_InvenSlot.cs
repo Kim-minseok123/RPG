@@ -32,12 +32,13 @@ public class UI_InvenSlot : UI_Base
             // TODO : C_USE_ITEM
             if (itemData.itemType == ItemType.Consumable)
                 return;
-
-           /* C_EquipItem equipPacket = new C_EquipItem();
+            if (description != null)
+                Managers.Resource.Destroy(description);
+            C_EquipItem equipPacket = new C_EquipItem();
             equipPacket.ItemDbId = ItemDbID;
-            equipPacket.Equipped = !Equipped;
-
-            Managers.Network.Send(equipPacket);*/
+            equipPacket.Equipped = true;
+            equipPacket.ObjectId = Managers.Object.MyPlayer.Id;
+            Managers.Network.Send(equipPacket);
         });
 
         _icon.gameObject.BindEvent((e) =>

@@ -10,6 +10,7 @@ public class CreatureController : BaseController
     public virtual int Hp { get { return Stat.Hp; } protected set { Stat.Hp = value; } }
     public virtual int Mp { get { return Stat.Mp; } protected set { Stat.Mp = value; } }
     public virtual int WeaponDamage { get; protected set; }
+    public virtual int ArmorDefence { get; protected set; }
     public virtual GameObject FinalAttacker { get; protected set; }
     public ObjectInfo objectInfo { get; protected set; } = new ObjectInfo();
     public StatInfo Stat 

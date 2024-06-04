@@ -137,7 +137,26 @@ public class UI_Equip : UI_Base
                 Managers.Resource.Destroy(glovesDes);
             }, Define.UIEvent.PointerExit);
         }
+        GetImage((int)Images.HelmetIcon).gameObject.BindEvent((e) => { NonEquipItem(0); });
+        GetImage((int)Images.ArmorIcon).gameObject.BindEvent((e) => { NonEquipItem(1); });
+        GetImage((int)Images.ShieldIcon).gameObject.BindEvent((e) => { NonEquipItem(2); });
+        GetImage((int)Images.BootsIcon).gameObject.BindEvent((e) => { NonEquipItem(3); });
+        GetImage((int)Images.CapeIcon).gameObject.BindEvent((e) => { NonEquipItem(4); });
+        GetImage((int)Images.WeaponIcon).gameObject.BindEvent((e) => { NonEquipItem(5); });
+        GetImage((int)Images.GlovesIcon).gameObject.BindEvent((e) => { NonEquipItem(6); });
+        GetImage((int)Images.AssistanceWeaponIcon).gameObject.BindEvent((e) => { NonEquipItem(7); });
         RefreshUI();
+    }
+    public void NonEquipItem(int index)
+    {
+        Item item = Managers.Inven.EquipItems[index];
+        if(item == null) return;
+
+        C_EquipItem equipItem = new C_EquipItem();
+        equipItem.ItemDbId = item.ItemDbId;
+        equipItem.Equipped = false;
+        equipItem.ObjectId = Managers.Object.MyPlayer.Id;
+        Managers.Network.Send(equipItem);
     }
     public void RefreshUI()
     {

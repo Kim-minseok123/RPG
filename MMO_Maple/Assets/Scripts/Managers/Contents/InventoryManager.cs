@@ -56,10 +56,20 @@ public class InventoryManager
     }
     public void EquipRemove(int i)
     {
-        EquipItems[i] = null;
+        EquipItems[i - 1] = null;
     }
     public void AddMoney(int add)
     {
         Money += add;
+    }
+    public Item EquipFind(Func<Item, bool> condition)
+    {
+        for (int i = 0; i < EquipItems.Length; i++)
+        {
+            if (EquipItems[i] != null)
+                if (condition.Invoke(EquipItems[i]))
+                    return EquipItems[i];
+        }
+        return null;
     }
 }

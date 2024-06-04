@@ -255,4 +255,25 @@ public class MyPlayerController : PlayerController
             }
         }
     }
+    public void RefreshAdditionalStat()
+    {
+        WeaponDamage = 0;
+        ArmorDefence = 0;
+        Item[] items = Managers.Inven.EquipItems;
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == null) continue;
+            if (items[i].Equipped == false) continue;
+
+            switch (items[i].ItemType)
+            {
+                case ItemType.Weapon:
+                    WeaponDamage += ((Weapon)items[i]).Damage;
+                    break;
+                case ItemType.Armor:
+                    ArmorDefence += ((Armor)items[i]).Defence;
+                    break;
+            }
+        }
+    }
 }

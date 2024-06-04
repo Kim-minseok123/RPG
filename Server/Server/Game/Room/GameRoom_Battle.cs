@@ -146,6 +146,7 @@ namespace Server.Game
                 return;
 			if (meleeAttack.IsMonster == false)
 			{
+                if (player.Inven.EquipItems[5] == null) return;
                 ObjectInfo info = player.Info;
                 if (info.PosInfo.State != CreatureState.Idle)
                     return;

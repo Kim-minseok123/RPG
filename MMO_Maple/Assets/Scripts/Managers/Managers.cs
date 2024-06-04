@@ -72,4 +72,8 @@ public class Managers : MonoBehaviour
         UI.Clear();
         Pool.Clear();
     }
+    private void OnApplicationQuit()
+    {
+        Network._session.Disconnect();
+    }
 }

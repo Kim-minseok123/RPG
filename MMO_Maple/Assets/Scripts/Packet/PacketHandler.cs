@@ -173,9 +173,10 @@ class PacketHandler
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         gameSceneUI.InvenUI.RefreshUI();
         gameSceneUI.StatUI.RefreshUI();
+        gameSceneUI.EquipUI.RefreshUI();
 
-        /*if (Managers.Object.MyPlayer != null)
-            Managers.Object.MyPlayer.RefreshAdditionalStat();*/
+        if (Managers.Object.MyPlayer != null)
+            Managers.Object.MyPlayer.RefreshAdditionalStat();
     }
     public static void S_DieHandler(PacketSession session, IMessage packet)
     {
@@ -195,6 +196,7 @@ class PacketHandler
         S_ItemList itemList = (S_ItemList)packet;
 
         Managers.Inven.Clear();
+        Managers.Inven.EquipClear();
 
         // 메모리에 아이템 정보 적용
         foreach (ItemInfo itemInfo in itemList.Items)
@@ -211,8 +213,8 @@ class PacketHandler
         }
         
         Managers.Inven.Money = itemList.Money;
-        /*if (Managers.Object.MyPlayer != null)
-            Managers.Object.MyPlayer.RefreshAdditionalStat();*/
+        if (Managers.Object.MyPlayer != null)
+            Managers.Object.MyPlayer.RefreshAdditionalStat();
     }
     public static void S_GetDropItemMotionHandler(PacketSession session, IMessage packet)
     {
@@ -238,6 +240,53 @@ class PacketHandler
         foreach (var id in equipItemList.TemplateIds)
         {
             pc.EquipItem(id);
+        }
+    }
+    public static void S_EquipItemHandler(PacketSession session, IMessage packet)
+    {
+        S_EquipItem equipItem = (S_EquipItem)packet;
+
+        GameObject go = Managers.Object.FindById(equipItem.ObjectId);
+        if (go == null)
+            return;
+        PlayerController pc = go.GetComponent<PlayerController>();
+        if (pc == null)
+            return;
+
+        if (equipItem.Equipped)
+        {
+            if(Managers.Object.MyPlayer.Id == equipItem.ObjectId)
+            {
+                Item item = Managers.Inven.Get(equipItem.ItemDbId);
+                Managers.Inven.Remove(item);
+                Managers.Inven.EquipAdd(equipItem.Slot, item);
+
+                UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+                gameSceneUI.InvenUI.RefreshUI();
+                gameSceneUI.StatUI.RefreshUI();
+                gameSceneUI.EquipUI.RefreshUI();
+
+                if (Managers.Object.MyPlayer != null)
+                    Managers.Object.MyPlayer.RefreshAdditionalStat();
+            }
+            pc.EquipItem(equipItem.TemplateId);
+        }
+        else
+        {
+            if (Managers.Object.MyPlayer.Id == equipItem.ObjectId)
+            {
+                Item item = Managers.Inven.EquipFind(i => i.ItemDbId == equipItem.ItemDbId);
+                Managers.Inven.EquipRemove(item.Slot);
+                Managers.Inven.Add(item);
+                UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+                gameSceneUI.InvenUI.RefreshUI();
+                gameSceneUI.StatUI.RefreshUI();
+                gameSceneUI.EquipUI.RefreshUI();
+
+                if (Managers.Object.MyPlayer != null)
+                    Managers.Object.MyPlayer.RefreshAdditionalStat();
+            }
+            pc.Disarm(equipItem.Slot);
         }
     }
 }
