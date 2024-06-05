@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class UI_Equip : UI_Base
 {
+    bool init = false;
     enum Images
     {
         HelmetIcon,
@@ -45,7 +46,7 @@ public class UI_Equip : UI_Base
         BindButton(typeof(Buttons));
         BindImage(typeof(Images));
 
-        GetButton((int)Buttons.ExitButton).gameObject.BindEvent((e) => { var ui = Managers.UI.SceneUI as UI_GameScene; ui.CloseUI("Equip"); });
+        GetButton((int)Buttons.ExitButton).gameObject.BindEvent((e) => { var ui = Managers.UI.SceneUI as UI_GameScene; ui.CloseUI("UI_Equip"); });
         {
             GetImage((int)Images.AssistanceWeaponIcon).gameObject.BindEvent((e) =>
             {
@@ -145,6 +146,9 @@ public class UI_Equip : UI_Base
         GetImage((int)Images.WeaponIcon).gameObject.BindEvent((e) => { NonEquipItem(5); });
         GetImage((int)Images.GlovesIcon).gameObject.BindEvent((e) => { NonEquipItem(6); });
         GetImage((int)Images.AssistanceWeaponIcon).gameObject.BindEvent((e) => { NonEquipItem(7); });
+
+        init = true;
+
         RefreshUI();
     }
     public void NonEquipItem(int index)
@@ -160,6 +164,7 @@ public class UI_Equip : UI_Base
     }
     public void RefreshUI()
     {
+        if (init == false) return;
         for (int i = 0; i < 8; i++)
         {
             GetImage(i).enabled = false;
@@ -225,5 +230,16 @@ public class UI_Equip : UI_Base
 
             }
         }
+    }
+    public override void InfoRemove()
+    {
+        if (awDes != null) Managers.Resource.Destroy(awDes);
+        if (weaponDes != null) Managers.Resource.Destroy(weaponDes);
+        if (helmetDes != null) Managers.Resource.Destroy(helmetDes);
+        if (bootsDes != null) Managers.Resource.Destroy(bootsDes);
+        if (shieldDes != null) Managers.Resource.Destroy(shieldDes);
+        if (glovesDes != null) Managers.Resource.Destroy(glovesDes);
+        if (capeDes != null) Managers.Resource.Destroy(capeDes);
+        if (armorDes != null) Managers.Resource.Destroy(armorDes);
     }
 }

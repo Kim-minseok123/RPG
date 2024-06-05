@@ -21,6 +21,7 @@ public class MonsterController : CreatureController
         _anim = GetComponent<Animator>();
         hpBar.value = 1f;
         _anim.SetBool("Death", false);
+        
 #if UNITY_SERVER
         PrevPos = transform.position;
         StopCoroutine(CheckPosInfo());
@@ -46,6 +47,7 @@ public class MonsterController : CreatureController
             case CreatureState.Dead:
                 break;
         }
+        
     }
     protected override void UpdateIdle()
     {

@@ -17,7 +17,7 @@ public class PlayerController : CreatureController
     public GameObject LeftHand;
     public GameObject Head;
 
-    GameObject curRightWeapon;
+    protected GameObject curRightWeapon;
     GameObject curLeftWeapon;
     GameObject curHeadItem;
     protected override void Init()

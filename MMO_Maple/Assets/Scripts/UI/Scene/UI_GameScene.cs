@@ -3,6 +3,7 @@ using Google.Protobuf.Protocol;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -157,38 +158,28 @@ public class UI_GameScene : UI_Scene
     {
         if (_curPopupSortOrder <= 1)
             return;
-       
-        switch (uiName)
+
+        if (string.IsNullOrEmpty(uiName))
         {
-            case "Inven":
-                InvenUI.gameObject.GetComponent<Canvas>().sortingOrder = 0;
-                InvenUI.gameObject.SetActive(false);
-                break;
-            case "Stat":
-                StatUI.gameObject.GetComponent<Canvas>().sortingOrder = 0;
-                StatUI.gameObject.SetActive(false);
-                break;
-            case "Skill":
-                break;
-            case "Equip":
-                EquipUI.gameObject.GetComponent<Canvas>().sortingOrder = 0;
-                EquipUI.gameObject.SetActive(false);
-                break;
-            default:
-                GameObject closeObj = _playerPopup[0].gameObject;
-                for (int i = 1; i < _playerPopup.Count; i++)
-                {
-                    if(closeObj.GetComponent<Canvas>().sortingOrder < _playerPopup[i].gameObject.GetComponent<Canvas>().sortingOrder)
-                        closeObj = _playerPopup[i].gameObject;
-                }
-                closeObj.GetComponent<Canvas>().sortingOrder = 0;
-                closeObj.gameObject.SetActive(false);
-                break;
+            UI_Base lastOpenedUI = _playerPopup.FirstOrDefault(ui => ui.gameObject.activeSelf && ui.GetComponent<Canvas>().sortingOrder == _curPopupSortOrder - 1);
+            if (lastOpenedUI != null)
+            {
+                lastOpenedUI.InfoRemove();
+                lastOpenedUI.gameObject.SetActive(false);
+                lastOpenedUI.GetComponent<Canvas>().sortingOrder = 0;
+                _curPopupSortOrder--;
+            }
         }
-        foreach (var ui in _playerPopup)
+        else
         {
-            ui.gameObject.GetComponent<Canvas>().sortingOrder--;
+            UI_Base uiToClose = _playerPopup.FirstOrDefault(ui => ui.name.Equals(uiName));
+            if (uiToClose != null && uiToClose.gameObject.activeSelf)
+            {
+                uiToClose.InfoRemove();
+                uiToClose.gameObject.SetActive(false);
+                uiToClose.GetComponent<Canvas>().sortingOrder = 0;
+                _curPopupSortOrder--;
+            }
         }
-        _curPopupSortOrder--;
     }
 }

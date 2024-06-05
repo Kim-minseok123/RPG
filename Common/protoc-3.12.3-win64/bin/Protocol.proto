@@ -239,6 +239,7 @@ message S_EquipItem {
   int32 slot = 3;
   int32 objectId = 4;
   int32 templateId = 5;
+  int32 nextSlot = 6;
 }
 
 message S_ChangeStat {

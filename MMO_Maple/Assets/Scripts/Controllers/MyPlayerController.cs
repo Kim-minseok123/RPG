@@ -69,6 +69,7 @@ public class MyPlayerController : PlayerController
         // 스킬
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            if (curRightWeapon == null) return;
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
             Skill skill = null;
             if (Managers.Data.SkillDict.TryGetValue(3, out skill) == false) return;
@@ -85,7 +86,7 @@ public class MyPlayerController : PlayerController
 
             if (invenUI.gameObject.activeSelf)
             {
-                gameSceneUI.CloseUI("Inven");
+                gameSceneUI.CloseUI("UI_Inventory");
             }
             else
             {
@@ -99,7 +100,7 @@ public class MyPlayerController : PlayerController
 
             if (statUI.gameObject.activeSelf)
             {
-                gameSceneUI.CloseUI("Stat");
+                gameSceneUI.CloseUI("UI_Stat");
             }
             else
             {
@@ -113,7 +114,7 @@ public class MyPlayerController : PlayerController
 
             if (equipUI.gameObject.activeSelf)
             {
-                gameSceneUI.CloseUI("Equip");
+                gameSceneUI.CloseUI("UI_Equip");
             }
             else
             {
@@ -130,12 +131,16 @@ public class MyPlayerController : PlayerController
             FindCloseMob();
         }
     }
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + new Vector3(0f, 0.8f, 0f), 2f);
+    }
     private void FindCloseMob()
     {
         Collider[] colliders;
         GameObject enemy = null;
-        colliders = Physics.OverlapSphere(transform.position, 5f, layerMask);
+        colliders = Physics.OverlapSphere(transform.position + new Vector3(0f, 0.8f, 0f), 2f, layerMask, QueryTriggerInteraction.Collide);
         if (colliders.Length > 0)
         {
             float short_distance = 1000f;
@@ -149,7 +154,6 @@ public class MyPlayerController : PlayerController
                 }
             }
         }
-        Debug.Log(enemy);
         if (enemy != null)
         {
             transform.LookAt(enemy.transform);
@@ -160,6 +164,7 @@ public class MyPlayerController : PlayerController
     public void OnClickMouseInputEvent()
     {
         if (State == CreatureState.Dead) return;
+            if (curRightWeapon == null) return;
 
         _moveTime += Time.deltaTime;
         if (IsPointerOverUIObject()) return;
@@ -182,6 +187,8 @@ public class MyPlayerController : PlayerController
         }
         else if (Input.GetMouseButtonDown(0))
         {
+            if (curRightWeapon == null) return;
+
             if (State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
             // idle 상태인지 검증 -> 아니라면 멈춤 패킷 보냈다가 공격 패킷 보냄
             if (State != CreatureState.Idle && State == CreatureState.Moving)

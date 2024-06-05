@@ -168,7 +168,6 @@ class PacketHandler
         }
         if (itemList.Money != 0)
             Managers.Inven.AddMoney(itemList.Money);
-        Debug.Log("아이템을 획득했습니다!");
 
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         gameSceneUI.InvenUI.RefreshUI();
@@ -260,7 +259,7 @@ class PacketHandler
                 Item item = Managers.Inven.Get(equipItem.ItemDbId);
                 Managers.Inven.Remove(item);
                 Managers.Inven.EquipAdd(equipItem.Slot, item);
-
+                item.Slot = equipItem.Slot;
                 UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
                 gameSceneUI.InvenUI.RefreshUI();
                 gameSceneUI.StatUI.RefreshUI();
@@ -279,6 +278,8 @@ class PacketHandler
                 Managers.Inven.EquipRemove(item.Slot);
                 Managers.Inven.Add(item);
                 UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+                item.Slot = equipItem.NextSlot;
+
                 gameSceneUI.InvenUI.RefreshUI();
                 gameSceneUI.StatUI.RefreshUI();
                 gameSceneUI.EquipUI.RefreshUI();

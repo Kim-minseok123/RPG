@@ -25,7 +25,6 @@ public class UI_InvenSlot : UI_Base
         {
             if (_icon.color.a == 0f)
                 return;
-            Debug.Log("Click Item");
 
             if (itemData == null)
                 return;
@@ -82,5 +81,10 @@ public class UI_InvenSlot : UI_Base
             _icon.color = color;
             _icon.gameObject.SetActive(true);
         }
+    }
+    public void InfoRemoveSlot()
+    {
+        if (description != null)
+            Managers.Resource.Destroy(description);
     }
 }

@@ -114,6 +114,7 @@ namespace Server.Game
                     equipOkItem.Slot = tempSlot;
                     equipOkItem.ObjectId = Id;
                     equipOkItem.TemplateId = item.TemplateId;
+					equipOkItem.NextSlot = unequipItem.Slot;
                     Room.Broadcast(equipOkItem);
                 }
                 {
@@ -170,6 +171,7 @@ namespace Server.Game
 					equipOkItem.Slot = item.Slot;
                     equipOkItem.ObjectId = Id;
 					equipOkItem.TemplateId = item.TemplateId;
+					equipOkItem.NextSlot = item.Slot;
 					Room.Broadcast(equipOkItem);
                 }
             }
@@ -195,6 +197,7 @@ namespace Server.Game
 				equipOkItem.Slot = tempSlot;
 				equipOkItem.ObjectId = Id;
                 equipOkItem.TemplateId = item.TemplateId;
+				equipOkItem.NextSlot = item.Slot;
                 Room.Broadcast(equipOkItem);
             }
 

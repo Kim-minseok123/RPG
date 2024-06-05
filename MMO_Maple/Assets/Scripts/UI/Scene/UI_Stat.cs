@@ -32,7 +32,7 @@ public class UI_Stat : UI_Base
         BindText(typeof(Texts));
         BindButton(typeof(Buttons));
 
-        GetButton((int)Buttons.ExitButton).gameObject.BindEvent((e) => { var ui = Managers.UI.SceneUI as UI_GameScene; ui.CloseUI("Stat"); });
+        GetButton((int)Buttons.ExitButton).gameObject.BindEvent((e) => { var ui = Managers.UI.SceneUI as UI_GameScene; ui.CloseUI("UI_Stat"); });
 
         myPlayer = Managers.Object.MyPlayer;
 

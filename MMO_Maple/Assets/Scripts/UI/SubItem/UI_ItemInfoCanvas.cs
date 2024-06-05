@@ -30,6 +30,14 @@ public class UI_ItemInfoCanvas : UI_Base
         BindImage(typeof(Images));
 
         RefreshUI();
+
+        var rectTransform = GetObject((int)GameObjects.ItemInfoObj).GetComponent<RectTransform>();
+
+        Vector2 mousePosition = Input.mousePosition;
+        Vector2 movePos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform.parent as RectTransform, mousePosition, null, out movePos);
+
+        rectTransform.anchoredPosition = movePos;
     }
     public void Setting(ItemData data)
     {

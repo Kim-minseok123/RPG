@@ -21,7 +21,7 @@ public class UI_Inventory : UI_Base
         BindButton(typeof(Buttons));
         BindText(typeof(Texts));
 
-        GetButton((int)Buttons.ExitButton).gameObject.BindEvent((e) => { var ui = Managers.UI.SceneUI as UI_GameScene; ui.CloseUI("Inven"); });
+        GetButton((int)Buttons.ExitButton).gameObject.BindEvent((e) => { var ui = Managers.UI.SceneUI as UI_GameScene; ui.CloseUI("UI_Inventory"); });
 
         Items.Clear();
 
@@ -68,5 +68,13 @@ public class UI_Inventory : UI_Base
         }
             
         GetText((int)Texts.CoinText).text = Managers.Inven.Money.ToString("N0");
+    }
+
+    public override void InfoRemove()
+    {
+        foreach (var item in Items)
+        {
+            item.InfoRemoveSlot();
+        }
     }
 }
