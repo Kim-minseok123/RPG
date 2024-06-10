@@ -68,6 +68,7 @@ class PacketHandler
 #else
         if (createOkPacket.Player == null)
         {
+            Managers.UI.FindPopupUI<UI_CreatePlayer_Popup>().isClick = false;
             Managers.UI.ShowPopupUI<UI_Confirm_Popup>().Setting("닉네임이 중복됩니다.\n 다른 닉네임을 사용해주세요.");
         }
         else

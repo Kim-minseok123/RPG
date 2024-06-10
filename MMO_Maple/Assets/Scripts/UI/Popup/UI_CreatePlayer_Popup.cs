@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 
 public class UI_CreatePlayer_Popup : UI_Popup
 {
-    bool isClick = false;
+    public bool isClick = false;
     enum Buttons
     {
         CreatePlayerMaleBtn,
@@ -97,7 +97,6 @@ public class UI_CreatePlayer_Popup : UI_Popup
             createPacket.Name = name;
             createPacket.IsMale = isMale;
             Managers.Network.Send(createPacket);
-            isClick = false;
         }
     }
     public GameObject Male;

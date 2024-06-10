@@ -1,6 +1,7 @@
 using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerSelectInit : MonoBehaviour
@@ -12,14 +13,15 @@ public class PlayerSelectInit : MonoBehaviour
     {
         _index = index;
 
-        List<LobbyPlayerInfo> lobbyPlayerInfos = Managers.Network.LobbyPlayerInfos;
+        List<LobbyPlayer> lobbyPlayerInfos = Managers.Network.LobbyPlayerInfos;
 
         // 플레이어가 있음
         if(index < lobbyPlayerInfos.Count)
         {
-            Managers.Resource.Instantiate("Creature/Player/PlayerLobby", Playerparent);
+            GameObject go =  Managers.Resource.Instantiate("Creature/Player/PlayerLobby", Playerparent);
             UI_PlayerInfoCanvas_Item item = Managers.UI.MakeSubItem<UI_PlayerInfoCanvas_Item>(transform);
-            item.Setting(lobbyPlayerInfos[index]);
+            item.Setting(lobbyPlayerInfos[index].Player);
+            go.GetComponent<PlayerLobby>().Setting(lobbyPlayerInfos[index].Item.ToList());
         }
         else
         {

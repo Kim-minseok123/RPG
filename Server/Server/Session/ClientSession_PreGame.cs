@@ -54,6 +54,7 @@ namespace Server
 				// 이 서버에 계정이 있는지 확인
 				AccountDb findAccount = db.Accounts
 					.Include(a => a.Players)
+					.ThenInclude(p => p.Items)
 					.Where(a => a.AccountLoginId == loginPacket.AccountId).FirstOrDefault();
 				// 계정이 있다.
 				if (findAccount != null)
@@ -71,12 +72,21 @@ namespace Server
 							Level = playerDb.Level,
 							ClassType = (int)playerDb.PlayerClass,
 						};
-
-						// 메모리에도 들고 있다
-						LobbyPlayers.Add(lobbyPlayer);
+						LobbyPlayer LP = new LobbyPlayer();
+						LP.Player = lobbyPlayer;
+						foreach (var item in playerDb.Items)
+						{
+							if (item.Equipped == false) continue;
+							LobbyPlayerItemInfo itemInfo = new LobbyPlayerItemInfo();
+							itemInfo.TemplateId = item.TemplateId;
+							itemInfo.Slot = item.Slot;
+							LP.Item.Add(itemInfo);
+                        }
+                        // 메모리에도 들고 있다
+                        LobbyPlayers.Add(lobbyPlayer);
 
 						// 패킷에 넣어준다
-						loginOk.Players.Add(lobbyPlayer);
+						loginOk.Players.Add(LP);
 					}
 
 					Send(loginOk);
@@ -273,9 +283,14 @@ namespace Server
 					LobbyPlayers.Add(lobbyPlayer);
 
 					// 클라에 전송
-					S_CreatePlayer newPlayer = new S_CreatePlayer() { Player = new LobbyPlayerInfo() };
-					newPlayer.Player.MergeFrom(lobbyPlayer);
-
+					S_CreatePlayer newPlayer = new S_CreatePlayer() { Player = new LobbyPlayer() };
+					LobbyPlayerItemInfo lobbyPlayerItemInfo = new LobbyPlayerItemInfo();
+					LobbyPlayerInfo lobbyPlayerInfo = new LobbyPlayerInfo();
+					lobbyPlayerInfo.MergeFrom(lobbyPlayer);
+					lobbyPlayerItemInfo.TemplateId = 1;
+					lobbyPlayerItemInfo.Slot = 6;
+					newPlayer.Player.Item.Add(lobbyPlayerItemInfo);
+					newPlayer.Player.Player = lobbyPlayerInfo;
 					Send(newPlayer);
 				}
 			}

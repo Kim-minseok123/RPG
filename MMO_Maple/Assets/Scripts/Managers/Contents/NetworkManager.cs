@@ -11,7 +11,7 @@ public class NetworkManager
 {
 	public int AccountId { get; set; }
 	public int Token { get; set; }
-	public List<LobbyPlayerInfo> LobbyPlayerInfos { get; set; } = new List<LobbyPlayerInfo>();
+	public List<LobbyPlayer> LobbyPlayerInfos { get; set; } = new List<LobbyPlayer>();
 	public ServerSession _session { get; private set; } = new ServerSession();
 	public ServerInfo ServInfo { get; private set; }
 	public bool Master { get; set; }
@@ -46,7 +46,7 @@ public class NetworkManager
 	public void Clear()
 	{
 		_session = new ServerSession();
-        LobbyPlayerInfos = new List<LobbyPlayerInfo>();
+        LobbyPlayerInfos = new List<LobbyPlayer>();
         ServInfo = null;
     }
 }

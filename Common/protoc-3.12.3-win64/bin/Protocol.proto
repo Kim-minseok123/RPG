@@ -128,7 +128,7 @@ message C_Login {
 
 message S_Login {
   int32 loginOk = 1;
-  repeated LobbyPlayerInfo players = 2;
+  repeated LobbyPlayer players = 2;
 }
 
 message S_Banish {
@@ -140,9 +140,8 @@ message C_CreatePlayer {
 }
 
 message S_CreatePlayer {
-  LobbyPlayerInfo player = 1;
+  LobbyPlayer player = 1;
 }
-
 
 message S_Spawn {
   repeated ObjectInfo objects = 1;
@@ -255,6 +254,14 @@ message S_Ping {
 }
 message C_Pong {
 
+}
+message LobbyPlayer {
+  LobbyPlayerInfo player = 1;
+  repeated LobbyPlayerItemInfo item = 2;
+}
+message LobbyPlayerItemInfo {
+  int32 templateId = 1;
+  int32 slot =2;
 }
 message LobbyPlayerInfo {
   int32 playerDbId = 1;
