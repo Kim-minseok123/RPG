@@ -117,12 +117,14 @@ namespace Server
 			if(playerInfo.ClassType == (int)ClassTypes.Beginner)
 			{
                 MyPlayer = ObjectManager.Instance.Add<Beginner>();
+				MyPlayer.classType = ClassTypes.Beginner;
             }
 			else if (playerInfo.ClassType == (int)ClassTypes.Warrior)
 			{
                 MyPlayer = ObjectManager.Instance.Add<Warrior>();
+				MyPlayer.classType = ClassTypes.Warrior;
             }
-           
+
             {
                 MyPlayer.PlayerDbId = playerInfo.PlayerDbId;
                 MyPlayer.Info.Name = playerInfo.Name;

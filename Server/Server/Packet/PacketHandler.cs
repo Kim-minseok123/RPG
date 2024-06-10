@@ -161,4 +161,19 @@ class PacketHandler
 
         room.Push(room.GetDropItem, player, dropItemPacket);
     }
+    public static void C_ChangeStatHandler(PacketSession session, IMessage packet)
+    {
+        C_ChangeStat changeStatPacket = (C_ChangeStat)packet;
+        ClientSession clientSession = (ClientSession)session;
+
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+
+        room.Push(room.StatChange, player, changeStatPacket);
+    }
 }

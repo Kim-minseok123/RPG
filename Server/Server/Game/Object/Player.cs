@@ -17,7 +17,7 @@ namespace Server.Game
 		public VisionCube Vision { get; private set; }
 
 		public Inventory Inven { get; private set; } = new Inventory();
-
+		public ClassTypes classType { get; set; }
 		public int WeaponDamage { get; private set; }
 		public int ArmorDefence { get; private set; }
 
@@ -63,7 +63,7 @@ namespace Server.Game
 			// -- 결과를 받아서 이어서 처리를 해야 하는 경우가 많음.
 			// -- 아이템 생성
 
-			//DbTransaction.SavePlayerStatus_Step1(this, Room);
+			DbTransaction.SavePlayerStat(this, Room);
 		}
 
 		public void HandleEquipItem(C_EquipItem equipPacket)
@@ -225,5 +225,10 @@ namespace Server.Game
 				}
 			}
 		}
-	}
+        public virtual void CalAttackValue()
+		{
+
+		}
+
+    }
 }

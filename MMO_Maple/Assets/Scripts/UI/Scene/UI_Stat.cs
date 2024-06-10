@@ -1,3 +1,4 @@
+using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,13 +35,24 @@ public class UI_Stat : UI_Base
 
         GetButton((int)Buttons.ExitButton).gameObject.BindEvent((e) => { var ui = Managers.UI.SceneUI as UI_GameScene; ui.CloseUI("UI_Stat"); });
 
+        GetButton((int)Buttons.StrUpButton).gameObject.BindEvent((e) => { MakeChagneStatPacket("Str"); });
+        GetButton((int)Buttons.DexUpButton).gameObject.BindEvent((e) => { MakeChagneStatPacket("Dex"); });
+        GetButton((int)Buttons.LukUpButton).gameObject.BindEvent((e) => { MakeChagneStatPacket("Luk"); });
+        GetButton((int)Buttons.IntUpButton).gameObject.BindEvent((e) => { MakeChagneStatPacket("Int"); });
+
         myPlayer = Managers.Object.MyPlayer;
 
         isInit = true;
 
         RefreshUI();
     }
-
+    void MakeChagneStatPacket(string statString)
+    {
+        if (myPlayer.Stat.StatPoint <= 0) return;
+        C_ChangeStat changeStatPacket = new C_ChangeStat();
+        changeStatPacket.ChangeStat = statString;
+        Managers.Network.Send(changeStatPacket);
+    }
     public void RefreshUI()
     {
         if (isInit == false) return;

@@ -18,23 +18,22 @@ public class MyPlayerController : PlayerController
     public override int Mp { get { return Stat.Mp; } protected set { Stat.Mp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     public int MaxAttack { 
         get {
-            int damage = (Stat.Str * 4 + Stat.Dex) * WeaponDamage / 100;
-            if (damage < 3)
-                return 3;
-            else
-                return damage; 
+            int attack = (int)((Stat.Str * 4 + Stat.Dex) * WeaponDamage / 100);
+            if(attack < 3) attack = 3;
+            if (WeaponDamage == 0) attack = 0;
+            return attack; 
         } 
     }
-    public int MinAttack { 
-        get {
-            int damage = (int)((Stat.Str * 4 * 0.9 * 0.1 + Stat.Dex) * WeaponDamage / 100);
-            if (damage < 1)
-                return 1;
-            else
-                return damage;
-        } 
+    public int MinAttack
+    {
+        get
+        {
+            int attack = (int)((Stat.Str * 4 * 0.9 * 0.1 + Stat.Dex) * WeaponDamage / 100);
+            if (attack < 1) attack = 1;
+            if (WeaponDamage == 0) attack = 0;
+            return attack;
+        }
     }
-
     protected override void Init()
     {
         base.Init();
@@ -271,7 +270,6 @@ public class MyPlayerController : PlayerController
         {
             if (items[i] == null) continue;
             if (items[i].Equipped == false) continue;
-
             switch (items[i].ItemType)
             {
                 case ItemType.Weapon:

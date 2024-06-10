@@ -35,6 +35,7 @@ namespace Server
 				long delta = (System.Environment.TickCount64 - _pingpongTick);
 				if (delta > 30 * 1000)
 				{
+					if (SessionManager.Instance.Find(SessionId) == null) return;
 					Console.WriteLine("Disconnected by PingCheck");
 					Disconnect();
 					return;

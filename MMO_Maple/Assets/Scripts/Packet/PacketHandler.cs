@@ -131,7 +131,6 @@ class PacketHandler
             new Vector3(stopMovePacket.Pos.PosX, stopMovePacket.Pos.PosY, stopMovePacket.Pos.PosZ)
             );
     }
-
     public static void S_ChangeHpHandler(PacketSession session, IMessage packet)
     {
         S_ChangeHp changeHpPacket = (S_ChangeHp)packet;
@@ -259,14 +258,17 @@ class PacketHandler
                 Item item = Managers.Inven.Get(equipItem.ItemDbId);
                 Managers.Inven.Remove(item);
                 Managers.Inven.EquipAdd(equipItem.Slot, item);
+                item.Equipped = equipItem.Equipped;
                 item.Slot = equipItem.Slot;
+                if (Managers.Object.MyPlayer != null)
+                    Managers.Object.MyPlayer.RefreshAdditionalStat();
+
                 UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
                 gameSceneUI.InvenUI.RefreshUI();
                 gameSceneUI.StatUI.RefreshUI();
                 gameSceneUI.EquipUI.RefreshUI();
 
-                if (Managers.Object.MyPlayer != null)
-                    Managers.Object.MyPlayer.RefreshAdditionalStat();
+                
             }
             pc.EquipItem(equipItem.TemplateId);
         }
@@ -277,18 +279,29 @@ class PacketHandler
                 Item item = Managers.Inven.EquipFind(i => i.ItemDbId == equipItem.ItemDbId);
                 Managers.Inven.EquipRemove(item.Slot);
                 Managers.Inven.Add(item);
+                item.Equipped = equipItem.Equipped;
                 UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
                 item.Slot = equipItem.NextSlot;
+                if (Managers.Object.MyPlayer != null)
+                    Managers.Object.MyPlayer.RefreshAdditionalStat();
 
                 gameSceneUI.InvenUI.RefreshUI();
                 gameSceneUI.StatUI.RefreshUI();
                 gameSceneUI.EquipUI.RefreshUI();
-
-                if (Managers.Object.MyPlayer != null)
-                    Managers.Object.MyPlayer.RefreshAdditionalStat();
             }
             pc.Disarm(equipItem.Slot);
         }
+    }
+    public static void S_ChangeStatHandler(PacketSession session, IMessage packet)
+    {
+        S_ChangeStat changeStatPacket = (S_ChangeStat)packet;
+
+        MyPlayerController myPlayer = Managers.Object.MyPlayer;
+        if (myPlayer == null) return;
+
+        myPlayer.SetStat(changeStatPacket.StatInfo);
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        gameSceneUI.StatUI.RefreshUI();
     }
 }
 

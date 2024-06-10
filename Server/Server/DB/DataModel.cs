@@ -31,8 +31,6 @@ namespace Server.DB
 		public int Mp { get; set; }
 		public int MaxMp { get; set; }
 		public int MaxHp { get; set; }
-		public int MaxAttack { get; set; }
-		public int MinAttack { get; set; }
 		public int Defense { get; set; }
 		public float Speed { get; set; }
 		public int Str { get; set; }

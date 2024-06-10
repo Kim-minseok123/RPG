@@ -11,65 +11,55 @@ namespace Server.DB
 	public partial class DbTransaction : JobSerializer
 	{
 		public static DbTransaction Instance { get; } = new DbTransaction();
-
-		// Me (GameRoom) -> You (Db) -> Me (GameRoom)
-		public static void SavePlayerStatus_AllInOne(Player player, GameRoom room)
+		public static void SavePlayerStat(Player player, GameRoom room)
 		{
-			if (player == null || room == null)
-				return;
+            if (player == null || room == null)
+                return;
 
-			// Me (GameRoom)
-			PlayerDb playerDb = new PlayerDb();
-			playerDb.PlayerDbId = player.PlayerDbId;
-			playerDb.Hp = player.Stat.Hp;
+            PlayerDb playerDb = new PlayerDb();
+            playerDb.PlayerDbId = player.PlayerDbId;
+			playerDb.MaxHp = player.Stat.MaxHp;
+			playerDb.MaxMp = player.Stat.MaxMp;
+            playerDb.Hp = player.Stat.Hp;
+			playerDb.Mp = player.Stat.Mp;
+			playerDb.StatPoint = player.Stat.StatPoint;
+			playerDb.Str = player.Stat.Str;
+			playerDb.Dex = player.Stat.Dex;
+			playerDb.Luk = player.Stat.Luk;
+			playerDb.Int = player.Stat.Int;
+			playerDb.posX = player.Pos.PosX;
+			playerDb.posY = player.Pos.PosY;
+			playerDb.posZ = player.Pos.PosZ;
+			playerDb.Level = player.Stat.Level;
+			playerDb.PlayerClass = player.classType;
 
-			// You
-			Instance.Push(() =>
-			{
-				using (AppDbContext db = new AppDbContext())
-				{
-					db.Entry(playerDb).State = EntityState.Unchanged;
-					db.Entry(playerDb).Property(nameof(PlayerDb.Hp)).IsModified = true;
-					bool success = db.SaveChangesEx();
-					if (success)
-					{
-					}
-				}
-			});			
-		}
-
-		// Me (GameRoom)
-		public static void SavePlayerStatus_Step1(Player player, GameRoom room)
-		{
-			if (player == null || room == null)
-				return;
-
-			// Me (GameRoom)
-			PlayerDb playerDb = new PlayerDb();
-			playerDb.PlayerDbId = player.PlayerDbId;
-			playerDb.Hp = player.Stat.Hp;
-			Instance.Push<PlayerDb, GameRoom>(SavePlayerStatus_Step2, playerDb, room);
-		}
-
-		// You (Db)
-		public static void SavePlayerStatus_Step2(PlayerDb playerDb, GameRoom room)
-		{
-			using (AppDbContext db = new AppDbContext())
-			{
-				db.Entry(playerDb).State = EntityState.Unchanged;
-				db.Entry(playerDb).Property(nameof(PlayerDb.Hp)).IsModified = true;
-				bool success = db.SaveChangesEx();
-				if (success)
-				{
-					room.Push(SavePlayerStatus_Step3, playerDb.Hp);
-				}
-			}
-		}
-
-		// Me
-		public static void SavePlayerStatus_Step3(int hp)
-		{
-		}
+            Instance.Push(() =>
+            {
+                using (AppDbContext db = new AppDbContext())
+                {
+                    db.Entry(playerDb).State = EntityState.Unchanged;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.Hp)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.MaxHp)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.Mp)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.MaxMp)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.StatPoint)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.Str)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.Dex)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.Luk)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.Int)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.posX)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.posY)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.posZ)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.Level)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.PlayerClass)).IsModified = true;
+                    bool success = db.SaveChangesEx();
+                    if (success)
+                    {
+                    }
+                }
+            });
+        }
+		
 
 		public static void GetItemPlayer(Player player, RewardData rewardData, GameRoom room, DropItem dropItem = null)
 		{

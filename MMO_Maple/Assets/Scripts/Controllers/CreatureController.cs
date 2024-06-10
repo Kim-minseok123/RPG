@@ -23,4 +23,8 @@ public class CreatureController : BaseController
     {
         objectInfo = info;
     }
+    public virtual void SetStat(StatInfo info)
+    {
+        Stat = info;
+    }
 }

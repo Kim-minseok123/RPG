@@ -95,7 +95,6 @@ namespace Server.Game
             }
 
         }
-        
         public bool IsObjectInRange(Vector3 attacker, Vector3 target, Vector3 forward, SKillRange skill)
         {
             Vector3 up = new Vector3(0, 1, 0); // Up vector assuming Y is up
@@ -253,6 +252,40 @@ namespace Server.Game
             DbTransaction.GetItemPlayer(player, dropItem._rewardData, this, dropItem);
 
         }
+        public void StatChange(Player player, C_ChangeStat changeStatPacket)
+        {
+            if (player == null) return;
+            string statName = changeStatPacket.ChangeStat;
+            if (player.Stat.StatPoint <= 0) return;
 
+            switch (statName)
+            {
+                case "Str" :
+                    player.Stat.StatPoint--;
+                    player.Stat.Str++;
+                    break;
+                case "Dex":
+                    player.Stat.StatPoint--;
+                    player.Stat.Dex++;
+                    break;
+                case "Luk":
+                    player.Stat.StatPoint--;
+                    player.Stat.Luk++;
+                    break;
+                case "Int":
+                    player.Stat.StatPoint--;
+                    player.Stat.Int++;
+                    break;
+                default:
+                    return;
+            }
+            player.CalAttackValue();
+
+            StatInfo playerStat = player.Stat;
+
+            S_ChangeStat statPacket = new S_ChangeStat();
+            statPacket.StatInfo = playerStat;
+            player.Session.Send(statPacket);
+        }
 	}
 }

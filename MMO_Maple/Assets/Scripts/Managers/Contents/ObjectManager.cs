@@ -37,6 +37,7 @@ public class ObjectManager
                 MyPlayer.Id = info.ObjectId;
                 MyPlayer.SetInfo(info);
                 MyPlayer.SetPos(info.PosInfo.Pos, info.PosInfo.Rotate);
+                MyPlayer.RefreshAdditionalStat();
                 MyPlayer.GetComponent<NavMeshAgent>().enabled = true;
                 Managers.UI.ShowSceneUI<UI_GameScene>();
             }
