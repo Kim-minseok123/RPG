@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 4000010690109084}
   - component: {fileID: -2831009750281419802}
   - component: {fileID: 3609969589864547739}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\uBE68\uAC04 \uD3EC\uC158"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3672140175283182299}
   - component: {fileID: 1656939797517504503}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}

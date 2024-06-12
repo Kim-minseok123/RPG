@@ -5,6 +5,7 @@ using Server.DB;
 using Server.Game.Room;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -228,6 +229,32 @@ namespace Server.Game
 		{
 
 		}
+		public void HandleUseItem(C_UseItem useItemPacket)
+		{
+            Item item = Inven.Get(useItemPacket.ItemDbId);
+            if (item == null)
+                return;
 
+            ConsumableItemAbility itemAbility = ConsumableItemAbilityFactory.CreateAbility(item.TemplateId);
+            if (itemAbility == null) return;
+            itemAbility.UseItem(this, (Consumable)item);
+			item.Count -= useItemPacket.Count;
+            if (item.Count <= 0)
+            {
+                Inven.Remove(item);
+				DbTransaction.RemoveItemNoti(this, item);
+            }
+			else
+			{
+				DbTransaction.UseItemNoti(this, item);
+            }
+
+			S_UseItem useItemOk = new S_UseItem();
+			useItemOk.ItemDbId = item.ItemDbId;
+			useItemOk.Count = item.Count;
+			useItemOk.StatInfo = new StatInfo();
+			useItemOk.StatInfo.MergeFrom(Stat);
+			Session.Send(useItemOk);
+        }
     }
 }

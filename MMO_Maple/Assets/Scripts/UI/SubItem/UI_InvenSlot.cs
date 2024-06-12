@@ -32,7 +32,10 @@ public class UI_InvenSlot : UI_Base
             // TODO : C_USE_ITEM
             if (itemData.itemType == ItemType.Consumable)
             {
-
+                C_UseItem useItemPacket = new C_UseItem();
+                useItemPacket.ItemDbId = ItemDbID;
+                useItemPacket.Count = 1;
+                Managers.Network.Send(useItemPacket);
                 return;
             }
             if (description != null)

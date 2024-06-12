@@ -150,7 +150,7 @@ namespace Server.Game
 	{
 		public ConsumableType ConsumableType { get; private set; }
 		public int MaxCount { get; set; }
-        public int HealHpVal { get; set; }
+        public int HealVal { get; set; }
         public Consumable(int templateId) : base(ItemType.Consumable)
 		{
 			Init(templateId);
@@ -170,7 +170,7 @@ namespace Server.Game
 				MaxCount = data.maxCount;
 				ConsumableType = data.consumableType;
 				Stackable = (data.maxCount > 1);
-				HealHpVal = data.healHpVal;
+				HealVal = data.healVal;
 			}
 		}
 	}

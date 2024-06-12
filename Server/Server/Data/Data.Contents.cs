@@ -92,7 +92,7 @@ namespace Server.Data
 	{
 		public ConsumableType consumableType;
 		public int maxCount;
-        public int healHpVal;
+        public int healVal;
         public string description;
     }
 

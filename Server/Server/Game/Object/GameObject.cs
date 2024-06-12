@@ -38,7 +38,12 @@ namespace Server.Game
 			get { return Stat.Hp; }
 			set { Stat.Hp = Math.Clamp(value, 0, Stat.MaxHp); }
 		}
-		public Positions Pos
+        public int Mp
+        {
+            get { return Stat.Mp; }
+            set { Stat.Mp = Math.Clamp(value, 0, Stat.MaxMp); }
+        }
+        public Positions Pos
 		{
             get { return PosInfo.Pos; }
             set { PosInfo.Pos = value; }

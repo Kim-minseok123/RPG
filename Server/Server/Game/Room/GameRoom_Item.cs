@@ -48,5 +48,11 @@ namespace Server.Game
                     DbTransaction.GetItemPlayer(player, dropItem._rewardData, this, dropItem);
             }
         }
+        public void HandleUseItem(Player player, C_UseItem useItemPacket)
+        {
+            if (player == null)
+                return;
+            player.HandleUseItem(useItemPacket);
+        }
     }
 }

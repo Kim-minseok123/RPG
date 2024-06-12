@@ -55,7 +55,7 @@
       "consumableType": "Potion",
       "maxCount": "100",
       "iconPath": "Textures/Item/redPotion",
-      "healHpVal": "50",
+      "healVal": "50",
       "description": "누군가 만든지 모르는 영약이다.\n체력을 50만큼 회복한다."
     }
   ]

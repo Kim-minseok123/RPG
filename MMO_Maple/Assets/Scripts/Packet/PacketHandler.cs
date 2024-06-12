@@ -315,6 +315,22 @@ class PacketHandler
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         gameSceneUI.InvenUI.RefreshUI();
     }
+    public static void S_UseItemHandler(PacketSession session, IMessage packet)
+    {
+        S_UseItem useItemPacket = (S_UseItem)packet;
+
+        Item item = Managers.Inven.Get(useItemPacket.ItemDbId);
+        if(item == null) return;
+        item.Count = useItemPacket.Count;
+        if(item.Count <= 0)
+        {
+            Managers.Inven.Remove(item);
+        }
+        UI_GameScene gameScene = Managers.UI.SceneUI as UI_GameScene;
+        Managers.Object.MyPlayer.SetStat(useItemPacket.StatInfo);
+        gameScene.ChangeHpOrMp();
+        gameScene.InvenUI.RefreshUI();
+    }
 }
 
 

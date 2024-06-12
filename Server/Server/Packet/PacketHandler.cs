@@ -176,4 +176,17 @@ class PacketHandler
 
         room.Push(room.StatChange, player, changeStatPacket);
     }
+    public static void C_UseItemHandler(PacketSession session, IMessage packet)
+    {
+        C_UseItem useItemPacket = (C_UseItem)packet;
+        ClientSession clientSession= (ClientSession)session;
+
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+        GameRoom room = player.Room;
+        if(room == null) return;
+
+        room.Push(room.HandleUseItem, player, useItemPacket);
+    }
 }
