@@ -59,8 +59,6 @@ namespace Server.DB
                 }
             });
         }
-		
-
 		public static void GetItemPlayer(Player player, RewardData rewardData, GameRoom room, DropItem dropItem = null)
 		{
 			if (player == null || rewardData == null || room == null)
@@ -83,7 +81,9 @@ namespace Server.DB
             if (itemDb.TemplateId == 1000)
 			{
                 playerDb.PlayerDbId = player.PlayerDbId;
-                playerDb.Money = player.Inven.Money + rewardData.count;
+                Random random = new Random();
+                int randVal = rewardData.count / 10;
+                playerDb.Money = player.Inven.Money + rewardData.count + random.Next(-randVal, randVal + 1);
             }
                 
             // You
@@ -138,5 +138,152 @@ namespace Server.DB
 				}
 			});
 		}
+        public static void GetConsumableItemPlayer(Player player, RewardData rewardData, GameRoom room, DropItem dropItem = null)
+        {
+            if (player == null || rewardData == null || room == null)
+                return;
+            ItemData itemData = null;
+            if (DataManager.ItemDict.TryGetValue(rewardData.itemId, out itemData) == false) return;
+            ConsumableData cmData = (ConsumableData)itemData;
+            int? findDbId = player.Inven.AlreadyHaveConsumable(rewardData.itemId);
+
+            if (findDbId == -1)
+                return;
+            else if(findDbId == null)
+            {
+                int? slot = player.Inven.GetEmptySlot();
+                if (slot == null)
+                    return;
+
+                ItemDb itemDb = new ItemDb()
+                {
+                    TemplateId = rewardData.itemId,
+                    Count = rewardData.count,
+                    Slot = slot.Value,
+                    OwnerDbId = player.PlayerDbId
+                };
+                Instance.Push(() =>
+                {
+                    using (AppDbContext db = new AppDbContext())
+                    {
+                        db.Items.Add(itemDb);
+                        bool success = db.SaveChangesEx();
+                        if (success)
+                        {
+                            room.Push(() =>
+                            {
+                                Item newItem = Item.MakeItem(itemDb);
+                                player.Inven.Add(newItem);
+                                {
+                                    S_AddItem itemPacket = new S_AddItem();
+                                    ItemInfo itemInfo = new ItemInfo();
+                                    itemInfo.MergeFrom(newItem.Info);
+                                    itemPacket.Items.Add(itemInfo);
+
+                                    player.Session.Send(itemPacket);
+                                    dropItem?.DisappearItem();
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+            else
+            {
+                Item curItem = player.Inven.Get((int)findDbId); 
+                if (curItem == null) return;
+                if(curItem.Count + rewardData.count <= cmData.maxCount)
+                {
+                    curItem.Count += rewardData.count;
+
+                    ItemDb itemDb = new ItemDb()
+                    {
+                        ItemDbId = curItem.ItemDbId,
+                        Count = curItem.Count,
+                    };
+
+                    Instance.Push(() =>
+                    {
+                        using (AppDbContext db = new AppDbContext())
+                        {
+                            db.Entry(itemDb).State = EntityState.Unchanged;
+                            db.Entry(itemDb).Property(nameof(ItemDb.Count)).IsModified = true;
+                            bool success = db.SaveChangesEx();
+                            if (success)
+                            {
+                                room.Push(() =>
+                                {
+                                    S_ChangeConsumableItem changeConsumableItem = new S_ChangeConsumableItem
+                                    {
+                                        ItemDbId = curItem.ItemDbId,
+                                        Count = curItem.Count
+                                    };
+                                    player.Session.Send(changeConsumableItem);
+                                    dropItem?.DisappearItem();
+                                });
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    int? slot = player.Inven.GetEmptySlot();
+                    if (slot == null)
+                        return;
+                    curItem.Count += rewardData.count;
+                    int leaveCount = curItem.Count - cmData.maxCount;
+
+                    ItemDb curitemDb = new ItemDb()
+                    {
+                        ItemDbId = curItem.ItemDbId,
+                        Count = curItem.Count,
+                    };
+
+                    ItemDb newItemDb = new ItemDb()
+                    {
+                        TemplateId = rewardData.itemId,
+                        Count = leaveCount,
+                        Slot = slot.Value,
+                        OwnerDbId = player.PlayerDbId
+                    };
+
+                    Instance.Push(() =>
+                    {
+                        using (AppDbContext db = new AppDbContext())
+                        {
+                            db.Entry(curitemDb).State = EntityState.Unchanged;
+                            db.Entry(curitemDb).Property(nameof(ItemDb.Count)).IsModified = true;
+                            db.Items.Add(newItemDb);
+                            bool success = db.SaveChangesEx();
+                            if (success)
+                            {
+                                room.Push(() =>
+                                {
+                                    S_ChangeConsumableItem changeConsumableItem = new S_ChangeConsumableItem
+                                    {
+                                        ItemDbId = curItem.ItemDbId,
+                                        Count = curItem.Count
+                                    };
+                                    player.Session.Send(changeConsumableItem);
+
+                                    Item newItem = Item.MakeItem(newItemDb);
+                                    player.Inven.Add(newItem);
+                                    {
+                                        S_AddItem itemPacket = new S_AddItem();
+                                        ItemInfo itemInfo = new ItemInfo();
+                                        itemInfo.MergeFrom(newItem.Info);
+                                        itemPacket.Items.Add(itemInfo);
+
+                                        player.Session.Send(itemPacket);
+                                        dropItem?.DisappearItem();
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                }
+            }
+        }
     }
 }

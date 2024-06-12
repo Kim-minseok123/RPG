@@ -2,6 +2,7 @@ using Data;
 using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,8 @@ public class UI_InvenSlot : UI_Base
 {
     [SerializeField]
     Image _icon;
+    [SerializeField]
+    TextMeshProUGUI _countText;
     ItemData itemData;
     GameObject description;
     public int ItemDbID { get; private set; }
@@ -19,8 +22,6 @@ public class UI_InvenSlot : UI_Base
 
     public override void Init()
     {
-
-
         _icon.gameObject.BindEvent((e) =>
         {
             if (_icon.color.a == 0f)
@@ -30,7 +31,10 @@ public class UI_InvenSlot : UI_Base
                 return;
             // TODO : C_USE_ITEM
             if (itemData.itemType == ItemType.Consumable)
+            {
+
                 return;
+            }
             if (description != null)
                 Managers.Resource.Destroy(description);
             C_EquipItem equipPacket = new C_EquipItem();
@@ -63,6 +67,7 @@ public class UI_InvenSlot : UI_Base
             Equipped = false;
 
             _icon.gameObject.SetActive(false);
+            _countText.gameObject.SetActive(false);
         }
         else
         {
@@ -80,6 +85,11 @@ public class UI_InvenSlot : UI_Base
             color.a = 1f;
             _icon.color = color;
             _icon.gameObject.SetActive(true);
+            if(item.ItemType == ItemType.Consumable)
+            {
+                _countText.gameObject.SetActive(true);
+                _countText.text = item.Count.ToString();
+            }
         }
     }
     public void InfoRemoveSlot()

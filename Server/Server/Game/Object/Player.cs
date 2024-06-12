@@ -31,7 +31,6 @@ namespace Server.Game
 		{
 			base.OnDamaged(attacker, damage);
 		}
-
 		public override void OnDead(GameObject attacker)
 		{
             if (Room == null)
@@ -65,7 +64,6 @@ namespace Server.Game
 
 			DbTransaction.SavePlayerStat(this, Room);
 		}
-
 		public void HandleEquipItem(C_EquipItem equipPacket)
 		{
 			// 착용 요청이라면, 겹치는 부위 해제
@@ -203,7 +201,6 @@ namespace Server.Game
 
             RefreshAdditionalStat();
 		}
-
 		public void RefreshAdditionalStat()
 		{
 			WeaponDamage = 0;
@@ -224,7 +221,9 @@ namespace Server.Game
 						break;
 				}
 			}
-		}
+			CalAttackValue();
+
+        }
         public virtual void CalAttackValue()
 		{
 

@@ -36,6 +36,7 @@ enum MsgId {
   S_EQUIP_ITEM = 29;
   C_CHANGE_STAT = 30;
   S_CHANGE_STAT = 31;
+  S_CHANGE_CONSUMABLE_ITEM = 32;
 }
 
 enum CreatureState {
@@ -245,6 +246,10 @@ message S_EquipItem {
 
 message S_ChangeStat {
   StatInfo statInfo = 1;
+}
+message S_ChangeConsumableItem{
+  int32 itemDbId = 1;
+  int32 count = 2;
 }
 message C_ChangeStat {
   string changeStat = 1;

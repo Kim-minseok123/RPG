@@ -304,6 +304,17 @@ class PacketHandler
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         gameSceneUI.StatUI.RefreshUI();
     }
+    public static void S_ChangeConsumableItemHandler(PacketSession session, IMessage packet)
+    {
+        S_ChangeConsumableItem cmItem = (S_ChangeConsumableItem)packet;
+
+        Item item = Managers.Inven.Get(cmItem.ItemDbId);
+        if (item == null) return;
+        item.Count = cmItem.Count;
+
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        gameSceneUI.InvenUI.RefreshUI();
+    }
 }
 
 

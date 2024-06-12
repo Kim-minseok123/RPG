@@ -17,5 +17,36 @@ namespace Server.Game
 
 			player.HandleEquipItem(equipPacket);
 		}
-	}
+        public void GetDropItem(Player player, C_GetDropItem dropItemPacket)
+        {
+            if (player == null) return;
+
+            DropItem dropItem = null;
+            if (_dropItem.TryGetValue(dropItemPacket.DropItemId, out dropItem) == false) return;
+
+            if (dropItem.Owner != null && dropItem.Owner != player) return;
+            // 템 자석핵 견제
+            Vector3 dropItemPos = Utils.PositionsToVector3(dropItem.Pos);
+            Vector3 playerPos = Utils.PositionsToVector3(player.Pos);
+            if (Vector3.Distance(dropItemPos, playerPos) > 5f)
+            {
+                S_Banish banPacket = new S_Banish();
+                player.Session.Send(banPacket);
+            }
+            S_GetDropItemMotion motionPacket = new S_GetDropItemMotion();
+            motionPacket.ObjectId = player.Id;
+            Broadcast(motionPacket);
+            if (dropItem._rewardData.itemId == 1000)
+                DbTransaction.GetItemPlayer(player, dropItem._rewardData, this, dropItem);
+            else
+            {
+                ItemData itemData = null;
+                if (DataManager.ItemDict.TryGetValue(dropItem._rewardData.itemId, out itemData) == false) return;
+                if (itemData.itemType == ItemType.Consumable)
+                    DbTransaction.GetConsumableItemPlayer(player, dropItem._rewardData, this, dropItem);
+                else
+                    DbTransaction.GetItemPlayer(player, dropItem._rewardData, this, dropItem);
+            }
+        }
+    }
 }

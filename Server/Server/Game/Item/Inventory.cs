@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Server.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -79,5 +80,21 @@ namespace Server.Game
         {
             EquipItems[i - 1] = null;
         }
+
+		public int? AlreadyHaveConsumable(int templateId)
+		{
+			ItemData itemData = null;
+			if(DataManager.ItemDict.TryGetValue(templateId, out itemData) == false) return -1;
+			ConsumableData consumableItem = (ConsumableData)itemData;
+			for (int slot = 0; slot < 24; slot++)
+			{
+				Item item = Items.Values.FirstOrDefault(i => i.Slot == slot && i.TemplateId == templateId && i.Count < consumableItem.maxCount);
+				if (item != null)
+				{
+					return item.ItemDbId;
+				}
+			}
+			return null;
+		}
     }
 }

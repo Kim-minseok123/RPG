@@ -229,29 +229,6 @@ namespace Server.Game
 					break;
 			}
 		}
-        public void GetDropItem(Player player, C_GetDropItem dropItemPacket)
-        {
-            if (player == null) return;
-
-            DropItem dropItem = null;
-            if (_dropItem.TryGetValue(dropItemPacket.DropItemId, out dropItem) == false) return;
-
-            if (dropItem.Owner != null && dropItem.Owner != player) return;
-            // 템 자석핵 견제
-            Vector3 dropItemPos = Utils.PositionsToVector3(dropItem.Pos);
-            Vector3 playerPos = Utils.PositionsToVector3(player.Pos);
-            if(Vector3.Distance(dropItemPos, playerPos) > 5f)
-            {
-                S_Banish banPacket = new S_Banish();
-                player.Session.Send(banPacket);
-            }
-            S_GetDropItemMotion motionPacket = new S_GetDropItemMotion();
-            motionPacket.ObjectId = player.Id;
-            Broadcast(motionPacket);
-
-            DbTransaction.GetItemPlayer(player, dropItem._rewardData, this, dropItem);
-
-        }
         public void StatChange(Player player, C_ChangeStat changeStatPacket)
         {
             if (player == null) return;
