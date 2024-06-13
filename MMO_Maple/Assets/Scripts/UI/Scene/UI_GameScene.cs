@@ -1,9 +1,11 @@
+using Data;
 using DG.Tweening;
 using Google.Protobuf.Protocol;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,6 +46,7 @@ public class UI_GameScene : UI_Scene
     {
         HpInfoSlider,
         MpInfoSlider,
+        ExpInfoSlider,
     }
     enum GameObjects
     {
@@ -113,6 +116,7 @@ public class UI_GameScene : UI_Scene
 
         Setting();
         ChangeHpOrMp();
+        ChangeExp();
     }
     public void Setting()
     {
@@ -130,6 +134,17 @@ public class UI_GameScene : UI_Scene
 
         Get<Slider>((int)Sliders.HpInfoSlider).DOValue(hpRatio, 0.5f).SetEase(Ease.OutExpo);
         Get<Slider>((int)Sliders.MpInfoSlider).DOValue(mpRatio, 0.5f).SetEase(Ease.OutExpo);
+    }
+    public void ChangeExp()
+    {
+        ExpData expData = null;
+        if (Managers.Data.ExpDict.TryGetValue(_myPlayer.Stat.Level, out expData) == false) return;
+        int MaxExp = expData.requiredExp;
+        int exp = _myPlayer.Exp;
+
+        float expRatio = Mathf.Max((float)exp / MaxExp, 0f);
+        Get<Slider>((int)Sliders.ExpInfoSlider).DOValue(expRatio, 0.5f).SetEase(Ease.OutExpo);
+        GetText((int)Texts.LevelText).text = _myPlayer.objectInfo.StatInfo.Level.ToString();
     }
     public void OpenUI(string uiName = null)
     {

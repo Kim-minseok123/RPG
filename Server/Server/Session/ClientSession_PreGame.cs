@@ -167,6 +167,7 @@ namespace Server
                         MyPlayer.Stat.Int = findPlayerDb.Int;
                         MyPlayer.Stat.Exp = findPlayerDb.Exp;
                         MyPlayer.Stat.StatPoint = findPlayerDb.StatPoint;
+						MyPlayer.Stat.SkillPoint = findPlayerDb.SkillPoint;
                     }
 
 					List<ItemDb> items = db.Items
@@ -251,6 +252,7 @@ namespace Server
 						posZ = 340f,
 						rotateY = 0f,
 						Money = 0,
+						SkillPoint = 0,
 					};
 					db.Players.Add(newPlayerDb);
 					bool success = db.SaveChangesEx();

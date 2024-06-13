@@ -55,8 +55,8 @@ class PacketManager
 		_handler.Add((ushort)MsgId.SDie, PacketHandler.S_DieHandler);		
 		_onRecv.Add((ushort)MsgId.SItemList, MakePacket<S_ItemList>);
 		_handler.Add((ushort)MsgId.SItemList, PacketHandler.S_ItemListHandler);		
-		_onRecv.Add((ushort)MsgId.SGetDropItemMotion, MakePacket<S_GetDropItemMotion>);
-		_handler.Add((ushort)MsgId.SGetDropItemMotion, PacketHandler.S_GetDropItemMotionHandler);		
+		_onRecv.Add((ushort)MsgId.SMotionOrEffect, MakePacket<S_MotionOrEffect>);
+		_handler.Add((ushort)MsgId.SMotionOrEffect, PacketHandler.S_MotionOrEffectHandler);		
 		_onRecv.Add((ushort)MsgId.SEquipItemList, MakePacket<S_EquipItemList>);
 		_handler.Add((ushort)MsgId.SEquipItemList, PacketHandler.S_EquipItemListHandler);		
 		_onRecv.Add((ushort)MsgId.SEquipItem, MakePacket<S_EquipItem>);

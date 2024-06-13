@@ -215,9 +215,9 @@ class PacketHandler
         if (Managers.Object.MyPlayer != null)
             Managers.Object.MyPlayer.RefreshAdditionalStat();
     }
-    public static void S_GetDropItemMotionHandler(PacketSession session, IMessage packet)
+    public static void S_MotionOrEffectHandler(PacketSession session, IMessage packet)
     {
-        S_GetDropItemMotion motionPacket = (S_GetDropItemMotion)packet;
+        S_MotionOrEffect motionPacket = (S_MotionOrEffect)packet;
 
         GameObject go = Managers.Object.FindById(motionPacket.ObjectId);
         if (go == null)
@@ -225,7 +225,7 @@ class PacketHandler
         PlayerController pc = go.GetComponent<PlayerController>();
         if (pc == null)
             return;
-        pc.PickUpItem();
+        pc.StartMotionOrEffect(motionPacket.ActionName);
     }
     public static void S_EquipItemListHandler(PacketSession session, IMessage packet)
     {
@@ -303,6 +303,9 @@ class PacketHandler
         myPlayer.SetStat(changeStatPacket.StatInfo);
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         gameSceneUI.StatUI.RefreshUI();
+        gameSceneUI.ChangeHpOrMp();
+        gameSceneUI.ChangeExp();
+
     }
     public static void S_ChangeConsumableItemHandler(PacketSession session, IMessage packet)
     {
@@ -326,10 +329,11 @@ class PacketHandler
         {
             Managers.Inven.Remove(item);
         }
-        UI_GameScene gameScene = Managers.UI.SceneUI as UI_GameScene;
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         Managers.Object.MyPlayer.SetStat(useItemPacket.StatInfo);
-        gameScene.ChangeHpOrMp();
-        gameScene.InvenUI.RefreshUI();
+        gameSceneUI.ChangeHpOrMp();
+        gameSceneUI.ChangeExp();
+        gameSceneUI.InvenUI.RefreshUI();
     }
 }
 

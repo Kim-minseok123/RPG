@@ -188,5 +188,9 @@ namespace Server.Game
 		{
 			return this;
 		}
-	}
+        public virtual void RewardExp(int exp)
+        {
+
+        }
+    }
 }

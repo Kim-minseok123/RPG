@@ -77,11 +77,29 @@ namespace Server.Game
                 if (item.ItemType == ItemType.Consumable)
                     return;
 
+				// 플레이어의 클래스나 레벨에 알맞는 아이템만 착용 가능
+				ClassTypes? itemRequiredClassType = Item.GetItemRequiredClassType(item);
+
+				if (itemRequiredClassType == null)
+					return;
+
+                if(classType != (ClassTypes)itemRequiredClassType)
+				{
+                    Console.WriteLine($"현재 직업에는 착용할 수 없는 장비 입니다. 요청한 플레이어 : {Info.Name}");
+					return;
+                }
+				if (Stat.Level < item.RequirementLevel)
+				{
+                    Console.WriteLine($"현재 레벨에는 착용할 수 없는 장비 입니다. 요청한 플레이어 : {Info.Name}");
+                    return;
+                }
+
                 Item unequipItem = null;
 
 				if (item.ItemType == ItemType.Weapon)
 				{
-					WeaponType weaponType = ((Weapon)item).WeaponType;
+					
+                    WeaponType weaponType = ((Weapon)item).WeaponType;
 					unequipItem = Inven.EquipFind(
 						i => i.Equipped && i.ItemType == ItemType.Weapon
 						&& ((weaponType == WeaponType.Assistance && ((Weapon)i).WeaponType == weaponType)
@@ -255,6 +273,36 @@ namespace Server.Game
 			useItemOk.StatInfo = new StatInfo();
 			useItemOk.StatInfo.MergeFrom(Stat);
 			Session.Send(useItemOk);
+        }
+		public override void RewardExp(int exp)
+		{
+			ExpData expData = null;
+			if (DataManager.ExpDict.TryGetValue(Stat.Level, out expData) == false) return;
+
+			Stat.Exp += exp;
+			if(Stat.Exp >= expData.requiredExp)
+			{
+				Stat.Exp -= expData.requiredExp;
+				Stat.Level++;
+				Stat.MaxHp += 20;
+				Stat.MaxMp += 6;
+				Stat.StatPoint += 5;
+				Stat.SkillPoint += 3;
+                DbTransaction.ExpNoti(this, levelUp: true);
+
+				S_MotionOrEffect levelUpEffect = new S_MotionOrEffect();
+				levelUpEffect.ObjectId = Id;
+				levelUpEffect.ActionName = "LevelUp";
+				Room.Broadcast(levelUpEffect);
+            }
+            else
+			{
+                DbTransaction.ExpNoti(this, levelUp: false);
+            }
+			S_ChangeStat changeStatPacket = new S_ChangeStat();
+			changeStatPacket.StatInfo = new StatInfo();
+			changeStatPacket.StatInfo.MergeFrom(Stat);
+			Session.Send(changeStatPacket);
         }
     }
 }

@@ -45,7 +45,6 @@ namespace Data
     }
 
     #endregion
-
     #region Item
 	[Serializable]
 	public class ItemData
@@ -148,5 +147,28 @@ namespace Data
         }
     }
 
+    #endregion
+    #region Exp
+    [Serializable]
+    public class ExpData
+    {
+        public int level;
+        public int requiredExp;
+    }
+    [Serializable]
+    public class ExpLoader : ILoader<int, ExpData>
+    {
+        public List<ExpData> exps = new List<ExpData>();
+
+        public Dictionary<int, ExpData> MakeDict()
+        {
+            Dictionary<int, ExpData> dict = new Dictionary<int, ExpData>();
+            foreach (ExpData exp in exps)
+            {
+                dict.Add(exp.level, exp);
+            }
+            return dict;
+        }
+    }
     #endregion
 }

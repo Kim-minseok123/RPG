@@ -148,12 +148,6 @@ public class PlayerController : CreatureController
         _anim.SetBool("Death", true);
         FinalAttacker = attacker;
     }
-    public void PickUpItem()
-    {
-        State = CreatureState.Wait;
-        _anim.SetTrigger("PickUp");
-        StartCoroutine(CoWaitForSecondsToState(1.5f, CreatureState.Idle));
-    }
     public void EquipItem(int id)
     {
         ItemData data = null;
@@ -219,4 +213,35 @@ public class PlayerController : CreatureController
                 break;
         }
     }
-}
+
+    public void StartMotionOrEffect(string actionName)
+    {
+        switch (actionName) 
+        {
+            case "Drop":
+                PickUpItemMotion();
+                break;
+            case "LevelUp":
+                LevelUpEffect();
+                break;
+            default:
+                Debug.Log("Not Exist Action : " + actionName);
+                break;
+        }
+    }
+    public void PickUpItemMotion()
+    {
+        State = CreatureState.Wait;
+        _anim.SetTrigger("PickUp");
+        StartCoroutine(CoWaitForSecondsToState(1.5f, CreatureState.Idle));
+    }
+
+    public void LevelUpEffect()
+    {
+        State = CreatureState.Wait;
+        _anim.SetTrigger("LevelUp");
+        GameObject effect = Managers.Resource.Instantiate("Effect/LevelUpEffect", transform);
+        Destroy(effect, 1.2f);
+        StartCoroutine(CoWaitForSecondsToState(1.2f, CreatureState.Idle));
+    }
+}   

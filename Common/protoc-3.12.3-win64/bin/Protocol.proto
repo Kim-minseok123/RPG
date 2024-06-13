@@ -30,7 +30,7 @@ enum MsgId {
   S_DIE = 23;
   S_ITEM_LIST = 24;
   C_GET_DROP_ITEM = 25;
-  S_GET_DROP_ITEM_MOTION = 26;
+  S_MOTION_OR_EFFECT = 26;
   S_EQUIP_ITEM_LIST = 27;
   C_EQUIP_ITEM = 28;
   S_EQUIP_ITEM = 29;
@@ -229,8 +229,9 @@ message S_AddItem {
 message C_GetDropItem {
   int32 dropItemId = 1;
 }
-message S_GetDropItemMotion {
+message S_MotionOrEffect {
   int32 objectId = 1;
+  string actionName = 2;
 }
 message C_EquipItem {
   int32 itemDbId = 1;
@@ -313,6 +314,7 @@ message StatInfo {
   int32 mp = 11;
   int32 maxMp = 12;
   int32 statPoint = 13;
+  int32 skillPoint = 14;
 }
 
 message SkillInfo {

@@ -80,6 +80,7 @@ namespace Server.Game
             Room.Broadcast(diePacket);
 
             ItemDrop(attacker);
+            attacker.RewardExp(Stat.Exp);
 
             Room.PushAfter(5000, DieEvent);
         }

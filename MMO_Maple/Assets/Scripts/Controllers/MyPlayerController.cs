@@ -16,6 +16,7 @@ public class MyPlayerController : PlayerController
     public override int MaxMp { get { return Stat.MaxMp; } protected set { Stat.MaxMp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     public override int Hp { get { return Stat.Hp; } protected set { Stat.Hp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     public override int Mp { get { return Stat.Mp; } protected set { Stat.Mp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
+    public int Exp { get { return Stat.Exp; } protected set { Stat.Exp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeExp(); } }
     public int MaxAttack { 
         get {
             int attack = (int)((Stat.Str * 4 + Stat.Dex) * WeaponDamage / 100);

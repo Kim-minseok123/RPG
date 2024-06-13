@@ -38,12 +38,22 @@ public class Item
     }
     public ItemType ItemType { get; private set; }
     public bool Stackable { get; protected set; }
-
+    public virtual string RequirementClass { get; protected set; }
+    public virtual int RequirementLevel { get; protected set; }
     public Item(ItemType itemType)
     {
         ItemType = itemType;
     }
-
+    public static ClassTypes? GetItemRequiredClassType(Item item)
+    {
+        if (item.RequirementClass.Equals("초보자"))
+            return ClassTypes.Beginner;
+        else if (item.RequirementClass.Equals("전사"))
+            return ClassTypes.Warrior;
+        else if (item.RequirementClass.Equals("궁수"))
+            return ClassTypes.Archer;
+        return null;
+    }
     public static Item MakeItem(ItemInfo itemInfo)
     {
         Item item = null;
@@ -84,8 +94,8 @@ public class Weapon : Item
 {
     public WeaponType WeaponType { get; private set; }
     public int Damage { get; private set; }
-    public string RequirementClass { get; private set; }
-    public int RequirementLevel { get; private set; }
+    public override string RequirementClass { get; protected set; }
+    public override int RequirementLevel { get; protected set; }
 
 
     public Weapon(int templateId) : base(ItemType.Weapon)
@@ -117,8 +127,8 @@ public class Armor : Item
 {
     public ArmorType ArmorType { get; private set; }
     public int Defence { get; private set; }
-    public string RequirementClass { get; private set; }
-    public int RequirementLevel { get; private set; }
+    public override string RequirementClass { get; protected set; }
+    public override int RequirementLevel { get; protected set; }
     public Armor(int templateId) : base(ItemType.Armor)
     {
         Init(templateId);

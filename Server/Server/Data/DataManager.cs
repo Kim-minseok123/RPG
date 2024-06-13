@@ -13,19 +13,20 @@ namespace Server.Data
 
 	public class DataManager
 	{
-		public static Dictionary<int, StatInfo> StatDict { get; private set; } = new Dictionary<int, StatInfo>();
 		public static Dictionary<int, Data.Skill> SkillDict { get; private set; } = new Dictionary<int, Data.Skill>();
 		public static Dictionary<int, Data.ItemData> ItemDict { get; private set; } = new Dictionary<int, Data.ItemData>();
 		public static Dictionary<int, Data.MonsterData> MonsterDict { get; private set; } = new Dictionary<int, Data.MonsterData>();
+        public static Dictionary<int, Data.ExpData> ExpDict { get; private set; } = new Dictionary<int, Data.ExpData>();
 
-		public static void LoadData()
+        public static void LoadData()
 		{
             SkillDict = LoadJson<Data.SkillData, int, Data.Skill>("SkillData").MakeDict();
             MonsterDict = LoadJson<Data.MonsterLoader, int, Data.MonsterData>("MonsterData").MakeDict();
 			ItemDict = LoadJson<Data.ItemLoader, int, Data.ItemData>("ItemData").MakeDict();
-		}
+			ExpDict = LoadJson<Data.ExpLoader, int, Data.ExpData>("ExpData").MakeDict();
+        }
 
-		static Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
+        static Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
 		{
 			string text = File.ReadAllText($"{ConfigManager.Config.dataPath}/{path}.json");
 			return Newtonsoft.Json.JsonConvert.DeserializeObject<Loader>(text);

@@ -87,5 +87,46 @@ namespace Server.DB
                 }
             });
         }
+        public static void ExpNoti(Player player, bool levelUp = false)
+        {
+            if (player == null)
+                return;
+
+            PlayerDb playerDb = new PlayerDb()
+            {
+                PlayerDbId = player.PlayerDbId,
+                Exp = player.Stat.Exp,
+            };
+            if (levelUp)
+            {
+                playerDb.Level = player.Stat.Level;
+                playerDb.MaxMp = player.Stat.MaxMp;
+                playerDb.MaxHp = player.Stat.MaxHp;
+                playerDb.StatPoint = player.Stat.StatPoint;
+                playerDb.SkillPoint = player.Stat.SkillPoint;
+            }
+
+            Instance.Push(() =>
+            {
+                using (AppDbContext db = new AppDbContext())
+                {
+                    db.Entry(playerDb).State = EntityState.Unchanged;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.Exp)).IsModified = true;
+                    if (levelUp)
+                    {
+                        db.Entry(playerDb).Property(nameof(PlayerDb.Level)).IsModified = true;
+                        db.Entry(playerDb).Property(nameof(PlayerDb.MaxHp)).IsModified = true;
+                        db.Entry(playerDb).Property(nameof(PlayerDb.MaxMp)).IsModified = true;
+                        db.Entry(playerDb).Property(nameof(PlayerDb.StatPoint)).IsModified = true;
+                        db.Entry(playerDb).Property(nameof(PlayerDb.SkillPoint)).IsModified = true;
+                    }
+                    bool success = db.SaveChangesEx();
+                    if (!success)
+                    {
+                        
+                    }
+                }
+            });
+        }
     }
 }

@@ -23,6 +23,8 @@ public class UI_ItemInfoCanvas : UI_Base
     {
         ItemInfoObj
     }
+    string classColor = "white";
+    string levelColor = "white";
     public override void Init()
     {
         BindObject(typeof(GameObjects));
@@ -39,9 +41,13 @@ public class UI_ItemInfoCanvas : UI_Base
 
         rectTransform.anchoredPosition = movePos;
     }
-    public void Setting(ItemData data)
+    public void Setting(ItemData data, bool classType = true, bool level = true)
     {
         itemData = data;
+
+        if (!classType) classColor = "red";
+        if (!level) levelColor = "red";
+
         RefreshUI();
     }
     private void RefreshUI()
@@ -55,14 +61,14 @@ public class UI_ItemInfoCanvas : UI_Base
         {
             case ItemType.Weapon:
                 WeaponData weapon = (WeaponData)itemData;
-                GetText((int)Texts.RequirementLevelText).text = "REQ LEV :\t" + weapon.requirementLevel.ToString();
-                GetText((int)Texts.RequirementClassText).text = "REQ ClS :\t" + weapon.requirementClass;
+                GetText((int)Texts.RequirementLevelText).text = $"<color={levelColor}>REQ LEV :\t{weapon.requirementLevel}</color>";
+                GetText((int)Texts.RequirementClassText).text = $"<color={classColor}>REQ ClS :\t{weapon.requirementClass}</color>";
                 GetText((int)Texts.DescriptionText).text = "공격력 : +" + weapon.damage;
                 break;
             case ItemType.Armor:
                 ArmorData armor = (ArmorData)itemData;
-                GetText((int)Texts.RequirementLevelText).text = "REQ LEV :\t" + armor.requirementLevel.ToString();
-                GetText((int)Texts.RequirementClassText).text = "REQ ClS :\t" + armor.requirementClass;
+                GetText((int)Texts.RequirementLevelText).text = $"<color={levelColor}>REQ LEV :\t{armor.requirementLevel}</color>";
+                GetText((int)Texts.RequirementClassText).text = $"<color={classColor}>REQ ClS :\t{armor.requirementClass}</color>";
                 GetText((int)Texts.DescriptionText).text = "방어력 : +" + armor.defence;
                 break;
             case ItemType.Consumable:

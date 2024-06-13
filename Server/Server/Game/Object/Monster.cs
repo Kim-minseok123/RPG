@@ -163,9 +163,11 @@ namespace Server.Game
 			}
 
 			base.OnDead(attacker);
+			if (attacker == null) return;
 			ItemDrop(attacker);
-            
+			attacker.RewardExp(Stat.Exp);
         }
+
 		public void ItemDrop(GameObject attacker)
 		{
             GameObject owner = attacker.GetOwner();

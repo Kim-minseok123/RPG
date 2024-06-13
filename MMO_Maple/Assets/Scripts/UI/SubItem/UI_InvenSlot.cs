@@ -18,7 +18,8 @@ public class UI_InvenSlot : UI_Base
     public int TemplateId { get; private set; }
     public int Count { get; private set; }
     public bool Equipped { get; private set; }
-
+    bool satisfiedClass = false;
+    bool satisfiedLevel = false;
 
     public override void Init()
     {
@@ -29,7 +30,7 @@ public class UI_InvenSlot : UI_Base
 
             if (itemData == null)
                 return;
-            // TODO : C_USE_ITEM
+            
             if (itemData.itemType == ItemType.Consumable)
             {
                 C_UseItem useItemPacket = new C_UseItem();
@@ -38,6 +39,8 @@ public class UI_InvenSlot : UI_Base
                 Managers.Network.Send(useItemPacket);
                 return;
             }
+            if (!satisfiedClass || !satisfiedLevel)
+                return;
             if (description != null)
                 Managers.Resource.Destroy(description);
             C_EquipItem equipPacket = new C_EquipItem();
@@ -51,7 +54,7 @@ public class UI_InvenSlot : UI_Base
         {
             if (itemData == null) return;
             description = Managers.Resource.Instantiate("UI/SubItem/UI_ItemInfoCanvas");
-            description.GetComponent<UI_ItemInfoCanvas>().Setting(itemData);
+            description.GetComponent<UI_ItemInfoCanvas>().Setting(itemData , satisfiedClass, satisfiedLevel);
         }, Define.UIEvent.PointerEnter);
 
         _icon.gameObject.BindEvent((e) =>
@@ -92,6 +95,14 @@ public class UI_InvenSlot : UI_Base
             {
                 _countText.gameObject.SetActive(true);
                 _countText.text = item.Count.ToString();
+            }
+            else
+            {
+                ClassTypes? classTypes = Item.GetItemRequiredClassType(item);
+                if (classTypes == null) return;
+
+                if ((int)classTypes == Managers.Object.MyPlayer.ClassType) satisfiedClass = true;
+                if (item.RequirementLevel <= Managers.Object.MyPlayer.Stat.Level) satisfiedLevel = true;
             }
         }
     }

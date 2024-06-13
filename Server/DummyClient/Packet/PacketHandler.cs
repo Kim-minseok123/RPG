@@ -74,7 +74,7 @@ public class PacketHandler
         else
         {
             // 무조건 첫번째 로그인
-            LobbyPlayerInfo info = loginPacket.Players[0];
+            LobbyPlayerInfo info = loginPacket.Players[0].Player;
             C_EnterGame enterGamePacket = new C_EnterGame();
             enterGamePacket.Name = info.Name;
             serverSession.Send(enterGamePacket);
@@ -93,7 +93,7 @@ public class PacketHandler
         else
         {
             C_EnterGame enterGamePacket = new C_EnterGame();
-            enterGamePacket.Name = createOkPacket.Player.Name;
+            enterGamePacket.Name = createOkPacket.Player.Player.Name;
             serverSession.Send(enterGamePacket);
         }
     }
@@ -109,7 +109,7 @@ public class PacketHandler
         else
         {
             C_EnterGame enterGamePacket = new C_EnterGame();
-            enterGamePacket.Name = createOkPacket.Player.Name;
+            enterGamePacket.Name = createOkPacket.Player.Player.Name;
             serverSession.Send(enterGamePacket);
         }
     }
@@ -151,5 +151,13 @@ public class PacketHandler
     public static void S_EquipItemListHandler(PacketSession session, IMessage packet)
     {
         S_EquipItemList equipItemListPacket = new S_EquipItemList();
+    }
+    public static void S_ChangeConsumableItemHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+    public static void S_UseItemHandler(PacketSession session, IMessage packet)
+    {
+
     }
 }

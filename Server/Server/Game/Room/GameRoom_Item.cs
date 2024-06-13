@@ -33,8 +33,9 @@ namespace Server.Game
                 S_Banish banPacket = new S_Banish();
                 player.Session.Send(banPacket);
             }
-            S_GetDropItemMotion motionPacket = new S_GetDropItemMotion();
+            S_MotionOrEffect motionPacket = new S_MotionOrEffect();
             motionPacket.ObjectId = player.Id;
+            motionPacket.ActionName = "Drop";
             Broadcast(motionPacket);
             if (dropItem._rewardData.itemId == 1000)
                 DbTransaction.GetItemPlayer(player, dropItem._rewardData, this, dropItem);

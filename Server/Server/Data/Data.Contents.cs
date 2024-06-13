@@ -5,25 +5,6 @@ using System.Text;
 
 namespace Server.Data
 {
-	#region Stat
-	[Serializable]
-	public class StatData : ILoader<int, StatInfo>
-	{
-		public List<StatInfo> stats = new List<StatInfo>();
-
-		public Dictionary<int, StatInfo> MakeDict()
-		{
-			Dictionary<int, StatInfo> dict = new Dictionary<int, StatInfo>();
-			foreach (StatInfo stat in stats)
-			{
-				stat.Hp = stat.MaxHp;
-				dict.Add(stat.Level, stat);
-			}	
-			return dict;
-		}
-	}
-    #endregion
-
     #region Skill
     [Serializable]
     public class Skill
@@ -62,7 +43,6 @@ namespace Server.Data
         }
     }
     #endregion
-
     #region Item
     [Serializable]
 	public class ItemData
@@ -126,7 +106,6 @@ namespace Server.Data
 		}
 	}
 	#endregion
-
 	#region Monster
 	[Serializable]
 	public class RewardData
@@ -163,5 +142,28 @@ namespace Server.Data
 		}
 	}
 
-	#endregion
+    #endregion
+    #region Exp
+    [Serializable]
+    public class ExpData
+    {
+        public int level;
+        public int requiredExp;
+    }
+    [Serializable]
+    public class ExpLoader : ILoader<int, ExpData>
+    {
+        public List<ExpData> exps = new List<ExpData>();
+
+        public Dictionary<int, ExpData> MakeDict()
+        {
+            Dictionary<int, ExpData> dict = new Dictionary<int, ExpData>();
+            foreach (ExpData exp in exps)
+            {
+                dict.Add(exp.level, exp);
+            }
+            return dict;
+        }
+    }
+    #endregion
 }
