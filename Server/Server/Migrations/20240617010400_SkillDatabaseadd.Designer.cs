@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Server.DB;
 
 namespace Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240617010400_SkillDatabaseadd")]
+    partial class SkillDatabaseadd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,29 +155,6 @@ namespace Server.Migrations
                     b.ToTable("Player");
                 });
 
-            modelBuilder.Entity("Server.DB.SkillDb", b =>
-                {
-                    b.Property<int>("SkillDbId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("PlayerDbId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SkillLevel")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TemplateId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SkillDbId");
-
-                    b.HasIndex("PlayerDbId");
-
-                    b.ToTable("Skill");
-                });
-
             modelBuilder.Entity("Server.DB.ItemDb", b =>
                 {
                     b.HasOne("Server.DB.PlayerDb", "Owner")
@@ -190,13 +169,6 @@ namespace Server.Migrations
                         .HasForeignKey("AccountDbId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Server.DB.SkillDb", b =>
-                {
-                    b.HasOne("Server.DB.PlayerDb", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerDbId");
                 });
 #pragma warning restore 612, 618
         }

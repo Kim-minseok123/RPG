@@ -144,9 +144,9 @@ public class PacketHandler
         S_Ping pingPacket = new S_Ping();
     }
 
-    public static void S_GetDropItemMotionHandler(PacketSession session, IMessage packet)
+    public static void S_MotionOrEffectHandler(PacketSession session, IMessage packet)
     {
-        S_GetDropItemMotion getDropItemMotionPacket = new S_GetDropItemMotion();
+        S_MotionOrEffect getDropItemMotionPacket = new S_MotionOrEffect();
     }
     public static void S_EquipItemListHandler(PacketSession session, IMessage packet)
     {

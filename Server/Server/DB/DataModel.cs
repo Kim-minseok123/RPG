@@ -61,4 +61,14 @@ namespace Server.DB
 		public int? OwnerDbId { get; set; }
 		public PlayerDb Owner { get; set; }
 	}
+	[Table("Skill")]
+	public class SkillDb
+	{
+		public int SkillDbId { get; set; }
+		public int TemplateId { get; set; }
+		public int SkillLevel { get; set; }
+        [ForeignKey("Player")]
+        public int? PlayerDbId { get; set; }
+        public PlayerDb Player { get; set; }
+    }
 }

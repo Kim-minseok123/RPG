@@ -303,6 +303,7 @@ class PacketHandler
         myPlayer.SetStat(changeStatPacket.StatInfo);
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         gameSceneUI.StatUI.RefreshUI();
+        gameSceneUI.SkillUI.RefreshUI();
         gameSceneUI.ChangeHpOrMp();
         gameSceneUI.ChangeExp();
 
@@ -334,6 +335,21 @@ class PacketHandler
         gameSceneUI.ChangeHpOrMp();
         gameSceneUI.ChangeExp();
         gameSceneUI.InvenUI.RefreshUI();
+    }
+    public static void S_SkillListHandler(PacketSession session, IMessage packet)
+    {
+        S_SkillList skillList = (S_SkillList)packet;
+        MyPlayerController myPlayer = Managers.Object.MyPlayer;
+
+        if (myPlayer == null)
+            return;
+        myPlayer.HaveSkillData.Clear();
+        foreach (SkillInfo skill in skillList.Skills)
+        {
+            myPlayer.HaveSkillData.Add(skill.SkillId, skill.Level);
+        }
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        gameSceneUI.SkillUI.RefreshUI();
     }
 }
 

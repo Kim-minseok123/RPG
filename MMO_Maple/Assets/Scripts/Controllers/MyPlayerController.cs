@@ -17,6 +17,7 @@ public class MyPlayerController : PlayerController
     public override int Hp { get { return Stat.Hp; } protected set { Stat.Hp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     public override int Mp { get { return Stat.Mp; } protected set { Stat.Mp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     public int Exp { get { return Stat.Exp; } protected set { Stat.Exp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeExp(); } }
+    public Dictionary<int, int> HaveSkillData = new Dictionary<int, int>();
     public int MaxAttack { 
         get {
             int attack = (int)((Stat.Str * 4 + Stat.Dex) * WeaponDamage / 100);
@@ -121,6 +122,20 @@ public class MyPlayerController : PlayerController
                 gameSceneUI.OpenUI("Equip");
             }
         }
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            UI_Skill skillUI = gameSceneUI.SkillUI;
+
+            if (skillUI.gameObject.activeSelf)
+            {
+                gameSceneUI.CloseUI("UI_Skill");
+            }
+            else
+            {
+                gameSceneUI.OpenUI("Skill");
+            }
+        }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
@@ -130,11 +145,6 @@ public class MyPlayerController : PlayerController
         {
             FindCloseMob();
         }
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + new Vector3(0f, 0.8f, 0f), 2f);
     }
     private void FindCloseMob()
     {
@@ -160,7 +170,6 @@ public class MyPlayerController : PlayerController
             MakePosPacket();
         }
     }
-
     public void OnClickMouseInputEvent()
     {
         if (State == CreatureState.Dead) return;
@@ -221,7 +230,6 @@ public class MyPlayerController : PlayerController
             }
         }
     }
-
     public override IEnumerator CheckPosInfo() {
         while (true)
         {
@@ -246,19 +254,23 @@ public class MyPlayerController : PlayerController
     }
     public IEnumerator CoAttackTimeWait(Skill skill, bool isContinual = false)
     {
-        for (int i = 0; i < skill.skillDatas.Count; i++)
+        if(skill.skillType == SkillType.SkillMeleeAttack)
         {
-            yield return new WaitForSeconds(skill.skillDatas[i].attackTime);
-            if(State == CreatureState.Skill)
+            AttackSkill attackSkill = (AttackSkill)skill;
+            for (int i = 0; i < attackSkill.skillDatas.Count; i++)
             {
-                C_MeleeAttack meleeAttack = new C_MeleeAttack() { Info = new SkillInfo(), Forward = new Positions() };
-                meleeAttack.Info.SkillId = skill.id;
-                meleeAttack.Forward = Util.Vector3ToPositions(transform.forward);
-                meleeAttack.IsMonster = false;
-                meleeAttack.ObjectId = Id;
-                if (isContinual) { meleeAttack.Time = i; }
-                else { meleeAttack.Time = 0; }
-                Managers.Network.Send(meleeAttack);
+                yield return new WaitForSeconds(attackSkill.skillDatas[i].attackTime);
+                if (State == CreatureState.Skill)
+                {
+                    C_MeleeAttack meleeAttack = new C_MeleeAttack() { Info = new SkillInfo(), Forward = new Positions() };
+                    meleeAttack.Info.SkillId = attackSkill.id;
+                    meleeAttack.Forward = Util.Vector3ToPositions(transform.forward);
+                    meleeAttack.IsMonster = false;
+                    meleeAttack.ObjectId = Id;
+                    if (isContinual) { meleeAttack.Time = i; }
+                    else { meleeAttack.Time = 0; }
+                    Managers.Network.Send(meleeAttack);
+                }
             }
         }
     }

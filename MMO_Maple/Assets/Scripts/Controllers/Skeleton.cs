@@ -28,13 +28,14 @@ public class Skeleton : MonsterController
 
     public IEnumerator CoAttackPacket(Skill skill)
     {
-        yield return new WaitForSeconds(skill.skillDatas[0].attackTime);
-        if (State == CreatureState.Dead) yield break; 
+        AttackSkill attackSkill = skill as AttackSkill;
+        yield return new WaitForSeconds(attackSkill.skillDatas[0].attackTime);
+        if (State == CreatureState.Dead) yield break;
 #if UNITY_SERVER
         if(State == CreatureState.Skill)
         {
             C_MeleeAttack meleeAttack = new C_MeleeAttack() { Info = new SkillInfo(), Forward = new Positions() };
-            meleeAttack.Info.SkillId = skill.id;
+            meleeAttack.Info.SkillId = attackSkill.id;
             meleeAttack.Forward = Util.Vector3ToPositions(transform.forward);
             meleeAttack.IsMonster = true;
             meleeAttack.Time = 0;
@@ -42,7 +43,7 @@ public class Skeleton : MonsterController
             Managers.Network.Send(meleeAttack);
         }
 #endif
-        yield return new WaitForSeconds(skill.cooldown - (int)skill.skillDatas[0].attackTime);
+        yield return new WaitForSeconds(skill.cooldown - (int)attackSkill.skillDatas[0].attackTime);
         if (State == CreatureState.Dead) yield break;
         State = CreatureState.Idle;
         isAttackMotion = false;

@@ -39,6 +39,7 @@ enum MsgId {
   S_CHANGE_CONSUMABLE_ITEM = 32;
   C_USE_ITEM = 33;
   S_USE_ITEM = 34;
+  S_SKILL_LIST = 35;
 }
 
 enum CreatureState {
@@ -68,7 +69,7 @@ enum GameObjectType {
 enum SkillType {
   SKILL_NONE = 0;
   SKILL_AUTO = 1;
-  SKILL_PROJECTILE = 2;
+  SKILL_BUFF = 2;
   SKILL_MELEE_ATTACK = 3;
 }
 
@@ -179,14 +180,6 @@ message C_CheckPos{
 	bool isMonster = 2;
 	int32 objectId = 3;
 }
-message C_Skill {
-  SkillInfo info = 1;
-}
-
-message S_Skill {
-  int32 objectId = 1;
-  SkillInfo info = 2;
-}
 message C_SkillMotion{
   SkillInfo info = 1;
   int32 objectId = 2;
@@ -209,7 +202,6 @@ message S_ChangeHp {
   bool isHeal = 3;
   int32 changeHp = 4;
 }
-
 message S_Die {
   int32 objectId = 1;
   int32 attackerId = 2;
@@ -266,6 +258,9 @@ message S_UseItem{
   int32 count = 2;
   StatInfo statInfo = 3;
 }
+message S_SkillList{
+  repeated SkillInfo skills = 1;
+}
 message S_Ping {
 
 }
@@ -319,6 +314,7 @@ message StatInfo {
 
 message SkillInfo {
   int32 skillId = 1;
+  int32 level = 2;
 }
 
 message ItemInfo {

@@ -127,14 +127,22 @@ public class PlayerController : CreatureController
         }
         else
         {
-            _anim.SetTrigger("Damage");
-            // 체력바 등 작업
-            Hp = hp;
-            State = CreatureState.Wait;
-            if(hp > 0 )
-                StartCoroutine(CoWaitForSecondsToState(0.8f, CreatureState.Idle));
-            GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
-            damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
+            if (damage <= 0)
+            {
+                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
+                damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
+            }
+            else
+            {
+                _anim.SetTrigger("Damage");
+                // 체력바 등 작업
+                Hp = hp;
+                State = CreatureState.Wait;
+                if (hp > 0)
+                    StartCoroutine(CoWaitForSecondsToState(0.8f, CreatureState.Idle));
+                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
+                damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
+            }
         }
     }
     IEnumerator CoWaitForSecondsToState(float time, CreatureState state)

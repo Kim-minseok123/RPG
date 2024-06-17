@@ -38,17 +38,20 @@ namespace Server.Game
                     DataManager.SkillDict.TryGetValue(4, out skillData);
                     Vector3 attacker = Utils.PositionsToVector3(Pos);
                     Vector3 target = Utils.PositionsToVector3(Target.Pos);
-                    if(Room != null && Target != null && Room.IsObjectInRange(attacker, target, forwardMonster, skillData.skillDatas[0].range))
+                    if (skillData.skillType == SkillType.SkillMeleeAttack)
                     {
-                        if (Room != null && State == CreatureState.Skill)
+                        if (Room != null && Target != null && Room.IsObjectInRange(attacker, target, forwardMonster, ((AttackSkill)skillData).skillDatas[0].range))
                         {
-                            Target.OnDamaged(this, skillData.skillDatas[0].damage + TotalAttack);
+                            if (Room != null && State == CreatureState.Skill)
+                            {
+                                Target.OnDamaged(this, ((AttackSkill)skillData).skillDatas[0].damage + TotalAttack);
+                            }
                         }
+                        int coolTick = (int)(1000 * skillData.cooldown);
+                        _coolTick = Environment.TickCount64 + coolTick;
+                        isCanAttack = false;
+                        isMotion = false;
                     }
-                    int coolTick = (int)(1000 * skillData.cooldown);
-                    _coolTick = Environment.TickCount64 + coolTick;
-                    isCanAttack = false;
-                    isMotion = false;
                 }
                 else
                 {

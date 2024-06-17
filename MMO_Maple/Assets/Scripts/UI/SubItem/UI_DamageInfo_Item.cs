@@ -26,7 +26,10 @@ public class UI_DamageInfo_Item : UI_Base
     public void Setting(int damage, Transform obj)
     {
         TextMeshProUGUI text = GetText((int)Texts.DamageText);
-        text.text = damage.ToString();
+        if (damage <= 0)
+            text.text = "MISS";
+        else
+            text.text = damage.ToString();
         transform.position = obj.position;
         text.transform.DOMoveY(text.transform.position.y + 0.5f, 2f).SetEase(Ease.OutCirc);
         text.DOFade(0, 2).SetEase(Ease.OutCirc).OnComplete(() => { Managers.Resource.Destroy(gameObject); });

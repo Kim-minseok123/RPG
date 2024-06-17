@@ -21,7 +21,7 @@ namespace Server.Game
 		public ClassTypes classType { get; set; }
 		public int WeaponDamage { get; private set; }
 		public int ArmorDefence { get; private set; }
-
+		public Dictionary<int,int> HaveSkillData = new Dictionary<int,int>();
 		public Player()
 		{
 			ObjectType = GameObjectType.Player;

@@ -195,6 +195,13 @@ namespace Server
 					}
 					itemListPacket.Money = findPlayerDb.Money;
                     Send(itemListPacket);
+					List<SkillDb> skills = db.Skills
+						.Where(s => s.PlayerDbId == playerInfo.PlayerDbId)
+						.ToList();
+					foreach (SkillDb skillDb in skills)
+					{
+						MyPlayer.HaveSkillData.Add(skillDb.TemplateId, skillDb.SkillLevel);
+					}
                 }
             }
 

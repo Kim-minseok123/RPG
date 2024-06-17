@@ -43,7 +43,7 @@ namespace Server.Game
             {
                 ItemData itemData = null;
                 if (DataManager.ItemDict.TryGetValue(dropItem._rewardData.itemId, out itemData) == false) return;
-                if (itemData.itemType == ItemType.Consumable)
+                if (itemData.itemType == ItemType.Consumable && ((ConsumableData)itemData).maxCount > 1)
                     DbTransaction.GetConsumableItemPlayer(player, dropItem._rewardData, this, dropItem);
                 else
                     DbTransaction.GetItemPlayer(player, dropItem._rewardData, this, dropItem);

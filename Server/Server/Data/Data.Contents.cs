@@ -13,12 +13,24 @@ namespace Server.Data
         public string name;
         public float cooldown;
         public SkillType skillType;
+        public int masterLevel;
+    }
+    [Serializable]
+    public class AttackSkill : Skill
+	{
         public List<SkillDataInfo> skillDatas;
+    }
+    [Serializable]
+    public class BuffSkill : Skill
+	{
+		public int duration;
+		public int skillLevelInc; 
     }
     public class SkillDataInfo
     {
         public float attackTime;
         public int damage;
+		public int skillLevelInc;
         public SKillRange range;
     }
     public class SKillRange
@@ -32,13 +44,20 @@ namespace Server.Data
     [Serializable]
     public class SkillData : ILoader<int, Skill>
     {
-        public List<Skill> skills = new List<Skill>();
+        public List<AttackSkill> attackSkills = new List<AttackSkill>();
+        public List<BuffSkill> buffSkills = new List<BuffSkill>();
 
         public Dictionary<int, Skill> MakeDict()
         {
             Dictionary<int, Skill> dict = new Dictionary<int, Skill>();
-            foreach (Skill skill in skills)
+            foreach (Skill skill in attackSkills)
+			{
+				dict.Add(skill.id, skill);
+            }
+            foreach (Skill skill in buffSkills)
+            {
                 dict.Add(skill.id, skill);
+            }
             return dict;
         }
     }

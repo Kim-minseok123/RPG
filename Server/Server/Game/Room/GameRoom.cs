@@ -34,7 +34,6 @@ namespace Server.Game
 			int y = (Map.MaxY - cellPos.y) / ZoneCells;
 			return GetZone(y, x);
 		}
-
 		public Zone GetZone(int indexY, int indexX)
 		{
 			if (indexX < 0 || indexX >= Zones.GetLength(1))
@@ -44,7 +43,6 @@ namespace Server.Game
 
 			return Zones[indexY, indexX];
 		}
-
 		public void Init(int mapId, int zoneCells)
 		{
 			//Map.LoadMap(mapId);
@@ -78,12 +76,10 @@ namespace Server.Game
             skeleton.Init(1);
             EnterGame(skeleton);
         }
-		// 누군가 주기적으로 호출해줘야 한다
 		public void Update()
 		{
 			Flush();
 		}
-
 		Random _rand = new Random();
 		public void EnterGame(GameObject gameObject)
 		{
@@ -116,6 +112,18 @@ namespace Server.Game
 							equipItemList.TemplateIds.Add(player.Inven.EquipItems[i].TemplateId);
 					}
 					player.Session.Send(equipItemList);
+
+                    S_SkillList skillListPacket = new S_SkillList();
+
+					foreach (var skillinfo in player.HaveSkillData)
+					{
+                        SkillInfo info = new SkillInfo();
+                        info.SkillId = skillinfo.Key;
+                        info.Level = skillinfo.Value;
+                        skillListPacket.Skills.Add(info);
+                    }
+
+                    player.Session.Send(skillListPacket);
 
                     //player.Vision.Update();
 
@@ -183,7 +191,6 @@ namespace Server.Game
                 }
             }
 		}
-
 		public void LeaveGame(int objectId)
 		{
 			GameObjectType type = ObjectManager.GetObjectTypeById(objectId);
@@ -237,7 +244,6 @@ namespace Server.Game
 				Broadcast(despawnPacket);
 			}
 		}
-
 		Player FindPlayer(Func<GameObject, bool> condition)
 		{
 			foreach (Player player in _players.Values)
@@ -248,8 +254,6 @@ namespace Server.Game
 
 			return null;
 		}
-
-		// 살짝 부담스러운 함수
 		public Player FindClosestPlayer(Vector2Int pos, int range)
 		{
 			List<Player> players = GetAdjacentPlayers(pos, range);
@@ -296,17 +300,11 @@ namespace Server.Game
 				p.Session.Send(packet);
 			}
 		}
-
 		public List<Player> GetAdjacentPlayers(Vector2Int pos, int range)
 		{
 			List<Zone> zones = GetAdjacentZones(pos, range);
 			return zones.SelectMany(z => z.Players).ToList();
 		}
-
-		// ㅁㅁㅁㅁㅁㅁ
-		// ㅁㅁㅁㅁㅁㅁ
-		// ㅁㅁㅁㅁㅁㅁ
-		// ㅁㅁㅁㅁㅁㅁ
 		public List<Zone> GetAdjacentZones(Vector2Int cellPos, int range = GameRoom.VisionCells)
 		{
 			HashSet<Zone> zones = new HashSet<Zone>();

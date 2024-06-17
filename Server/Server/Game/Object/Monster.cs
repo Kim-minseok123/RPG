@@ -219,6 +219,7 @@ namespace Server.Game
 			}
 			return null;
 		}
+		protected IJob skillJob;
         public override void OnDamaged(GameObject attacker, int damage)
         {
 			if (State == CreatureState.Dead) return;
@@ -234,11 +235,19 @@ namespace Server.Game
                 resStopMovePacket.Pos = Pos;
                 Room.Broadcast(resStopMovePacket);
 				_MoveTick = 0;
-                State = CreatureState.Wait;
+				if (damage - Stat.Defense > 0) 
+				{
+                    State = CreatureState.Wait;
+                    isCanAttack = false;
+                    isMotion = false;
+                }
                 Console.WriteLine("맞음");
-                isCanAttack = false;
-                isMotion = false;
-                Room.PushAfter(1200, ChangeStateAfterTime, CreatureState.Skill);
+                if(skillJob != null)
+				{
+					skillJob.Cancel = true;
+					skillJob = null;
+				}
+                skillJob = Room.PushAfter(1200, ChangeStateAfterTime, CreatureState.Skill);
             }
         }
 		public void ChangeStateAfterTime(CreatureState state)
