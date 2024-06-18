@@ -167,7 +167,7 @@ namespace Server.Game
                             {
                                 int damage =
                                     (((AttackSkill)skill).skillDatas[meleeAttack.Time].damage
-                                    + (((AttackSkill)skill).skillDatas[meleeAttack.Time].skillLevelInc * level))
+                                    + (((AttackSkill)skill).skillDatas[meleeAttack.Time].skillLevelInc * (level - 1)))
                                     / 100
                                     * player.Attack;
                                 monster.OnDamaged(player, damage);
