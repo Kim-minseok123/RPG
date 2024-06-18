@@ -15,6 +15,7 @@ namespace Data
         public float cooldown;
         public SkillType skillType;
         public int masterLevel;
+        public bool isContinual;
     }
     [Serializable]
     public class AttackSkill : Skill

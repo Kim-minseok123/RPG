@@ -304,5 +304,32 @@ namespace Server.Game
 			changeStatPacket.StatInfo.MergeFrom(Stat);
 			Session.Send(changeStatPacket);
         }
+
+		public void HandleSkillLevelUp(C_SkillLevelUp skillLevelUp)
+		{
+			if (Stat.SkillPoint <= 0) return;
+			int id = skillLevelUp.Skill.SkillId;
+			int level;
+			bool isNew = false;
+			if(HaveSkillData.TryGetValue(skillLevelUp.Skill.SkillId, out level) == true)
+			{
+				HaveSkillData[skillLevelUp.Skill.SkillId]++;
+				isNew = false;
+			}
+			else
+			{
+				HaveSkillData.Add(skillLevelUp.Skill.SkillId, 1);
+				level = 1;
+				isNew = true;
+			}
+			Stat.SkillPoint--;
+			SkillInfo skillInfo = new SkillInfo() { SkillId = id, Level = level };
+			DbTransaction.SkillLevelNoti(this, skillInfo);
+
+			S_SkillLevelUp skillLevelUpOkPacket = new S_SkillLevelUp() { Skill = new SkillInfo() };
+			skillLevelUpOkPacket.Skill.MergeFrom(skillInfo);
+			skillLevelUpOkPacket.IsNew = isNew;
+			Session.Send(skillLevelUpOkPacket);
+		}
     }
 }

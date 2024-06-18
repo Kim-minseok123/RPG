@@ -178,4 +178,17 @@ class PacketHandler
 
         room.Push(room.HandleUseItem, player, useItemPacket);
     }
+    public static void C_SkillLevelUpHandler(PacketSession session, IMessage packet)
+    {
+        C_SkillLevelUp skillLevelUpPacket = (C_SkillLevelUp)packet;
+        ClientSession clientSession = (ClientSession)session;
+
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+        GameRoom room = player.Room;
+        if (room == null) return;
+
+        room.Push(room.HandleSkillLevelUp, player, skillLevelUpPacket);
+    }
 }

@@ -13,6 +13,7 @@ namespace Server.Data
         public string name;
         public float cooldown;
         public SkillType skillType;
+        public bool isContinual;
         public int masterLevel;
     }
     [Serializable]

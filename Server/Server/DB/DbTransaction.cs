@@ -32,6 +32,7 @@ namespace Server.DB
 			playerDb.posZ = player.Pos.PosZ;
 			playerDb.Level = player.Stat.Level;
 			playerDb.PlayerClass = player.classType;
+            playerDb.SkillPoint = player.Stat.SkillPoint;
 
             Instance.Push(() =>
             {
@@ -52,6 +53,7 @@ namespace Server.DB
                     db.Entry(playerDb).Property(nameof(PlayerDb.posZ)).IsModified = true;
                     db.Entry(playerDb).Property(nameof(PlayerDb.Level)).IsModified = true;
                     db.Entry(playerDb).Property(nameof(PlayerDb.PlayerClass)).IsModified = true;
+                    db.Entry(playerDb).Property(nameof(PlayerDb.SkillPoint)).IsModified = true;
                     bool success = db.SaveChangesEx();
                     if (success)
                     {

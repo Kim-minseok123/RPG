@@ -69,15 +69,15 @@ public class UI_Skill : UI_Base
         switch (myPlayer.ClassType)
         {
             case (int)ClassTypes.Beginner:
-                GetText((int)Texts.SkillTitleText).text = "초보자의 길";
+                GetText((int)Texts.SkillTitleText).text = "초보자 모험 가이드";
                 GetImage((int)Images.ClassLogoImage).sprite = Beginner;
                 break;
             case (int)ClassTypes.Warrior:
-                GetText((int)Texts.SkillTitleText).text = "전사의 시작";
+                GetText((int)Texts.SkillTitleText).text = "전사 입문서";
                 GetImage((int)Images.ClassLogoImage).sprite = Warrior;
                 break;
             case (int)ClassTypes.Archer:
-                GetText((int)Texts.SkillTitleText).text = "궁수의 시작";
+                GetText((int)Texts.SkillTitleText).text = "궁수 입문서";
                 GetImage((int)Images.ClassLogoImage).sprite = Archer;
                 break;
         }

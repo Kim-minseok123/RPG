@@ -1,4 +1,5 @@
 using Data;
+using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class UI_SkillInfo : UI_Base
     enum Images
     {
         IconImage,
+        LockSkillImage
     }
     enum Texts
     {
@@ -29,6 +31,16 @@ public class UI_SkillInfo : UI_Base
         BindImage(typeof(Images));
         BindText(typeof(Texts));
         BindButton(typeof(Buttons));
+
+        GetButton((int)Buttons.SkillLevelUpBtn).gameObject.BindEvent(
+            e => 
+            {
+                if (Managers.Object.MyPlayer.Stat.SkillPoint <= 0) return;
+                C_SkillLevelUp skillLevelUp = new C_SkillLevelUp() { Skill = new SkillInfo() };
+                skillLevelUp.Skill.SkillId = templateId;
+                skillLevelUp.Skill.Level = 1;
+                Managers.Network.Send(skillLevelUp);
+            });
 
         _init = true;
 
@@ -50,9 +62,11 @@ public class UI_SkillInfo : UI_Base
         if(Managers.Object.MyPlayer.HaveSkillData.TryGetValue(templateId, out skillLevel) == false)
         {
             GetText((int)Texts.SkillLevelText).text = "0";
+            GetImage((int)Images.LockSkillImage).color = new Color(1, 1, 1, 0.5f);
         }
         else
         {
+            GetImage((int)Images.LockSkillImage).color = new Color(1, 1, 1, 0);
             GetText((int)Texts.SkillLevelText).text = skillLevel.ToString();
         }
         if(Managers.Object.MyPlayer.Stat.SkillPoint <= 0)

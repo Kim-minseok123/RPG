@@ -40,6 +40,8 @@ enum MsgId {
   C_USE_ITEM = 33;
   S_USE_ITEM = 34;
   S_SKILL_LIST = 35;
+  C_SKILL_LEVEL_UP = 36;
+  S_SKILL_LEVEL_UP = 37;
 }
 
 enum CreatureState {
@@ -249,17 +251,24 @@ message S_ChangeConsumableItem{
 message C_ChangeStat {
   string changeStat = 1;
 }
-message C_UseItem{
+message C_UseItem {
   int32 itemDbId = 1;
   int32 count = 2;
 }
-message S_UseItem{
+message S_UseItem {
   int32 itemDbId = 1;
   int32 count = 2;
   StatInfo statInfo = 3;
 }
-message S_SkillList{
+message S_SkillList {
   repeated SkillInfo skills = 1;
+}
+message C_SkillLevelUp {
+  SkillInfo skill = 1;
+}
+message S_SkillLevelUp {
+  SkillInfo skill = 1;
+  bool isNew = 2;
 }
 message S_Ping {
 

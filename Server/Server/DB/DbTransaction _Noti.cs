@@ -128,5 +128,58 @@ namespace Server.DB
                 }
             });
         }
+        public static void SkillLevelNoti(Player player, SkillInfo skillInfo)
+        {
+            if (player == null || skillInfo == null || skillInfo.Level <= 0) return;
+
+            Instance.Push(() =>
+            {
+                using (AppDbContext db = new AppDbContext())
+                {
+                    bool success = false;
+
+                    if (skillInfo.Level == 1)
+                    {
+                        success = AddNewSkill(db, player.PlayerDbId, skillInfo.SkillId, skillInfo.Level);
+                    }
+                    else
+                    {
+                        success = UpdateSkillLevel(db, player.PlayerDbId, skillInfo.SkillId, skillInfo.Level);
+                    }
+
+                    if (!success)
+                    {
+                        // 실패 시 로깅 또는 예외 처리
+                        Console.WriteLine("Skill level update failed for PlayerDbId: " + player.PlayerDbId);
+                    }
+                }
+            });
+        }
+
+        private static bool AddNewSkill(AppDbContext db, int playerDbId, int skillId, int skillLevel)
+        {
+            SkillDb skillDb = new SkillDb
+            {
+                PlayerDbId = playerDbId,
+                TemplateId = skillId,
+                SkillLevel = skillLevel
+            };
+            db.Skills.Add(skillDb);
+            return db.SaveChangesEx();
+        }
+
+        private static bool UpdateSkillLevel(AppDbContext db, int playerDbId, int skillId, int skillLevel)
+        {
+            SkillDb skillDb = db.Skills.SingleOrDefault(s => s.PlayerDbId == playerDbId && s.TemplateId == skillId);
+            if (skillDb != null)
+            {
+                skillDb.SkillLevel = skillLevel;
+                db.Entry(skillDb).State = EntityState.Unchanged;
+                db.Entry(skillDb).Property(nameof(SkillDb.SkillLevel)).IsModified = true;
+                return db.SaveChangesEx();
+            }
+            return false;
+        }
+
     }
 }

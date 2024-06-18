@@ -351,6 +351,27 @@ class PacketHandler
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         gameSceneUI.SkillUI.RefreshUI();
     }
+    public static void S_SkillLevelUpHandler(PacketSession session, IMessage packet)
+    {
+        S_SkillLevelUp skillLevelUp = (S_SkillLevelUp)packet;
+        MyPlayerController myPlayer = Managers.Object.MyPlayer;
+
+        if(myPlayer == null) return;
+
+        myPlayer.Stat.SkillPoint--;
+        SkillInfo skillInfo = skillLevelUp.Skill;
+
+        if (skillLevelUp.IsNew)
+        {
+            myPlayer.HaveSkillData.Add(skillInfo.SkillId, skillInfo.Level);
+        }
+        else
+        {
+            myPlayer.HaveSkillData[skillInfo.SkillId] = skillInfo.Level;
+        }
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        gameSceneUI.SkillUI.RefreshUI();
+    }
 }
 
 

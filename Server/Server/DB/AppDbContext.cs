@@ -37,6 +37,9 @@ namespace Server.DB
 			builder.Entity<PlayerDb>()
 				.HasIndex(p => p.PlayerName)
 				.IsUnique();
-		}
+
+            builder.Entity<SkillDb>()
+            .HasAlternateKey(s => new { s.PlayerDbId, s.TemplateId });
+        }
 	}
 }

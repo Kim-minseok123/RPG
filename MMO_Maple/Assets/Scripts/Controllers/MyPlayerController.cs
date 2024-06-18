@@ -74,10 +74,7 @@ public class MyPlayerController : PlayerController
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
             Skill skill = null;
             if (Managers.Data.SkillDict.TryGetValue(3, out skill) == false) return;
-            C_SkillMotion skillMotion = new C_SkillMotion() { Info = new SkillInfo() };
-            skillMotion.Info.SkillId = skill.id;
-            Managers.Network.Send(skillMotion);
-            StartCoroutine(CoAttackTimeWait(skill, true));
+            QuickAction(skill);
         }
         // UI
         else if(Input.GetKeyDown(KeyCode.I))
@@ -226,7 +223,7 @@ public class MyPlayerController : PlayerController
                 skillMotion.IsMonster = false;
                 Managers.Network.Send(skillMotion);
                 State = CreatureState.Wait;
-                StartCoroutine(CoAttackTimeWait(skill));
+                StartCoroutine(CoAttackTimeWait(skill, skill.isContinual));
             }
         }
     }
@@ -293,5 +290,13 @@ public class MyPlayerController : PlayerController
                     break;
             }
         }
+    }
+
+    public void QuickAction(Skill skill)
+    {
+        C_SkillMotion skillMotion = new C_SkillMotion() { Info = new SkillInfo() };
+        skillMotion.Info.SkillId = skill.id;
+        Managers.Network.Send(skillMotion);
+        StartCoroutine(CoAttackTimeWait(skill, skill.isContinual));
     }
 }

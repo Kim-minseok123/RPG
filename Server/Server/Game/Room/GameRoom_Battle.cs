@@ -162,14 +162,22 @@ namespace Server.Game
                         Vector3 forward = Utils.PositionsToVector3(meleeAttack.Forward);
                         if (IsObjectInRange(a, b, forward, ((AttackSkill)skill).skillDatas[meleeAttack.Time].range) == true)
                         {
-                            int damage = 
-                                (((AttackSkill)skill).skillDatas[meleeAttack.Time].damage 
-                                + ((AttackSkill)skill).skillDatas[meleeAttack.Time].skillLevelInc) 
-                                / 100 
-                                * player.Attack;
-                            monster.OnDamaged(player, damage);
-                            if (skill.id == 1 || skill.id == 2)
-                                break;
+                            int level = 0;
+                            if (skill.id == 1 || skill.id == 2 || player.HaveSkillData.TryGetValue(skill.id, out level))
+                            {
+                                int damage =
+                                    (((AttackSkill)skill).skillDatas[meleeAttack.Time].damage
+                                    + (((AttackSkill)skill).skillDatas[meleeAttack.Time].skillLevelInc * level))
+                                    / 100
+                                    * player.Attack;
+                                monster.OnDamaged(player, damage);
+                                if (skill.id == 1 || skill.id == 2)
+                                    break;
+                            }
+                            else
+                            {
+                                return;
+                            }
                         }
                     }
                 }
@@ -222,6 +230,13 @@ namespace Server.Game
             S_ChangeStat statPacket = new S_ChangeStat();
             statPacket.StatInfo = playerStat;
             player.Session.Send(statPacket);
+        }
+        public void HandleSkillLevelUp(Player player, C_SkillLevelUp skillLevelUp)
+        {
+            if (player == null || skillLevelUp.Skill.Level <= 0)
+                return;
+
+            player.HandleSkillLevelUp(skillLevelUp);
         }
 	}
 }
