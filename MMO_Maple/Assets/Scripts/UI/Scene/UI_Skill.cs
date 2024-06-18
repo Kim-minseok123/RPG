@@ -82,4 +82,11 @@ public class UI_Skill : UI_Base
                 break;
         }
     }
+    public override void InfoRemove()
+    {
+        foreach (var skill in Skills)
+        {
+            skill.InfoRemoveSkill();
+        }
+    }
 }

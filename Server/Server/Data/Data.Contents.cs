@@ -15,6 +15,8 @@ namespace Server.Data
         public SkillType skillType;
         public bool isContinual;
         public int masterLevel;
+        public string description;
+        public int mpConsume;
     }
     [Serializable]
     public class AttackSkill : Skill

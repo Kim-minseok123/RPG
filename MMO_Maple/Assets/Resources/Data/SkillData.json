@@ -6,6 +6,7 @@
       "cooldown": "1.7",
       "skillType": "SkillMeleeAttack",
       "isContinual": "false",
+      "description": "",
       "skillDatas": [
         {
           "attackTime": "0.65",
@@ -25,6 +26,7 @@
       "cooldown": "1.5",
       "skillType": "SkillMeleeAttack",
       "isContinual": "false",
+      "description": "",
       "skillDatas": [
         {
           "attackTime": "0.8",
@@ -45,6 +47,8 @@
       "skillType": "SkillMeleeAttack",
       "masterLevel": "20",
       "isContinual": "true",
+      "description": "MP를 소모하여 전방의 적들을 무기로 찌른 후 크게 휘둘러 일격을 가한다.",
+      "mpConsume": "15",
       "skillDatas": [
         {
           "attackTime": "0.8",
@@ -76,6 +80,7 @@
       "cooldown": "3.2",
       "skillType": "SkillMeleeAttack",
       "isContinual": "false",
+      "description": "",
       "skillDatas": [
         {
           "attackTime": "1.05",
@@ -94,12 +99,14 @@
     {
       "id": "5",
       "name": "분노",
+      "description": "일정 시간동안 본인의 물리 공격력을 상승시킨다.",
+      "mpConsume": "10",
       "isContinual": "false",
       "cooldown": "1.5",
       "skillType": "SkillBuff",
       "duration": "10",
       "masterLevel": "20",
-      "skillLevelInc": "10"
+      "skillLevelInc": "1"
     }
   ]
 } 

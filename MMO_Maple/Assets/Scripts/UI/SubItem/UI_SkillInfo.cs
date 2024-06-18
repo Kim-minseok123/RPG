@@ -2,12 +2,14 @@ using Data;
 using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_SkillInfo : UI_Base
 {
     Skill skillData;
+    GameObject description;
     enum Images
     {
         IconImage,
@@ -42,6 +44,19 @@ public class UI_SkillInfo : UI_Base
                 Managers.Network.Send(skillLevelUp);
             });
 
+        GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
+        {
+            if (skillData == null) return;
+            description = Managers.Resource.Instantiate("UI/SubItem/UI_SkillInfoCanvas");
+            description.GetComponent<UI_SkillInfoCanvas>().Setting(skillData, skillLevel);
+        }, Define.UIEvent.PointerEnter);
+
+        GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
+        {
+            if (skillData == null) return;
+            Managers.Resource.Destroy(description);
+        }, Define.UIEvent.PointerExit);
+
         _init = true;
 
         RefreshUI();
@@ -74,5 +89,10 @@ public class UI_SkillInfo : UI_Base
             GetText((int)Texts.SkillLevelUpText).color = new Color(1, 1, 1, 0.5f);
             GetButton((int)Buttons.SkillLevelUpBtn).gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
         }
+    }
+    public void InfoRemoveSkill()
+    {
+        if (description != null)
+            Managers.Resource.Destroy(description);
     }
 }

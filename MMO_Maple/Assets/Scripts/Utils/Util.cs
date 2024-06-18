@@ -1,4 +1,5 @@
-﻿using Google.Protobuf.Protocol;
+﻿using Data;
+using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,6 @@ public class Util
             component = go.AddComponent<T>();
         return component;
 	}
-
     public static GameObject FindChild(GameObject go, string name = null, bool recursive = false)
     {
         Transform transform = FindChild<Transform>(go, name, recursive);
@@ -21,7 +21,6 @@ public class Util
         
         return transform.gameObject;
     }
-
     public static T FindChild<T>(GameObject go, string name = null, bool recursive = false) where T : UnityEngine.Object
     {
         if (go == null)
@@ -58,5 +57,75 @@ public class Util
     public static Positions Vector3ToPositions(Vector3 vector)
     {
         return new Positions() { PosX = vector.x, PosY = vector.y, PosZ = vector.z };
+    }
+}
+public class SkillDescription
+{
+    public static string MakeDescription(Skill skill, int curLevel)
+    {
+        string result = "";
+
+        switch (skill.id)
+        {
+            case 3:
+                AttackSkill attackSkill = (AttackSkill)skill;
+                if (curLevel == 0)
+                {
+                    result = $"[다음레벨 1]\n" +
+                        $"MP {skill.mpConsume}를 소모, 전방의 모든 적을 " +
+                        $"{attackSkill.skillDatas[0].damage + attackSkill.skillDatas[0].skillLevelInc * curLevel}% 데미지 후 " +
+                        $"{attackSkill.skillDatas[1].damage + attackSkill.skillDatas[1].skillLevelInc * curLevel}% 데미지";
+                }
+                else if (curLevel == skill.masterLevel)
+                {
+                    result = $"[현재레벨 {curLevel}]\n" +
+                        $"MP {skill.mpConsume}를 소모, 전방의 모든 적을 " +
+                        $"{attackSkill.skillDatas[0].damage + attackSkill.skillDatas[0].skillLevelInc * (curLevel - 1)}% 데미지 후 " +
+                        $"{attackSkill.skillDatas[1].damage + attackSkill.skillDatas[1].skillLevelInc * (curLevel - 1)}% 데미지";
+                }
+                else
+                {
+                    result = $"[현재레벨 {curLevel}]\n" +
+                        $"MP {skill.mpConsume}를 소모, 전방의 모든 적을 " +
+                        $"{attackSkill.skillDatas[0].damage + attackSkill.skillDatas[0].skillLevelInc * (curLevel - 1)}% 데미지 후 " +
+                        $"{attackSkill.skillDatas[1].damage + attackSkill.skillDatas[1].skillLevelInc * (curLevel - 1)}% 데미지\n" +
+                        $"[다음레벨 {curLevel + 1}]\n" +
+                        $"MP {skill.mpConsume}를 소모, 전방의 모든 적을 " +
+                        $"{attackSkill.skillDatas[0].damage + attackSkill.skillDatas[0].skillLevelInc * curLevel}% 데미지 후 " +
+                        $"{attackSkill.skillDatas[1].damage + attackSkill.skillDatas[1].skillLevelInc * curLevel}% 데미지";
+                }
+                return result;
+            case 5:
+                BuffSkill buffSkill = (BuffSkill)skill;
+                if (curLevel == 0)
+                {
+                    result = $"[다음레벨 1]\n" +
+                        $"MP {skill.mpConsume}를 소모, " +
+                        $"지속 시간 {10 * (curLevel + 1)}초, " +
+                        $"물리 공격력 {(int)(buffSkill.skillLevelInc * (curLevel + 1) / 2)} 상승";
+                }
+                else if (curLevel == skill.masterLevel)
+                {
+                    result = $"[현재레벨 {curLevel}]\n" +
+                        $"MP {skill.mpConsume}를 소모, " +
+                        $"지속 시간 {10 * curLevel}초, " +
+                        $"물리 공격력 {(int)(buffSkill.skillLevelInc * curLevel / 2)} 상승";
+                }
+                else
+                {
+                    result = $"[현재레벨 {curLevel}]\n" +
+                        $"MP {skill.mpConsume}를 소모, " +
+                        $"지속 시간 {10 * curLevel}초, " +
+                        $"물리 공격력 {(int)(buffSkill.skillLevelInc * curLevel / 2)} 상승\n" +
+                        $"[다음레벨 {curLevel + 1}]\n" +
+                        $"MP {skill.mpConsume}를 소모, " +
+                        $"지속 시간 {10 * (curLevel + 1)}초, " +
+                        $"물리 공격력 {(int)(buffSkill.skillLevelInc * (curLevel + 1) / 2)} 상승";
+                }
+                return result;
+            default:
+                break;
+        }
+        return null;
     }
 }
