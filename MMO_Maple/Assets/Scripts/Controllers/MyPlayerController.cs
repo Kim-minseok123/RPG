@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Playables;
 
 public class MyPlayerController : PlayerController
 {
@@ -65,6 +64,7 @@ public class MyPlayerController : PlayerController
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
     }
+
     private void KeyInputEvent()
     {
         // 스킬
@@ -72,9 +72,57 @@ public class MyPlayerController : PlayerController
         {
             if (curRightWeapon == null) return;
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
-            Skill skill = null;
-            if (Managers.Data.SkillDict.TryGetValue(3, out skill) == false) return;
-            QuickAction(skill);
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            gameSceneUI.InvokeSkillQuickSlot("Q");
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            if (curRightWeapon == null) return;
+            if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            gameSceneUI.InvokeSkillQuickSlot("W");
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (curRightWeapon == null) return;
+            if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            gameSceneUI.InvokeSkillQuickSlot("E");
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (curRightWeapon == null) return;
+            if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            gameSceneUI.InvokeSkillQuickSlot("R");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (curRightWeapon == null) return;
+            if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            gameSceneUI.InvokeItemQuickSlot("1");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (curRightWeapon == null) return;
+            if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            gameSceneUI.InvokeItemQuickSlot("2");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (curRightWeapon == null) return;
+            if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            gameSceneUI.InvokeItemQuickSlot("3");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if (curRightWeapon == null) return;
+            if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            gameSceneUI.InvokeItemQuickSlot("4");
         }
         // UI
         else if(Input.GetKeyDown(KeyCode.I))
@@ -291,9 +339,9 @@ public class MyPlayerController : PlayerController
             }
         }
     }
-
     public void QuickAction(Skill skill)
     {
+        if (Stat.Mp - skill.mpConsume < 0) { Debug.Log("마나 없음"); return; }
         C_SkillMotion skillMotion = new C_SkillMotion() { Info = new SkillInfo() };
         skillMotion.Info.SkillId = skill.id;
         Managers.Network.Send(skillMotion);

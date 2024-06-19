@@ -10,6 +10,7 @@ public class UI_SkillInfo : UI_Base
 {
     Skill skillData;
     GameObject description;
+    GameObject dragObj;
     enum Images
     {
         IconImage,
@@ -33,7 +34,7 @@ public class UI_SkillInfo : UI_Base
         BindImage(typeof(Images));
         BindText(typeof(Texts));
         BindButton(typeof(Buttons));
-
+        // 스킬 레벨업
         GetButton((int)Buttons.SkillLevelUpBtn).gameObject.BindEvent(
             e => 
             {
@@ -43,20 +44,49 @@ public class UI_SkillInfo : UI_Base
                 skillLevelUp.Skill.Level = 1;
                 Managers.Network.Send(skillLevelUp);
             });
-
-        GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
         {
-            if (skillData == null) return;
-            description = Managers.Resource.Instantiate("UI/SubItem/UI_SkillInfoCanvas");
-            description.GetComponent<UI_SkillInfoCanvas>().Setting(skillData, skillLevel);
-        }, Define.UIEvent.PointerEnter);
-
-        GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
+            // 스킬 설명 출력
+            GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
+            {
+                if (skillData == null) return;
+                description = Managers.Resource.Instantiate("UI/SubItem/UI_SkillInfoCanvas");
+                description.GetComponent<UI_SkillInfoCanvas>().Setting(skillData, skillLevel);
+            }, Define.UIEvent.PointerEnter);
+            // 스킬 설명 삭제
+            GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
+            {
+                if (skillData == null) return;
+                if (description != null)
+                    Managers.Resource.Destroy(description);
+            }, Define.UIEvent.PointerExit);
+        }
         {
-            if (skillData == null) return;
-            Managers.Resource.Destroy(description);
-        }, Define.UIEvent.PointerExit);
+            // 스킬 드래그 시작
+            GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
+            {
+                if(skillData == null || skillLevel <= 0) return;
+                dragObj = Managers.Resource.Instantiate("UI/UI_SkillDrag");
+                dragObj = Util.FindChild(dragObj, "Icon");
+                if (dragObj == null) return;
+                dragObj.GetComponent<Image>().sprite = GetImage((int)Images.IconImage).sprite;
+            }, Define.UIEvent.DragEnter);
+            // 스킬 드래그
+            GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
+            {
+                if (skillData == null || skillLevel <= 0) return;
+                if (dragObj == null) return;
+                dragObj.transform.position = e.position;
+            }, Define.UIEvent.Drag);
+            // 스킬 드래그 멈춤
+            GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
+            {
+                if (skillData == null || skillLevel <= 0) return;
+                if (dragObj == null || templateId < 0) return;
+                Managers.Resource.Destroy(dragObj);
+                (Managers.UI.SceneUI as UI_GameScene).RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, templateId, true);
 
+            }, Define.UIEvent.DragEnd);
+        }
         _init = true;
 
         RefreshUI();

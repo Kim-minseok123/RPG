@@ -21,8 +21,10 @@ public class UI_SkillInfoCanvas : UI_Base
     }
     enum GameObjects
     {
-        SkillInfoObj
+        SkillInfoObj,
+        Background
     }
+    Vector2 backgroundSize;
 
     public override void Init()
     {
@@ -32,13 +34,10 @@ public class UI_SkillInfoCanvas : UI_Base
 
         RefreshUI();
 
-        var rectTransform = GetObject((int)GameObjects.SkillInfoObj).GetComponent<RectTransform>();
-
-        Vector2 mousePosition = Input.mousePosition;
-        Vector2 movePos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform.parent as RectTransform, mousePosition, null, out movePos);
-
-        rectTransform.anchoredPosition = movePos;
+        var rectTransform = GetObject((int)GameObjects.Background).GetComponent<RectTransform>();
+        backgroundSize.x = rectTransform.sizeDelta.x;
+        backgroundSize.y = rectTransform.sizeDelta.y;
+        UpdateUIPosition();
     }
     public void Setting(Skill data, int curLevel)
     {
@@ -59,11 +58,21 @@ public class UI_SkillInfoCanvas : UI_Base
     }
     public void Update()
     {
+        UpdateUIPosition();
+    }
+    private void UpdateUIPosition()
+    {
         var rectTransform = GetObject((int)GameObjects.SkillInfoObj).GetComponent<RectTransform>();
 
         Vector2 mousePosition = Input.mousePosition;
         Vector2 movePos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform.parent as RectTransform, mousePosition, null, out movePos);
+
+        float halfScreenWidth = Screen.width / 2f;
+        float halfScreenHeight = Screen.height / 2f;
+
+        movePos.x = Mathf.Clamp(movePos.x, -halfScreenWidth, halfScreenWidth - backgroundSize.x);
+        movePos.y = Mathf.Clamp(movePos.y, -halfScreenHeight + backgroundSize.y, halfScreenHeight);
 
         rectTransform.anchoredPosition = movePos;
     }

@@ -21,10 +21,12 @@ public class UI_ItemInfoCanvas : UI_Base
     }
     enum GameObjects
     {
-        ItemInfoObj
+        ItemInfoObj,
+        Background
     }
     string classColor = "white";
     string levelColor = "white";
+    Vector2 backgroundSize;
     public override void Init()
     {
         BindObject(typeof(GameObjects));
@@ -32,14 +34,10 @@ public class UI_ItemInfoCanvas : UI_Base
         BindImage(typeof(Images));
 
         RefreshUI();
-
-        var rectTransform = GetObject((int)GameObjects.ItemInfoObj).GetComponent<RectTransform>();
-
-        Vector2 mousePosition = Input.mousePosition;
-        Vector2 movePos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform.parent as RectTransform, mousePosition, null, out movePos);
-
-        rectTransform.anchoredPosition = movePos;
+        var rectTransform = GetObject((int)GameObjects.Background).GetComponent<RectTransform>();
+        backgroundSize.x = rectTransform.sizeDelta.x;
+        backgroundSize.y = rectTransform.sizeDelta.y;
+        UpdateUIPosition();
     }
     public void Setting(ItemData data, bool classType = true, bool level = true)
     {
@@ -81,11 +79,22 @@ public class UI_ItemInfoCanvas : UI_Base
     }
     public void Update()
     {
+        UpdateUIPosition();
+    }
+
+    private void UpdateUIPosition()
+    {
         var rectTransform = GetObject((int)GameObjects.ItemInfoObj).GetComponent<RectTransform>();
 
         Vector2 mousePosition = Input.mousePosition;
         Vector2 movePos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform.parent as RectTransform, mousePosition, null, out movePos);
+
+        float halfScreenWidth = Screen.width / 2f;
+        float halfScreenHeight = Screen.height / 2f;
+
+        movePos.x = Mathf.Clamp(movePos.x, -halfScreenWidth, halfScreenWidth - backgroundSize.x);
+        movePos.y = Mathf.Clamp(movePos.y, -halfScreenHeight + backgroundSize.y, halfScreenHeight);
 
         rectTransform.anchoredPosition = movePos;
     }

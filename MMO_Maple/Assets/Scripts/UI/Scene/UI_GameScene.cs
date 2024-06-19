@@ -6,6 +6,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +17,8 @@ public class UI_GameScene : UI_Scene
     public UI_Stat StatUI { get; private set; }
     public UI_Equip EquipUI { get; private set; }
     public UI_Skill SkillUI { get; private set; }
-
+    public Dictionary<string, int> QuickSlotSkill = new();
+    public Dictionary<string, int> QuickSlotItem = new();
     List<UI_Base> _playerPopup = new();
     int _curPopupSortOrder = 1;
 
@@ -42,6 +45,10 @@ public class UI_GameScene : UI_Scene
         PlayerClassText,
         PlayerNameText,
         LevelText,
+        QuickSlotNumText1,
+        QuickSlotNumText2,
+        QuickSlotNumText3,
+        QuickSlotNumText4
     }
     enum Sliders
     {
@@ -108,23 +115,33 @@ public class UI_GameScene : UI_Scene
 
         GetText((int)Texts.LevelText).text = _myPlayer.objectInfo.StatInfo.Level.ToString();
 
-        Sprite nullSprite = Managers.Resource.Load<Sprite>("UI/Content/Mini_background"); 
-        GetImage((int)Images.QuickSlotIconImageQ).sprite = nullSprite;
-        GetImage((int)Images.QuickSlotIconImageW).sprite = nullSprite;
-        GetImage((int)Images.QuickSlotIconImageE).sprite = nullSprite;
-        GetImage((int)Images.QuickSlotIconImageR).sprite = nullSprite;
-        GetImage((int)Images.QuickSlotIconImage1).sprite = nullSprite;
-        GetImage((int)Images.QuickSlotIconImage2).sprite = nullSprite;
-        GetImage((int)Images.QuickSlotIconImage3).sprite = nullSprite;
-        GetImage((int)Images.QuickSlotIconImage4).sprite = nullSprite;
-
-        Setting();
         ChangeHpOrMp();
         ChangeExp();
     }
-    public void Setting()
+    public void RefreshUI()
     {
-        
+        _myPlayer = Managers.Object.MyPlayer;
+
+        GetText((int)Texts.PlayerNameText).text = _myPlayer.objectInfo.Name.ToString();
+
+        switch (_myPlayer.ClassType)
+        {
+            case (int)ClassTypes.Beginner:
+                GetText((int)Texts.PlayerClassText).text = "초보자";
+                GetImage((int)Images.PlayerClassImage).sprite = Beginner;
+                break;
+            case (int)ClassTypes.Warrior:
+                GetText((int)Texts.PlayerClassText).text = "전사";
+                GetImage((int)Images.PlayerClassImage).sprite = Warrior;
+                break;
+            case (int)ClassTypes.Archer:
+                GetText((int)Texts.PlayerClassText).text = "궁수";
+                GetImage((int)Images.PlayerClassImage).sprite = Archer;
+                break;
+        }
+
+        GetText((int)Texts.LevelText).text = _myPlayer.objectInfo.StatInfo.Level.ToString();
+        DrawQuickSlot();
     }
     public void ChangeHpOrMp()
     {
@@ -148,7 +165,7 @@ public class UI_GameScene : UI_Scene
 
         float expRatio = Mathf.Max((float)exp / MaxExp, 0f);
         Get<Slider>((int)Sliders.ExpInfoSlider).DOValue(expRatio, 0.5f).SetEase(Ease.OutExpo);
-        GetText((int)Texts.LevelText).text = _myPlayer.objectInfo.StatInfo.Level.ToString();
+        RefreshUI();
     }
     public void OpenUI(string uiName = null)
     {
@@ -203,5 +220,151 @@ public class UI_GameScene : UI_Scene
                 _curPopupSortOrder--;
             }
         }
+    }
+    public void RequestQuickSlotUI(string pos, int templateId, bool isSkill)
+    {
+        switch (pos)
+        {
+            case "QuickSlotIconImageQ":
+                if(isSkill)
+                    RegisterQuickSlot("Q", templateId, true);
+                break;
+            case "QuickSlotIconImageW":
+                if(isSkill)
+                    RegisterQuickSlot("W", templateId, true);
+                break;
+            case "QuickSlotIconImageE":
+                if(isSkill)
+                    RegisterQuickSlot("E", templateId, true);
+                break;
+            case "QuickSlotIconImageR":
+                if(isSkill)
+                    RegisterQuickSlot("R", templateId, true);
+                break;
+            case "QuickSlotIconImage1":
+                if(!isSkill)
+                    RegisterQuickSlot("1", templateId, false);
+                break;
+            case "QuickSlotIconImage2":
+                if(!isSkill)
+                    RegisterQuickSlot("2", templateId, false);
+                break;
+            case "QuickSlotIconImage3":
+                if(!isSkill)
+                    RegisterQuickSlot("3", templateId, false);
+                break;
+            case "QuickSlotIconImage4":
+                if(!isSkill)
+                    RegisterQuickSlot("4", templateId, false);
+                break;
+            default:
+                return;
+        }
+    }
+    public void RegisterQuickSlot(string keyName, int templateId, bool isSkill)
+    {
+        var quickSlot = isSkill ? QuickSlotSkill : QuickSlotItem;
+
+        if (quickSlot.TryGetValue(keyName, out int curTemplateId) && curTemplateId == templateId)
+            return;
+
+        quickSlot[keyName] = templateId;
+
+        var keysToRemove = quickSlot
+            .Where(slot => slot.Key != keyName && slot.Value == templateId)
+            .Select(slot => slot.Key)
+            .ToList();
+
+        foreach (var key in keysToRemove)
+        {
+            quickSlot.Remove(key);
+        }
+        DrawQuickSlot();
+    }
+    public void DrawQuickSlot()
+    {
+        {
+            Sprite nullSprite = Managers.Resource.Load<Sprite>("UI/Content/Mini_background");
+            GetImage((int)Images.QuickSlotIconImageQ).sprite = nullSprite;
+            GetImage((int)Images.QuickSlotIconImageW).sprite = nullSprite;
+            GetImage((int)Images.QuickSlotIconImageE).sprite = nullSprite;
+            GetImage((int)Images.QuickSlotIconImageR).sprite = nullSprite;
+            GetImage((int)Images.QuickSlotIconImage1).sprite = nullSprite;
+            GetImage((int)Images.QuickSlotIconImage2).sprite = nullSprite;
+            GetImage((int)Images.QuickSlotIconImage3).sprite = nullSprite;
+            GetImage((int)Images.QuickSlotIconImage4).sprite = nullSprite;
+            GetText((int)Texts.QuickSlotNumText1).text = "";
+            GetText((int)Texts.QuickSlotNumText2).text = "";
+            GetText((int)Texts.QuickSlotNumText3).text = "";
+            GetText((int)Texts.QuickSlotNumText4).text = "";
+        }
+        foreach (var Slot in QuickSlotSkill)
+        {
+            if (Managers.Data.SkillDict.TryGetValue(Slot.Value, out Skill skill) == false) return;
+            Sprite sprite = Managers.Resource.Load<Sprite>($"Textures/Skill/{skill.name}");
+            switch (Slot.Key)
+            {
+                case "Q":
+                    GetImage((int)Images.QuickSlotIconImageQ).sprite = sprite;
+                    break;
+                case "W":
+                    GetImage((int)Images.QuickSlotIconImageW).sprite = sprite;
+                    break;
+                case "E":
+                    GetImage((int)Images.QuickSlotIconImageE).sprite = sprite;
+                    break;
+                case "R":
+                    GetImage((int)Images.QuickSlotIconImageR).sprite = sprite;
+                    break;
+            }
+        }
+        foreach (var Slot in QuickSlotItem)
+        {
+            if (Managers.Data.ItemDict.TryGetValue(Slot.Value, out ItemData itemData) == false) return;
+            Sprite sprite = Managers.Resource.Load<Sprite>(itemData.iconPath);
+            int itemCount = Managers.Inven.FindItemCount(Slot.Value);
+            switch (Slot.Key)
+            {
+                case "1":
+                    GetImage((int)Images.QuickSlotIconImage1).sprite = sprite;
+                    GetText((int)Texts.QuickSlotNumText1).text = itemCount.ToString();
+                    break;
+                case "2":
+                    GetImage((int)Images.QuickSlotIconImage2).sprite = sprite;
+                    GetText((int)Texts.QuickSlotNumText2).text = itemCount.ToString();
+                    break;
+                case "3":
+                    GetImage((int)Images.QuickSlotIconImage3).sprite = sprite;
+                    GetText((int)Texts.QuickSlotNumText3).text = itemCount.ToString();
+                    break;
+                case "4":
+                    GetImage((int)Images.QuickSlotIconImage4).sprite = sprite;
+                    GetText((int)Texts.QuickSlotNumText4).text = itemCount.ToString();
+                    break;
+            }
+        }
+    }
+    public void InvokeSkillQuickSlot(string keyName)
+    {
+        if (QuickSlotSkill.TryGetValue(keyName, out int templateId) == false)
+            return;
+        if (Managers.Data.SkillDict.TryGetValue(templateId, out Skill skill) == false) 
+            return;
+        _myPlayer.QuickAction(skill);
+        DrawQuickSlot();
+
+    }
+    public void InvokeItemQuickSlot(string keyName)
+    {
+        if (QuickSlotItem.TryGetValue(keyName, out int templateId) == false)
+            return;
+        Item quickItem = Managers.Inven.Find(item => item.TemplateId == templateId && item.ItemType == ItemType.Consumable);
+        if (quickItem == null)
+            return;
+        C_UseItem useItemPacket = new C_UseItem();
+        useItemPacket.ItemDbId = quickItem.ItemDbId;
+        useItemPacket.Count = 1;
+        Managers.Network.Send(useItemPacket);
+        DrawQuickSlot();
     }
 }

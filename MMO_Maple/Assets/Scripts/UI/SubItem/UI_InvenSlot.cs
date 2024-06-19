@@ -14,6 +14,7 @@ public class UI_InvenSlot : UI_Base
     TextMeshProUGUI _countText;
     ItemData itemData;
     GameObject description;
+    GameObject dragObj;
     public int ItemDbID { get; private set; }
     public int TemplateId { get; private set; }
     public int Count { get; private set; }
@@ -25,6 +26,7 @@ public class UI_InvenSlot : UI_Base
     {
         _icon.gameObject.BindEvent((e) =>
         {
+            if (e.clickCount < 2) return;
             if (_icon.color.a == 0f)
                 return;
 
@@ -49,19 +51,44 @@ public class UI_InvenSlot : UI_Base
             equipPacket.ObjectId = Managers.Object.MyPlayer.Id;
             Managers.Network.Send(equipPacket);
         });
-
-        _icon.gameObject.BindEvent((e) =>
         {
-            if (itemData == null) return;
-            description = Managers.Resource.Instantiate("UI/SubItem/UI_ItemInfoCanvas");
-            description.GetComponent<UI_ItemInfoCanvas>().Setting(itemData , satisfiedClass, satisfiedLevel);
-        }, Define.UIEvent.PointerEnter);
+            _icon.gameObject.BindEvent((e) =>
+            {
+                if (itemData == null) return;
+                description = Managers.Resource.Instantiate("UI/SubItem/UI_ItemInfoCanvas");
+                description.GetComponent<UI_ItemInfoCanvas>().Setting(itemData, satisfiedClass, satisfiedLevel);
+            }, Define.UIEvent.PointerEnter);
 
-        _icon.gameObject.BindEvent((e) =>
+            _icon.gameObject.BindEvent((e) =>
+            {
+                if (description == null) return;
+                Managers.Resource.Destroy(description);
+            }, Define.UIEvent.PointerExit);
+        }
         {
-            if (description == null) return;
-            Managers.Resource.Destroy(description);
-        }, Define.UIEvent.PointerExit);
+            _icon.gameObject.BindEvent((e) =>
+            {
+                if (itemData == null) return;
+                dragObj = Managers.Resource.Instantiate("UI/UI_SkillDrag");
+                dragObj = Util.FindChild(dragObj, "Icon");
+                if (dragObj == null) return;
+                dragObj.GetComponent<Image>().sprite = _icon.sprite;
+            }, Define.UIEvent.DragEnter);
+            _icon.gameObject.BindEvent((e) =>
+            {
+                if (itemData == null) return;
+                if (dragObj == null) return;
+                dragObj.transform.position = e.position;
+            }, Define.UIEvent.Drag);
+            _icon.gameObject.BindEvent((e) =>
+            {
+                if (itemData == null) return;
+                if (dragObj == null) return;
+                Managers.Resource.Destroy(dragObj);
+                if(itemData.itemType == ItemType.Consumable)
+                    (Managers.UI.SceneUI as UI_GameScene).RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, TemplateId, false);
+            }, Define.UIEvent.DragEnd);
+        }
     }
     public void SetItem(Item item)
     {

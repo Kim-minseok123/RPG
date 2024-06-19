@@ -23,6 +23,8 @@ public class Define
     {
         Click,
         Drag,
+        DragEnter,
+        DragEnd,
         PointerEnter,
         PointerExit,
     }

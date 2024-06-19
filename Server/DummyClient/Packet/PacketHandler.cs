@@ -36,7 +36,6 @@ public class PacketHandler
 
     public static void S_SkillHandler(PacketSession session, IMessage packet)
     {
-        S_Skill skillPacket = packet as S_Skill;
     }
 
     public static void S_ChangeHpHandler(PacketSession session, IMessage packet)
@@ -157,6 +156,14 @@ public class PacketHandler
 
     }
     public static void S_UseItemHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+    public static void S_SkillListHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+    public static void S_SkillLevelUpHandler(PacketSession session, IMessage packet)
     {
 
     }

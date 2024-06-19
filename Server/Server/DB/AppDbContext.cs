@@ -17,6 +17,7 @@ namespace Server.DB
 		public DbSet<PlayerDb> Players { get; set; }
 		public DbSet<ItemDb> Items { get; set; }
 		public DbSet<SkillDb> Skills { get; set; }
+		public DbSet<QuickSlotDb> QuickSlots { get; set; }
 
 		static readonly ILoggerFactory _logger = LoggerFactory.Create(builder => { builder.AddConsole(); });
 
@@ -40,6 +41,9 @@ namespace Server.DB
 
             builder.Entity<SkillDb>()
             .HasAlternateKey(s => new { s.PlayerDbId, s.TemplateId });
+
+            builder.Entity<QuickSlotDb>()
+            .HasAlternateKey(s => new { s.PlayerDbId, s.Slot });
         }
 	}
 }

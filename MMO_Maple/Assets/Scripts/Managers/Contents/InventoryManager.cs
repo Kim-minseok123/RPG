@@ -28,6 +28,16 @@ public class InventoryManager
         }
         return null;
     }
+    public int FindItemCount(int templateId)
+    {
+        int result = 0;
+        foreach (Item item in Items.Values)
+        {
+            if (item.TemplateId == templateId)
+                result += item.Count;
+        }
+        return result;
+    }
     public void Clear()
     {
         Items.Clear();
