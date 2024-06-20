@@ -202,6 +202,12 @@ namespace Server
 					{
 						MyPlayer.HaveSkillData.Add(skillDb.TemplateId, skillDb.SkillLevel);
 					}
+					List<QuickSlotDb> quickSlots = db.QuickSlots
+						.Where(q => q.PlayerDbId == playerInfo.PlayerDbId).ToList();
+					foreach (QuickSlotDb slot in quickSlots)
+					{
+						MyPlayer.QuickSlot.Add(slot.Slot, slot.TemplateId);
+					}
                 }
             }
 

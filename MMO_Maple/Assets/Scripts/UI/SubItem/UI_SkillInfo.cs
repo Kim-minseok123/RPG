@@ -10,6 +10,7 @@ public class UI_SkillInfo : UI_Base
 {
     Skill skillData;
     GameObject description;
+    GameObject dragIcon;
     GameObject dragObj;
     enum Images
     {
@@ -66,25 +67,25 @@ public class UI_SkillInfo : UI_Base
             {
                 if(skillData == null || skillLevel <= 0) return;
                 dragObj = Managers.Resource.Instantiate("UI/UI_SkillDrag");
-                dragObj = Util.FindChild(dragObj, "Icon");
-                if (dragObj == null) return;
-                dragObj.GetComponent<Image>().sprite = GetImage((int)Images.IconImage).sprite;
+                dragIcon = Util.FindChild(dragObj, "Icon");
+                if (dragIcon == null) return;
+                dragIcon.GetComponent<Image>().sprite = GetImage((int)Images.IconImage).sprite;
             }, Define.UIEvent.DragEnter);
             // 스킬 드래그
             GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
             {
                 if (skillData == null || skillLevel <= 0) return;
-                if (dragObj == null) return;
-                dragObj.transform.position = e.position;
+                if (dragObj == null) return; if (dragIcon == null) return;
+                dragIcon.transform.position = e.position;
             }, Define.UIEvent.Drag);
             // 스킬 드래그 멈춤
             GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
             {
                 if (skillData == null || skillLevel <= 0) return;
-                if (dragObj == null || templateId < 0) return;
+                if (dragObj == null || templateId < 0) return; if (dragIcon == null ) return;
                 Managers.Resource.Destroy(dragObj);
-                (Managers.UI.SceneUI as UI_GameScene).RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, templateId, true);
-
+                if(e.pointerCurrentRaycast.gameObject.name != null)
+                    (Managers.UI.SceneUI as UI_GameScene).RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, templateId, true);
             }, Define.UIEvent.DragEnd);
         }
         _init = true;
@@ -107,7 +108,7 @@ public class UI_SkillInfo : UI_Base
         if(Managers.Object.MyPlayer.HaveSkillData.TryGetValue(templateId, out skillLevel) == false)
         {
             GetText((int)Texts.SkillLevelText).text = "0";
-            GetImage((int)Images.LockSkillImage).color = new Color(1, 1, 1, 0.5f);
+            GetImage((int)Images.LockSkillImage).color = new Color(1, 1, 1, 0.7f);
         }
         else
         {

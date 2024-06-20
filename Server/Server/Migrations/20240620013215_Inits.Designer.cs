@@ -10,8 +10,8 @@ using Server.DB;
 namespace Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240417021709_testStats")]
-    partial class testStats
+    [Migration("20240620013215_Inits")]
+    partial class Inits
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -102,16 +102,13 @@ namespace Server.Migrations
                     b.Property<int>("Luk")
                         .HasColumnType("int");
 
-                    b.Property<int>("MaxAttack")
-                        .HasColumnType("int");
-
                     b.Property<int>("MaxHp")
                         .HasColumnType("int");
 
                     b.Property<int>("MaxMp")
                         .HasColumnType("int");
 
-                    b.Property<int>("MinAttack")
+                    b.Property<int>("Money")
                         .HasColumnType("int");
 
                     b.Property<int>("Mp")
@@ -122,6 +119,9 @@ namespace Server.Migrations
 
                     b.Property<string>("PlayerName")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("SkillPoint")
+                        .HasColumnType("int");
 
                     b.Property<float>("Speed")
                         .HasColumnType("real");
@@ -155,6 +155,53 @@ namespace Server.Migrations
                     b.ToTable("Player");
                 });
 
+            modelBuilder.Entity("Server.DB.QuickSlotDb", b =>
+                {
+                    b.Property<int>("QuickSlotDbId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PlayerDbId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Slot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TemplateId")
+                        .HasColumnType("int");
+
+                    b.HasKey("QuickSlotDbId");
+
+                    b.HasAlternateKey("PlayerDbId", "Slot");
+
+                    b.ToTable("QuickSlot");
+                });
+
+            modelBuilder.Entity("Server.DB.SkillDb", b =>
+                {
+                    b.Property<int>("SkillDbId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PlayerDbId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SkillLevel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TemplateId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SkillDbId");
+
+                    b.HasAlternateKey("PlayerDbId", "TemplateId");
+
+                    b.ToTable("Skill");
+                });
+
             modelBuilder.Entity("Server.DB.ItemDb", b =>
                 {
                     b.HasOne("Server.DB.PlayerDb", "Owner")
@@ -167,6 +214,24 @@ namespace Server.Migrations
                     b.HasOne("Server.DB.AccountDb", "Account")
                         .WithMany("Players")
                         .HasForeignKey("AccountDbId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Server.DB.QuickSlotDb", b =>
+                {
+                    b.HasOne("Server.DB.PlayerDb", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerDbId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Server.DB.SkillDb", b =>
+                {
+                    b.HasOne("Server.DB.PlayerDb", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerDbId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

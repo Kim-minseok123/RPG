@@ -22,6 +22,7 @@ namespace Server.Game
 		public int WeaponDamage { get; private set; }
 		public int ArmorDefence { get; private set; }
 		public Dictionary<int,int> HaveSkillData = new Dictionary<int,int>();
+		public Dictionary<string, int> QuickSlot = new Dictionary<string, int>();
 		public Player()
 		{
 			ObjectType = GameObjectType.Player;

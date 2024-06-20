@@ -243,5 +243,12 @@ namespace Server.Game
 
             player.HandleSkillLevelUp(skillLevelUp);
         }
-	}
+        public void HandleSaveQuickSlot(Player player, C_SaveQuickSlot saveQuickSlot)
+        {
+            if (player == null)
+                return;
+            DbTransaction.SaveQuickSlotNoti(player, saveQuickSlot);
+        }
+
+    }
 }

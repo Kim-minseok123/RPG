@@ -2,7 +2,7 @@
 
 namespace Server.Migrations
 {
-    public partial class init : Migration
+    public partial class Inits : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,15 +26,28 @@ namespace Server.Migrations
                     PlayerDbId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PlayerName = table.Column<string>(nullable: true),
+                    IsMale = table.Column<bool>(nullable: false),
                     AccountDbId = table.Column<int>(nullable: false),
                     PlayerClass = table.Column<int>(nullable: false),
                     Level = table.Column<int>(nullable: false),
                     Hp = table.Column<int>(nullable: false),
                     Mp = table.Column<int>(nullable: false),
+                    MaxMp = table.Column<int>(nullable: false),
                     MaxHp = table.Column<int>(nullable: false),
-                    Attack = table.Column<int>(nullable: false),
+                    Defense = table.Column<int>(nullable: false),
                     Speed = table.Column<float>(nullable: false),
-                    TotalExp = table.Column<int>(nullable: false)
+                    Str = table.Column<int>(nullable: false),
+                    Dex = table.Column<int>(nullable: false),
+                    Int = table.Column<int>(nullable: false),
+                    Luk = table.Column<int>(nullable: false),
+                    Exp = table.Column<int>(nullable: false),
+                    StatPoint = table.Column<int>(nullable: false),
+                    posX = table.Column<float>(nullable: false),
+                    posY = table.Column<float>(nullable: false),
+                    posZ = table.Column<float>(nullable: false),
+                    rotateY = table.Column<float>(nullable: false),
+                    Money = table.Column<int>(nullable: false),
+                    SkillPoint = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,6 +83,50 @@ namespace Server.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "QuickSlot",
+                columns: table => new
+                {
+                    QuickSlotDbId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TemplateId = table.Column<int>(nullable: false),
+                    Slot = table.Column<string>(nullable: false),
+                    PlayerDbId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuickSlot", x => x.QuickSlotDbId);
+                    table.UniqueConstraint("AK_QuickSlot_PlayerDbId_Slot", x => new { x.PlayerDbId, x.Slot });
+                    table.ForeignKey(
+                        name: "FK_QuickSlot_Player_PlayerDbId",
+                        column: x => x.PlayerDbId,
+                        principalTable: "Player",
+                        principalColumn: "PlayerDbId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Skill",
+                columns: table => new
+                {
+                    SkillDbId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TemplateId = table.Column<int>(nullable: false),
+                    SkillLevel = table.Column<int>(nullable: false),
+                    PlayerDbId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Skill", x => x.SkillDbId);
+                    table.UniqueConstraint("AK_Skill_PlayerDbId_TemplateId", x => new { x.PlayerDbId, x.TemplateId });
+                    table.ForeignKey(
+                        name: "FK_Skill_Player_PlayerDbId",
+                        column: x => x.PlayerDbId,
+                        principalTable: "Player",
+                        principalColumn: "PlayerDbId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Account_AccountLoginId",
                 table: "Account",
@@ -98,6 +155,12 @@ namespace Server.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Item");
+
+            migrationBuilder.DropTable(
+                name: "QuickSlot");
+
+            migrationBuilder.DropTable(
+                name: "Skill");
 
             migrationBuilder.DropTable(
                 name: "Player");

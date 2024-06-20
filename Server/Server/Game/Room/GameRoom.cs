@@ -104,27 +104,36 @@ namespace Server.Game
 					S_EnterGame enterPacket = new S_EnterGame();
 					enterPacket.Player = player.Info;
 					player.Session.Send(enterPacket);
-					S_EquipItemList equipItemList = new S_EquipItemList();
-					equipItemList.ObjectId = player.Id;
-					for (int i = 0; i < player.Inven.EquipItems.Length; i++)
 					{
-						if (player.Inven.EquipItems[i] != null)
-							equipItemList.TemplateIds.Add(player.Inven.EquipItems[i].TemplateId);
+						S_EquipItemList equipItemList = new S_EquipItemList();
+						equipItemList.ObjectId = player.Id;
+						for (int i = 0; i < player.Inven.EquipItems.Length; i++)
+						{
+							if (player.Inven.EquipItems[i] != null)
+								equipItemList.TemplateIds.Add(player.Inven.EquipItems[i].TemplateId);
+						}
+						player.Session.Send(equipItemList);
+
+						S_SkillList skillListPacket = new S_SkillList();
+
+						foreach (var skillinfo in player.HaveSkillData)
+						{
+							SkillInfo info = new SkillInfo();
+							info.SkillId = skillinfo.Key;
+							info.Level = skillinfo.Value;
+							skillListPacket.Skills.Add(info);
+						}
+
+						player.Session.Send(skillListPacket);
+
+						S_QuickSlot quickSlotPacket = new S_QuickSlot();
+						foreach (var info in player.QuickSlot)
+						{
+							QuickSlotInfo quickSlotInfo = new QuickSlotInfo() { SlotName = info.Key, TemplateId = info.Value };
+							quickSlotPacket.Info.Add(quickSlotInfo);
+						}
+						player.Session.Send(quickSlotPacket);
 					}
-					player.Session.Send(equipItemList);
-
-                    S_SkillList skillListPacket = new S_SkillList();
-
-					foreach (var skillinfo in player.HaveSkillData)
-					{
-                        SkillInfo info = new SkillInfo();
-                        info.SkillId = skillinfo.Key;
-                        info.Level = skillinfo.Value;
-                        skillListPacket.Skills.Add(info);
-                    }
-
-                    player.Session.Send(skillListPacket);
-
                     //player.Vision.Update();
 
                     S_Spawn spawnPacket = new S_Spawn();

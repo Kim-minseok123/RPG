@@ -76,7 +76,7 @@ namespace Server.DB
     {
         public int QuickSlotDbId { get; set; }
         public int TemplateId { get; set; }
-        public int Slot { get; set; }
+        public string Slot { get; set; }
         [ForeignKey("Player")]
         public int PlayerDbId { get; set; }
         public PlayerDb Player { get; set; }

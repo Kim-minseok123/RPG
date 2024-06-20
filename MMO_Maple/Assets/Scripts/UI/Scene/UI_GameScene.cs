@@ -21,7 +21,8 @@ public class UI_GameScene : UI_Scene
     public Dictionary<string, int> QuickSlotItem = new();
     List<UI_Base> _playerPopup = new();
     int _curPopupSortOrder = 1;
-
+    GameObject dragObj;
+    GameObject dragIcon;
     public Sprite Beginner;
     public Sprite Warrior;
     public Sprite Archer;
@@ -29,7 +30,6 @@ public class UI_GameScene : UI_Scene
     MyPlayerController _myPlayer;
     enum Images
     {
-        PlayerImage,
         QuickSlotIconImageQ,
         QuickSlotIconImageW,
         QuickSlotIconImageE,
@@ -38,6 +38,7 @@ public class UI_GameScene : UI_Scene
         QuickSlotIconImage2,
         QuickSlotIconImage3,
         QuickSlotIconImage4,
+        PlayerImage,
         PlayerClassImage,
     }
     enum Texts
@@ -114,9 +115,44 @@ public class UI_GameScene : UI_Scene
         }
 
         GetText((int)Texts.LevelText).text = _myPlayer.objectInfo.StatInfo.Level.ToString();
-
+        QuickSlotChange(0, true, "Q");
+        QuickSlotChange(1, true, "W");
+        QuickSlotChange(2, true, "E");
+        QuickSlotChange(3, true, "R");
+        QuickSlotChange(4, false, "1");
+        QuickSlotChange(5, false, "2");
+        QuickSlotChange(6, false, "3");
+        QuickSlotChange(7, false, "4");
         ChangeHpOrMp();
         ChangeExp();
+    }
+    void QuickSlotChange(int i, bool isSkill, string str)
+    {
+        Image _icon = GetImage(i);
+        _icon.gameObject.BindEvent((e) =>
+        {
+            var quickSlot = isSkill ? QuickSlotSkill : QuickSlotItem;
+            if (quickSlot.TryGetValue(str, out int templateId) == false) return;
+            dragObj = Managers.Resource.Instantiate("UI/UI_SkillDrag");
+            dragIcon = Util.FindChild(dragObj, "Icon");
+            if (dragIcon == null) return;
+            dragIcon.GetComponent<Image>().sprite = _icon.sprite;
+        }, Define.UIEvent.DragEnter);
+        _icon.gameObject.BindEvent((e) =>
+        {
+            if (dragObj == null) return;
+            if (dragIcon == null) return;
+            dragIcon.transform.position = e.position;
+        }, Define.UIEvent.Drag);
+        _icon.gameObject.BindEvent((e) =>
+        {
+            var quickSlot = isSkill ? QuickSlotSkill : QuickSlotItem;
+            if (quickSlot.TryGetValue(str, out int templateId) == false) return;
+            if (dragIcon == null) return;
+            if (dragObj == null) return;
+            Managers.Resource.Destroy(dragObj);
+            (Managers.UI.SceneUI as UI_GameScene).RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, templateId, isSkill);
+        }, Define.UIEvent.DragEnd);
     }
     public void RefreshUI()
     {

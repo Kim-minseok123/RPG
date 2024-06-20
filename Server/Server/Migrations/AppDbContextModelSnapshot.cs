@@ -163,8 +163,9 @@ namespace Server.Migrations
                     b.Property<int>("PlayerDbId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Slot")
-                        .HasColumnType("int");
+                    b.Property<string>("Slot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("TemplateId")
                         .HasColumnType("int");

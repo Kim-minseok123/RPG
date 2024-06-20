@@ -180,6 +180,40 @@ namespace Server.DB
             }
             return false;
         }
+        public static void SaveQuickSlotNoti(Player player, C_SaveQuickSlot saveQuickSlot)
+        {
+            if (player == null) return;
+            foreach (var info in saveQuickSlot.Info)
+            {
+                Instance.Push(() =>
+                {
+                    using (AppDbContext db = new AppDbContext()) 
+                    {
+                        QuickSlotDb quickSlotDb = db.QuickSlots.SingleOrDefault(q => q.PlayerDbId == player.PlayerDbId && q.Slot == info.SlotName);
+                        if(quickSlotDb != null)
+                        {
+                            quickSlotDb.TemplateId = info.TemplateId;
+                            db.Entry(quickSlotDb).State = EntityState.Unchanged;
+                            db.Entry(quickSlotDb).Property(nameof(QuickSlotDb.TemplateId)).IsModified = true;
+                        }
+                        else
+                        {
+                            quickSlotDb = new QuickSlotDb()
+                            {
+                                PlayerDbId = player.PlayerDbId,
+                                Slot = info.SlotName,
+                                TemplateId = info.TemplateId
+                            };
+                            db.QuickSlots.Add(quickSlotDb);
+                        }
+                        bool success = db.SaveChangesEx();
+                        if (!success)
+                        {
 
+                        }
+                    }
+                });
+            }
+        }
     }
 }

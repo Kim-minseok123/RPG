@@ -2,6 +2,7 @@
 using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Util
@@ -57,6 +58,10 @@ public class Util
     public static Positions Vector3ToPositions(Vector3 vector)
     {
         return new Positions() { PosX = vector.x, PosY = vector.y, PosZ = vector.z };
+    }
+    public static bool IsAllLetters(string input)
+    {
+        return input.All(char.IsLetter);
     }
 }
 public class SkillDescription

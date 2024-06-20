@@ -70,7 +70,9 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.SSkillList, MakePacket<S_SkillList>);
 		_handler.Add((ushort)MsgId.SSkillList, PacketHandler.S_SkillListHandler);		
 		_onRecv.Add((ushort)MsgId.SSkillLevelUp, MakePacket<S_SkillLevelUp>);
-		_handler.Add((ushort)MsgId.SSkillLevelUp, PacketHandler.S_SkillLevelUpHandler);
+		_handler.Add((ushort)MsgId.SSkillLevelUp, PacketHandler.S_SkillLevelUpHandler);		
+		_onRecv.Add((ushort)MsgId.SQuickSlot, MakePacket<S_QuickSlot>);
+		_handler.Add((ushort)MsgId.SQuickSlot, PacketHandler.S_QuickSlotHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

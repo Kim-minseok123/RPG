@@ -43,7 +43,7 @@ namespace Server.DB
             .HasAlternateKey(s => new { s.PlayerDbId, s.TemplateId });
 
             builder.Entity<QuickSlotDb>()
-            .HasAlternateKey(s => new { s.PlayerDbId, s.Slot });
+				.HasAlternateKey(q => new { q.PlayerDbId, q.Slot });
         }
 	}
 }

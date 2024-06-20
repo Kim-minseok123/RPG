@@ -372,6 +372,17 @@ class PacketHandler
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         gameSceneUI.SkillUI.RefreshUI();
     }
+    public static void S_QuickSlotHandler(PacketSession session, IMessage packet)
+    {
+        S_QuickSlot quickSlot = (S_QuickSlot)packet;
+        foreach (var info in quickSlot.Info)
+        {
+            if (Util.IsAllLetters(info.SlotName))
+                (Managers.UI.SceneUI as UI_GameScene).RegisterQuickSlot(info.SlotName, info.TemplateId, true);
+            else
+                (Managers.UI.SceneUI as UI_GameScene).RegisterQuickSlot(info.SlotName, info.TemplateId, false);
+        }
+    }
 }
 
 

@@ -14,6 +14,7 @@ public class UI_InvenSlot : UI_Base
     TextMeshProUGUI _countText;
     ItemData itemData;
     GameObject description;
+    GameObject dragIcon;
     GameObject dragObj;
     public int ItemDbID { get; private set; }
     public int TemplateId { get; private set; }
@@ -70,22 +71,22 @@ public class UI_InvenSlot : UI_Base
             {
                 if (itemData == null) return;
                 dragObj = Managers.Resource.Instantiate("UI/UI_SkillDrag");
-                dragObj = Util.FindChild(dragObj, "Icon");
-                if (dragObj == null) return;
-                dragObj.GetComponent<Image>().sprite = _icon.sprite;
+                dragIcon = Util.FindChild(dragObj, "Icon");
+                if (dragIcon == null) return;
+                dragIcon.GetComponent<Image>().sprite = _icon.sprite;
             }, Define.UIEvent.DragEnter);
             _icon.gameObject.BindEvent((e) =>
             {
                 if (itemData == null) return;
                 if (dragObj == null) return;
-                dragObj.transform.position = e.position;
+                dragIcon.transform.position = e.position;
             }, Define.UIEvent.Drag);
             _icon.gameObject.BindEvent((e) =>
             {
                 if (itemData == null) return;
                 if (dragObj == null) return;
                 Managers.Resource.Destroy(dragObj);
-                if(itemData.itemType == ItemType.Consumable)
+                if(itemData.itemType == ItemType.Consumable && e.pointerCurrentRaycast.gameObject.name != null)
                     (Managers.UI.SceneUI as UI_GameScene).RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, TemplateId, false);
             }, Define.UIEvent.DragEnd);
         }

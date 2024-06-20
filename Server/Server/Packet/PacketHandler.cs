@@ -191,4 +191,17 @@ class PacketHandler
 
         room.Push(room.HandleSkillLevelUp, player, skillLevelUpPacket);
     }
+    public static void C_SaveQuickSlotHandler(PacketSession session, IMessage packet)
+    {
+        C_SaveQuickSlot quickSlotPacket = (C_SaveQuickSlot)packet;
+        ClientSession clientSession = (ClientSession)session;
+
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+        GameRoom room = player.Room;
+        if (room == null) return;
+
+        room.Push(room.HandleSaveQuickSlot, player, quickSlotPacket);
+    }
 }

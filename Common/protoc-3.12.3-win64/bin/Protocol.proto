@@ -42,6 +42,8 @@ enum MsgId {
   S_SKILL_LIST = 35;
   C_SKILL_LEVEL_UP = 36;
   S_SKILL_LEVEL_UP = 37;
+  C_SAVE_QUICK_SLOT = 38;
+  S_QUICK_SLOT = 39;
 }
 
 enum CreatureState {
@@ -270,6 +272,12 @@ message S_SkillLevelUp {
   SkillInfo skill = 1;
   bool isNew = 2;
 }
+message C_SaveQuickSlot{
+  repeated QuickSlotInfo info = 1;
+}
+message S_QuickSlot{
+  repeated QuickSlotInfo info = 1;
+}
 message S_Ping {
 
 }
@@ -324,6 +332,12 @@ message StatInfo {
 message SkillInfo {
   int32 skillId = 1;
   int32 level = 2;
+}
+
+message QuickSlotInfo
+{
+  string slotName = 1;
+  int32 templateId = 2;
 }
 
 message ItemInfo {
