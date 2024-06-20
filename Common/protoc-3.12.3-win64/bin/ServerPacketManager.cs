@@ -52,7 +52,9 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.CSkillLevelUp, MakePacket<C_SkillLevelUp>);
 		_handler.Add((ushort)MsgId.CSkillLevelUp, PacketHandler.C_SkillLevelUpHandler);		
 		_onRecv.Add((ushort)MsgId.CSaveQuickSlot, MakePacket<C_SaveQuickSlot>);
-		_handler.Add((ushort)MsgId.CSaveQuickSlot, PacketHandler.C_SaveQuickSlotHandler);
+		_handler.Add((ushort)MsgId.CSaveQuickSlot, PacketHandler.C_SaveQuickSlotHandler);		
+		_onRecv.Add((ushort)MsgId.CChangeItemSlot, MakePacket<C_ChangeItemSlot>);
+		_handler.Add((ushort)MsgId.CChangeItemSlot, PacketHandler.C_ChangeItemSlotHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

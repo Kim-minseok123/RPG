@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
+using System;
 
 public class UI_InvenSlot : UI_Base
 {
@@ -86,10 +88,22 @@ public class UI_InvenSlot : UI_Base
                 if (itemData == null) return;
                 if (dragObj == null) return;
                 Managers.Resource.Destroy(dragObj);
-                if(itemData.itemType == ItemType.Consumable && e.pointerCurrentRaycast.gameObject.name != null)
-                    (Managers.UI.SceneUI as UI_GameScene).RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, TemplateId, false);
+                string name = e.pointerCurrentRaycast.gameObject.name;
+                if (name == null) return;
+                // 아이템 창끼리 인벤 교환
+                if (name.Contains("InventorySlot_"))
+                {
+                    RequestChangeInvenSlot(ExtractNumberFromName(name));
+                    return;
+                }
+                if(itemData.itemType == ItemType.Consumable && name != null)
+                    (Managers.UI.SceneUI as UI_GameScene).RequestQuickSlotUI(name, TemplateId, false);
             }, Define.UIEvent.DragEnd);
         }
+    }
+    public void SetName(string name)
+    {
+        _icon.gameObject.name = name;
     }
     public void SetItem(Item item)
     {
@@ -100,7 +114,7 @@ public class UI_InvenSlot : UI_Base
             Count = 0;
             Equipped = false;
 
-            _icon.gameObject.SetActive(false);
+            _icon.color = new Color(1, 1, 1, 0);
             _countText.gameObject.SetActive(false);
         }
         else
@@ -119,7 +133,8 @@ public class UI_InvenSlot : UI_Base
             color.a = 1f;
             _icon.color = color;
             _icon.gameObject.SetActive(true);
-            if(item.ItemType == ItemType.Consumable)
+            _icon.color = new Color(1, 1, 1, 1);
+            if (item.ItemType == ItemType.Consumable)
             {
                 _countText.gameObject.SetActive(true);
                 _countText.text = item.Count.ToString();
@@ -138,5 +153,32 @@ public class UI_InvenSlot : UI_Base
     {
         if (description != null)
             Managers.Resource.Destroy(description);
+    }
+    public void RequestChangeInvenSlot(int changeSlotNum) 
+    {
+        if (changeSlotNum == -1) return;
+        Item item = Managers.Inven.Get(ItemDbID);
+        if (item == null) return;
+        int curSlot = item.Slot;
+        if (changeSlotNum == curSlot)
+            return;
+
+        C_ChangeItemSlot changeSlot = new C_ChangeItemSlot()
+        { 
+            ItemDbId = ItemDbID,
+            CurSlot = curSlot,
+            ChangeItemSlot = changeSlotNum
+        };
+        Managers.Network.Send(changeSlot);
+    }
+    public int ExtractNumberFromName(string name)
+    {
+        Match match = Regex.Match(name, @"\d+");
+
+        if (match.Success)
+        {
+            return int.Parse(match.Value);
+        }
+        return -1;
     }
 }

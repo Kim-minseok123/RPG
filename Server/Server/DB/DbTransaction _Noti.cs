@@ -215,5 +215,54 @@ namespace Server.DB
                 });
             }
         }
+        public static void ChangeItemSlotNoti(Player player, Item curItem, Item pointItem = null)
+        {
+            if (player == null) return;
+
+            ItemDb item1 = new ItemDb()
+            {
+                ItemDbId = curItem.ItemDbId,
+                Count = curItem.Count,
+                Slot = curItem.Slot,
+            };
+            ItemDb item2 = null;
+            if(pointItem != null)
+            {
+                item2 = new ItemDb()
+                {
+                    ItemDbId = pointItem.ItemDbId,
+                    Count = pointItem.Count,
+                    Slot = pointItem.Slot,
+                };
+            }
+
+            Instance.Push(() => {
+                using (AppDbContext db = new AppDbContext())
+                {
+                    if(curItem.Slot == -1)
+                    {
+                        ItemDb itemDb = db.Items.SingleOrDefault(i => i.ItemDbId == curItem.ItemDbId);
+                        db.Items.Remove(itemDb);
+                    }
+                    else
+                    {
+                        db.Entry(item1).State = EntityState.Unchanged;
+                        db.Entry(item1).Property(nameof(ItemDb.Slot)).IsModified = true;
+                        db.Entry(item1).Property(nameof(ItemDb.Count)).IsModified = true;
+                    }
+                    if(item2 != null)
+                    {
+                        db.Entry(item2).State = EntityState.Unchanged;
+                        db.Entry(item2).Property(nameof(ItemDb.Slot)).IsModified = true;
+                        db.Entry(item2).Property(nameof(ItemDb.Count)).IsModified = true;
+                    }
+                    bool success = db.SaveChangesEx();
+                    if (!success)
+                    {
+
+                    }
+                }
+            });
+        }
     }
 }

@@ -332,5 +332,88 @@ namespace Server.Game
 			skillLevelUpOkPacket.IsNew = isNew;
 			Session.Send(skillLevelUpOkPacket);
 		}
+		public void HandleChangeItemSlot(C_ChangeItemSlot itemSlotPacket)
+		{
+			Item curItem = Inven.Get(itemSlotPacket.ItemDbId);
+			if (curItem == null)
+				return;
+			Item pointItem = Inven.Find(i=> i.Slot == itemSlotPacket.ChangeItemSlot);
+			if(pointItem == null)
+			{
+				curItem.Slot = itemSlotPacket.ChangeItemSlot;
+				S_ChangeItemSlot changeItemSlotOk = new S_ChangeItemSlot()
+				{
+					ItemDbIdOne = curItem.ItemDbId,
+					CountOne = curItem.Count,
+					SlotOne = curItem.Slot,
+					ItemDbIdTwo = -1,
+					SlotTwo = -1,
+					CountTwo = -1
+				};
+                Console.WriteLine(changeItemSlotOk.ItemDbIdOne + " " + changeItemSlotOk.SlotOne);
+                Session.Send(changeItemSlotOk);
+			}
+			else
+			{
+				if (curItem.Slot == pointItem.Slot) return;
+				if(curItem.TemplateId == pointItem.TemplateId && curItem.ItemType == ItemType.Consumable && pointItem.ItemType == ItemType.Consumable)
+				{
+					
+                    if (DataManager.ItemDict.TryGetValue(pointItem.TemplateId, out ItemData itemData) == false) return;
+
+                    int maxCount = ((ConsumableData)itemData).maxCount;
+                    if (pointItem.Count == maxCount) return;
+
+                    int addCount = curItem.Count + pointItem.Count;
+                    if (addCount > maxCount)
+                    {
+						curItem.Count -= (maxCount - pointItem.Count);
+                        pointItem.Count = maxCount;
+                        S_ChangeItemSlot changeItemSlotOk = new S_ChangeItemSlot()
+                        {
+                            ItemDbIdOne = curItem.ItemDbId,
+                            CountOne = curItem.Count,
+                            SlotOne = curItem.Slot,
+                            ItemDbIdTwo = pointItem.ItemDbId,
+                            SlotTwo = pointItem.Slot,
+                            CountTwo = pointItem.Count
+                        };
+                        Session.Send(changeItemSlotOk);
+                    }
+                    else
+                    {
+                        pointItem.Count = addCount;
+                        Inven.Remove(curItem);
+
+                        S_ChangeItemSlot changeItemSlotOk = new S_ChangeItemSlot()
+                        {
+                            ItemDbIdOne = curItem.ItemDbId,
+                            CountOne = -1,
+                            SlotOne = -1,
+                            ItemDbIdTwo = pointItem.ItemDbId,
+                            SlotTwo = pointItem.Slot,
+                            CountTwo = pointItem.Count
+                        };
+                        Session.Send(changeItemSlotOk);
+                    }
+				}
+				else
+				{
+                    (pointItem.Slot, curItem.Slot) = (curItem.Slot, pointItem.Slot);
+                    S_ChangeItemSlot changeItemSlotOk = new S_ChangeItemSlot()
+                    {
+                        ItemDbIdOne = curItem.ItemDbId,
+                        CountOne = curItem.Count,
+                        SlotOne = curItem.Slot,
+                        ItemDbIdTwo = pointItem.ItemDbId,
+                        SlotTwo = pointItem.Slot,
+                        CountTwo = pointItem.Count
+                    };
+                    Session.Send(changeItemSlotOk);
+                }
+            }
+
+			DbTransaction.ChangeItemSlotNoti(this, curItem, pointItem);
+		}
     }
 }

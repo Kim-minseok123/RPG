@@ -146,11 +146,12 @@ public class UI_GameScene : UI_Scene
         }, Define.UIEvent.Drag);
         _icon.gameObject.BindEvent((e) =>
         {
-            var quickSlot = isSkill ? QuickSlotSkill : QuickSlotItem;
-            if (quickSlot.TryGetValue(str, out int templateId) == false) return;
             if (dragIcon == null) return;
             if (dragObj == null) return;
             Managers.Resource.Destroy(dragObj);
+            var quickSlot = isSkill ? QuickSlotSkill : QuickSlotItem;
+            if (quickSlot.TryGetValue(str, out int templateId) == false) return;
+            if (e.pointerCurrentRaycast.gameObject.name == null) return;
             (Managers.UI.SceneUI as UI_GameScene).RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, templateId, isSkill);
         }, Define.UIEvent.DragEnd);
     }

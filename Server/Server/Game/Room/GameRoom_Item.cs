@@ -55,5 +55,10 @@ namespace Server.Game
                 return;
             player.HandleUseItem(useItemPacket);
         }
+        public void HandleChangeItemSlot(Player player, C_ChangeItemSlot itemSlotPacket)
+        {
+            if (player == null) return;
+            player.HandleChangeItemSlot(itemSlotPacket);
+        }
     }
 }

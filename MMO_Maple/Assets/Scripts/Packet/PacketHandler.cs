@@ -383,6 +383,43 @@ class PacketHandler
                 (Managers.UI.SceneUI as UI_GameScene).RegisterQuickSlot(info.SlotName, info.TemplateId, false);
         }
     }
+    public static void S_ChangeItemSlotHandler(PacketSession session, IMessage packet)
+    {
+        S_ChangeItemSlot itemSlot = (S_ChangeItemSlot)packet;
+
+        if(itemSlot.SlotOne == -1 && itemSlot.ItemDbIdTwo != -1)
+        {
+            Item item1 = Managers.Inven.Get(itemSlot.ItemDbIdOne);
+            Item item2 = Managers.Inven.Get(itemSlot.ItemDbIdTwo);
+            if (item1 == null || item2 == null) return;
+            Managers.Inven.Remove(item1);
+            item2.Count = itemSlot.CountTwo;
+            item2.Slot = itemSlot.SlotTwo;
+        }
+        else
+        {
+            // 빈 곳에 아이템 옮김
+            if(itemSlot.ItemDbIdTwo == -1)
+            {
+                Item item = Managers.Inven.Get(itemSlot.ItemDbIdOne);
+                if (item == null) return;
+                item.Count = itemSlot.CountOne;
+                item.Slot = itemSlot.SlotOne;
+            }
+            else
+            {
+                Item item1 = Managers.Inven.Get(itemSlot.ItemDbIdOne);
+                Item item2 = Managers.Inven.Get(itemSlot.ItemDbIdTwo);
+                if (item1 == null || item2 == null) return;
+                item1.Count = itemSlot.CountOne;
+                item1.Slot = itemSlot.SlotOne;
+                item2.Count = itemSlot.CountTwo;
+                item2.Slot = itemSlot.SlotTwo;
+            }
+        }
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        gameSceneUI.InvenUI.RefreshUI();
+    }
 }
 
 

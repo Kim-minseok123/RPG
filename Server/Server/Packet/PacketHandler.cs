@@ -204,4 +204,17 @@ class PacketHandler
 
         room.Push(room.HandleSaveQuickSlot, player, quickSlotPacket);
     }
+    public static void C_ChangeItemSlotHandler(PacketSession session, IMessage packet)
+    {
+        C_ChangeItemSlot itemSlotPacket = (C_ChangeItemSlot)packet;
+        ClientSession clientSession = (ClientSession)session;
+
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+        GameRoom room = player.Room;
+        if (room == null) return;
+
+        room.Push(room.HandleChangeItemSlot, player, itemSlotPacket);
+    }
 }

@@ -31,7 +31,9 @@ public class UI_Inventory : UI_Base
         for (int i = 0; i < 24; i++)
         {
             GameObject go = Managers.Resource.Instantiate("UI/SubItem/UI_InvenSlot", grid.transform);
+            go.name = $"InventorySlot_{i}";
             UI_InvenSlot item = go.GetOrAddComponent<UI_InvenSlot>();
+            item.SetName(go.name);
             Items.Add(item);
         }
 
