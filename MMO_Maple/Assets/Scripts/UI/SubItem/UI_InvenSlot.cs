@@ -72,7 +72,7 @@ public class UI_InvenSlot : UI_Base
             _icon.gameObject.BindEvent((e) =>
             {
                 if (itemData == null) return;
-                dragObj = Managers.Resource.Instantiate("UI/UI_SkillDrag");
+                dragObj = Managers.Resource.Instantiate("UI/UI_DragObj");
                 dragIcon = Util.FindChild(dragObj, "Icon");
                 if (dragIcon == null) return;
                 dragIcon.GetComponent<Image>().sprite = _icon.sprite;
@@ -113,7 +113,7 @@ public class UI_InvenSlot : UI_Base
             TemplateId = 0;
             Count = 0;
             Equipped = false;
-
+            itemData = null;
             _icon.color = new Color(1, 1, 1, 0);
             _countText.gameObject.SetActive(false);
         }
@@ -141,11 +141,15 @@ public class UI_InvenSlot : UI_Base
             }
             else
             {
+                _countText.text = "";
+
                 ClassTypes? classTypes = Item.GetItemRequiredClassType(item);
                 if (classTypes == null) return;
 
                 if ((int)classTypes == Managers.Object.MyPlayer.ClassType) satisfiedClass = true;
+                else satisfiedClass = false;
                 if (item.RequirementLevel <= Managers.Object.MyPlayer.Stat.Level) satisfiedLevel = true;
+                else satisfiedLevel = false;
             }
         }
     }

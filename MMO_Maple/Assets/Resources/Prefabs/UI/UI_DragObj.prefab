@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 203313482677053808}
   - component: {fileID: 1003121596442787965}
   m_Layer: 5
-  m_Name: UI_SkillDrag
+  m_Name: UI_DragObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

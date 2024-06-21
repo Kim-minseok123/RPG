@@ -138,14 +138,14 @@ public class UI_Equip : UI_Base
                 Managers.Resource.Destroy(glovesDes);
             }, Define.UIEvent.PointerExit);
         }
-        GetImage((int)Images.HelmetIcon).gameObject.BindEvent((e) => { NonEquipItem(0); });
-        GetImage((int)Images.ArmorIcon).gameObject.BindEvent((e) => { NonEquipItem(1); });
-        GetImage((int)Images.ShieldIcon).gameObject.BindEvent((e) => { NonEquipItem(2); });
-        GetImage((int)Images.BootsIcon).gameObject.BindEvent((e) => { NonEquipItem(3); });
-        GetImage((int)Images.CapeIcon).gameObject.BindEvent((e) => { NonEquipItem(4); });
-        GetImage((int)Images.WeaponIcon).gameObject.BindEvent((e) => { NonEquipItem(5); });
-        GetImage((int)Images.GlovesIcon).gameObject.BindEvent((e) => { NonEquipItem(6); });
-        GetImage((int)Images.AssistanceWeaponIcon).gameObject.BindEvent((e) => { NonEquipItem(7); });
+        GetImage((int)Images.HelmetIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; NonEquipItem(0); });
+        GetImage((int)Images.ArmorIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; NonEquipItem(1); });
+        GetImage((int)Images.ShieldIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; NonEquipItem(2); });
+        GetImage((int)Images.BootsIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; NonEquipItem(3); });
+        GetImage((int)Images.CapeIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; NonEquipItem(4); });
+        GetImage((int)Images.WeaponIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; NonEquipItem(5); });
+        GetImage((int)Images.GlovesIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; NonEquipItem(6); });
+        GetImage((int)Images.AssistanceWeaponIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; NonEquipItem(7); });
 
         init = true;
 

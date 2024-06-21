@@ -66,7 +66,7 @@ public class UI_SkillInfo : UI_Base
             GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
             {
                 if(skillData == null || skillLevel <= 0) return;
-                dragObj = Managers.Resource.Instantiate("UI/UI_SkillDrag");
+                dragObj = Managers.Resource.Instantiate("UI/UI_DragObj");
                 dragIcon = Util.FindChild(dragObj, "Icon");
                 if (dragIcon == null) return;
                 dragIcon.GetComponent<Image>().sprite = GetImage((int)Images.IconImage).sprite;

@@ -133,7 +133,7 @@ public class UI_GameScene : UI_Scene
         {
             var quickSlot = isSkill ? QuickSlotSkill : QuickSlotItem;
             if (quickSlot.TryGetValue(str, out int templateId) == false) return;
-            dragObj = Managers.Resource.Instantiate("UI/UI_SkillDrag");
+            dragObj = Managers.Resource.Instantiate("UI/UI_DragObj");
             dragIcon = Util.FindChild(dragObj, "Icon");
             if (dragIcon == null) return;
             dragIcon.GetComponent<Image>().sprite = _icon.sprite;

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using Server.DB;
 using Server.Game.Room;
+using ServerCore;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -341,17 +342,8 @@ namespace Server.Game
 			if(pointItem == null)
 			{
 				curItem.Slot = itemSlotPacket.ChangeItemSlot;
-				S_ChangeItemSlot changeItemSlotOk = new S_ChangeItemSlot()
-				{
-					ItemDbIdOne = curItem.ItemDbId,
-					CountOne = curItem.Count,
-					SlotOne = curItem.Slot,
-					ItemDbIdTwo = -1,
-					SlotTwo = -1,
-					CountTwo = -1
-				};
-                Console.WriteLine(changeItemSlotOk.ItemDbIdOne + " " + changeItemSlotOk.SlotOne);
-                Session.Send(changeItemSlotOk);
+				pointItem = new Item(ItemType.None) { ItemDbId = -1, Slot = -1, Count = -1 };
+				MakeChangeItemSlotPacket(curItem, pointItem);
 			}
 			else
 			{
@@ -369,51 +361,37 @@ namespace Server.Game
                     {
 						curItem.Count -= (maxCount - pointItem.Count);
                         pointItem.Count = maxCount;
-                        S_ChangeItemSlot changeItemSlotOk = new S_ChangeItemSlot()
-                        {
-                            ItemDbIdOne = curItem.ItemDbId,
-                            CountOne = curItem.Count,
-                            SlotOne = curItem.Slot,
-                            ItemDbIdTwo = pointItem.ItemDbId,
-                            SlotTwo = pointItem.Slot,
-                            CountTwo = pointItem.Count
-                        };
-                        Session.Send(changeItemSlotOk);
+                        MakeChangeItemSlotPacket(curItem, pointItem);
                     }
                     else
                     {
                         pointItem.Count = addCount;
                         Inven.Remove(curItem);
-
-                        S_ChangeItemSlot changeItemSlotOk = new S_ChangeItemSlot()
-                        {
-                            ItemDbIdOne = curItem.ItemDbId,
-                            CountOne = -1,
-                            SlotOne = -1,
-                            ItemDbIdTwo = pointItem.ItemDbId,
-                            SlotTwo = pointItem.Slot,
-                            CountTwo = pointItem.Count
-                        };
-                        Session.Send(changeItemSlotOk);
+						curItem.Slot = -1;
+						curItem.Count = -1;
+                        MakeChangeItemSlotPacket(curItem, pointItem);
                     }
-				}
+                }
 				else
 				{
                     (pointItem.Slot, curItem.Slot) = (curItem.Slot, pointItem.Slot);
-                    S_ChangeItemSlot changeItemSlotOk = new S_ChangeItemSlot()
-                    {
-                        ItemDbIdOne = curItem.ItemDbId,
-                        CountOne = curItem.Count,
-                        SlotOne = curItem.Slot,
-                        ItemDbIdTwo = pointItem.ItemDbId,
-                        SlotTwo = pointItem.Slot,
-                        CountTwo = pointItem.Count
-                    };
-                    Session.Send(changeItemSlotOk);
+                    MakeChangeItemSlotPacket(curItem, pointItem);
                 }
             }
-
-			DbTransaction.ChangeItemSlotNoti(this, curItem, pointItem);
+            DbTransaction.ChangeItemSlotNoti(this, curItem, pointItem);
 		}
+        public void MakeChangeItemSlotPacket(Item curItem, Item pointItem)
+        {
+            S_ChangeItemSlot changeItemSlotOk = new S_ChangeItemSlot()
+            {
+                ItemDbIdOne = curItem.ItemDbId,
+                CountOne = curItem.Count,
+                SlotOne = curItem.Slot,
+                ItemDbIdTwo = pointItem.ItemDbId,
+                SlotTwo = pointItem.Slot,
+                CountTwo = pointItem.Count
+            };
+            Session.Send(changeItemSlotOk);
+        }
     }
 }
