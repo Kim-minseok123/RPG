@@ -32,8 +32,27 @@ namespace Server.Game
 
 		public override void OnDamaged(GameObject attacker, int damage)
 		{
-			base.OnDamaged(attacker, damage);
-		}
+            if (Room == null)
+                return;
+
+            damage = Math.Max(damage - (ArmorDefence + Stat.Defense), 0);
+            Stat.Hp = Math.Max(Stat.Hp - damage, 0);
+
+            S_ChangeHp changePacket = new S_ChangeHp();
+            changePacket.ObjectId = Id;
+            changePacket.Hp = Stat.Hp;
+            changePacket.ChangeHp = damage;
+            changePacket.IsHeal = false;
+            Room.Broadcast(changePacket);
+            //Room.Broadcast(CellPos, changePacket);
+            Console.WriteLine(attacker + "에 의한 HP 감소");
+
+            if (Stat.Hp <= 0)
+            {
+                State = CreatureState.Dead;
+                OnDead(attacker);
+            }
+        }
 		public override void OnDead(GameObject attacker)
 		{
             if (Room == null)

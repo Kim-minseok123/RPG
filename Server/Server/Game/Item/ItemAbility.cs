@@ -13,7 +13,7 @@ namespace Server.Game
                 case 200:
                     return new RedPotion();
                 case 201:
-                    break;
+                    return new BluePotion();
             }
             return null;
         }
@@ -27,6 +27,13 @@ namespace Server.Game
         public void UseItem(Player player, Consumable item)
         {
             player.Hp += item.HealVal;
+        }
+    }
+    public class BluePotion : ConsumableItemAbility
+    {
+        public void UseItem(Player player, Consumable item)
+        {
+            player.Mp += item.HealVal;
         }
     }
     

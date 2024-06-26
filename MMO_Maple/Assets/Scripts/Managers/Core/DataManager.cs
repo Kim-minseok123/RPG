@@ -14,7 +14,9 @@ public class DataManager
     public Dictionary<int, Data.Monster> MonsterDict { get; private set; } = new Dictionary<int, Data.Monster>();
     public Dictionary<int, Data.ItemData> ItemDict { get; private set; } = new Dictionary<int, Data.ItemData>();
     public Dictionary<int, Data.ExpData> ExpDict { get; private set; } = new Dictionary<int, Data.ExpData>();
-	public  List<int> BeginnerSkillData { get; private set; } = new List<int>();
+    public Dictionary<int, Data.NpcData> NpcDict { get; private set; } = new Dictionary<int, Data.NpcData>();
+
+    public List<int> BeginnerSkillData { get; private set; } = new List<int>();
 
     public void Init()
     {
@@ -22,6 +24,8 @@ public class DataManager
         ItemDict = LoadJson<Data.ItemLoader, int, Data.ItemData>("ItemData").MakeDict();
         MonsterDict = LoadJson<Data.MonsterData, int, Data.Monster>("MonsterData").MakeDict();
         ExpDict = LoadJson<Data.ExpLoader, int, Data.ExpData>("ExpData").MakeDict();
+        NpcDict = LoadJson<Data.NpcLoader, int, Data.NpcData>("NpcData").MakeDict();
+
         BeginnerSkillData.Add(3);
         BeginnerSkillData.Add(5);
 	}

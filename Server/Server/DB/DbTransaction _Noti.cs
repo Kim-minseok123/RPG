@@ -155,7 +155,6 @@ namespace Server.DB
                 }
             });
         }
-
         private static bool AddNewSkill(AppDbContext db, int playerDbId, int skillId, int skillLevel)
         {
             SkillDb skillDb = new SkillDb
@@ -167,7 +166,6 @@ namespace Server.DB
             db.Skills.Add(skillDb);
             return db.SaveChangesEx();
         }
-
         private static bool UpdateSkillLevel(AppDbContext db, int playerDbId, int skillId, int skillLevel)
         {
             SkillDb skillDb = db.Skills.SingleOrDefault(s => s.PlayerDbId == playerDbId && s.TemplateId == skillId);

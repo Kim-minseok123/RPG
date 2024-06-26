@@ -56,7 +56,16 @@
       "maxCount": "100",
       "iconPath": "Textures/Item/redPotion",
       "healVal": "50",
-      "description": "누군가 만든지 모르는 영약이다.\n체력을 50만큼 회복한다."
+      "description": "빨간 꽃을 달여 만든 영약이다.\n체력을 50만큼 회복한다."
+    },
+    {
+      "id": "201",
+      "name": "파란 포션",
+      "consumableType": "Potion",
+      "maxCount": "100",
+      "iconPath": "Textures/Item/bluePotion",
+      "healVal": "50",
+      "description": "파란 광석을 잘게 다져 만든 영약이다.\n마나를 50만큼 회복한다."
     }
   ]
 } 

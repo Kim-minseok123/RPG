@@ -188,4 +188,29 @@ namespace Server.Data
         }
     }
     #endregion
+    #region Npc
+    [Serializable]
+    public class NpcData
+    {
+        public int id;
+        public string name;
+        public List<NpcSellList> npcSellLists;
+    }
+
+    [Serializable]
+    public class NpcLoader : ILoader<int, NpcData>
+    {
+        public List<NpcData> npcs = new List<NpcData>();
+
+        public Dictionary<int, NpcData> MakeDict()
+        {
+            Dictionary<int, NpcData> dict = new Dictionary<int, NpcData>();
+            foreach (NpcData npc in npcs)
+            {
+                dict.Add(npc.id, npc);
+            }
+            return dict;
+        }
+    }
+    #endregion
 }

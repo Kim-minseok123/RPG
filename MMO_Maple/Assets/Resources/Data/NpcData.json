@@ -1,0 +1,30 @@
+{
+  "npcs": [
+    {
+      "id": "1",
+      "name": "알리",
+      "npcSellLists": [
+        {
+          "templateId": "200",
+          "sellGold": "50"
+        },
+        {
+          "templateId": "201",
+          "sellGold": "100"
+        },
+        {
+          "templateId": "1",
+          "sellGold": "50"
+        },
+        {
+          "templateId": "100",
+          "sellGold": "200"
+        },
+        {
+          "templateId": "101",
+          "sellGold": "120"
+        }
+      ]
+    }
+  ]
+} 

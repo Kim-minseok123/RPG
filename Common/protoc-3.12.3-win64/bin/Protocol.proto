@@ -70,6 +70,7 @@ enum GameObjectType {
   MONSTER = 2;
   PROJECTILE = 3;
   DROPITEM = 4;
+  NPC = 5;
 }
 
 enum SkillType {
@@ -375,4 +376,8 @@ message Positions{
   float posX = 1;
   float posY = 2;
   float posZ = 3;
+}
+message NpcSellList{
+  int32 templateId = 1; 
+  int32 sellGold = 2;
 }

@@ -78,6 +78,16 @@ public class ObjectManager
             dropItem.itemName = info.Name;
             dropItem.SetPos(info.PosInfo.Pos);
         }
+        else if(objectType == GameObjectType.Npc)
+        {
+            GameObject go = Managers.Resource.Instantiate($"Creature/NPC/{info.Name}");
+            go.name = info.Name;
+            _objects.Add(info.ObjectId, go);
+
+            NPCController npcController = go.GetComponent<NPCController>();
+            npcController.Id = info.ObjectId;
+            npcController.SetPos(info.PosInfo.Pos, info.PosInfo.Rotate);
+        }
     }
 
     public void Remove(int id)

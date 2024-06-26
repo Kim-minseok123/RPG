@@ -19,15 +19,13 @@ namespace Server.Game
 		Dictionary<int, Player> _players = new Dictionary<int, Player>();
 		Dictionary<int, Monster> _monsters = new Dictionary<int, Monster>();
 		Dictionary<int, DropItem> _dropItem = new Dictionary<int, DropItem>();
+		Dictionary<int, Npc> _npc = new Dictionary<int, Npc>();
 
 		public Zone[,] Zones { get; private set; }
 		public int ZoneCells { get; private set; }
 		public int PlayerCount { get { return _players.Count; } }
 		public Map Map { get; private set; } = new Map();
 
-		// ㅁㅁㅁ
-		// ㅁㅁㅁ
-		// ㅁㅁㅁ
 		public Zone GetZone(Vector2Int cellPos)
 		{
 			int x = (cellPos.x - Map.MinX) / ZoneCells;
@@ -62,13 +60,14 @@ namespace Server.Game
 					Zones[y, x] = new Zone(y, x);
 				}
 			}
-
 			
 			for (int i = 0; i < 1; i++)
 			{
 				SpawnMob();
-
             }
+			Npc npc = ObjectManager.Instance.Add<Npc>();
+			npc.Init(1);
+			EnterGame(npc);
 		}
 		public void SpawnMob()
 		{
@@ -147,6 +146,10 @@ namespace Server.Game
 					{
 						spawnPacket.Objects.Add(m.Info);
 					}
+                    foreach (Npc n in _npc.Values)
+                    {
+                        spawnPacket.Objects.Add(n.Info);
+                    }
                     player.Session.Send(spawnPacket);
 					foreach (Player p in _players.Values)
 					{
@@ -171,7 +174,6 @@ namespace Server.Game
 				monster.Room = this;
                 monster.Update();
 			}
-			
 			else if (type == GameObjectType.Dropitem)
 			{
 				DropItem dropItem = gameObject as DropItem;
@@ -179,6 +181,12 @@ namespace Server.Game
                 dropItem.Room = this;
 
                 dropItem.Update();
+			}
+			else if(type == GameObjectType.Npc)
+			{
+				Npc npc = gameObject as Npc;
+				_npc.Add(gameObject.Id, npc);
+				npc.Room = this;
 			}
 
 			// 타인한테 정보 전송

@@ -19,6 +19,6 @@ public class PotionShopNPC : NPCController
 
     public override void OpenNpc()
     {
-
+        Debug.Log("OpenNpc");
     }
 }
