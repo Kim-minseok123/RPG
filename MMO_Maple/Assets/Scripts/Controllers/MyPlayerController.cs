@@ -64,7 +64,6 @@ public class MyPlayerController : PlayerController
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
     }
-
     private void KeyInputEvent()
     {
         // ½ºÅ³
@@ -98,28 +97,24 @@ public class MyPlayerController : PlayerController
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (curRightWeapon == null) return;
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
             UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeItemQuickSlot("1");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            if (curRightWeapon == null) return;
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
             UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeItemQuickSlot("2");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if (curRightWeapon == null) return;
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
             UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeItemQuickSlot("3");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            if (curRightWeapon == null) return;
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
             UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeItemQuickSlot("4");
@@ -346,5 +341,19 @@ public class MyPlayerController : PlayerController
         skillMotion.Info.SkillId = skill.id;
         Managers.Network.Send(skillMotion);
         StartCoroutine(CoAttackTimeWait(skill, skill.isContinual));
+    }
+
+    public void OnTriggerStay(Collider other)
+    {
+        if (other == null) return;
+        if (!other.gameObject.CompareTag("NPC")) return;
+        if (Input.GetKeyDown(KeyCode.Space) && Managers.Object.MyPlayer.State == CreatureState.Idle)
+        {
+            NPCController npcController = other.gameObject.GetComponent<NPCController>();
+            if(npcController != null)
+            {
+                npcController.OpenNpc();
+            }
+        }
     }
 }

@@ -642,6 +642,7 @@ GameObject:
   - component: {fileID: 7611459364522600802}
   - component: {fileID: 5398819882065624907}
   - component: {fileID: 3862953348932127812}
+  - component: {fileID: 4657663149315412706}
   m_Layer: 0
   m_Name: MyPlayer
   m_TagString: Untagged
@@ -824,6 +825,27 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!135 &4657663149315412706
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253086935255656}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &1310638065648324
 GameObject:
   m_ObjectHideFlags: 0

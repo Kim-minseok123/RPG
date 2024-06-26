@@ -352,7 +352,7 @@ namespace Server.Game
 				{
 					
                     if (DataManager.ItemDict.TryGetValue(pointItem.TemplateId, out ItemData itemData) == false) return;
-
+					if (((Consumable)curItem).Stackable == false) return;
                     int maxCount = ((ConsumableData)itemData).maxCount;
                     if (pointItem.Count == maxCount) return;
 
