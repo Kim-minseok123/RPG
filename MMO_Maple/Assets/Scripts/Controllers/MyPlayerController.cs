@@ -35,6 +35,8 @@ public class MyPlayerController : PlayerController
             return attack;
         }
     }
+    public bool NpcTrigger = false;
+    public GameObject Body;
     protected override void Init()
     {
         base.Init();
@@ -50,6 +52,7 @@ public class MyPlayerController : PlayerController
     }
     protected override void Update()
     {
+        if (NpcTrigger) return;
         OnClickMouseInputEvent();
         KeyInputEvent();
         base.Update();
@@ -342,17 +345,25 @@ public class MyPlayerController : PlayerController
         Managers.Network.Send(skillMotion);
         StartCoroutine(CoAttackTimeWait(skill, skill.isContinual));
     }
-
+    public float interactionCooldown = 2f; 
+    private float lastInteractionTime = -1f; 
     public void OnTriggerStay(Collider other)
     {
         if (other == null) return;
         if (!other.gameObject.CompareTag("NPC")) return;
+        float currentTime = Time.time;
         if (Input.GetKeyDown(KeyCode.Space) && Managers.Object.MyPlayer.State == CreatureState.Idle)
         {
+            if (currentTime - lastInteractionTime < interactionCooldown)
+                return;
             NPCController npcController = other.gameObject.GetComponent<NPCController>();
-            if(npcController != null)
+            if(npcController != null && NpcTrigger == false)
             {
                 npcController.OpenNpc();
+            }
+            else if(npcController != null && NpcTrigger == true)
+            {
+                npcController.CloseNpc();
             }
         }
     }

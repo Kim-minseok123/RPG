@@ -2,7 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using static UnityEngine.GraphicsBuffer;
+using static UnityEditor.PlayerSettings;
+using UnityEngine.UIElements;
 
 public class CameraController : MonoBehaviour
 {
@@ -10,6 +13,9 @@ public class CameraController : MonoBehaviour
     MyPlayerController player;
     public float Yaxis;
     public float Xaxis;
+    public bool NpcTrigger = false;
+    Vector3 prevPos;
+    Vector3 prevRotate;
     public void Awake()
     {
 
@@ -28,6 +34,7 @@ public class CameraController : MonoBehaviour
     void LateUpdate()
     {
         if (player == null) return;
+        if (NpcTrigger) return;
         if (Input.GetMouseButton(2))
         {
             Yaxis += Input.GetAxis("Mouse X") * rotSensitive;
@@ -39,9 +46,21 @@ public class CameraController : MonoBehaviour
             this.transform.eulerAngles = targetRotation;
         }
         transform.position = player.transform.position - transform.forward * dis;
+        prevPos = transform.position;
+        prevRotate = transform.rotation.eulerAngles;
     }
     public void SettingPlayer(MyPlayerController myPlayer)
     {
         player = myPlayer;
+    }
+    public void PlayerToNpcMove(Vector3 pos, Vector3 rotate, GameObject npc)
+    {
+        transform.DOMove(pos, 1).SetEase(Ease.OutQuad).OnComplete(() => { npc.transform.DOLookAt(transform.position, 0.5f, AxisConstraint.Y); });
+        transform.DORotate(rotate, 1).SetEase(Ease.OutQuad);
+    }
+    public void NpcToPlayerMove()
+    {
+        transform.DOMove(prevPos, 1).SetEase(Ease.OutQuad);
+        transform.DORotate(prevRotate, 1).SetEase(Ease.OutQuad).OnComplete(() => { NpcTrigger = false; });
     }
 }

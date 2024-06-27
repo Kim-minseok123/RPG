@@ -2192,6 +2192,7 @@ MonoBehaviour:
   Beginner: {fileID: -1181284794, guid: 4942a68b080be4443947987fb8146128, type: 3}
   Warrior: {fileID: 1364861740, guid: 4942a68b080be4443947987fb8146128, type: 3}
   Archer: {fileID: -2085827286, guid: 4942a68b080be4443947987fb8146128, type: 3}
+  NpcTrigger: 0
 --- !u!1 &3099351164084690222
 GameObject:
   m_ObjectHideFlags: 0

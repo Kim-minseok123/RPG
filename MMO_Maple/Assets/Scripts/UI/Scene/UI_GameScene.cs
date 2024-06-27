@@ -26,7 +26,7 @@ public class UI_GameScene : UI_Scene
     public Sprite Beginner;
     public Sprite Warrior;
     public Sprite Archer;
-
+    public bool NpcTrigger = false;
     MyPlayerController _myPlayer;
     enum Images
     {
@@ -67,6 +67,8 @@ public class UI_GameScene : UI_Scene
         QuickSlotSet2,
         QuickSlotSet3,
         QuickSlotSet4,
+        PlayerInfo,
+        QuickSlot,
     }
     public override void Init()
     {
@@ -206,6 +208,7 @@ public class UI_GameScene : UI_Scene
     }
     public void OpenUI(string uiName = null)
     {
+        if (NpcTrigger) return;
         switch(uiName)
         {
             case "Inven":
@@ -260,6 +263,7 @@ public class UI_GameScene : UI_Scene
     }
     public void RequestQuickSlotUI(string pos, int templateId, bool isSkill)
     {
+        if (NpcTrigger) return;
         switch (pos)
         {
             case "QuickSlotIconImageQ":
@@ -300,6 +304,8 @@ public class UI_GameScene : UI_Scene
     }
     public void RegisterQuickSlot(string keyName, int templateId, bool isSkill)
     {
+        if (NpcTrigger) return;
+
         var quickSlot = isSkill ? QuickSlotSkill : QuickSlotItem;
 
         if (quickSlot.TryGetValue(keyName, out int curTemplateId) && curTemplateId == templateId)
@@ -383,6 +389,8 @@ public class UI_GameScene : UI_Scene
     }
     public void InvokeSkillQuickSlot(string keyName)
     {
+        if (NpcTrigger) return;
+
         if (QuickSlotSkill.TryGetValue(keyName, out int templateId) == false)
             return;
         if (Managers.Data.SkillDict.TryGetValue(templateId, out Skill skill) == false) 
@@ -393,6 +401,8 @@ public class UI_GameScene : UI_Scene
     }
     public void InvokeItemQuickSlot(string keyName)
     {
+        if (NpcTrigger) return;
+
         if (QuickSlotItem.TryGetValue(keyName, out int templateId) == false)
             return;
         Item quickItem = Managers.Inven.Find(item => item.TemplateId == templateId && item.ItemType == ItemType.Consumable);
@@ -403,5 +413,22 @@ public class UI_GameScene : UI_Scene
         useItemPacket.Count = 1;
         Managers.Network.Send(useItemPacket);
         DrawQuickSlot();
+    }
+    public void CloseAllUI()
+    {
+        for (int i = 0; i < _playerPopup.Count; i++)
+        {
+            CloseUI();
+        }
+    }
+    public void CloseInfoAndSlot()
+    {
+        GetObject((int)GameObjects.PlayerInfo).SetActive(false);
+        GetObject((int)GameObjects.QuickSlot).SetActive(false);
+    }
+    public void OpenInfoAndSlot()
+    {
+        GetObject((int)GameObjects.PlayerInfo).SetActive(true);
+        GetObject((int)GameObjects.QuickSlot).SetActive(true);
     }
 }

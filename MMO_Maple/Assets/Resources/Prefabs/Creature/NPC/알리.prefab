@@ -1691,7 +1691,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fdde8e4fec5e9544bd765961762e01e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NameTag: {fileID: 4483947635387743656}
+  prevRotate: {x: 0, y: 180, z: 0}
   animator: {fileID: 95455848339679364}
+  templateId: 1
 --- !u!136 &9146079426951236320
 CapsuleCollider:
   m_ObjectHideFlags: 0
