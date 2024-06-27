@@ -71,8 +71,9 @@ namespace Server.Data
 	{
 		public int id;
 		public string name;
+        public int sellGold;
 		public ItemType itemType;
-	}
+    }
 
 	public class WeaponData : ItemData
 	{

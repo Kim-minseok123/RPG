@@ -3,6 +3,7 @@
     {
       "id": "1",
       "name": "낡은 검",
+      "sellGold": "50",
       "weaponType": "Sword",
       "damage": "17",
       "requirementLevel": "1",
@@ -12,6 +13,7 @@
     {
       "id": "2",
       "name": "도끼",
+      "sellGold": "200",
       "weaponType": "Axe",
       "damage": "30",
       "requirementLevel": "5",
@@ -21,6 +23,7 @@
     {
       "id": "3",
       "name": "나카마키",
+      "sellGold": "200",
       "weaponType": "Sword",
       "damage": "32",
       "requirementLevel": "5",
@@ -32,6 +35,7 @@
     {
       "id": "100",
       "name": "뼈 갑옷",
+      "sellGold": "120",
       "armorType": "Armor",
       "defence": "3",
       "requirementLevel": "1",
@@ -41,6 +45,7 @@
     {
       "id": "101",
       "name": "검은 투구",
+      "sellGold": "100",
       "armorType": "Helmet",
       "defence": "1",
       "requirementLevel": "1",
@@ -52,6 +57,7 @@
     {
       "id": "200",
       "name": "빨간 포션",
+      "sellGold": "50",
       "consumableType": "Potion",
       "maxCount": "100",
       "iconPath": "Textures/Item/redPotion",
@@ -61,6 +67,7 @@
     {
       "id": "201",
       "name": "파란 포션",
+      "sellGold": "100",
       "consumableType": "Potion",
       "maxCount": "100",
       "iconPath": "Textures/Item/bluePotion",

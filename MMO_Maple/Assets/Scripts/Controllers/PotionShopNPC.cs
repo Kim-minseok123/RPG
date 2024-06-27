@@ -6,8 +6,7 @@ public class PotionShopNPC : NPCController
 {
     public Animator animator;
     int prevNum = -1;
-    [SerializeField]
-    int templateId = 1;
+
     private void Start()
     {
         SetAnim();
@@ -20,7 +19,6 @@ public class PotionShopNPC : NPCController
             animNum = Random.Range(0, 4);
         } while (prevNum == animNum);
         prevNum = animNum;
-        Debug.Log(animNum);
         animator.SetInteger("CurAnim", animNum);
     }
 
@@ -42,10 +40,10 @@ public class PotionShopNPC : NPCController
     }
     public override void OpenNpcUI()
     {
-
+        base.OpenNpcUI();
     }
     public override void CloseNpcUI()
     {
-
+        base.CloseNpcUI();
     }
 }

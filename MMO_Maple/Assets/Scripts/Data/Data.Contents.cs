@@ -74,6 +74,7 @@ namespace Data
 		public string name;
 		public ItemType itemType;
 		public string iconPath;
+        public int sellGold;
 	}
 
 	[Serializable]

@@ -6,6 +6,8 @@ using UnityEngine;
 public class NPCController : BaseController
 {
     public GameObject NameTag;
+    [SerializeField]
+    int templateId = 1;
     public virtual void OpenNpc()
     {
         NpcOpenTrigger();
@@ -33,11 +35,11 @@ public class NPCController : BaseController
     }
     public virtual void OpenNpcUI()
     {
-
+        Managers.UI.ShowPopupUI<UI_NpcSellPopup>().Setting(templateId);
     }
     public virtual void CloseNpcUI()
     {
-
+        Managers.UI.ClosePopupUI();
     }
     public virtual void NpcCloseTrigger()
     {
