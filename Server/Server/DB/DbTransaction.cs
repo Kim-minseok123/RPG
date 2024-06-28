@@ -4,6 +4,7 @@ using Server.Data;
 using Server.Game;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Server.DB
@@ -61,7 +62,7 @@ namespace Server.DB
                 }
             });
         }
-		public static void GetItemPlayer(Player player, RewardData rewardData, GameRoom room, DropItem dropItem = null)
+		public static void GetItemPlayer(Player player, RewardData rewardData, GameRoom room, DropItem dropItem = null, int minusMoney = 0)
 		{
 			if (player == null || rewardData == null || room == null)
 				return;
@@ -115,6 +116,13 @@ namespace Server.DB
                     }
 					else
 					{
+                        if(minusMoney > 0)
+                        {
+                            playerDb.PlayerDbId = player.PlayerDbId;
+                            playerDb.Money = Math.Max(player.Inven.Money - minusMoney, 0);
+                            db.Entry(playerDb).State = EntityState.Unchanged;
+                            db.Entry(playerDb).Property(nameof(PlayerDb.Money)).IsModified = true;
+                        }
                         db.Items.Add(itemDb);
                         bool success = db.SaveChangesEx();
                         if (success)
@@ -129,8 +137,14 @@ namespace Server.DB
                                     ItemInfo itemInfo = new ItemInfo();
                                     itemInfo.MergeFrom(newItem.Info);
                                     itemPacket.Items.Add(itemInfo);
-
+                                    if (minusMoney > 0)
+                                    {
+                                        itemPacket.Money = -minusMoney;
+                                        player.Inven.Money -= minusMoney;
+                                    }
                                     player.Session.Send(itemPacket);
+                                    Console.WriteLine("플레이어 " + player.Id + " 소지한 골드 : " + player.Inven.Money);
+
                                     dropItem?.DisappearItem();
                                 }
                             });
@@ -140,7 +154,7 @@ namespace Server.DB
 				}
 			});
 		}
-        public static void GetConsumableItemPlayer(Player player, RewardData rewardData, GameRoom room, DropItem dropItem = null)
+        public static void GetConsumableItemPlayer(Player player, RewardData rewardData, GameRoom room, DropItem dropItem = null, int minusMoney = 0)
         {
             if (player == null || rewardData == null || room == null)
                 return;
@@ -168,6 +182,14 @@ namespace Server.DB
                 {
                     using (AppDbContext db = new AppDbContext())
                     {
+                        if (minusMoney > 0)
+                        {
+                            PlayerDb playerDb = new PlayerDb();
+                            playerDb.PlayerDbId = player.PlayerDbId;
+                            playerDb.Money = Math.Max(player.Inven.Money - minusMoney, 0);
+                            db.Entry(playerDb).State = EntityState.Unchanged;
+                            db.Entry(playerDb).Property(nameof(PlayerDb.Money)).IsModified = true;
+                        }
                         db.Items.Add(itemDb);
                         bool success = db.SaveChangesEx();
                         if (success)
@@ -181,9 +203,16 @@ namespace Server.DB
                                     ItemInfo itemInfo = new ItemInfo();
                                     itemInfo.MergeFrom(newItem.Info);
                                     itemPacket.Items.Add(itemInfo);
-
+                                    if (minusMoney > 0)
+                                    {
+                                        itemPacket.Money = -minusMoney;
+                                        player.Inven.Money -= minusMoney;
+                                    }
                                     player.Session.Send(itemPacket);
                                     dropItem?.DisappearItem();
+                                    Console.WriteLine("플레이어 " + player.Id + " 소지한 골드 : " + player.Inven.Money);
+
+
                                 }
                             });
                         }
@@ -208,6 +237,14 @@ namespace Server.DB
                     {
                         using (AppDbContext db = new AppDbContext())
                         {
+                            if (minusMoney > 0)
+                            {
+                                PlayerDb playerDb = new PlayerDb();
+                                playerDb.PlayerDbId = player.PlayerDbId;
+                                playerDb.Money = Math.Max(player.Inven.Money - minusMoney, 0);
+                                db.Entry(playerDb).State = EntityState.Unchanged;
+                                db.Entry(playerDb).Property(nameof(PlayerDb.Money)).IsModified = true;
+                            }
                             db.Entry(itemDb).State = EntityState.Unchanged;
                             db.Entry(itemDb).Property(nameof(ItemDb.Count)).IsModified = true;
                             bool success = db.SaveChangesEx();
@@ -221,6 +258,16 @@ namespace Server.DB
                                         Count = curItem.Count
                                     };
                                     player.Session.Send(changeConsumableItem);
+                                    if (minusMoney > 0)
+                                    {
+                                        S_AddItem itemPacket = new S_AddItem();
+                                        itemPacket.Money = -minusMoney;
+                                        player.Inven.Money -= minusMoney;
+                                        player.Session.Send(itemPacket);
+                                        Console.WriteLine("플레이어 " + player.Id + " 소지한 골드 : " + player.Inven.Money);
+
+
+                                    }
                                     dropItem?.DisappearItem();
                                 });
                             }
@@ -253,6 +300,14 @@ namespace Server.DB
                     {
                         using (AppDbContext db = new AppDbContext())
                         {
+                            if (minusMoney > 0)
+                            {
+                                PlayerDb playerDb = new PlayerDb();
+                                playerDb.PlayerDbId = player.PlayerDbId;
+                                playerDb.Money = Math.Max(player.Inven.Money - minusMoney, 0);
+                                db.Entry(playerDb).State = EntityState.Unchanged;
+                                db.Entry(playerDb).Property(nameof(PlayerDb.Money)).IsModified = true;
+                            }
                             db.Entry(curitemDb).State = EntityState.Unchanged;
                             db.Entry(curitemDb).Property(nameof(ItemDb.Count)).IsModified = true;
                             db.Items.Add(newItemDb);
@@ -275,8 +330,15 @@ namespace Server.DB
                                         ItemInfo itemInfo = new ItemInfo();
                                         itemInfo.MergeFrom(newItem.Info);
                                         itemPacket.Items.Add(itemInfo);
-
+                                        if (minusMoney > 0)
+                                        {
+                                            itemPacket.Money = -minusMoney;
+                                            player.Inven.Money -= minusMoney;
+                                        }
                                         player.Session.Send(itemPacket);
+                                        Console.WriteLine("플레이어 " + player.Id + " 소지한 골드 : " + player.Inven.Money);
+
+
                                         dropItem?.DisappearItem();
                                     }
                                 });
@@ -286,6 +348,74 @@ namespace Server.DB
 
                 }
             }
+        }
+        public static void RemoveItem(Player player, GameRoom room, C_RemoveItem removeItem, int plusMoney = 0)
+        {
+            if (player == null) return;
+            Item item = player.Inven.Get(removeItem.ItemDbId);
+            if (item == null)
+                return;
+            int remainCount = item.Count - removeItem.Count;
+
+            Instance.Push(() => {
+                using (AppDbContext db = new AppDbContext())
+                { 
+                    if(item.Count - removeItem.Count > 0)
+                    {
+                        ItemDb itemDb = new ItemDb()
+                        {
+                            ItemDbId = item.ItemDbId,
+                            Count = remainCount
+                        };
+                        db.Entry(itemDb).State = EntityState.Unchanged;
+                        db.Entry(itemDb).Property(nameof(ItemDb.Count)).IsModified = true;
+                    }
+                    else
+                    {
+                        ItemDb itemDb = db.Items.SingleOrDefault(i=> i.ItemDbId == item.ItemDbId && i.OwnerDbId == player.PlayerDbId);
+                        if (itemDb == null) return;
+                        db.Items.Remove(itemDb);
+                    }
+                    if(plusMoney > 0)
+                    {
+                        PlayerDb playerDb = new PlayerDb()
+                        {
+                            PlayerDbId = player.PlayerDbId,
+                            Money = player.Inven.Money + plusMoney
+                        };
+                        db.Entry(playerDb).State = EntityState.Unchanged;
+                        db.Entry(playerDb).Property(nameof(PlayerDb.Money)).IsModified = true;
+                    }
+                    bool success = db.SaveChangesEx();
+                    if (success)
+                    {
+                        room.Push(() =>
+                        {
+                            if(remainCount > 0)
+                            {
+                                item.Count = remainCount;
+                                if (plusMoney > 0)
+                                    player.Inven.Money += plusMoney;
+                            }
+                            else
+                            {
+                                player.Inven.Remove(item);
+                                if (plusMoney > 0)
+                                    player.Inven.Money += plusMoney;
+                            }
+                            S_RemoveItem removeOk = new S_RemoveItem();
+                            ItemInfo itemInfo = new ItemInfo();
+                            itemInfo.TemplateId = item.TemplateId;
+                            itemInfo.ItemDbId = item.ItemDbId;
+                            itemInfo.Count = remainCount;
+                            removeOk.Items.Add(itemInfo);
+                            removeOk.Money = plusMoney;
+                            player.Session.Send(removeOk);
+                            Console.WriteLine("플레이어 "+player.Id  + " 소지한 골드 : "+ player.Inven.Money);
+                        });
+                    }
+                }
+            });
         }
     }
 }

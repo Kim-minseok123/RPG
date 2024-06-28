@@ -900,7 +900,7 @@ GameObject:
   - component: {fileID: 3531653102093087121}
   - component: {fileID: 3522849740480008270}
   m_Layer: 5
-  m_Name: UI_NpcSellPopup
+  m_Name: UI_NpcSell_Popup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -110,7 +110,7 @@ public class UI_CreatePlayer_Popup : UI_Popup
         Tweener tw = cg.DOFade(0f, 0.5f);
         yield return tw.WaitForCompletion();
         Managers.UI.ClosePopupUI(this);
-        Managers.UI.ShowPopupUI<UI_SelecetPlayer_Popup>();
+        Managers.UI.ShowPopupUI<UI_SelectPlayer_Popup>();
     }
     public void EndCreate()
     {

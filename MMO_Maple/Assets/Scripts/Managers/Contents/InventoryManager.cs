@@ -71,6 +71,8 @@ public class InventoryManager
     public void AddMoney(int add)
     {
         Money += add;
+        if(Money < 0)
+            Money = 0;
     }
     public Item EquipFind(Func<Item, bool> condition)
     {

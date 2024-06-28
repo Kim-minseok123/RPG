@@ -48,7 +48,7 @@ namespace Server.DB
             {
                 using (AppDbContext db = new AppDbContext())
                 {
-                    ItemDb itemDb = db.Items.SingleOrDefault(i => i.ItemDbId == item.ItemDbId);
+                    ItemDb itemDb = db.Items.SingleOrDefault(i => i.ItemDbId == item.ItemDbId && i.OwnerDbId == player.PlayerDbId);
                     if (itemDb != null)
                     {
                         db.Items.Remove(itemDb);

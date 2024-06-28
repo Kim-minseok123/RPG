@@ -9,7 +9,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_SelecetPlayer_Popup : UI_Popup
+public class UI_SelectPlayer_Popup : UI_Popup
 {
     bool isClick = false;
     enum Buttons

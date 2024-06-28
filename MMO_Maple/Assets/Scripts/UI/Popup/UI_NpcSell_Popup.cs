@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class UI_NpcSellPopup : UI_Popup
+public class UI_NpcSell_Popup : UI_Popup
 {
     int templateId;
     NpcData npcData;
@@ -64,7 +64,7 @@ public class UI_NpcSellPopup : UI_Popup
         foreach (Item item in items)
         {
             GameObject go = Managers.Resource.Instantiate("UI/SubItem/UI_PlayerSellInfo", GetObject((int)GameObjects.PlayerSellContent).transform);
-            go.GetComponent<UI_PlayerSellInfo>().Setting(item.TemplateId);
+            go.GetComponent<UI_PlayerSellInfo>().Setting(item.TemplateId, item.ItemDbId);
         }
         GetText((int)Texts.CoinText).text = Managers.Inven.Money.ToString();
     }

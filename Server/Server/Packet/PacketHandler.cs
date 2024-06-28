@@ -119,7 +119,17 @@ class PacketHandler
 	{
 		
 	}
+    public static void C_AddItemHandler(PacketSession session, IMessage packet)
+    {
+        C_AddItem addItemPacket = (C_AddItem)packet;
+        ClientSession clientSession = (ClientSession)session;
 
+        Player player = clientSession.MyPlayer;
+        if (player == null) return;
+        GameRoom room = player.Room;
+        if (room == null) return;
+        room.Push(room.HandleAddItem, player, addItemPacket);
+    }
 	public static void C_EquipItemHandler(PacketSession session, IMessage packet)
 	{
 		C_EquipItem equipPacket = (C_EquipItem)packet;
@@ -216,5 +226,20 @@ class PacketHandler
         if (room == null) return;
 
         room.Push(room.HandleChangeItemSlot, player, itemSlotPacket);
+    }
+    public static void C_RemoveItemHandler(PacketSession session, IMessage packet)
+    {
+        C_RemoveItem removeItemPacket = (C_RemoveItem)packet;
+        ClientSession clientSession = (ClientSession)session;
+
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+
+        room.Push(room.HandleRemoveItem, player, removeItemPacket);
     }
 }

@@ -41,6 +41,8 @@ class PacketManager
 		_handler.Add((ushort)MsgId.CMeleeAttack, PacketHandler.C_MeleeAttackHandler);		
 		_onRecv.Add((ushort)MsgId.CSkillMotion, MakePacket<C_SkillMotion>);
 		_handler.Add((ushort)MsgId.CSkillMotion, PacketHandler.C_SkillMotionHandler);		
+		_onRecv.Add((ushort)MsgId.CAddItem, MakePacket<C_AddItem>);
+		_handler.Add((ushort)MsgId.CAddItem, PacketHandler.C_AddItemHandler);		
 		_onRecv.Add((ushort)MsgId.CGetDropItem, MakePacket<C_GetDropItem>);
 		_handler.Add((ushort)MsgId.CGetDropItem, PacketHandler.C_GetDropItemHandler);		
 		_onRecv.Add((ushort)MsgId.CEquipItem, MakePacket<C_EquipItem>);
@@ -54,7 +56,9 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.CSaveQuickSlot, MakePacket<C_SaveQuickSlot>);
 		_handler.Add((ushort)MsgId.CSaveQuickSlot, PacketHandler.C_SaveQuickSlotHandler);		
 		_onRecv.Add((ushort)MsgId.CChangeItemSlot, MakePacket<C_ChangeItemSlot>);
-		_handler.Add((ushort)MsgId.CChangeItemSlot, PacketHandler.C_ChangeItemSlotHandler);
+		_handler.Add((ushort)MsgId.CChangeItemSlot, PacketHandler.C_ChangeItemSlotHandler);		
+		_onRecv.Add((ushort)MsgId.CRemoveItem, MakePacket<C_RemoveItem>);
+		_handler.Add((ushort)MsgId.CRemoveItem, PacketHandler.C_RemoveItemHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

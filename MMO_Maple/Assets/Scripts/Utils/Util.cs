@@ -63,6 +63,20 @@ public class Util
     {
         return input.All(char.IsLetter);
     }
+    public static string ChagneClassType(ClassTypes classTypes)
+    {
+        switch (classTypes)
+        {
+            case ClassTypes.Beginner:
+                return "초보자";
+            case ClassTypes.Warrior:
+                return "전사";
+            case ClassTypes.Archer:
+                return "궁수";
+            default:
+                return "";
+        }
+    }
 }
 public class SkillDescription
 {

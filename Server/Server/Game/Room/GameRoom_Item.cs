@@ -60,5 +60,63 @@ namespace Server.Game
             if (player == null) return;
             player.HandleChangeItemSlot(itemSlotPacket);
         }
+        public void HandleAddItem(Player player, C_AddItem addItemPacket)
+        {
+            if (player == null) return;
+
+            ItemData itemData;
+            if (DataManager.ItemDict.TryGetValue(addItemPacket.TemplateId, out itemData) == false) return;
+            if(itemData.itemType == ItemType.Consumable)
+            {
+                if (addItemPacket.IsBuy)
+                {
+                    int minusMoney = addItemPacket.Count * itemData.sellGold;
+                    if (minusMoney > player.Inven.Money) return;
+                    RewardData rewardData = new RewardData();
+                    rewardData.itemId = addItemPacket.TemplateId;
+                    rewardData.count = addItemPacket.Count;
+                    DbTransaction.GetConsumableItemPlayer(player, rewardData, this, minusMoney: minusMoney);
+                }
+                else
+                {
+                    RewardData rewardData = new RewardData();
+                    rewardData.itemId = addItemPacket.TemplateId;
+                    rewardData.count = addItemPacket.Count;
+                    DbTransaction.GetConsumableItemPlayer(player, rewardData, this);
+                }
+            }
+            else
+            {
+                if (addItemPacket.IsBuy)
+                {
+                    int minusMoney = addItemPacket.Count * itemData.sellGold;
+                    if (minusMoney > player.Inven.Money) return;
+                    RewardData rewardData = new RewardData();
+                    rewardData.itemId = addItemPacket.TemplateId;
+                    rewardData.count = addItemPacket.Count;
+                    DbTransaction.GetItemPlayer(player, rewardData, this, minusMoney: minusMoney);
+                }
+                else
+                {
+                    RewardData rewardData = new RewardData();
+                    rewardData.itemId = addItemPacket.TemplateId;
+                    rewardData.count = addItemPacket.Count;
+                    DbTransaction.GetItemPlayer(player, rewardData, this);
+                }
+            }
+        }
+        public void HandleRemoveItem(Player player, C_RemoveItem removeItemPacket)
+        {
+            if (player == null) return;
+            ItemData itemData;
+            if (DataManager.ItemDict.TryGetValue(removeItemPacket.TemplateId, out itemData) == false) return;
+            Item item = player.Inven.Get(removeItemPacket.ItemDbId);
+            if (item == null) return;
+            if (item.Count - removeItemPacket.Count < 0) return;
+            if(removeItemPacket.IsSell)
+                DbTransaction.RemoveItem(player, this, removeItemPacket, plusMoney:(itemData.sellGold /2) * removeItemPacket.Count);
+            else
+                DbTransaction.RemoveItem(player, this, removeItemPacket);
+        }
     }
 }

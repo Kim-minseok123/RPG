@@ -26,26 +26,29 @@ enum MsgId {
   S_CHANGE_HP = 19;
   C_SKILL_MOTION = 20;
   S_SKILL_MOTION = 21;
-  S_ADD_ITEM = 22;
-  S_DIE = 23;
-  S_ITEM_LIST = 24;
-  C_GET_DROP_ITEM = 25;
-  S_MOTION_OR_EFFECT = 26;
-  S_EQUIP_ITEM_LIST = 27;
-  C_EQUIP_ITEM = 28;
-  S_EQUIP_ITEM = 29;
-  C_CHANGE_STAT = 30;
-  S_CHANGE_STAT = 31;
-  S_CHANGE_CONSUMABLE_ITEM = 32;
-  C_USE_ITEM = 33;
-  S_USE_ITEM = 34;
-  S_SKILL_LIST = 35;
-  C_SKILL_LEVEL_UP = 36;
-  S_SKILL_LEVEL_UP = 37;
-  C_SAVE_QUICK_SLOT = 38;
-  S_QUICK_SLOT = 39;
-  C_CHANGE_ITEM_SLOT = 40;
-  S_CHANGE_ITEM_SLOT = 41;
+  C_ADD_ITEM = 22;
+  S_ADD_ITEM = 23;
+  S_DIE = 24;
+  S_ITEM_LIST = 25;
+  C_GET_DROP_ITEM = 26;
+  S_MOTION_OR_EFFECT = 27;
+  S_EQUIP_ITEM_LIST = 28;
+  C_EQUIP_ITEM = 29;
+  S_EQUIP_ITEM = 30;
+  C_CHANGE_STAT = 31;
+  S_CHANGE_STAT = 32;
+  S_CHANGE_CONSUMABLE_ITEM = 33;
+  C_USE_ITEM = 34;
+  S_USE_ITEM = 35;
+  S_SKILL_LIST = 36;
+  C_SKILL_LEVEL_UP = 37;
+  S_SKILL_LEVEL_UP = 38;
+  C_SAVE_QUICK_SLOT = 39;
+  S_QUICK_SLOT = 40;
+  C_CHANGE_ITEM_SLOT = 41;
+  S_CHANGE_ITEM_SLOT = 42;
+  C_REMOVE_ITEM = 43;
+  S_REMOVE_ITEM = 44;
 }
 
 enum CreatureState {
@@ -221,7 +224,22 @@ message S_EquipItemList{
   repeated int32 templateIds = 1;
   int32 objectId = 2;
 }
+message C_AddItem{
+  int32 templateId = 1;
+  int32 count = 2;
+  bool isBuy = 3;
+}
 message S_AddItem {
+  repeated ItemInfo items = 1;
+  int32 money = 2;
+}
+message C_RemoveItem{
+  int32 itemDbId = 1;
+  int32 templateId =2;
+  int32 count = 3;
+  bool isSell = 4;
+}
+message S_RemoveItem{
   repeated ItemInfo items = 1;
   int32 money = 2;
 }

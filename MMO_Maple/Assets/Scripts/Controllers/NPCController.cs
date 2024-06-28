@@ -35,7 +35,7 @@ public class NPCController : BaseController
     }
     public virtual void OpenNpcUI()
     {
-        Managers.UI.ShowPopupUI<UI_NpcSellPopup>().Setting(templateId);
+        Managers.UI.ShowPopupUI<UI_NpcSell_Popup>().Setting(templateId);
     }
     public virtual void CloseNpcUI()
     {

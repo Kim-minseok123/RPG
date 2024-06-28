@@ -94,6 +94,8 @@ public class UIManager
     }
     public T FindPopupUI<T>() where T : UI_Popup
     {
+        if (_popupStack.Count == 0)
+            return null;
         var topPopup = _popupStack.Peek();
         if(topPopup == null) return null;
         if (topPopup is T)
