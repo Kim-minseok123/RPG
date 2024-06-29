@@ -4,13 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using DG.Tweening;
 public class MyPlayerController : PlayerController
 {
     Camera cm;
     public int ClassType;
     private float _moveTime = 0.5f;
-    public LayerMask layerMask;
+    public float testSpeed = 0.1f;
+    public LayerMask mosterLayerMask;
+    public LayerMask groundLayerMask;
     public override int MaxHp { get { return Stat.MaxHp; } protected set { Stat.MaxHp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     public override int MaxMp { get { return Stat.MaxMp; } protected set { Stat.MaxMp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     public override int Hp { get { return Stat.Hp; } protected set { Stat.Hp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
@@ -193,7 +195,7 @@ public class MyPlayerController : PlayerController
     {
         Collider[] colliders;
         GameObject enemy = null;
-        colliders = Physics.OverlapSphere(transform.position + new Vector3(0f, 0.8f, 0f), 2f, layerMask, QueryTriggerInteraction.Collide);
+        colliders = Physics.OverlapSphere(transform.position + new Vector3(0f, 0.8f, 0f), 2f, mosterLayerMask, QueryTriggerInteraction.Collide);
         if (colliders.Length > 0)
         {
             float short_distance = 1000f;
@@ -225,8 +227,9 @@ public class MyPlayerController : PlayerController
             if (State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
             Ray ray = cm.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, groundLayerMask))
             {
+                transform.DOLookAt(hit.point, testSpeed, AxisConstraint.Y);
                 // TODO : 이동 패킷
                 //MoveTarget(hit.point);
                 C_Move movePacket = new C_Move() { PosInfo = new PositionInfo() { Pos = new Positions() } };
