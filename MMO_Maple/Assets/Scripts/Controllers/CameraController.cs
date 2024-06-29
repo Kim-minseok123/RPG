@@ -1,11 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEditor.PlayerSettings;
-using UnityEngine.UIElements;
 
 public class CameraController : MonoBehaviour
 {

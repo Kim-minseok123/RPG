@@ -1,13 +1,8 @@
 using Data;
 using DG.Tweening;
 using Google.Protobuf.Protocol;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Mathematics;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.UI;
 

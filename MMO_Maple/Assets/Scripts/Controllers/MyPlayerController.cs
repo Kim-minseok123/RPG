@@ -345,7 +345,7 @@ public class MyPlayerController : PlayerController
         Managers.Network.Send(skillMotion);
         StartCoroutine(CoAttackTimeWait(skill, skill.isContinual));
     }
-    public float interactionCooldown = 2f; 
+    public float interactionCooldown = 1.5f; 
     private float lastInteractionTime = -1f; 
     public void OnTriggerStay(Collider other)
     {
@@ -357,6 +357,7 @@ public class MyPlayerController : PlayerController
             if (currentTime - lastInteractionTime < interactionCooldown)
                 return;
             NPCController npcController = other.gameObject.GetComponent<NPCController>();
+            lastInteractionTime = currentTime;
             if(npcController != null && NpcTrigger == false)
             {
                 npcController.OpenNpc();

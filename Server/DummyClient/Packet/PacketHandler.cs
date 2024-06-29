@@ -167,4 +167,17 @@ public class PacketHandler
     {
 
     }
+    public static void S_QuickSlotHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+    public static void S_ChangeItemSlotHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+    public static void S_RemoveItemHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+
 }

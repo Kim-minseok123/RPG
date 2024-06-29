@@ -223,9 +223,10 @@ namespace Server.DB
             {
                 Item curItem = player.Inven.Get((int)findDbId); 
                 if (curItem == null) return;
-                if(curItem.Count + rewardData.count <= cmData.maxCount)
+                int newCount = curItem.Count + rewardData.count;
+                if (newCount <= cmData.maxCount)
                 {
-                    curItem.Count += rewardData.count;
+                    curItem.Count = newCount;
 
                     ItemDb itemDb = new ItemDb()
                     {
