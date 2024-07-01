@@ -10,7 +10,7 @@ public class MyPlayerController : PlayerController
     Camera cm;
     public int ClassType;
     private float _moveTime = 0.5f;
-    public float testSpeed = 0.1f;
+    public float lookRotationSpeed = 0.5f;
     public LayerMask mosterLayerMask;
     public LayerMask groundLayerMask;
     public override int MaxHp { get { return Stat.MaxHp; } set { Stat.MaxHp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
@@ -231,7 +231,7 @@ public class MyPlayerController : PlayerController
 
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, groundLayerMask))
             {
-                transform.DOLookAt(hit.point, testSpeed, AxisConstraint.Y);
+                transform.DOLookAt(hit.point, lookRotationSpeed, AxisConstraint.Y);
                 // TODO : 이동 패킷
                 //MoveTarget(hit.point);
                 C_Move movePacket = new C_Move() { PosInfo = new PositionInfo() { Pos = new Positions() } };
