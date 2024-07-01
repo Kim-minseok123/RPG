@@ -87,6 +87,11 @@ namespace Server.Game
 			// -- 아이템 생성
 
 			DbTransaction.SavePlayerStat(this, Room);
+
+			foreach (var job in buffJob.Values)
+			{
+				job.Cancel = true;
+			}
 		}
 		public void HandleEquipItem(C_EquipItem equipPacket)
 		{

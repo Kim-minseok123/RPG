@@ -104,25 +104,25 @@ public class MyPlayerController : PlayerController
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
+            if (State == CreatureState.Dead || State == CreatureState.Wait) return;
             UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeItemQuickSlot("1");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
+            if (State == CreatureState.Dead || State == CreatureState.Wait) return;
             UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeItemQuickSlot("2");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
+            if (State == CreatureState.Dead || State == CreatureState.Wait) return;
             UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeItemQuickSlot("3");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
+            if (State == CreatureState.Dead || State == CreatureState.Wait) return;
             UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeItemQuickSlot("4");
         }
@@ -332,15 +332,9 @@ public class MyPlayerController : PlayerController
             // 버프 작업
             BuffSkillAbility ability = SkillAbilityFactory.CreateAbility(skill.id);
             ability.ApplyAbility(this, buff, skillLevel);
-            
-            StartCoroutine(ResetBuff(buff.duration * skillLevel, ability, buff));
+
+            Managers.UI.SceneUI.GetComponent<UI_GameScene>().RegisterBuff(buff, ability, buff.duration * skillLevel);
         }
-    }
-    public IEnumerator ResetBuff(int time, BuffSkillAbility ability, BuffSkill buff)
-    {
-        yield return new WaitForSeconds(time);
-        ability.ReSetAbility(this, buff);
-        (Managers.UI.SceneUI as UI_GameScene).StatUI.RefreshUI();
     }
     public void RefreshAdditionalStat()
     {

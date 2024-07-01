@@ -23,6 +23,8 @@ public class UI_GameScene : UI_Scene
     public Sprite Archer;
     public bool NpcTrigger = false;
     MyPlayerController _myPlayer;
+
+    public Dictionary<int, UI_BuffSkillInfo> _buffs = new Dictionary<int, UI_BuffSkillInfo>();
     enum Images
     {
         QuickSlotIconImageQ,
@@ -64,7 +66,9 @@ public class UI_GameScene : UI_Scene
         QuickSlotSet4,
         PlayerInfo,
         QuickSlot,
+        BuffState
     }
+
     public override void Init()
     {
         base.Init();
@@ -425,5 +429,22 @@ public class UI_GameScene : UI_Scene
     {
         GetObject((int)GameObjects.PlayerInfo).SetActive(true);
         GetObject((int)GameObjects.QuickSlot).SetActive(true);
+    }
+
+    public void RegisterBuff(BuffSkill buff, BuffSkillAbility ability, int duration)
+    {
+        RemoveBuffUI(buff.id);
+        UI_BuffSkillInfo uI_BuffSkillInfo = Managers.Resource.Instantiate("UI/SubItem/UI_BuffSkillInfo", GetObject((int)GameObjects.BuffState).transform).GetComponent<UI_BuffSkillInfo>();
+        _buffs.Add(buff.id, uI_BuffSkillInfo);
+        uI_BuffSkillInfo.Setting(buff, ability, duration);
+    }
+    public void RemoveBuffUI(int buffId)
+    {
+        if (_buffs.TryGetValue(buffId, out UI_BuffSkillInfo buffUI))
+        {
+            buffUI.Stop();
+            _buffs.Remove(buffId);
+            Managers.Resource.Destroy(buffUI.gameObject);
+        }
     }
 }

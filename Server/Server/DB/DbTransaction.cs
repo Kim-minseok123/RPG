@@ -266,8 +266,6 @@ namespace Server.DB
                                         player.Inven.Money -= minusMoney;
                                         player.Session.Send(itemPacket);
                                         Console.WriteLine("플레이어 " + player.Id + " 소지한 골드 : " + player.Inven.Money);
-
-
                                     }
                                     dropItem?.DisappearItem();
                                 });

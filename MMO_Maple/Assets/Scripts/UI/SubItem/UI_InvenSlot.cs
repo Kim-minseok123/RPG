@@ -48,6 +48,7 @@ public class UI_InvenSlot : UI_Base
                 return;
             if (description != null)
                 Managers.Resource.Destroy(description);
+            if (Managers.Object.MyPlayer.State != CreatureState.Idle) return;
             C_EquipItem equipPacket = new C_EquipItem();
             equipPacket.ItemDbId = ItemDbID;
             equipPacket.Equipped = true;
