@@ -173,13 +173,13 @@ class PacketHandler
         gameSceneUI.InvenUI.RefreshUI();
         gameSceneUI.StatUI.RefreshUI();
         gameSceneUI.EquipUI.RefreshUI();
-        gameSceneUI.DrawQuickSlot();
 
         if (Managers.Object.MyPlayer != null)
             Managers.Object.MyPlayer.RefreshAdditionalStat();
         var uiNpc = Managers.UI.FindPopupUI<UI_NpcSell_Popup>();
         if (uiNpc != null)
             uiNpc.RefreshUI();
+        gameSceneUI.DrawQuickSlot();
     }
     public static void S_DieHandler(PacketSession session, IMessage packet)
     {

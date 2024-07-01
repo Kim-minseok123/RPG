@@ -140,12 +140,24 @@ namespace Server.DB
 
                     if (skillInfo.Level == 1)
                     {
-                        success = AddNewSkill(db, player.PlayerDbId, skillInfo.SkillId, skillInfo.Level);
+                        SkillDb skillDb = new SkillDb
+                        {
+                            PlayerDbId = player.PlayerDbId,
+                            TemplateId = skillInfo.SkillId,
+                            SkillLevel = skillInfo.Level
+                        };
+                        db.Skills.Add(skillDb);
                     }
                     else
                     {
-                        success = UpdateSkillLevel(db, player.PlayerDbId, skillInfo.SkillId, skillInfo.Level);
+                        SkillDb skillDb = db.Skills.SingleOrDefault(s => s.PlayerDbId == player.PlayerDbId && s.TemplateId == skillInfo.SkillId);
+                        if (skillDb != null)
+                        {
+                            skillDb.SkillLevel = skillInfo.Level;
+                            db.Entry(skillDb).State = EntityState.Modified;
+                        }
                     }
+                    success = db.SaveChangesEx();
 
                     if (!success)
                     {
@@ -154,29 +166,6 @@ namespace Server.DB
                     }
                 }
             });
-        }
-        private static bool AddNewSkill(AppDbContext db, int playerDbId, int skillId, int skillLevel)
-        {
-            SkillDb skillDb = new SkillDb
-            {
-                PlayerDbId = playerDbId,
-                TemplateId = skillId,
-                SkillLevel = skillLevel
-            };
-            db.Skills.Add(skillDb);
-            return db.SaveChangesEx();
-        }
-        private static bool UpdateSkillLevel(AppDbContext db, int playerDbId, int skillId, int skillLevel)
-        {
-            SkillDb skillDb = db.Skills.SingleOrDefault(s => s.PlayerDbId == playerDbId && s.TemplateId == skillId);
-            if (skillDb != null)
-            {
-                skillDb.SkillLevel = skillLevel;
-                db.Entry(skillDb).State = EntityState.Unchanged;
-                db.Entry(skillDb).Property(nameof(SkillDb.SkillLevel)).IsModified = true;
-                return db.SaveChangesEx();
-            }
-            return false;
         }
         public static void SaveQuickSlotNoti(Player player, C_SaveQuickSlot saveQuickSlot)
         {
@@ -187,12 +176,17 @@ namespace Server.DB
                 {
                     using (AppDbContext db = new AppDbContext()) 
                     {
+                        QuickSlotDb existQuickSlot = db.QuickSlots.SingleOrDefault(q => q.PlayerDbId == player.PlayerDbId && q.TemplateId == info.TemplateId && q.Slot != info.SlotName);
+                        if (existQuickSlot != null)
+                        {
+                            db.QuickSlots.Remove(existQuickSlot);
+                        }
+
                         QuickSlotDb quickSlotDb = db.QuickSlots.SingleOrDefault(q => q.PlayerDbId == player.PlayerDbId && q.Slot == info.SlotName);
                         if(quickSlotDb != null)
                         {
                             quickSlotDb.TemplateId = info.TemplateId;
-                            db.Entry(quickSlotDb).State = EntityState.Unchanged;
-                            db.Entry(quickSlotDb).Property(nameof(QuickSlotDb.TemplateId)).IsModified = true;
+                            db.Entry(quickSlotDb).State = EntityState.Modified;
                         }
                         else
                         {

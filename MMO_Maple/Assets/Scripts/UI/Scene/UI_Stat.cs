@@ -59,7 +59,10 @@ public class UI_Stat : UI_Base
         GetText((int)Texts.PlayerStatNameText).text = $"닉네임 : <color=#F3E3AE>{myPlayer.objectInfo.Name}</color>";
         GetText((int)Texts.HpText).text = $"HP\t: <color=#F3E3AE>{myPlayer.Hp}</color> / <color=#F3E3AE>{myPlayer.MaxHp}</color>";
         GetText((int)Texts.MpText).text = $"MP\t: <color=#F3E3AE>{myPlayer.Mp}</color> / <color=#F3E3AE>{myPlayer.MaxMp}</color>";
-        GetText((int)Texts.AttackText).text = $"공격력\t: <color=#F3E3AE>{myPlayer.MinAttack}</color> ~ <color=#F3E3AE>{myPlayer.MaxAttack}</color>";
+        if(myPlayer.BuffDamage > 0)
+            GetText((int)Texts.AttackText).text = $"공격력\t: <color=red>{myPlayer.MinAttack}</color> ~ <color=red>{myPlayer.MaxAttack}</color>";
+        else
+            GetText((int)Texts.AttackText).text = $"공격력\t: <color=#F3E3AE>{myPlayer.MinAttack}</color> ~ <color=#F3E3AE>{myPlayer.MaxAttack}</color>";
         GetText((int)Texts.RemainPointText).text = $"남은 스텟 포인트 : <color=#F3E3AE>{myPlayer.Stat.StatPoint}</color>";
         GetText((int)Texts.StrText).text = $"Str\t: <color=#F3E3AE>{myPlayer.Stat.Str}</color>";
         GetText((int)Texts.DexText).text = $"Dex\t: <color=#F3E3AE>{myPlayer.Stat.Dex}</color>";

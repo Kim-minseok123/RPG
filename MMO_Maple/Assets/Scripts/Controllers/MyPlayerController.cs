@@ -13,15 +13,17 @@ public class MyPlayerController : PlayerController
     public float testSpeed = 0.1f;
     public LayerMask mosterLayerMask;
     public LayerMask groundLayerMask;
-    public override int MaxHp { get { return Stat.MaxHp; } protected set { Stat.MaxHp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
-    public override int MaxMp { get { return Stat.MaxMp; } protected set { Stat.MaxMp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
-    public override int Hp { get { return Stat.Hp; } protected set { Stat.Hp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
-    public override int Mp { get { return Stat.Mp; } protected set { Stat.Mp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
+    public override int MaxHp { get { return Stat.MaxHp; } set { Stat.MaxHp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
+    public override int MaxMp { get { return Stat.MaxMp; } set { Stat.MaxMp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
+    public override int Hp { get { return Stat.Hp; } set { Stat.Hp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
+    public override int Mp { get { return Stat.Mp; } set { Stat.Mp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeHpOrMp(); } }
     public int Exp { get { return Stat.Exp; } protected set { Stat.Exp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeExp(); } }
     public Dictionary<int, int> HaveSkillData = new Dictionary<int, int>();
+    public int BuffDamage;
+
     public int MaxAttack { 
         get {
-            int attack = (int)((Stat.Str * 4 + Stat.Dex) * WeaponDamage / 100);
+            int attack = (int)((Stat.Str * 4 + Stat.Dex) * (WeaponDamage + BuffDamage) / 100);
             if(attack < 3) attack = 3;
             if (WeaponDamage == 0) attack = 0;
             return attack; 
@@ -31,7 +33,7 @@ public class MyPlayerController : PlayerController
     {
         get
         {
-            int attack = (int)((Stat.Str * 4 * 0.9 * 0.1 + Stat.Dex) * WeaponDamage / 100);
+            int attack = (int)((Stat.Str * 4 * 0.9 * 0.1 + Stat.Dex) * (WeaponDamage + BuffDamage) / 100);
             if (attack < 1) attack = 1;
             if (WeaponDamage == 0) attack = 0;
             return attack;
@@ -319,6 +321,26 @@ public class MyPlayerController : PlayerController
                 }
             }
         }
+        else if(skill.skillType == SkillType.SkillBuff)
+        {
+            if (CreatureState.Idle != State) yield break;
+            if (HaveSkillData.TryGetValue(skill.id, out int skillLevel) == false) yield break;
+            C_SkillBuff skillBuffPacket = new C_SkillBuff();
+            skillBuffPacket.SkillId = skill.id;
+            Managers.Network.Send(skillBuffPacket);
+            BuffSkill buff = (BuffSkill)skill;
+            // 버프 작업
+            BuffSkillAbility ability = SkillAbilityFactory.CreateAbility(skill.id);
+            ability.ApplyAbility(this, buff, skillLevel);
+            
+            StartCoroutine(ResetBuff(buff.duration * skillLevel, ability, buff));
+        }
+    }
+    public IEnumerator ResetBuff(int time, BuffSkillAbility ability, BuffSkill buff)
+    {
+        yield return new WaitForSeconds(time);
+        ability.ReSetAbility(this, buff);
+        (Managers.UI.SceneUI as UI_GameScene).StatUI.RefreshUI();
     }
     public void RefreshAdditionalStat()
     {

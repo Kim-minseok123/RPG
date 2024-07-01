@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf.Protocol;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using Server.Data;
 using Server.DB;
 using Server.Game.Room;
@@ -20,6 +21,7 @@ namespace Server.Game
 
 		public Inventory Inven { get; private set; } = new Inventory();
 		public ClassTypes classType { get; set; }
+		public int BuffDamage { get; set; }
 		public int WeaponDamage { get; private set; }
 		public int ArmorDefence { get; private set; }
 		public Dictionary<int,int> HaveSkillData = new Dictionary<int,int>();
@@ -336,7 +338,8 @@ namespace Server.Game
 			{
 				HaveSkillData[skillLevelUp.Skill.SkillId]++;
 				isNew = false;
-			}
+				level = HaveSkillData[skillLevelUp.Skill.SkillId];
+            }
 			else
 			{
 				HaveSkillData.Add(skillLevelUp.Skill.SkillId, 1);
@@ -411,6 +414,39 @@ namespace Server.Game
                 CountTwo = pointItem.Count
             };
             Session.Send(changeItemSlotOk);
+        }
+		Dictionary<int, IJob> buffJob = new Dictionary<int, IJob>();
+        public void HandleSkillBuff(BuffSkill buff, BuffSkillAbility ability)
+        {
+            if (State != CreatureState.Idle) return;
+            State = CreatureState.Wait;
+            Room.PushAfter((int)(buff.cooldown * 1000), ChangeStateAfterTime, CreatureState.Idle);
+            if (HaveSkillData.TryGetValue(buff.id, out int skillLevel) == false) return;
+            if (buffJob.TryGetValue(buff.id, out IJob job))
+            {
+                job.Cancel = true;
+                buffJob.Remove(buff.id);
+            }
+
+            ability.ApplyAbility(this, buff, skillLevel);
+            job = Room.PushAfter(buff.duration * skillLevel * 1000, ResetAbility, buff, ability);
+            buffJob[buff.id] = job;
+
+            Console.WriteLine(Mp);
+            S_ChangeStat changeStat = new S_ChangeStat();
+            changeStat.StatInfo = Stat;
+            Session.Send(changeStat);
+        }
+
+        public void ResetAbility(BuffSkill buff, BuffSkillAbility ability)
+        {
+            ability.ReSetAbility(this, buff);
+            buffJob.Remove(buff.id);
+            Console.WriteLine(buff.id + " 버프 제거 됨");
+        }
+        public void ChangeStateAfterTime(CreatureState state)
+        {
+            State = state;
         }
     }
 }

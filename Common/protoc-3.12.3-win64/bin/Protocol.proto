@@ -49,6 +49,7 @@ enum MsgId {
   S_CHANGE_ITEM_SLOT = 42;
   C_REMOVE_ITEM = 43;
   S_REMOVE_ITEM = 44;
+  C_SKILL_BUFF = 45;
 }
 
 enum CreatureState {
@@ -312,7 +313,9 @@ message S_ChangeItemSlot {
   int32 slotTwo = 5;
   int32 countTwo = 6;
 }
-
+message C_SkillBuff{
+  int32 skillId = 1;
+}
 message S_Ping {
 
 }

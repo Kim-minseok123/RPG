@@ -15,11 +15,12 @@ namespace Server.Game
         }
         public override void CalAttackValue()
         {
-            MaxAttack = (Stat.Str * 4 + Stat.Dex) * WeaponDamage / 100;
-            MinAttack = (int)((Stat.Str * 4 * 0.9 * 0.1 + Stat.Dex) * WeaponDamage / 100);
+            MaxAttack = (Stat.Str * 4 + Stat.Dex) * (WeaponDamage + BuffDamage) / 100;
+            MinAttack = (int)((Stat.Str * 4 * 0.9 * 0.1 + Stat.Dex) * (WeaponDamage + BuffDamage) / 100);
             if (MinAttack < 1) MinAttack = 1;
             if (MaxAttack < 3) MaxAttack = 3;
             if (WeaponDamage == 0) { MinAttack = 0; MaxAttack = 0; }
+            Console.WriteLine(MaxAttack + " 최대 공격력임");
         }
     }
 }

@@ -4851,7 +4851,7 @@ GameObject:
   - component: {fileID: 6642199199589531581}
   - component: {fileID: 3627856772980114984}
   m_Layer: 0
-  m_Name: Star aura
+  m_Name: AngerEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

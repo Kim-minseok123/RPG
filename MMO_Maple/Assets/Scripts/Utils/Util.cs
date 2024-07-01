@@ -135,16 +135,30 @@ public class SkillDescription
                     result = $"[현재레벨 {curLevel}]\n" +
                         $"MP {skill.mpConsume}를 소모, " +
                         $"지속 시간 {10 * curLevel}초, " +
-                        $"물리 공격력 {(int)(buffSkill.skillLevelInc * curLevel / 2)} 상승\n" +
+                        $"물리 공격력 {(int)((buffSkill.skillLevelInc + curLevel) / 2)} 상승\n" +
                         $"[다음레벨 {curLevel + 1}]\n" +
                         $"MP {skill.mpConsume}를 소모, " +
                         $"지속 시간 {10 * (curLevel + 1)}초, " +
-                        $"물리 공격력 {(int)(buffSkill.skillLevelInc * (curLevel + 1) / 2)} 상승";
+                        $"물리 공격력 {(int)((buffSkill.skillLevelInc + (curLevel + 1)) / 2)} 상승";
                 }
                 return result;
             default:
                 break;
         }
         return null;
+    }
+    public static string GetSkillNameKorToEng(string name)
+    {
+        string result = null;
+        switch (name)
+        {
+            case "파천강기":
+                return "HeavenCleavingForce";
+            case "분노":
+                return "Anger";
+            default:
+                break;
+        }
+        return result;
     }
 }

@@ -242,4 +242,19 @@ class PacketHandler
 
         room.Push(room.HandleRemoveItem, player, removeItemPacket);
     }
+    public static void C_SkillBuffHandler(PacketSession session, IMessage packet)
+    {
+        C_SkillBuff skillbulffPacket = (C_SkillBuff)packet;
+        ClientSession clientSession = (ClientSession)session;
+
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+
+        room.Push(room.HandleSkillBuff, player, skillbulffPacket);
+    }
 }

@@ -200,7 +200,6 @@ namespace Server.Game
 				monster.isCanAttack = true;
             }
         }
-
         public void StatChange(Player player, C_ChangeStat changeStatPacket)
         {
             if (player == null) return;
@@ -249,6 +248,17 @@ namespace Server.Game
                 return;
             DbTransaction.SaveQuickSlotNoti(player, saveQuickSlot);
         }
+        public void HandleSkillBuff(Player player, C_SkillBuff skillBuffPacket)
+        {
+            if (player == null)
+                return;
+            if (DataManager.SkillDict.TryGetValue(skillBuffPacket.SkillId, out Skill skill) == false)
+                return;
+            if (skill.skillType != SkillType.SkillBuff) return;
+            BuffSkill buffSkill = (BuffSkill)skill;
+            BuffSkillAbility ability = SkillAbilityFactory.CreateAbility(skill.id);
 
+            player.HandleSkillBuff(buffSkill, ability);
+        }
     }
 }

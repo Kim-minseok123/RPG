@@ -16,7 +16,6 @@ public class PlayerController : CreatureController
     public GameObject RightHand;
     public GameObject LeftHand;
     public GameObject Head;
-
     protected GameObject curRightWeapon;
     GameObject curLeftWeapon;
     GameObject curHeadItem;
@@ -105,12 +104,17 @@ public class PlayerController : CreatureController
         Skill skill = null;
         Managers.Data.SkillDict.TryGetValue(info.SkillId, out skill);
         if (skill == null) return;
-        
-        State = CreatureState.Skill;
-        attackNum = info.SkillId;
-        _anim.SetInteger("AttackNum", attackNum);
-        StartCoroutine(CoAttackMotion(skill.cooldown));
-        
+        if(skill.skillType == SkillType.SkillBuff) 
+        {
+            StartMotionOrEffect(SkillDescription.GetSkillNameKorToEng(skill.name));
+        }
+        else
+        {
+            State = CreatureState.Skill;
+            attackNum = info.SkillId;
+            _anim.SetInteger("AttackNum", attackNum);
+            StartCoroutine(CoAttackMotion(skill.cooldown));
+        }
     }
     public IEnumerator CoAttackMotion(float coolDown)
     {
@@ -221,7 +225,6 @@ public class PlayerController : CreatureController
                 break;
         }
     }
-
     public void StartMotionOrEffect(string actionName)
     {
         switch (actionName) 
@@ -231,6 +234,13 @@ public class PlayerController : CreatureController
                 break;
             case "LevelUp":
                 LevelUpEffect();
+                break;
+            case "Anger":
+                State = CreatureState.Wait;
+                _anim.SetTrigger("LevelUp");
+                GameObject effect = Managers.Resource.Instantiate("Effect/AngerEffect", transform);
+                Destroy(effect, 1.5f);
+                StartCoroutine(CoWaitForSecondsToState(1.5f, CreatureState.Idle));
                 break;
             default:
                 Debug.Log("Not Exist Action : " + actionName);
@@ -243,7 +253,6 @@ public class PlayerController : CreatureController
         _anim.SetTrigger("PickUp");
         StartCoroutine(CoWaitForSecondsToState(1.5f, CreatureState.Idle));
     }
-
     public void LevelUpEffect()
     {
         State = CreatureState.Wait;
