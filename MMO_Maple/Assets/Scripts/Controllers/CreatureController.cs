@@ -27,10 +27,11 @@ public class CreatureController : BaseController
     {
         Stat = info;
     }
-    public virtual void EffectInst(string name, float time)
+    public virtual void EffectInst(string name, float time, Vector3 pos, Vector3 scale)
     {
-        GameObject effect = Managers.Resource.Instantiate($"Effect/{name}");
-        effect.transform.position = transform.position + effect.transform.position;
+        GameObject effect = Managers.Resource.Instantiate($"Effect/{name}", transform);
+        effect.transform.position = pos;
+        effect.transform.localScale = scale;
         StartCoroutine(CoWaitForSecondsDestory(effect, time));
     }
     IEnumerator CoWaitForSecondsDestory(GameObject effect, float time)

@@ -4850,6 +4850,7 @@ GameObject:
   - component: {fileID: 7909250533478703700}
   - component: {fileID: 6642199199589531581}
   - component: {fileID: 3627856772980114984}
+  - component: {fileID: 6981339253483885786}
   m_Layer: 0
   m_Name: AngerEffect
   m_TagString: Untagged
@@ -9680,6 +9681,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &6981339253483885786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7053385775836331393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2e5580886343041a5e74b1712b0682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
 --- !u!1 &8554865047300510678
 GameObject:
   m_ObjectHideFlags: 0

@@ -141,14 +141,14 @@ public class MonsterController : CreatureController
         {
             if(damage <= 0)
             {
-                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
+                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo", transform);
                 damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
             }
             else
             {
                 State = CreatureState.Damaged;
                 _anim.SetTrigger("Damage");
-                EffectInst("HitEffect", 1.0f);
+                EffectInst("HitEffect", 1.0f, transform.position + new Vector3(0f, 0.1f, 0f), new Vector3(0.1f, 0.1f, 0.1f));
                 // 체력바 등 작업
                 Hp = hp;
                 var value = Mathf.Max(0f, (float)Hp / MaxHp);
@@ -157,7 +157,7 @@ public class MonsterController : CreatureController
                 else
                     hpBar.DOValue(value, 0.5f).SetEase(Ease.OutExpo);
 
-                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
+                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo", transform);
                 damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
             }
         }

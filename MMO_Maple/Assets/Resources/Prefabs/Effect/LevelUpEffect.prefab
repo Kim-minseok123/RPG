@@ -19600,6 +19600,7 @@ GameObject:
   - component: {fileID: 3650638188812647480}
   - component: {fileID: 797784518864179116}
   - component: {fileID: 5796355061092580784}
+  - component: {fileID: 8540184796650319615}
   m_Layer: 0
   m_Name: LevelUpEffect
   m_TagString: Untagged
@@ -24482,6 +24483,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8540184796650319615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744133877081091469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2e5580886343041a5e74b1712b0682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
 --- !u!1 &7673830656541891808
 GameObject:
   m_ObjectHideFlags: 0

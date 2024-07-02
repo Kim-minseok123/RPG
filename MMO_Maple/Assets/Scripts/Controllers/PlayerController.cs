@@ -133,19 +133,19 @@ public class PlayerController : CreatureController
         {
             if (damage <= 0)
             {
-                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
+                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo", transform);
                 damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
             }
             else
             {
                 _anim.SetTrigger("Damage");
-                EffectInst("HitEffect", 1.0f);
+                EffectInst("HitEffect", 1.0f, transform.position + new Vector3(0f, 1f, 0f), new Vector3(1f, 1f, 1f));
                 // 체력바 등 작업
                 Hp = hp;
                 State = CreatureState.Wait;
                 if (hp > 0)
                     StartCoroutine(CoWaitForSecondsToState(0.8f, CreatureState.Idle));
-                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
+                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo", transform);
                 damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
             }
         }
@@ -239,7 +239,7 @@ public class PlayerController : CreatureController
             case "Anger":
                 State = CreatureState.Wait;
                 _anim.SetTrigger("LevelUp");
-                EffectInst("AngerEffect", 1.5f);
+                EffectInst("AngerEffect", 1.5f, transform.position, new Vector3(1f, 1f, 1f));
                 StartCoroutine(CoWaitForSecondsToState(1.5f, CreatureState.Idle));
                 break;
             default:
@@ -257,7 +257,7 @@ public class PlayerController : CreatureController
     {
         State = CreatureState.Wait;
         _anim.SetTrigger("LevelUp");
-        EffectInst("LevelUpEffect", 1.2f);
+        EffectInst("LevelUpEffect", 1.2f, transform.position, new Vector3(1f, 1f, 1f));
         StartCoroutine(CoWaitForSecondsToState(1.2f, CreatureState.Idle));
     }
 

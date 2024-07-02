@@ -4,27 +4,26 @@ using UnityEngine;
 
 public class test : MonoBehaviour
 {
-    public LayerMask layerMask;
+    GameObject go;
+   
     public void Update()
     {
-        Collider[] colliders;
-        GameObject enemy = null;
-        colliders = Physics.OverlapSphere(transform.position + new Vector3(0f, 0.8f, 0f), 2f, layerMask, QueryTriggerInteraction.Collide);
-        if (colliders.Length > 0)
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            float short_distance = 1000f;
-            foreach (Collider col in colliders)
-            {
-                Debug.Log(col.gameObject.name);
-                float short_distance2 = Vector3.Distance(transform.position, col.transform.position);
-                if (short_distance > short_distance2)
-                {
-                    short_distance = short_distance2;
-                    enemy = col.gameObject;
-                }
-            }
+            Spawn();
         }
-        Debug.Log(enemy);
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            DeSpawn();
+        }
     }
-
+    public void Spawn()
+    {
+        go = Managers.Resource.Instantiate("Effect/AngerEffect", transform);
+        go.transform.position = transform.position;
+    }
+    public void DeSpawn()
+    {
+        Managers.Resource.Destroy(go);
+    }
 }
