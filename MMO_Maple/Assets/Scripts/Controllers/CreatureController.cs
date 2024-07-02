@@ -27,4 +27,15 @@ public class CreatureController : BaseController
     {
         Stat = info;
     }
+    public virtual void EffectInst(string name, float time)
+    {
+        GameObject effect = Managers.Resource.Instantiate($"Effect/{name}");
+        effect.transform.position = transform.position + effect.transform.position;
+        StartCoroutine(CoWaitForSecondsDestory(effect, time));
+    }
+    IEnumerator CoWaitForSecondsDestory(GameObject effect, float time)
+    {
+        yield return new WaitForSeconds(time);
+        Managers.Resource.Destroy(effect);
+    }
 }

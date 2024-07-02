@@ -148,6 +148,7 @@ public class MonsterController : CreatureController
             {
                 State = CreatureState.Damaged;
                 _anim.SetTrigger("Damage");
+                EffectInst("HitEffect", 1.0f);
                 // 체력바 등 작업
                 Hp = hp;
                 var value = Mathf.Max(0f, (float)Hp / MaxHp);

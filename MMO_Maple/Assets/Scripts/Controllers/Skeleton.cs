@@ -105,4 +105,8 @@ public class Skeleton : MonsterController
 
         yield return null;
     }
+    public override void EffectInst(string name, float time)
+    {
+        base.EffectInst(name, time);
+    }
 }

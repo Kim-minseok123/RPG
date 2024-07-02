@@ -139,6 +139,7 @@ public class PlayerController : CreatureController
             else
             {
                 _anim.SetTrigger("Damage");
+                EffectInst("HitEffect", 1.0f);
                 // 체력바 등 작업
                 Hp = hp;
                 State = CreatureState.Wait;
@@ -238,8 +239,7 @@ public class PlayerController : CreatureController
             case "Anger":
                 State = CreatureState.Wait;
                 _anim.SetTrigger("LevelUp");
-                GameObject effect = Managers.Resource.Instantiate("Effect/AngerEffect", transform);
-                Destroy(effect, 1.5f);
+                EffectInst("AngerEffect", 1.5f);
                 StartCoroutine(CoWaitForSecondsToState(1.5f, CreatureState.Idle));
                 break;
             default:
@@ -257,8 +257,8 @@ public class PlayerController : CreatureController
     {
         State = CreatureState.Wait;
         _anim.SetTrigger("LevelUp");
-        GameObject effect = Managers.Resource.Instantiate("Effect/LevelUpEffect", transform);
-        Destroy(effect, 1.2f);
+        EffectInst("LevelUpEffect", 1.2f);
         StartCoroutine(CoWaitForSecondsToState(1.2f, CreatureState.Idle));
     }
+
 }   
