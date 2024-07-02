@@ -133,7 +133,7 @@ public class PlayerController : CreatureController
         {
             if (damage <= 0)
             {
-                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo", transform);
+                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
                 damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
             }
             else
@@ -145,7 +145,7 @@ public class PlayerController : CreatureController
                 State = CreatureState.Wait;
                 if (hp > 0)
                     StartCoroutine(CoWaitForSecondsToState(0.8f, CreatureState.Idle));
-                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo", transform);
+                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
                 damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
             }
         }

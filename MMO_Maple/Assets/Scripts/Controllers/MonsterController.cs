@@ -141,7 +141,7 @@ public class MonsterController : CreatureController
         {
             if(damage <= 0)
             {
-                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo", transform);
+                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
                 damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
             }
             else
@@ -157,7 +157,7 @@ public class MonsterController : CreatureController
                 else
                     hpBar.DOValue(value, 0.5f).SetEase(Ease.OutExpo);
 
-                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo", transform);
+                GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
                 damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage, transform);
             }
         }

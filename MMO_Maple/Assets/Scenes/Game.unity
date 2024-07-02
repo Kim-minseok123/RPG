@@ -821,7 +821,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingEffects:
   - AngerEffect
-  - DamageInfo
   - HitEffect
   - LevelUpEffect
 --- !u!4 &38553241

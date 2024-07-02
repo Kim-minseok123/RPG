@@ -31,7 +31,6 @@ public class UI_DamageInfo_Item : UI_Base
         else
             text.text = damage.ToString();
         transform.position = obj.position;
-        transform.localScale = new Vector3(1f, 1f, 1f);
         text.transform.DOMoveY(text.transform.position.y + 0.5f, 2f).SetEase(Ease.OutCirc);
         text.DOFade(0, 2).SetEase(Ease.OutCirc).OnComplete(() => { Managers.Resource.Destroy(gameObject); });
     }
