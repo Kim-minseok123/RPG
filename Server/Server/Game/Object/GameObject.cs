@@ -86,60 +86,6 @@ namespace Server.Game
 
 		}
 
-		public Vector2Int CellPos
-		{
-			get
-			{
-				return new Vector2Int((int)PosInfo.Pos.PosX, (int)PosInfo.Pos.PosY);
-			}
-
-			set
-			{
-				PosInfo.Pos.PosX = value.x;
-				PosInfo.Pos.PosY = value.y;
-			}
-		}
-
-		public Vector2Int GetFrontCellPos()
-		{
-			return new Vector2Int();
-		}
-
-		public Vector2Int GetFrontCellPos(MoveDir dir)
-		{
-			Vector2Int cellPos = CellPos;
-
-			switch (dir)
-			{
-				case MoveDir.Up:
-					cellPos += Vector2Int.up;
-					break;
-				case MoveDir.Down:
-					cellPos += Vector2Int.down;
-					break;
-				case MoveDir.Left:
-					cellPos += Vector2Int.left;
-					break;
-				case MoveDir.Right:
-					cellPos += Vector2Int.right;
-					break;
-			}
-
-			return cellPos;
-		}
-
-		public static MoveDir GetDirFromVec(Vector2Int dir)
-		{
-			if (dir.x > 0)
-				return MoveDir.Right;
-			else if (dir.x < 0)
-				return MoveDir.Left;
-			else if (dir.y > 0)
-				return MoveDir.Up;
-			else
-				return MoveDir.Down;
-		}
-
 		public virtual void OnDamaged(GameObject attacker, int damage)
 		{
 			if (Room == null)

@@ -37,6 +37,7 @@ namespace Server.Game
                     Skill skillData = null;
                     DataManager.SkillDict.TryGetValue(4, out skillData);
                     Vector3 attacker = Utils.PositionsToVector3(Pos);
+                    if (Target == null) return;
                     Vector3 target = Utils.PositionsToVector3(Target.Pos);
                     if (skillData.skillType == SkillType.SkillMeleeAttack)
                     {

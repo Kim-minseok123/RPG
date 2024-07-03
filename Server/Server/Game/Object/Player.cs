@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using Server.Data;
 using Server.DB;
-using Server.Game.Room;
 using ServerCore;
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,6 @@ namespace Server.Game
 	{
 		public int PlayerDbId { get; set; }
 		public ClientSession Session { get; set; }
-		public VisionCube Vision { get; private set; }
 
 		public Inventory Inven { get; private set; } = new Inventory();
 		public ClassTypes classType { get; set; }
@@ -29,7 +27,6 @@ namespace Server.Game
 		public Player()
 		{
 			ObjectType = GameObjectType.Player;
-			Vision = new VisionCube(this);
         }
 
 		public override void OnDamaged(GameObject attacker, int damage)

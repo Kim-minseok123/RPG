@@ -823,6 +823,7 @@ MonoBehaviour:
   - AngerEffect
   - HitEffect
   - LevelUpEffect
+  - DamageInfo
 --- !u!4 &38553241
 Transform:
   m_ObjectHideFlags: 0
