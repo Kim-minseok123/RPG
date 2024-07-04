@@ -170,4 +170,5 @@ public class MonsterController : CreatureController
         _anim.SetBool("Death", true);
         FinalAttacker = attacker;
     }
+
 }

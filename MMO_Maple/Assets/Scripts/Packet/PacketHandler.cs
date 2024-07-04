@@ -339,6 +339,7 @@ class PacketHandler
         Managers.Object.MyPlayer.SetStat(useItemPacket.StatInfo);
         gameSceneUI.ChangeHpOrMp();
         gameSceneUI.ChangeExp();
+        gameSceneUI.DrawQuickSlot();
         gameSceneUI.InvenUI.RefreshUI();
     }
     public static void S_SkillListHandler(PacketSession session, IMessage packet)

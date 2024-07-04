@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using Server.Data;
 using Server.DB;
+using Server.Game.Room;
 using ServerCore;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,9 @@ namespace Server.Game
 	{
 		public int PlayerDbId { get; set; }
 		public ClientSession Session { get; set; }
+        public VisionCube Vision { get; private set; }
 
-		public Inventory Inven { get; private set; } = new Inventory();
+        public Inventory Inven { get; private set; } = new Inventory();
 		public ClassTypes classType { get; set; }
 		public int BuffDamage { get; set; }
 		public int WeaponDamage { get; private set; }
@@ -27,9 +29,10 @@ namespace Server.Game
 		public Player()
 		{
 			ObjectType = GameObjectType.Player;
+            Vision = new VisionCube(this);
         }
 
-		public override void OnDamaged(GameObject attacker, int damage)
+        public override void OnDamaged(GameObject attacker, int damage)
 		{
             if (Room == null)
                 return;
@@ -42,7 +45,7 @@ namespace Server.Game
             changePacket.Hp = Stat.Hp;
             changePacket.ChangeHp = damage;
             changePacket.IsHeal = false;
-            Room.Broadcast(changePacket);
+            Room.Broadcast(Pos,changePacket);
             //Room.Broadcast(CellPos, changePacket);
             Console.WriteLine(attacker + "에 의한 HP 감소");
 
@@ -60,7 +63,7 @@ namespace Server.Game
             S_Die diePacket = new S_Die();
             diePacket.ObjectId = Id;
             diePacket.AttackerId = attacker.Id;
-            Room.Broadcast(diePacket);
+            Room.Broadcast(Pos, diePacket);
 
             Room.PushAfter(1500, DieEvent);
         }
@@ -157,7 +160,7 @@ namespace Server.Game
                     equipOkItem.ObjectId = Id;
                     equipOkItem.TemplateId = item.TemplateId;
 					equipOkItem.NextSlot = unequipItem.Slot;
-                    Room.Broadcast(equipOkItem);
+                    Room.Broadcast(Pos, equipOkItem);
                 }
                 {
                     int equipSlot = -1;
@@ -214,7 +217,7 @@ namespace Server.Game
                     equipOkItem.ObjectId = Id;
 					equipOkItem.TemplateId = item.TemplateId;
 					equipOkItem.NextSlot = item.Slot;
-					Room.Broadcast(equipOkItem);
+					Room.Broadcast(Pos, equipOkItem);
                 }
             }
 			else
@@ -240,7 +243,7 @@ namespace Server.Game
 				equipOkItem.ObjectId = Id;
                 equipOkItem.TemplateId = item.TemplateId;
 				equipOkItem.NextSlot = item.Slot;
-                Room.Broadcast(equipOkItem);
+                Room.Broadcast(Pos, equipOkItem);
             }
 
             RefreshAdditionalStat();
@@ -318,7 +321,7 @@ namespace Server.Game
 				S_MotionOrEffect levelUpEffect = new S_MotionOrEffect();
 				levelUpEffect.ObjectId = Id;
 				levelUpEffect.ActionName = "LevelUp";
-				Room.Broadcast(levelUpEffect);
+				Room.Broadcast(Pos, levelUpEffect);
             }
             else
 			{

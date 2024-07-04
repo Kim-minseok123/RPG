@@ -1,4 +1,5 @@
 ﻿using Google.Protobuf.Protocol;
+using Server.Game.Room;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -26,14 +27,15 @@ namespace Server.Game
 		public virtual int TotalAttack { get { return Attack; } }
 		public virtual int TotalDefence { get { return 0; } }
 		public virtual int Attack { get { return random.Next(1, Stat.Str + 1); } }
-
+		public Zone curZone { get; set; }
 		public float Speed
 		{
 			get { return Stat.Speed; }
 			set { Stat.Speed = value; }
 		}
+        public bool isMoving = false;
 
-		public int Hp
+        public int Hp
 		{
 			get { return Stat.Hp; }
 			set { Stat.Hp = Math.Clamp(value, 0, Stat.MaxHp); }
@@ -79,6 +81,7 @@ namespace Server.Game
 			PosInfo.Pos = myPos;
 			PosInfo.Rotate = myRotate;
 			Info.StatInfo = Stat;
+			//zone 설정
 		}
 
 		public virtual void Update()
@@ -99,7 +102,7 @@ namespace Server.Game
 			changePacket.Hp = Stat.Hp;
 			changePacket.ChangeHp = damage;
 			changePacket.IsHeal = false;
-			Room.Broadcast(changePacket);
+			Room.Broadcast(Pos, changePacket);
             //Room.Broadcast(CellPos, changePacket);
             Console.WriteLine(attacker +"에 의한 HP 감소");
 
@@ -118,7 +121,7 @@ namespace Server.Game
 			S_Die diePacket = new S_Die();
 			diePacket.ObjectId = Id;
 			diePacket.AttackerId = attacker.Id;
-			Room.Broadcast(diePacket);
+			Room.Broadcast(Pos, diePacket);
 
 			Room.PushAfter(1000, DieEvent);
 		}

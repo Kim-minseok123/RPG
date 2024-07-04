@@ -50,9 +50,9 @@ namespace Server.Game
                         }
                         int coolTick = (int)(1000 * skillData.cooldown);
                         _coolTick = Environment.TickCount64 + coolTick;
-                        isCanAttack = false;
-                        isMotion = false;
                     }
+                    isCanAttack = false;
+                    isMotion = false;
                 }
                 else
                 {
@@ -81,7 +81,7 @@ namespace Server.Game
             S_Die diePacket = new S_Die();
             diePacket.ObjectId = Id;
             diePacket.AttackerId = attacker.Id;
-            Room.Broadcast(diePacket);
+            Room.Broadcast(Pos, diePacket);
 
             ItemDrop(attacker);
             attacker.RewardExp(Stat.Exp);

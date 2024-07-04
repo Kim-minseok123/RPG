@@ -36,7 +36,7 @@ namespace Server.Game
             S_MotionOrEffect motionPacket = new S_MotionOrEffect();
             motionPacket.ObjectId = player.Id;
             motionPacket.ActionName = "Drop";
-            Broadcast(motionPacket);
+            Broadcast(player.Pos, motionPacket);
             if (dropItem._rewardData.itemId == 1000)
                 DbTransaction.GetItemPlayer(player, dropItem._rewardData, this, dropItem);
             else

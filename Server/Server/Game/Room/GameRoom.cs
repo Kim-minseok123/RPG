@@ -2,17 +2,19 @@
 using Google.Protobuf.Protocol;
 using Server.Data;
 using Server.DB;
+using Server.Game.Room;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Threading;
 
 namespace Server.Game
 {
 	public partial class GameRoom : JobSerializer
 	{
-		public const int VisionCells = 5;
+		public const int VisionCells = 10;
 
 		public int RoomId { get; set; }
 
@@ -20,9 +22,47 @@ namespace Server.Game
 		Dictionary<int, Monster> _monsters = new Dictionary<int, Monster>();
 		Dictionary<int, DropItem> _dropItem = new Dictionary<int, DropItem>();
 		Dictionary<int, Npc> _npc = new Dictionary<int, Npc>();
+		Player MasterPlayer = null;
 		public int PlayerCount { get { return _players.Count; } }
+		public float mapMinX = 300;
+		public float mapMinZ = 300;
+		public float mapMaxX = 390;
+		public float mapMaxZ = 390;
+		public float mapSizeX { get { return mapMaxX - mapMinX; } }
+		public float mapSizeZ { get { return mapMaxZ - mapMinZ; } }
+
+		public Zone[,] Zones { get; private set; }
+		public int ZoneCells { get; private set; }
+		public Zone GetZone(Positions pos)
+		{
+			int x = (int)((pos.PosX - mapMinX) / ZoneCells);
+			int z = (int)((mapMaxZ - pos.PosZ ) / ZoneCells);
+			return GetZone(z, x);
+		}
+		public Zone GetZone(int z, int x)
+		{
+			if (x < 0 || x >= Zones.GetLength(1))
+				return null;
+			if (z < 0 || z >= Zones.GetLength(0))
+				return null;
+			return Zones[z, x];
+		}
 		public void Init(int mapId, int zoneCells)
 		{
+
+			ZoneCells = zoneCells;
+
+			int countZ = (int)((mapSizeZ + zoneCells - 1) / zoneCells);
+			int countX = (int)((mapSizeX + zoneCells - 1) / zoneCells);
+			Zones = new Zone[countZ, countX];
+
+			for (int z = 0; z < countZ; z++)
+			{
+				for (int x = 0; x < countX; x++)
+				{
+					Zones[z, x] = new Zone(z, x);
+				}
+			}
 			for (int i = 0; i < 1; i++)
 			{
 				SpawnMob();
@@ -54,15 +94,14 @@ namespace Server.Game
 				Player player = gameObject as Player;
 				_players.Add(gameObject.Id, player);
 				player.Room = this;
-
-				//player.RefreshAdditionalStat();
-
-				//Map.ApplyMove(player, new Vector2Int(player.CellPos.x, player.CellPos.y));
-				//GetZone(player.CellPos).Players.Add(player);
-
-				// 본인한테 정보 전송
+                if (player.Session.Master == true)
 				{
-					S_EnterGame enterPacket = new S_EnterGame();
+					MasterPlayer = player;
+				}
+
+                // 본인한테 정보 전송
+                {
+                    S_EnterGame enterPacket = new S_EnterGame();
 					enterPacket.Player = player.Info;
 					player.Session.Send(enterPacket);
 					{
@@ -95,45 +134,25 @@ namespace Server.Game
 						}
 						player.Session.Send(quickSlotPacket);
 					}
-                    //player.Vision.Update();
 
-                    S_Spawn spawnPacket = new S_Spawn();
-                    foreach (Player p in _players.Values)
-                    {
-                        if (player != p && !p.Session.Master)
-                            spawnPacket.Objects.Add(p.Info);
-                        
-                    }
-					foreach (Monster m in _monsters.Values)
-					{
-						spawnPacket.Objects.Add(m.Info);
-					}
-                    foreach (Npc n in _npc.Values)
-                    {
-                        spawnPacket.Objects.Add(n.Info);
-                    }
-                    player.Session.Send(spawnPacket);
-					foreach (Player p in _players.Values)
-					{
-						if (player != p && !p.Session.Master) 
-						{
-                            S_EquipItemList equipItemLists = new S_EquipItemList();
-							equipItemLists.ObjectId = p.Id;
-                            for (int i = 0; i < p.Inven.EquipItems.Length; i++)
-                            {
-                                if (p.Inven.EquipItems[i] != null)
-                                    equipItemLists.TemplateIds.Add(p.Inven.EquipItems[i].TemplateId);
-                            }
-                            player.Session.Send(equipItemLists);
-                        }
-					}
+					GetZone(player.Pos).Players.Add(player);
+					player.curZone = GetZone(player.Pos);
+					if (player.Session.Master != true)
+						player.Vision.Update();
+					else
+						SpawnMaster();
                 }
-			}
+            }
 			else if (type == GameObjectType.Monster)
 			{
 				Monster monster = gameObject as Monster;
 				_monsters.Add(gameObject.Id, monster);
 				monster.Room = this;
+
+				Zone zone = GetZone(monster.Pos);
+				zone.Monsters.Add(monster);
+				monster.curZone = zone;
+
                 monster.Update();
 			}
 			else if (type == GameObjectType.Dropitem)
@@ -142,6 +161,10 @@ namespace Server.Game
 				_dropItem.Add(gameObject.Id, dropItem);
                 dropItem.Room = this;
 
+                Zone zone = GetZone(dropItem.Pos);
+                zone.DropItems.Add(dropItem);
+                dropItem.curZone = zone;
+
                 dropItem.Update();
 			}
 			else if(type == GameObjectType.Npc)
@@ -149,13 +172,17 @@ namespace Server.Game
 				Npc npc = gameObject as Npc;
 				_npc.Add(gameObject.Id, npc);
 				npc.Room = this;
-			}
+
+                Zone zone = GetZone(npc.Pos);
+                zone.Npcs.Add(npc);
+                npc.curZone = zone;
+            }
 
 			// 타인한테 정보 전송
 			{
 				S_Spawn spawnPacket = new S_Spawn();
 				spawnPacket.Objects.Add(gameObject.Info);
-				Broadcast(spawnPacket, gameObject.Id);
+				Broadcast(gameObject.Pos, spawnPacket, gameObject.Id, true);
 				if (type == GameObjectType.Player)
 				{
 					Player player = gameObject as Player;
@@ -166,19 +193,41 @@ namespace Server.Game
                         if (player.Inven.EquipItems[i] != null)
                             equipItemList.TemplateIds.Add(player.Inven.EquipItems[i].TemplateId);
                     }
-                    Broadcast(equipItemList, gameObject.Id);
+                    Broadcast(player.Pos, equipItemList, gameObject.Id, true);
                 }
             }
 		}
+		public void SpawnMaster()
+		{
+			S_Spawn spawnPacket = new S_Spawn();
+			foreach (var player in _players.Values)
+			{
+				spawnPacket.Objects.Add(player.Info);
+			}
+			foreach (var monster in _monsters.Values)
+			{
+                spawnPacket.Objects.Add(monster.Info);
+            }
+			foreach (var npc in _npc.Values)
+			{
+                spawnPacket.Objects.Add(npc.Info);
+            }
+			foreach (var dropItem in _dropItem.Values)
+			{
+                spawnPacket.Objects.Add(dropItem.Info);
+            }
+			MasterPlayer.Session.Send(spawnPacket);
+        }
 		public void LeaveGame(int objectId)
 		{
 			GameObjectType type = ObjectManager.GetObjectTypeById(objectId);
-
+			Positions pos = new Positions();
 			if (type == GameObjectType.Player)
 			{
 				Player player = null;
 				if (_players.Remove(objectId, out player) == false)
 					return;
+				pos = player.Pos;
 				List<Monster> monsters = _monsters.Values.ToList();
 				foreach (var monster in monsters)
 				{
@@ -186,6 +235,7 @@ namespace Server.Game
 						monster.Target = null;
 				}
 				player.OnLeaveGame();
+				player.curZone.Remove(player);
 				player.Room = null;
 
 				// 본인한테 정보 전송
@@ -199,8 +249,10 @@ namespace Server.Game
 				Monster monster = null;
 				if (_monsters.Remove(objectId, out monster) == false)
 					return;
+				pos = monster.Pos;
+                monster.curZone.Remove(monster);
 
-				monster.Room = null;
+                monster.Room = null;
 				if (_monsters.Count <= 0) SpawnMob();
             }
 			else if (type == GameObjectType.Dropitem)
@@ -208,6 +260,8 @@ namespace Server.Game
 				DropItem dropItem = null;
 				if (_dropItem.Remove(objectId, out dropItem) == false)
 					return;
+				pos = dropItem.Pos;
+                dropItem.curZone.Remove(dropItem);
 
                 dropItem.Room = null;
 			}
@@ -220,26 +274,74 @@ namespace Server.Game
 			{
 				S_Despawn despawnPacket = new S_Despawn();
 				despawnPacket.ObjectIds.Add(objectId);
-				Broadcast(despawnPacket);
+				Broadcast(pos ,despawnPacket);
 			}
 		}
-		Player FindPlayer(Func<GameObject, bool> condition)
+		public void Broadcast(Positions pos, IMessage packet, int id = -1, bool includeMaster = true)
 		{
-			foreach (Player player in _players.Values)
-			{
-				if (condition.Invoke(player))
-					return player;
-			}
+			if (includeMaster)
+				BroadcastMaster(packet);
 
-			return null;
-		}
-		public void Broadcast(IMessage packet, int id = -1)
+            Broadcast(pos, packet, id);
+        }
+		public void Broadcast(Positions pos, IMessage packet, int id)
 		{
-			foreach(Player p in _players.Values)
-			{
-				if (id != -1 && p.Id == id) continue;
-				p.Session.Send(packet);
-			}
+            List<Zone> zones = GetAdjacentZones(pos);
+            foreach (Player p in zones.SelectMany(z => z.Players))
+            {
+                if ((id != -1 && p.Id == id) || p.Session.Master) continue;
+                int dx = (int)(p.Pos.PosX - pos.PosX);
+                int dz = (int)(p.Pos.PosZ - pos.PosZ);
+                if (Math.Abs(dx) > GameRoom.VisionCells)
+                    continue;
+                if (Math.Abs(dz) > GameRoom.VisionCells)
+                    continue;
+                p.Session.Send(packet);
+            }
+        }
+		public void BroadcastMaster(IMessage packet)
+		{
+			MasterPlayer?.Session.Send(packet);
 		}
-	}
+		public List<Player> GetAdjacentPlayers(Positions pos, int range = GameRoom.VisionCells) 
+		{
+            List<Zone> zones = GetAdjacentZones(pos, range);
+            return zones.SelectMany(z => z.Players).ToList();
+        }
+        public List<Zone> GetAdjacentZones(Positions pos, int range = GameRoom.VisionCells)
+        {
+            HashSet<Zone> zones = new HashSet<Zone>();
+
+            int maxZ = (int)(pos.PosZ + range);
+            int minZ = (int)(pos.PosZ - range);
+            int maxX = (int)(pos.PosX + range);
+            int minX = (int)(pos.PosX - range);
+
+            int leftTopIndexY = (int)((mapMaxZ - maxZ) / ZoneCells);
+            int leftTopIndexX = (int)((minX - mapMinX) / ZoneCells);
+            int rightBotIndexY = (int)((mapMaxZ - minZ) / ZoneCells);
+            int rightBotIndexX = (int)((maxX - mapMinX) / ZoneCells);
+
+            int startIndexY = Math.Min(leftTopIndexY, rightBotIndexY);
+            int endIndexY = Math.Max(leftTopIndexY, rightBotIndexY);
+            int startIndexX = Math.Min(leftTopIndexX, rightBotIndexX);
+            int endIndexX = Math.Max(leftTopIndexX, rightBotIndexX);
+
+            // Iterate through the indices and collect zones
+            for (int y = startIndexY; y <= endIndexY; y++)
+            {
+                for (int x = startIndexX; x <= endIndexX; x++)
+                {
+                    Zone zone = GetZone(y, x);
+                    if (zone != null)
+                    {
+                        zones.Add(zone);
+                    }
+                }
+            }
+
+            return zones.ToList();
+        }
+
+    }
 }

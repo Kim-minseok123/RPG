@@ -12,7 +12,6 @@ namespace Server.Game
 	public class Monster : GameObject
 	{
 		protected Vector3 SpawnPos;
-		public bool isMoving = false;
 		public int TemplateId { get; private set; }
 		public GameObject Target { get; set; }
 		public bool isCanAttack = false;
@@ -101,7 +100,6 @@ namespace Server.Game
 		protected void BroadcastMove()
 		{
 			// 다른 플레이어한테도 알려준다
-			isMoving = true;
 
             S_Move movePacket = new S_Move();
 			movePacket.ObjectId = Id;
@@ -109,10 +107,13 @@ namespace Server.Game
 			nextPosinfo.MergeFrom(PosInfo);
 			nextPosinfo.Pos = nextPos;
 			movePacket.DestPosInfo = nextPosinfo;
-			if(Target == null)
+
+            if (Target == null)
 				movePacket.TargetId = -1;
 			else movePacket.TargetId = Target.Id;
-            Room.Broadcast(movePacket);
+			DestPos = nextPos;
+            isMoving = true;
+            Room.Broadcast(Pos, movePacket);
         }
 
         protected long _coolTick = 0;
@@ -233,7 +234,7 @@ namespace Server.Game
                 resStopMovePacket.PosOk = true;
                 resStopMovePacket.Rotate = PosInfo.Rotate;
                 resStopMovePacket.Pos = Pos;
-                Room.Broadcast(resStopMovePacket);
+                Room.Broadcast(Pos, resStopMovePacket);
 				_MoveTick = 0;
 				if (damage - Stat.Defense > 0) 
 				{

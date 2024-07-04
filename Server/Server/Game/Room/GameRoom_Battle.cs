@@ -2,6 +2,7 @@
 using Google.Protobuf.Protocol;
 using Server.Data;
 using Server.DB;
+using Server.Game.Room;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -25,12 +26,12 @@ namespace Server.Game
 
 			info.PosInfo.State = movePosInfo.State;
 			player.DestPos = movePacket.PosInfo.Pos;
-
+            player.isMoving = true;
 			S_Move resMovePacket = new S_Move();
 			resMovePacket.ObjectId = player.Info.ObjectId;
 			resMovePacket.DestPosInfo = movePacket.PosInfo;
 			resMovePacket.TargetId = -1;
-			Broadcast(resMovePacket);
+			Broadcast(player.Pos, resMovePacket);
 		}
 		public void HandleStopMove(Player player, C_StopMove stopMovePacket)
 		{
@@ -44,12 +45,13 @@ namespace Server.Game
 			player.Pos = stopMovePacket.PosInfo.Pos;
 			player.Ratate = stopMovePacket.PosInfo.Rotate;
 			player.DestPos = null;
+            player.isMoving = false;
             S_StopMove resStopMovePacket = new S_StopMove();
 			resStopMovePacket.ObjectId = player.Info.ObjectId;
 			resStopMovePacket.PosOk = true;
 			resStopMovePacket.Rotate = stopMovePacket.PosInfo.Rotate;
 			resStopMovePacket.Pos = player.Pos;
-			Broadcast(resStopMovePacket);
+			Broadcast(player.Pos, resStopMovePacket);
         }
         public void HandleStopMoveMonster(C_StopMove stopMovePacket)
         {
@@ -61,12 +63,13 @@ namespace Server.Game
             monster.Ratate = stopMovePacket.PosInfo.Rotate;
 			monster.isMoving = false;
             monster._nextSearchTick = Environment.TickCount64 + 7000;
+            monster.DestPos = null;
             S_StopMove resStopMovePacket = new S_StopMove();
             resStopMovePacket.ObjectId = monster.Info.ObjectId;
             resStopMovePacket.PosOk = true;
             resStopMovePacket.Rotate = stopMovePacket.PosInfo.Rotate;
             resStopMovePacket.Pos = monster.Pos;
-            Broadcast(resStopMovePacket);
+            Broadcast(monster.Pos, resStopMovePacket);
         }
         public void HandleCheckPos(Player player, C_CheckPos posPacket)
 		{
@@ -78,11 +81,19 @@ namespace Server.Game
             }
 			if(posPacket.IsMonster == false)
 			{
-                PositionInfo playerPos = player.PosInfo;
-                if (playerPos.Pos.PosX != posPacket.CurPosInfo.Pos.PosX || playerPos.Pos.PosY != posPacket.CurPosInfo.Pos.PosY || playerPos.Pos.PosZ != posPacket.CurPosInfo.Pos.PosZ)
+                Positions playerPos = player.Pos;
+                if (playerPos.PosX != posPacket.CurPosInfo.Pos.PosX || playerPos.PosY != posPacket.CurPosInfo.Pos.PosY || playerPos.PosZ != posPacket.CurPosInfo.Pos.PosZ)
                 {
                     player.Pos = posPacket.CurPosInfo.Pos;
                     player.Ratate = posPacket.CurPosInfo.Rotate;
+                    Zone now = player.curZone;
+                    Zone after = GetZone(playerPos);
+                    if (after == null)
+                        return;
+                    
+                    now.Players.Remove(player);
+                    after.Players.Add(player);
+                    player.curZone = after;
                 }
             }
             else
@@ -90,8 +101,19 @@ namespace Server.Game
                 Monster monster = null;
                 _monsters.TryGetValue(posPacket.ObjectId, out monster);
                 if (monster == null) return;
-                monster.Pos = posPacket.CurPosInfo.Pos;
-                monster.Ratate = posPacket.CurPosInfo.Rotate;
+                Positions monsterPos = monster.Pos;
+                if (monsterPos.PosX != posPacket.CurPosInfo.Pos.PosX || monsterPos.PosY != posPacket.CurPosInfo.Pos.PosY || monsterPos.PosZ != posPacket.CurPosInfo.Pos.PosZ)
+                {
+                    monster.Pos = posPacket.CurPosInfo.Pos;
+                    monster.Ratate = posPacket.CurPosInfo.Rotate;
+                    Zone now = monster.curZone;
+                    Zone after = GetZone(monsterPos);
+                    if (after == null)
+                        return;
+                    now.Monsters.Remove(monster);
+                    after.Monsters.Add(monster);
+                    monster.curZone = after;
+                }
             }
 
         }
@@ -123,7 +145,7 @@ namespace Server.Game
                 S_SkillMotion skillMotionServer = new S_SkillMotion() { Info = new SkillInfo() };
                 skillMotionServer.ObjectId = player.Id;
                 skillMotionServer.Info.SkillId = skillMotion.Info.SkillId;
-                Broadcast(skillMotionServer);
+                Broadcast(player.Pos, skillMotionServer);
             }
             else
 			{
@@ -136,7 +158,7 @@ namespace Server.Game
                 S_SkillMotion skillMotionServer = new S_SkillMotion() { Info = new SkillInfo() };
                 skillMotionServer.ObjectId = monster.Id;
                 skillMotionServer.Info.SkillId = skillMotion.Info.SkillId;
-                Broadcast(skillMotionServer);
+                Broadcast(monster.Pos, skillMotionServer);
             }
         }
         public void HandleMeleeAttack(Player player, C_MeleeAttack meleeAttack)
