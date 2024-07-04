@@ -332,7 +332,6 @@ namespace Server.Game
 			changeStatPacket.StatInfo.MergeFrom(Stat);
 			Session.Send(changeStatPacket);
         }
-
 		public void HandleSkillLevelUp(C_SkillLevelUp skillLevelUp)
 		{
 			if (Stat.SkillPoint <= 0) return;
@@ -437,7 +436,6 @@ namespace Server.Game
             job = Room.PushAfter(buff.duration * skillLevel * 1000, ResetAbility, buff, ability);
             buffJob[buff.id] = job;
 
-            Console.WriteLine(Mp);
             S_ChangeStat changeStat = new S_ChangeStat();
             changeStat.StatInfo = Stat;
             Session.Send(changeStat);

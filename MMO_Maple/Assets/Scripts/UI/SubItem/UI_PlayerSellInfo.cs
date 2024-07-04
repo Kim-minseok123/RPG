@@ -8,6 +8,7 @@ using UnityEngine;
 public class UI_PlayerSellInfo : UI_Base
 {
     public int templateId;
+    UI_NpcSell_Popup popup;
     public int itemDbId;
     ItemData itemData;
     GameObject description;
@@ -29,10 +30,11 @@ public class UI_PlayerSellInfo : UI_Base
         BindImage(typeof(Images));
         BindText(typeof(Texts));
     }
-    public void Setting(int templateId, int itemDbId)
+    public void Setting(int templateId, int itemDbId, UI_NpcSell_Popup popup)
     {
         this.templateId = templateId;
         this.itemDbId = itemDbId;
+        this.popup = popup;
         if (Managers.Data.ItemDict.TryGetValue(templateId, out itemData) == false) return;
         RefreshUI();
     }
@@ -54,6 +56,7 @@ public class UI_PlayerSellInfo : UI_Base
                 // 몇개를 판매하시겠습니까? 출력 팝업
                 GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
                 {
+                    popup.InfoRemove();
                     if (e.clickCount < 2) return;
                     Managers.UI.ShowPopupUI<UI_SelectConfirm_Popup>().Setting("몇개를 판매하시겠습니까?", true, (count) =>
                     {
@@ -81,6 +84,7 @@ public class UI_PlayerSellInfo : UI_Base
                 // 정말 판매하시겠습니까? 출력 팝업
                 GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
                 {
+                    popup.InfoRemove();
                     if (e.clickCount < 2) return;
                     Managers.UI.ShowPopupUI<UI_SelectConfirm_Popup>().Setting("정말 판매하시겠습니까?", false, (count) =>
                     {
@@ -124,6 +128,7 @@ public class UI_PlayerSellInfo : UI_Base
             // 정말 판매하시겠습니까? 출력 팝업
             GetImage((int)Images.IconImage).gameObject.BindEvent((e) =>
             {
+                popup.InfoRemove();
                 if (e.clickCount < 2) return;
                 Managers.UI.ShowPopupUI<UI_SelectConfirm_Popup>().Setting("정말 판매하시겠습니까?", false, (count) =>
                 {

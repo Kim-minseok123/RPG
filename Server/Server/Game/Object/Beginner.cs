@@ -20,7 +20,6 @@ namespace Server.Game
             if (MinAttack < 1) MinAttack = 1;
             if (MaxAttack < 3) MaxAttack = 3;
             if (WeaponDamage == 0) { MinAttack = 0; MaxAttack = 0; }
-            Console.WriteLine(MaxAttack + " 최대 공격력임");
         }
     }
 }

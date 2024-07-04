@@ -90,7 +90,7 @@ namespace Server.Game
                     Zone after = GetZone(playerPos);
                     if (after == null)
                         return;
-                    
+                    if (now == after) return;
                     now.Players.Remove(player);
                     after.Players.Add(player);
                     player.curZone = after;
@@ -110,6 +110,7 @@ namespace Server.Game
                     Zone after = GetZone(monsterPos);
                     if (after == null)
                         return;
+                    if (now == after) return;
                     now.Monsters.Remove(monster);
                     after.Monsters.Add(monster);
                     monster.curZone = after;

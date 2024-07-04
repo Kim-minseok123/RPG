@@ -57,14 +57,14 @@ public class UI_NpcSell_Popup : UI_Popup
         foreach (NpcSellList item in npcData.npcSellLists)
         {
             GameObject go = Managers.Resource.Instantiate("UI/SubItem/UI_NpcSellInfo", GetObject((int)GameObjects.NpcSellContent).transform);
-            go.GetComponent<UI_NpcSellInfo>().Setting(item.TemplateId);
+            go.GetComponent<UI_NpcSellInfo>().Setting(item.TemplateId, this);
         }
         List<Item> items = Managers.Inven.Items.Values.ToList();
         items.Sort((left, right) => { return left.Slot - right.Slot; });
         foreach (Item item in items)
         {
             GameObject go = Managers.Resource.Instantiate("UI/SubItem/UI_PlayerSellInfo", GetObject((int)GameObjects.PlayerSellContent).transform);
-            go.GetComponent<UI_PlayerSellInfo>().Setting(item.TemplateId, item.ItemDbId);
+            go.GetComponent<UI_PlayerSellInfo>().Setting(item.TemplateId, item.ItemDbId, this);
         }
         GetText((int)Texts.CoinText).text = Managers.Inven.Money.ToString();
     }

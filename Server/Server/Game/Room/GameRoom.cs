@@ -14,7 +14,7 @@ namespace Server.Game
 {
 	public partial class GameRoom : JobSerializer
 	{
-		public const int VisionCells = 10;
+		public const int VisionCells = 5;
 
 		public int RoomId { get; set; }
 
