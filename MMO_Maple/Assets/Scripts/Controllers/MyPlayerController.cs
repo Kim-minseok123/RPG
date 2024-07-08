@@ -45,7 +45,11 @@ public class MyPlayerController : PlayerController
     {
         base.Init();
         cm = Camera.main;
-        cm.GetComponent<CameraController>().SettingPlayer(this);
+        GameObject vcm = GameObject.FindWithTag("CM");
+        if (vcm == null)
+            cm.GetComponent<CameraController>().SettingPlayer(this);
+        else
+            vcm.GetComponent<CameraController>().SettingPlayer(this);
         PrevPos = transform.position;
 #if UNITY_SERVER
 
