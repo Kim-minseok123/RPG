@@ -21,10 +21,10 @@ namespace Server.Game
 			}
 		}
 
-		public GameRoom Add(int mapId)
+		public GameRoom Add(int mapId, int ZoneCell, int minX, int minY, int maxX, int maxY, int visionCell)
 		{
 			GameRoom gameRoom = new GameRoom();
-			gameRoom.Push(gameRoom.Init, mapId, 30);
+			gameRoom.Push(gameRoom.Init, mapId, ZoneCell, minX, minY, maxX, maxY , visionCell);
 
 			gameRoom.RoomId = _roomId;
 			_rooms.Add(_roomId, gameRoom);

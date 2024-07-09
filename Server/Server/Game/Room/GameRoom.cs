@@ -14,9 +14,10 @@ namespace Server.Game
 {
 	public partial class GameRoom : JobSerializer
 	{
-		public const int VisionCells = 5;
+		public int VisionCells = 5;
 
 		public int RoomId { get; set; }
+		public int mapId { get; set; }
 
 		Dictionary<int, Player> _players = new Dictionary<int, Player>();
 		Dictionary<int, Monster> _monsters = new Dictionary<int, Monster>();
@@ -24,13 +25,13 @@ namespace Server.Game
 		Dictionary<int, Npc> _npc = new Dictionary<int, Npc>();
 		Player MasterPlayer = null;
 		public int PlayerCount { get { return _players.Count; } }
-		public float mapMinX = 300;
-		public float mapMinZ = 300;
-		public float mapMaxX = 390;
-		public float mapMaxZ = 390;
+		public float mapMinX;
+		public float mapMinZ;
+		public float mapMaxX;
+		public float mapMaxZ;
 		public float mapSizeX { get { return mapMaxX - mapMinX; } }
 		public float mapSizeZ { get { return mapMaxZ - mapMinZ; } }
-
+		public List<Player> moveMapPlayer = new List<Player>();
 		public Zone[,] Zones { get; private set; }
 		public int ZoneCells { get; private set; }
 		public Zone GetZone(Positions pos)
@@ -47,12 +48,18 @@ namespace Server.Game
 				return null;
 			return Zones[z, x];
 		}
-		public void Init(int mapId, int zoneCells)
+		public void Init(int mapId, int zoneCells, int minX, int minY, int maxX, int maxY, int visionCell)
 		{
-
+			this.mapId = mapId;
 			ZoneCells = zoneCells;
+            mapMinX = minX;
+			mapMinZ = minY;
+			mapMaxX = maxX;
+			mapMaxZ = maxY;
+			VisionCells = visionCell;
+			moveMapPlayer.Clear();
 
-			int countZ = (int)((mapSizeZ + zoneCells - 1) / zoneCells);
+            int countZ = (int)((mapSizeZ + zoneCells - 1) / zoneCells);
 			int countX = (int)((mapSizeX + zoneCells - 1) / zoneCells);
 			Zones = new Zone[countZ, countX];
 
@@ -63,13 +70,16 @@ namespace Server.Game
 					Zones[z, x] = new Zone(z, x);
 				}
 			}
-			for (int i = 0; i < 1; i++)
+			if(mapId == 1)
 			{
-				SpawnMob();
+                for (int i = 0; i < 1; i++)
+                {
+                    SpawnMob();
+                }
+                Npc npc = ObjectManager.Instance.Add<Npc>();
+                npc.Init(1);
+                EnterGame(npc);
             }
-			Npc npc = ObjectManager.Instance.Add<Npc>();
-			npc.Init(1);
-			EnterGame(npc);
 		}
 		public void SpawnMob()
 		{
@@ -292,9 +302,9 @@ namespace Server.Game
                 if ((id != -1 && p.Id == id) || p.Session.Master) continue;
                 int dx = (int)(p.Pos.PosX - pos.PosX);
                 int dz = (int)(p.Pos.PosZ - pos.PosZ);
-                if (Math.Abs(dx) > GameRoom.VisionCells)
+                if (Math.Abs(dx) > VisionCells)
                     continue;
-                if (Math.Abs(dz) > GameRoom.VisionCells)
+                if (Math.Abs(dz) > VisionCells)
                     continue;
                 p.Session.Send(packet);
             }
@@ -303,19 +313,19 @@ namespace Server.Game
 		{
 			MasterPlayer?.Session.Send(packet);
 		}
-		public List<Player> GetAdjacentPlayers(Positions pos, int range = GameRoom.VisionCells) 
+		public List<Player> GetAdjacentPlayers(Positions pos) 
 		{
-            List<Zone> zones = GetAdjacentZones(pos, range);
+            List<Zone> zones = GetAdjacentZones(pos);
             return zones.SelectMany(z => z.Players).ToList();
         }
-        public List<Zone> GetAdjacentZones(Positions pos, int range = GameRoom.VisionCells)
+        public List<Zone> GetAdjacentZones(Positions pos)
         {
             HashSet<Zone> zones = new HashSet<Zone>();
 
-            int maxZ = (int)(pos.PosZ + range);
-            int minZ = (int)(pos.PosZ - range);
-            int maxX = (int)(pos.PosX + range);
-            int minX = (int)(pos.PosX - range);
+            int maxZ = (int)(pos.PosZ + VisionCells);
+            int minZ = (int)(pos.PosZ - VisionCells);
+            int maxX = (int)(pos.PosX + VisionCells);
+            int minX = (int)(pos.PosX - VisionCells);
 
             int leftTopIndexY = (int)((mapMaxZ - maxZ) / ZoneCells);
             int leftTopIndexX = (int)((minX - mapMinX) / ZoneCells);
@@ -342,6 +352,96 @@ namespace Server.Game
 
             return zones.ToList();
         }
+		public void ChangeTheRoom(int roomId, Player player, string mapName)
+		{
+			GameRoom room = GameLogic.Instance.Find(roomId);
+			if (room == null) return;
+			if (player == null) return;
 
+			int objectId = player.Id;
+            if (_players.Remove(objectId, out player) == false)
+                return;
+            List<Monster> monsters = _monsters.Values.ToList();
+            foreach (var monster in monsters)
+            {
+                if (monster.Target != null && monster.Target == player)
+                    monster.Target = null;
+            }
+            player.curZone.Remove(player);
+            player.Room = null;
+
+            S_Despawn despawnPacket = new S_Despawn();
+            despawnPacket.ObjectIds.Add(objectId);
+            Broadcast(player.Pos, despawnPacket);
+
+			player.Room = room;
+
+            room.cutSceneCount = 0;
+            if (player != null)
+                room.moveMapPlayer.Add(player);
+
+            // 맵 이동 패킷 보내기
+            S_ChangeMap changeMap = new S_ChangeMap();
+			changeMap.MapName = mapName;
+			player.Session.Send(changeMap);
+        }
+		public void HandleExpedition(Player player, C_Expedition expeditionPacket)
+		{
+			if(moveMapPlayer.Count == 0)
+			{
+				S_Message message = new S_Message();
+				message.Message = $"누군가 레드 드래곤 원정대를 생성했습니다.\n 5분뒤 원정대가 출발합니다.";
+				foreach (Player players in _players.Values)
+				{
+					players.Session.Send(message);
+				}
+				PushAfter(1000, AllPlayerEnterNextMap, 2, "Boss");
+			}
+			else
+			{
+				if (moveMapPlayer.Find(p => p.Info.Name == player.Info.Name) != null)
+				{
+                    S_Message messages = new S_Message();
+                    messages.Message = "이미 원정대에 가입했습니다.";
+                    player.Session.Send(messages);
+					return;
+                }
+                S_Message message = new S_Message();
+                message.Message = "누군가 레드 드래곤 원정대에 참여했습니다.";
+                foreach (Player players in _players.Values)
+                {
+                    players.Session.Send(message);
+                }
+            }
+            moveMapPlayer.Add(player);
+        }
+		int cutSceneCount = 0;
+        public void HandleEndCutScene(Player players, C_EndCutScene endCutScene)
+		{
+			cutSceneCount++;
+			if(cutSceneCount == moveMapPlayer.Count)
+			{
+				foreach (Player player in moveMapPlayer)
+				{
+					// 위치 조절
+					player.Pos.PosX = 90f;
+					player.Pos.PosZ = 40f;
+					player.Pos.PosY = 0.5f;
+					EnterGame(player);
+				}
+				// 드래곤 소환
+				RedDragon redDragon = new RedDragon();
+				redDragon.Init();
+				EnterGame(redDragon);
+			}
+		}
+		public void AllPlayerEnterNextMap(int roomId, string mapName)
+		{
+			foreach (var player in moveMapPlayer)
+			{
+				ChangeTheRoom(roomId, player, mapName);
+			}
+			moveMapPlayer.Clear();
+		}
     }
 }

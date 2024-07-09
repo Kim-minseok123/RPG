@@ -50,6 +50,10 @@ enum MsgId {
   C_REMOVE_ITEM = 43;
   S_REMOVE_ITEM = 44;
   C_SKILL_BUFF = 45;
+  S_MESSAGE = 46;
+  C_EXPEDITION = 47;
+  S_CHANGE_MAP = 48;
+  C_END_CUT_SCENE = 49;
 }
 
 enum CreatureState {
@@ -315,6 +319,18 @@ message S_ChangeItemSlot {
 }
 message C_SkillBuff{
   int32 skillId = 1;
+}
+message S_Message {
+  string message = 1;
+}
+message C_Expedition{
+  int32 objectId = 1;
+}
+message C_EndCutScene{
+  bool cutSceneEnd = 1;
+}
+message S_ChangeMap{
+  string mapName = 1;
 }
 message S_Ping {
 

@@ -1,6 +1,7 @@
 using Data;
 using DG.Tweening;
 using Google.Protobuf.Protocol;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -46,7 +47,8 @@ public class UI_GameScene : UI_Scene
         QuickSlotNumText1,
         QuickSlotNumText2,
         QuickSlotNumText3,
-        QuickSlotNumText4
+        QuickSlotNumText4,
+        MessageText,
     }
     enum Sliders
     {
@@ -153,7 +155,7 @@ public class UI_GameScene : UI_Scene
             var quickSlot = isSkill ? QuickSlotSkill : QuickSlotItem;
             if (quickSlot.TryGetValue(str, out int templateId) == false) return;
             if (e.pointerCurrentRaycast.gameObject.name == null) return;
-            (Managers.UI.SceneUI as UI_GameScene).RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, templateId, isSkill);
+            RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, templateId, isSkill);
         }, Define.UIEvent.DragEnd);
     }
     public void RefreshUI()
@@ -446,5 +448,17 @@ public class UI_GameScene : UI_Scene
             _buffs.Remove(buffId);
             Managers.Resource.Destroy(buffUI.gameObject);
         }
+    }
+    Coroutine MessageTextDestory;
+    public void SetMessage(string str)
+    {
+        GetText((int)Texts.MessageText).text = str;
+        if(MessageTextDestory != null) StopCoroutine(MessageTextDestory);
+        MessageTextDestory = StartCoroutine(CoMessageDestory());
+    }
+    IEnumerator CoMessageDestory()
+    {
+        yield return new WaitForSeconds(5f);
+        GetText((int)Texts.MessageText).text = "";
     }
 }

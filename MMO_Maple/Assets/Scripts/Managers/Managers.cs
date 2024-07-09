@@ -76,21 +76,24 @@ public class Managers : MonoBehaviour
     private void OnApplicationQuit()
     {
         C_SaveQuickSlot saveSlot = new C_SaveQuickSlot();
-        foreach (var slot in (UI.SceneUI as UI_GameScene).QuickSlotSkill)
+        if ((UI.SceneUI as UI_GameScene) != null)
         {
-            QuickSlotInfo info = new QuickSlotInfo();
-            info.SlotName = slot.Key;
-            info.TemplateId = slot.Value;
-            saveSlot.Info.Add(info);
+            foreach (var slot in (UI.SceneUI as UI_GameScene).QuickSlotSkill)
+            {
+                QuickSlotInfo info = new QuickSlotInfo();
+                info.SlotName = slot.Key;
+                info.TemplateId = slot.Value;
+                saveSlot.Info.Add(info);
+            }
+            foreach (var slot in (UI.SceneUI as UI_GameScene).QuickSlotItem)
+            {
+                QuickSlotInfo info = new QuickSlotInfo();
+                info.SlotName = slot.Key;
+                info.TemplateId = slot.Value;
+                saveSlot.Info.Add(info);
+            }
+            Network.Send(saveSlot);
         }
-        foreach (var slot in (UI.SceneUI as UI_GameScene).QuickSlotItem)
-        {
-            QuickSlotInfo info = new QuickSlotInfo();
-            info.SlotName = slot.Key;
-            info.TemplateId = slot.Value;
-            saveSlot.Info.Add(info);
-        }
-        Network.Send(saveSlot);
         Network._session.Disconnect();
     }
 }

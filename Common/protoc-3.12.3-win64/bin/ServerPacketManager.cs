@@ -60,7 +60,11 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.CRemoveItem, MakePacket<C_RemoveItem>);
 		_handler.Add((ushort)MsgId.CRemoveItem, PacketHandler.C_RemoveItemHandler);		
 		_onRecv.Add((ushort)MsgId.CSkillBuff, MakePacket<C_SkillBuff>);
-		_handler.Add((ushort)MsgId.CSkillBuff, PacketHandler.C_SkillBuffHandler);
+		_handler.Add((ushort)MsgId.CSkillBuff, PacketHandler.C_SkillBuffHandler);		
+		_onRecv.Add((ushort)MsgId.CExpedition, MakePacket<C_Expedition>);
+		_handler.Add((ushort)MsgId.CExpedition, PacketHandler.C_ExpeditionHandler);		
+		_onRecv.Add((ushort)MsgId.CEndCutScene, MakePacket<C_EndCutScene>);
+		_handler.Add((ushort)MsgId.CEndCutScene, PacketHandler.C_EndCutSceneHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

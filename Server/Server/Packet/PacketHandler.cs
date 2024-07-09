@@ -257,4 +257,34 @@ class PacketHandler
 
         room.Push(room.HandleSkillBuff, player, skillbulffPacket);
     }
+    public static void C_ExpeditionHandler(PacketSession session, IMessage packet)
+    {
+        C_Expedition expeditionPacket = (C_Expedition)packet;
+        ClientSession clientSession = (ClientSession)session;
+
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+
+        room.Push(room.HandleExpedition, player, expeditionPacket);
+    }
+    public static void C_EndCutSceneHandler(PacketSession session, IMessage packet)
+    {
+        C_EndCutScene cutScenePacket = (C_EndCutScene)packet;
+        ClientSession clientSession = (ClientSession)session;
+
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+
+        room.Push(room.HandleEndCutScene, player, cutScenePacket);
+    }
 }

@@ -457,6 +457,29 @@ class PacketHandler
         if (uiNpc != null)
             uiNpc.RefreshUI();
     }
+    public static void S_MessageHandler(PacketSession session, IMessage packet)
+    {
+        S_Message messagePacket = (S_Message)packet;
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        gameSceneUI.SetMessage(messagePacket.Message);
+    }
+    public static void S_ChangeMapHandler(PacketSession session, IMessage packet)
+    {
+        S_ChangeMap changeMapPacket = (S_ChangeMap)packet;
+        Managers.UI.CloseAllPopupUI();
+
+        TransitionSettings ts = Managers.Resource.Load<TransitionSettings>("Trans/LinearWipe");
+        switch (changeMapPacket.MapName)
+        {
+            case "Lobby":
+                TransitionManager.Instance().Transition(Define.Scene.Lobby, ts, 0);
+                break;
+            case "Boss":
+                TransitionManager.Instance().Transition(Define.Scene.Boss, ts, 0);
+                break;
+        }
+        Managers.Object.Clear();
+    }
 }
 
 
