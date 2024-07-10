@@ -46,6 +46,9 @@ public class CameraController : MonoBehaviour
     public void SettingPlayer(MyPlayerController myPlayer)
     {
         player = myPlayer;
+        GameObject timeLine = GameObject.FindWithTag("Timeline");
+        if (timeLine != null)
+            timeLine.SetActive(false);
     }
     public void PlayerToNpcMove(Vector3 pos, Vector3 rotate, GameObject npc)
     {

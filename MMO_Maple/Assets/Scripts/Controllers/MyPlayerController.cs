@@ -229,12 +229,12 @@ public class MyPlayerController : PlayerController
     public void OnClickMouseInputEvent()
     {
         if (State == CreatureState.Dead) return;
-            if (curRightWeapon == null) return;
 
         _moveTime += Time.deltaTime;
-        if (IsPointerOverUIObject()) return;
         if (Input.GetMouseButton(1) && _moveTime >= 0.3f)
         {
+            if (IsPointerOverUIObject()) return;
+
             if (State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
             Ray ray = cm.ScreenPointToRay(Input.mousePosition);
 
@@ -254,6 +254,7 @@ public class MyPlayerController : PlayerController
         else if (Input.GetMouseButtonDown(0))
         {
             if (curRightWeapon == null) return;
+            if (IsPointerOverUIObject()) return;
 
             if (State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
             // idle 상태인지 검증 -> 아니라면 멈춤 패킷 보냈다가 공격 패킷 보냄

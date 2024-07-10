@@ -162,7 +162,6 @@ namespace Server.Game
 				Zone zone = GetZone(monster.Pos);
 				zone.Monsters.Add(monster);
 				monster.curZone = zone;
-
                 monster.Update();
 			}
 			else if (type == GameObjectType.Dropitem)
@@ -395,7 +394,7 @@ namespace Server.Game
 				{
 					players.Session.Send(message);
 				}
-				PushAfter(1000, AllPlayerEnterNextMap, 2, "Boss");
+				PushAfter(3000, AllPlayerEnterNextMap, 2, "Boss");
 			}
 			else
 			{
@@ -430,8 +429,8 @@ namespace Server.Game
 					EnterGame(player);
 				}
 				// 드래곤 소환
-				RedDragon redDragon = new RedDragon();
-				redDragon.Init();
+				RedDragon redDragon = ObjectManager.Instance.Add<RedDragon>();
+                redDragon.Init(2);
 				EnterGame(redDragon);
 			}
 		}

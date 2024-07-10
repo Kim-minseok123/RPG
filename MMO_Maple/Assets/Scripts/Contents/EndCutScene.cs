@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class EndCutScene : MonoBehaviour
 {
+    public GameObject mainCamera;
     public void End()
     {
-        gameObject.SetActive(false);
+        mainCamera.SetActive(true);
+
         C_EndCutScene endCutScene = new C_EndCutScene();
         endCutScene.CutSceneEnd = true;
         Managers.Network.Send(endCutScene);

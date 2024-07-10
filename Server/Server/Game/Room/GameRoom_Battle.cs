@@ -178,11 +178,14 @@ namespace Server.Game
                 if (DataManager.SkillDict.TryGetValue(meleeAttack.Info.SkillId, out skill) == false) return;
                 if(SkillType.SkillMeleeAttack == skill.skillType)
                 {
-                    if (player.Stat.Mp - skill.mpConsume < 0) {  Console.WriteLine("마나 없음"); return; }
-                    player.Stat.Mp = Math.Max(0, player.Stat.Mp- skill.mpConsume);
-                    S_ChangeStat changeStat = new S_ChangeStat() { StatInfo = new StatInfo() };
-                    changeStat.StatInfo.MergeFrom(player.Stat);
-                    player.Session.Send(changeStat);
+                    if(meleeAttack.Time == 0)
+                    {
+                        if (player.Stat.Mp - skill.mpConsume < 0) { Console.WriteLine("마나 없음"); return; }
+                        player.Stat.Mp = Math.Max(0, player.Stat.Mp - skill.mpConsume);
+                        S_ChangeStat changeStat = new S_ChangeStat() { StatInfo = new StatInfo() };
+                        changeStat.StatInfo.MergeFrom(player.Stat);
+                        player.Session.Send(changeStat);
+                    }
                     foreach (Monster monster in _monsters.Values)
                     {
                         Vector3 a = Utils.PositionsToVector3(player.Pos);

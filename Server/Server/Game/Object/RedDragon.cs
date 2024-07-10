@@ -6,12 +6,17 @@ namespace Server.Game
 {
     public class RedDragon : Monster
     {
-        public void Init()
+        public override void Init(int templateId)
         {
-            Pos.PosX = -37f;
-            Pos.PosZ = -5f;
+            base.Init(templateId);
+            Pos.PosX = 89;
+            Pos.PosZ = 58f;
             Pos.PosY = 0f;
             PosInfo.Rotate.RotateY = 180;
+        }
+        protected override void UpdateIdle()
+        {
+
         }
     }
 }

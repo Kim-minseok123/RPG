@@ -796,13 +796,17 @@ MonoBehaviour:
   LeftHand: {fileID: 1646690165255584}
   Head: {fileID: 1410003859455014}
   ClassType: 0
-  testSpeed: 0.1
+  lookRotationSpeed: 0.5
   mosterLayerMask:
     serializedVersion: 2
     m_Bits: 64
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  UILayerMask:
+    serializedVersion: 2
+    m_Bits: 32
+  BuffDamage: 0
   NpcTrigger: 0
   Body: {fileID: 9116949771961835988}
   interactionCooldown: 1.5

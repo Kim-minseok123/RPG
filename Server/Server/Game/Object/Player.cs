@@ -310,15 +310,20 @@ namespace Server.Game
 			Stat.Exp += exp;
 			if(Stat.Exp >= expData.requiredExp)
 			{
-				Stat.Exp -= expData.requiredExp;
-				Stat.Level++;
-				Stat.MaxHp += 20;
-				Stat.MaxMp += 6;
-				Stat.StatPoint += 5;
-				Stat.SkillPoint += 3;
-                DbTransaction.ExpNoti(this, levelUp: true);
+				while (Stat.Exp >= expData.requiredExp)
+				{
 
-				S_MotionOrEffect levelUpEffect = new S_MotionOrEffect();
+                    Stat.Exp -= expData.requiredExp;
+                    Stat.Level++;
+                    Stat.MaxHp += 20;
+                    Stat.MaxMp += 6;
+                    Stat.StatPoint += 5;
+                    Stat.SkillPoint += 3;
+                    DbTransaction.ExpNoti(this, levelUp: true);
+                    if (DataManager.ExpDict.TryGetValue(Stat.Level, out expData) == false) break;
+                }
+
+                S_MotionOrEffect levelUpEffect = new S_MotionOrEffect();
 				levelUpEffect.ObjectId = Id;
 				levelUpEffect.ActionName = "LevelUp";
 				Room.Broadcast(Pos, levelUpEffect);

@@ -64,7 +64,8 @@ public class ObjectManager
             mc.Id = info.ObjectId;
             mc.SetInfo(info);
             mc.SetPos(info.PosInfo.Pos, info.PosInfo.Rotate);
-            mc.GetComponent<NavMeshAgent>().enabled = true;
+            if(mc.GetComponent<NavMeshAgent>() != null)
+                mc.GetComponent<NavMeshAgent>().enabled = true;
         }
         
         else if (objectType == GameObjectType.Dropitem)
