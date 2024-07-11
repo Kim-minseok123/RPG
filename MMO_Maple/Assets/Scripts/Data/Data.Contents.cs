@@ -35,9 +35,9 @@ namespace Data
         public float attackTime;
         public int damage;
         public int skillLevelInc;
-        public SKillRange range;
+        public SkillRange range;
     }
-    public class SKillRange
+    public class SkillRange
     {
         public float width;
         public float depth;

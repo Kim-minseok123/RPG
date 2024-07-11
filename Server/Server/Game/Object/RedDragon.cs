@@ -14,6 +14,7 @@ namespace Server.Game
             Pos.PosZ = 58f;
             Pos.PosY = 0f;
             PosInfo.Rotate.RotateY = 180;
+            hitBox = new HitBox(10, 6, 12);
         }
         protected override void UpdateIdle()
         {

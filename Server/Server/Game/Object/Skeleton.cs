@@ -41,7 +41,7 @@ namespace Server.Game
                     Vector3 target = Utils.PositionsToVector3(Target.Pos);
                     if (skillData.skillType == SkillType.SkillMeleeAttack)
                     {
-                        if (Room != null && Target != null && Room.IsObjectInRange(attacker, target, forwardMonster, ((AttackSkill)skillData).skillDatas[0].range))
+                        if (Room != null && Target != null && Room.IsObjectInRange(attacker, target, forwardMonster, ((AttackSkill)skillData).skillDatas[0].range,Target.hitBox))
                         {
                             if (Room != null && State == CreatureState.Skill)
                             {

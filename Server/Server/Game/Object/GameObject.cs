@@ -34,6 +34,7 @@ namespace Server.Game
 			set { Stat.Speed = value; }
 		}
         public bool isMoving = false;
+        public HitBox hitBox { get; set; }
 
         public int Hp
 		{
@@ -81,6 +82,7 @@ namespace Server.Game
 			PosInfo.Pos = myPos;
 			PosInfo.Rotate = myRotate;
 			Info.StatInfo = Stat;
+			hitBox = new HitBox(0, 0, 0);
 			//zone 설정
 		}
 
@@ -140,6 +142,19 @@ namespace Server.Game
         public virtual void RewardExp(int exp)
         {
 
+        }
+    }
+    public class HitBox
+    {
+        public float width;
+        public float depth;
+        public float height;
+
+        public HitBox(float width, float depth, float height)
+        {
+            this.width = width;
+            this.depth = depth;
+            this.height = height;
         }
     }
 }

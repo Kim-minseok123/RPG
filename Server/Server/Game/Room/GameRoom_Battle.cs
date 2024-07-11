@@ -118,26 +118,54 @@ namespace Server.Game
             }
 
         }
-        public bool IsObjectInRange(Vector3 attacker, Vector3 target, Vector3 forward, SKillRange skill)
+        public bool IsObjectInRange(Vector3 attacker, Vector3 target, Vector3 forward, SkillRange skill, HitBox hitBox)
         {
-            Vector3 up = new Vector3(0, 1, 0); // Up vector assuming Y is up
-            Vector3 right = forward.Cross(up).normalized; // Right vector
+            Vector3 up = new Vector3(0, 1, 0); // Y축을 기준으로 하는 위쪽 벡터
+            Vector3 right = forward.Cross(up).normalized; // 전방 벡터와 위쪽 벡터의 외적을 통해 오른쪽 벡터를 계산
 
             Vector3 relativePos = target - attacker;
+
             float forwardDistance = Vector3.Dot(relativePos, forward);
             float rightDistance = Vector3.Dot(relativePos, right);
             float upwardDistance = Vector3.Dot(relativePos, up);
 
-            if (forwardDistance >= skill.nonDepth && forwardDistance <= skill.depth &&
-                Math.Abs(rightDistance) <= skill.width / 2 &&
-                Math.Abs(upwardDistance) <= skill.height / 2)
+            if (hitBox.width == 0 && hitBox.depth == 0 && hitBox.height == 0)
             {
-                return true;
+                // 히트박스가 없는 경우 기존 로직 사용
+                if (forwardDistance >= skill.nonDepth && forwardDistance <= skill.depth &&
+                    Math.Abs(rightDistance) <= skill.width / 2 &&
+                    Math.Abs(upwardDistance) <= skill.height / 2)
+                {
+                    return true;
+                }
+                return false;
             }
 
-            return false;
+            // 타겟의 히트 박스 범위 계산
+            float targetMinForward = forwardDistance - hitBox.depth / 2;
+            float targetMaxForward = forwardDistance + hitBox.depth / 2;
+            float targetMinRight = rightDistance - hitBox.width / 2;
+            float targetMaxRight = rightDistance + hitBox.width / 2;
+            float targetMinUp = upwardDistance - hitBox.height / 2;
+            float targetMaxUp = upwardDistance + hitBox.height / 2;
+
+            // 스킬 범위 계산
+            float skillMinForward = skill.nonDepth;
+            float skillMaxForward = skill.depth;
+            float skillMinRight = -skill.width / 2;
+            float skillMaxRight = skill.width / 2;
+            float skillMinUp = -skill.height / 2;
+            float skillMaxUp = skill.height / 2;
+
+            // 충돌 여부 확인
+            bool isOverlapping =
+                targetMaxForward >= skillMinForward && targetMinForward <= skillMaxForward &&
+                targetMaxRight >= skillMinRight && targetMinRight <= skillMaxRight &&
+                targetMaxUp >= skillMinUp && targetMinUp <= skillMaxUp;
+
+            return isOverlapping;
         }
-		public void HandleSkillMotion(Player player, C_SkillMotion skillMotion)
+        public void HandleSkillMotion(Player player, C_SkillMotion skillMotion)
 		{
             if (player == null)
                 return;
@@ -191,7 +219,7 @@ namespace Server.Game
                         Vector3 a = Utils.PositionsToVector3(player.Pos);
                         Vector3 b = Utils.PositionsToVector3(monster.Pos);
                         Vector3 forward = Utils.PositionsToVector3(meleeAttack.Forward);
-                        if (IsObjectInRange(a, b, forward, ((AttackSkill)skill).skillDatas[meleeAttack.Time].range) == true)
+                        if (IsObjectInRange(a, b, forward, ((AttackSkill)skill).skillDatas[meleeAttack.Time].range, monster.hitBox) == true)
                         {
                             int level = 0;
                             if (skill.id == 1 || skill.id == 2 || player.HaveSkillData.TryGetValue(skill.id, out level))
