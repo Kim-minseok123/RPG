@@ -29,7 +29,6 @@ public class RedDragon : MonsterController
             else
             {
                
-                EffectInst("HitEffect", 1.0f, transform.position + new Vector3(0f, 0.1f, 0f), new Vector3(0.1f, 0.1f, 0.1f));
                 // 체력바 등 작업
                 Hp = hp;
                 var value = Mathf.Max(0f, (float)Hp / MaxHp);
@@ -43,7 +42,7 @@ public class RedDragon : MonsterController
                 }
 
                 GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
-                damageInfo.transform.position = transform.position;
+                damageInfo.transform.position = transform.position + new Vector3(0, 3f, 0);
                 damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage);
             }
         }

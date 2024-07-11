@@ -819,11 +819,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e5a2a4ab56bf724faae15359b0ee526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadingEffects:
-  - AngerEffect
-  - HitEffect
-  - LevelUpEffect
-  - DamageInfo
+  loading:
+  - Effect/AngerEffect
+  - Effect/HitEffect
+  - Effect/LevelUpEffect
+  - "Creature/Monster/\uC2A4\uCF08\uB808\uD1A4"
+  - "Creature/NPC/\uB85C\uBE48"
+  - "Creature/NPC/\uC54C\uB9AC"
+  - Creature/Player/Player
 --- !u!4 &38553241
 Transform:
   m_ObjectHideFlags: 0

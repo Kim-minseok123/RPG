@@ -19,7 +19,7 @@ public class MonsterController : CreatureController
         base.Init();
         _agent = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
-        hpBar.value = 1f;
+        hpBar.gameObject.SetActive(true);
         _anim.SetBool("Death", false);
         
 #if UNITY_SERVER

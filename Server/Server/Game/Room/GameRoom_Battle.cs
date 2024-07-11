@@ -229,6 +229,7 @@ namespace Server.Game
                                     + (((AttackSkill)skill).skillDatas[meleeAttack.Time].skillLevelInc * (level - 1)))
                                     / 100
                                     * player.Attack;
+                                Console.WriteLine(damage + "를 입힐 예정");
                                 monster.OnDamaged(player, damage);
                                 if (skill.id == 1 || skill.id == 2)
                                     break;

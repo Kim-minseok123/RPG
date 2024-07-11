@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class GameScene : BaseScene
 {
-    public string[] loadingEffects;
+    public string[] loading;
     protected override void Init()
     {
         base.Init();
 
         SceneType = Define.Scene.Game;
         List<GameObject> list = new List<GameObject>();
-        foreach (string name in loadingEffects)
+        foreach (string name in loading)
         {
-            list.Add(Managers.Resource.Instantiate($"Effect/{name}"));
+            list.Add(Managers.Resource.Instantiate($"{name}"));
         }
         foreach (var item in list)
         {

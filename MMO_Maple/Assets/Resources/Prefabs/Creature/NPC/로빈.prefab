@@ -2904,6 +2904,7 @@ GameObject:
   - component: {fileID: 114380782822982968}
   - component: {fileID: -4408022877049001742}
   - component: {fileID: 5820175224338861974}
+  - component: {fileID: -2320410939433518671}
   m_Layer: 0
   m_Name: "\uB85C\uBE48"
   m_TagString: NPC
@@ -3033,6 +3034,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameTag: {fileID: 0}
   templateId: 2
+--- !u!114 &-2320410939433518671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668188202801692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2e5580886343041a5e74b1712b0682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
 --- !u!1 &1672909316657688
 GameObject:
   m_ObjectHideFlags: 0

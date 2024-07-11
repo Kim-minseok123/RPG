@@ -12,6 +12,10 @@ public class BaseController : MonoBehaviour
 	{
 		Init();
 	}
+    private void OnEnable()
+    {
+		Init();
+    }
     public int Id { get; set; }
 	public Vector3 PrevPos { get; set; }
 

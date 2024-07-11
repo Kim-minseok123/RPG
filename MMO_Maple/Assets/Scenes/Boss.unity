@@ -38529,6 +38529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1422051289}
+  room2: {fileID: 1671499892}
 --- !u!1 &1858963277
 GameObject:
   m_ObjectHideFlags: 0

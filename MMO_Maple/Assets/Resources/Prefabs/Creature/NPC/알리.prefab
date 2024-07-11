@@ -1587,6 +1587,7 @@ GameObject:
   - component: {fileID: 114961877321315192}
   - component: {fileID: 6046611271572005116}
   - component: {fileID: 9146079426951236320}
+  - component: {fileID: 2388464305962602087}
   m_Layer: 0
   m_Name: "\uC54C\uB9AC"
   m_TagString: NPC
@@ -1692,9 +1693,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NameTag: {fileID: 4483947635387743656}
-  prevRotate: {x: 0, y: 180, z: 0}
-  animator: {fileID: 95455848339679364}
   templateId: 1
+  animator: {fileID: 95455848339679364}
 --- !u!136 &9146079426951236320
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1718,6 +1718,19 @@ CapsuleCollider:
   m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &2388464305962602087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253013051146282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2e5580886343041a5e74b1712b0682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
 --- !u!1 &1257730882728438
 GameObject:
   m_ObjectHideFlags: 0
