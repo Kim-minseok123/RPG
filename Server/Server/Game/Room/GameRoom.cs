@@ -34,6 +34,7 @@ namespace Server.Game
 		public List<Player> moveMapPlayer = new List<Player>();
 		public Zone[,] Zones { get; private set; }
 		public int ZoneCells { get; private set; }
+		bool isRaid = false;
 		public Zone GetZone(Positions pos)
 		{
 			int x = (int)((pos.PosX - mapMinX) / ZoneCells);
@@ -76,10 +77,13 @@ namespace Server.Game
                 {
                     SpawnMob();
                 }
-                Npc npc = ObjectManager.Instance.Add<Npc>();
-                npc.Init(1);
-                EnterGame(npc);
-            }
+                Npc Alli = ObjectManager.Instance.Add<Npc>();
+                Alli.Init(1);
+                EnterGame(Alli);
+                Npc Robin = ObjectManager.Instance.Add<Npc>();
+                Robin.Init(2);
+                EnterGame(Robin);
+            }	
 		}
 		public void SpawnMob()
 		{
@@ -386,6 +390,13 @@ namespace Server.Game
         }
 		public void HandleExpedition(Player player, C_Expedition expeditionPacket)
 		{
+			if(GameLogic.Instance.Find(expeditionPacket.RoomId).isRaid)
+			{
+                S_Message message = new S_Message();
+                message.Message = $"누군가 레드 드래곤 토벌 중 입니다.";
+				player.Session.Send(message);
+				return;
+            }
 			if(moveMapPlayer.Count == 0)
 			{
 				S_Message message = new S_Message();
@@ -394,7 +405,7 @@ namespace Server.Game
 				{
 					players.Session.Send(message);
 				}
-				PushAfter(3000, AllPlayerEnterNextMap, 2, "Boss");
+				PushAfter(3000, AllPlayerEnterNextMap, expeditionPacket.RoomId, "Boss");
 			}
 			else
 			{
@@ -440,6 +451,10 @@ namespace Server.Game
 			{
 				ChangeTheRoom(roomId, player, mapName);
 			}
+			if(roomId == 2)
+			{
+				GameLogic.Instance.Find(roomId).isRaid = true;
+            }
 			moveMapPlayer.Clear();
 		}
     }

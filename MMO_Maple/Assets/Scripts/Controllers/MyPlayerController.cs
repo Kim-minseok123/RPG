@@ -196,11 +196,7 @@ public class MyPlayerController : PlayerController
         {
             FindCloseMob();
         }
-        else if (Input.GetKeyDown(KeyCode.X))
-        {
-            C_Expedition expedition = new C_Expedition();
-            Managers.Network.Send(expedition);
-        }
+        
     }
     private void FindCloseMob()
     {

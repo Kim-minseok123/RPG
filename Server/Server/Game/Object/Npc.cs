@@ -21,8 +21,10 @@ namespace Server.Game
             Info.Name = npcData.name;
 
             ObjectType = GameObjectType.Npc;
-
-            SpawnPos = new Vector3(343.72f, 6.19f, 348.31f);
+            if(npcData.id == 1)
+                SpawnPos = new Vector3(343.72f, 6.19f, 348.31f);
+            else if(npcData.id == 2)
+                SpawnPos = new Vector3(326.25f, 6.19f, 347.52f);
             PosInfo.Rotate = new RotateInfo() { RotateX = 0, RotateY = 180, RotateZ = 0};
             PosInfo.Pos.PosX = SpawnPos.x;
             PosInfo.Pos.PosY = SpawnPos.y;

@@ -33619,8 +33619,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
-  m_AmplitudeGain: 1
-  m_FrequencyGain: 1
+  m_AmplitudeGain: 2
+  m_FrequencyGain: 2
   mNoiseOffsets: {x: -218.86526, y: 847.6737, z: -928.839}
 --- !u!114 &1382888684
 MonoBehaviour:
@@ -37153,8 +37153,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1767673178}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0, w: -1}
-  m_LocalPosition: {x: -36.91674, y: 3, z: -16.813545}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: -1}
+  m_LocalPosition: {x: -36.91674, y: 2.4, z: -16.813545}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -38480,6 +38480,8 @@ PlayableDirector:
     value: {fileID: 933454545}
   - key: {fileID: 1801750451173697177, guid: 0d0505d3e3c17f44ea1376086d4d529e, type: 2}
     value: {fileID: 891313898}
+  - key: {fileID: 5630281083730766924, guid: 0d0505d3e3c17f44ea1376086d4d529e, type: 2}
+    value: {fileID: 1767673181}
   m_ExposedReferences:
     m_References:
     - 00816d49bc4cad74ca723691a53f9eb5: {fileID: 1698012085}
@@ -38487,8 +38489,10 @@ PlayableDirector:
     - cd01ba18066544b42946564e104d507b: {fileID: 71360903}
     - 7f899feac5ba05843bc2a17dff84b2e4: {fileID: 891313896}
     - 3c4e2b72f38bb91469b5b725085114c0: {fileID: 1767673179}
+    - 4baae6dbd780a174384b5fcafdb9bd60: {fileID: 71360903}
     - 27b413ca3fe1e614984da6c725ec9185: {fileID: 1889910780}
     - d77d6813f939f50469c38de8640547d9: {fileID: 71360903}
+    - 6c4e3635eef803b45a9366f920d5ca53: {fileID: 1889910780}
 --- !u!4 &1858681026
 Transform:
   m_ObjectHideFlags: 0
