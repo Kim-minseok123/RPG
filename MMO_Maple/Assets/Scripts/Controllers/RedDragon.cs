@@ -12,6 +12,8 @@ public class RedDragon : MonsterController
         hpbarUI = Managers.Resource.Instantiate("UI/Popup/UI_BossHp_Popup").GetComponent<UI_BossHp_Popup>();
         hpbarUI.Setting(gameObject);
         hpbarUI.ChangeHp(MaxHp);
+        _anim = GetComponent<Animator>();
+        _anim.SetInteger("ActionNum", -1);
     }
     public override void ChangeHp(int hp, bool isHeal, int damage)
     {
@@ -46,5 +48,17 @@ public class RedDragon : MonsterController
                 damageInfo.GetComponent<UI_DamageInfo_Item>().Setting(damage);
             }
         }
+    }
+    public override void OnAttack(SkillInfo info)
+    {
+        int actionNum = info.SkillId;
+
+        StartCoroutine(CoChagneAnimNum(actionNum));
+    }
+    public IEnumerator CoChagneAnimNum(int actionNum)
+    {
+        _anim.SetInteger("ActionNum", actionNum);
+        yield return new WaitForSeconds(0.5f);
+        _anim.SetInteger("ActionNum", -1);
     }
 }
