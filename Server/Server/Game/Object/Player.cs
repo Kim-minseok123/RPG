@@ -18,7 +18,7 @@ namespace Server.Game
 		public int PlayerDbId { get; set; }
 		public ClientSession Session { get; set; }
         public VisionCube Vision { get; private set; }
-
+        public bool IsMaster { get; set; }
         public Inventory Inven { get; private set; } = new Inventory();
 		public ClassTypes classType { get; set; }
 		public int BuffDamage { get; set; }
@@ -31,12 +31,15 @@ namespace Server.Game
 			ObjectType = GameObjectType.Player;
             Vision = new VisionCube(this);
         }
-
+        bool isDamageDelay = false;
         public override void OnDamaged(GameObject attacker, int damage)
 		{
             if (Room == null)
                 return;
-
+            if (isDamageDelay)
+                return;
+            isDamageDelay = true;
+            Room.PushAfter(1500, DamageDelayEnd);
             damage = Math.Max(damage - (ArmorDefence + Stat.Defense), 0);
             Stat.Hp = Math.Max(Stat.Hp - damage, 0);
 
@@ -54,6 +57,10 @@ namespace Server.Game
                 State = CreatureState.Dead;
                 OnDead(attacker);
             }
+        }
+        void DamageDelayEnd()
+        {
+            isDamageDelay = false;
         }
 		public override void OnDead(GameObject attacker)
 		{
@@ -85,7 +92,16 @@ namespace Server.Game
 			// - 다른 쓰레드로 DB 일감을 던져버리면 되지 않을까?
 			// -- 결과를 받아서 이어서 처리를 해야 하는 경우가 많음.
 			// -- 아이템 생성
-
+            if(Room.RoomId == 2)
+            {
+                Pos.PosX = 340;
+                Pos.PosZ = 340;
+                Pos.PosY = 8.5f;
+                if (IsMaster)
+                {
+                    Room.ChangeMaster(this);
+                }
+            }
 			DbTransaction.SavePlayerStat(this, Room);
 
 			foreach (var job in buffJob.Values)

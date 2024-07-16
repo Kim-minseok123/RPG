@@ -22,6 +22,12 @@ namespace Server
             Quaternion quaternion = Quaternion.CreateFromYawPitchRoll(rotation.RotateX, rotation.RotateY, rotation.RotateZ);
             return quaternion;
         }
+        public static bool InRangeObject(Vector3 min, Vector3 max, Vector3 pos)
+        {
+            if (min.x <= pos.x && pos.x <= max.x && min.z <= pos.z && pos.z <= max.z)
+                return true;
+            return false;
+        }
     }
     public class Vector3
     {

@@ -20,7 +20,7 @@ public class MyPlayerController : PlayerController
     public int Exp { get { return Stat.Exp; } protected set { Stat.Exp = value; Managers.UI.SceneUI.GetComponent<UI_GameScene>().ChangeExp(); } }
     public Dictionary<int, int> HaveSkillData = new Dictionary<int, int>();
     public int BuffDamage;
-
+    public bool isMaster = false;
     public int MaxAttack { 
         get {
             int attack = (int)((Stat.Str * 4 + Stat.Dex) * (WeaponDamage + BuffDamage) / 100);

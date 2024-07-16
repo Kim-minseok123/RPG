@@ -315,5 +315,21 @@ namespace Server.Game
 
             player.HandleSkillBuff(buffSkill, ability);
         }
+        public void HandleSkillAction(Player player, C_SkillAction actionPacket)
+        {
+            if (_monsters.TryGetValue(actionPacket.ObjectId, out Monster monster) == false)
+                return;
+            RedDragon redDragon = monster as RedDragon;
+            if(redDragon != null)
+            {
+                if(redDragon.Master.Id != player.Id)
+                {
+                    S_Banish banishPacekt = new S_Banish();
+                    player.Session.Send(banishPacekt);
+                    return;
+                }
+                redDragon.AttackAction(actionPacket.Time, actionPacket.IsEnd);
+            }
+        }
     }
 }

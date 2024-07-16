@@ -9,11 +9,18 @@ public class RedDragon : MonsterController
     UI_BossHp_Popup hpbarUI;
     protected override void Init()
     {
+      
+    }
+    public void Start()
+    {
         hpbarUI = Managers.Resource.Instantiate("UI/Popup/UI_BossHp_Popup").GetComponent<UI_BossHp_Popup>();
         hpbarUI.Setting(gameObject);
         hpbarUI.ChangeHp(MaxHp);
         _anim = GetComponent<Animator>();
-        _anim.SetInteger("ActionNum", -1);
+    }
+    protected override void Update()
+    {
+
     }
     public override void ChangeHp(int hp, bool isHeal, int damage)
     {
@@ -52,13 +59,52 @@ public class RedDragon : MonsterController
     public override void OnAttack(SkillInfo info)
     {
         int actionNum = info.SkillId;
-
-        StartCoroutine(CoChagneAnimNum(actionNum));
+        switch (info.SkillId)
+        {
+            case 1:
+                StartCoroutine(EffectInst("Effect/HitUIPoint", new Vector3(81, 0.1f, 48), 1f));
+                StartCoroutine(EffectInst("Effect/HitUIPoint", new Vector3(97, 0.1f, 48), 1f));
+                StartCoroutine(EffectInst("Effect/MagicEffect", new Vector3(81, 0f, 48), 2f, 1.2f));
+                StartCoroutine(EffectInst("Effect/MagicEffect", new Vector3(97, 0f, 48), 2f, 1.2f));
+                break;                                                                 
+            case 2:
+                StartCoroutine(EffectInst("Effect/HitUIPoint", new Vector3(89, 0.1f, 48), 1f));
+                StartCoroutine(EffectInst("Effect/HitUIPoint", new Vector3(89, 0.1f, 56), 1f));
+                break;                                                                 
+            case 3:
+            case 4:
+                StartCoroutine(EffectInst("Effect/HitUIPoint", new Vector3(81, 0.1f, 40), 1f));
+                StartCoroutine(EffectInst("Effect/HitUIPoint", new Vector3(89, 0.1f, 40), 1f));
+                StartCoroutine(EffectInst("Effect/HitUIPoint", new Vector3(97, 0.1f, 40), 1f));
+                break;
+        }
+        StartCoroutine(CoChagneAnimNum(actionNum.ToString()));
     }
-    public IEnumerator CoChagneAnimNum(int actionNum)
+    public IEnumerator CoChagneAnimNum(string actionName)
     {
-        _anim.SetInteger("ActionNum", actionNum);
-        yield return new WaitForSeconds(0.5f);
-        _anim.SetInteger("ActionNum", -1);
+        if(actionName != "0")
+            yield return new WaitForSeconds(1f);
+        _anim.SetTrigger(actionName);
+    }
+    public IEnumerator EffectInst(string path, Vector3 pos, float time, float time2 = 0)
+    {
+        yield return new WaitForSeconds(time2);
+
+        GameObject go = Managers.Resource.Instantiate(path);
+        go.transform.position = pos;
+        yield return new WaitForSeconds(time);
+        Managers.Resource.Destroy(go);
+    }
+    public void DamageSkill(AnimationEvent myEvent)
+    {
+        if (Managers.Object.MyPlayer.isMaster == false) return;
+        C_SkillAction skillActionPacket = new C_SkillAction();
+        skillActionPacket.Time = myEvent.intParameter;
+        if(myEvent.floatParameter == 1)
+            skillActionPacket.IsEnd = true;
+        else 
+            skillActionPacket.IsEnd = false;
+        skillActionPacket.ObjectId = Id;
+        Managers.Network.Send(skillActionPacket);
     }
 }

@@ -480,6 +480,17 @@ class PacketHandler
         }
         Managers.Object.Clear();
     }
+    public static void S_SetMasterClientHandler(PacketSession session, IMessage packet)
+    {
+        S_SetMasterClient masterClientPacket = (S_SetMasterClient)packet;
+        MyPlayerController myPlayer = Managers.Object.MyPlayer;
+        if (myPlayer != null  && myPlayer.Id == masterClientPacket.ObjectId)
+        {
+            myPlayer.isMaster = true;
+        }
+        else
+            myPlayer.isMaster = false;
+    }
 }
 
 

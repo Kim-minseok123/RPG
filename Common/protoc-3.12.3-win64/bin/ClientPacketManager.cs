@@ -80,7 +80,9 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.SMessage, MakePacket<S_Message>);
 		_handler.Add((ushort)MsgId.SMessage, PacketHandler.S_MessageHandler);		
 		_onRecv.Add((ushort)MsgId.SChangeMap, MakePacket<S_ChangeMap>);
-		_handler.Add((ushort)MsgId.SChangeMap, PacketHandler.S_ChangeMapHandler);
+		_handler.Add((ushort)MsgId.SChangeMap, PacketHandler.S_ChangeMapHandler);		
+		_onRecv.Add((ushort)MsgId.SSetMasterClient, MakePacket<S_SetMasterClient>);
+		_handler.Add((ushort)MsgId.SSetMasterClient, PacketHandler.S_SetMasterClientHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

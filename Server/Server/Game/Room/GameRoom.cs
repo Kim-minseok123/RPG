@@ -240,6 +240,7 @@ namespace Server.Game
 				Player player = null;
 				if (_players.Remove(objectId, out player) == false)
 					return;
+				moveMapPlayer.Remove(player);
 				pos = player.Pos;
 				List<Monster> monsters = _monsters.Values.ToList();
 				foreach (var monster in monsters)
@@ -382,7 +383,7 @@ namespace Server.Game
             room.cutSceneCount = 0;
             if (player != null)
                 room.moveMapPlayer.Add(player);
-
+			player.IsMaster = false;
             // 맵 이동 패킷 보내기
             S_ChangeMap changeMap = new S_ChangeMap();
 			changeMap.MapName = mapName;
@@ -431,18 +432,30 @@ namespace Server.Game
 			cutSceneCount++;
 			if(cutSceneCount == moveMapPlayer.Count)
 			{
-				foreach (Player player in moveMapPlayer)
+                S_SetMasterClient setMasterClient = new S_SetMasterClient();
+
+                if (moveMapPlayer[0] != null)
 				{
-					// 위치 조절
-					player.Pos.PosX = 90f;
-					player.Pos.PosZ = 40f;
-					player.Pos.PosY = 0.5f;
-					EnterGame(player);
+					moveMapPlayer[0].IsMaster = true;
+					setMasterClient.ObjectId = moveMapPlayer[0].Id;
 				}
-				// 드래곤 소환
-				RedDragon redDragon = ObjectManager.Instance.Add<RedDragon>();
-                redDragon.Init(2);
-				EnterGame(redDragon);
+                foreach (Player player in moveMapPlayer)
+                {
+                    // 위치 조절
+                    player.Pos.PosX = 90f;
+                    player.Pos.PosZ = 40f;
+                    player.Pos.PosY = 0.5f;
+                    EnterGame(player);
+					player.Session.Send(setMasterClient);
+                }
+                // 드래곤 소환
+                if (moveMapPlayer[0] != null)
+				{
+                    RedDragon redDragon = ObjectManager.Instance.Add<RedDragon>();
+                    redDragon.Init(2, moveMapPlayer[0]);
+                    EnterGame(redDragon);
+                }
+				moveMapPlayer.Clear();
 			}
 		}
 		public void AllPlayerEnterNextMap(int roomId, string mapName)
@@ -456,6 +469,30 @@ namespace Server.Game
 				GameLogic.Instance.Find(roomId).isRaid = true;
             }
 			moveMapPlayer.Clear();
+		}
+		public void ChangeMaster(Player player)
+		{
+			player.IsMaster = false;
+			if(_players.Count == 0)
+			{
+				foreach (var monster in _monsters.Values)
+				{
+					LeaveGame(monster.Id);
+					
+				}
+				isRaid = false;
+				return;
+			}
+			foreach (var player2 in _players.Values)
+			{
+				if(player2.Id != player.Id)
+				{
+                    foreach (var monster in _monsters.Values)
+						(monster as RedDragon).Master = player2;
+                    player2.IsMaster = true;
+					break;
+				}
+			}
 		}
     }
 }

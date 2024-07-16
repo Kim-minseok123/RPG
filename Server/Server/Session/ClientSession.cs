@@ -117,7 +117,7 @@ namespace Server
 				if (MyPlayer == null)
 					return;
 
-				GameRoom room = GameLogic.Instance.Find(1);
+				GameRoom room = MyPlayer.Room;
 				room.Push(room.LeaveGame, MyPlayer.Info.ObjectId);
 			});
 

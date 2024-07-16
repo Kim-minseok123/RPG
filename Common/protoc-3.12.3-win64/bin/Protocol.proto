@@ -54,6 +54,8 @@ enum MsgId {
   C_EXPEDITION = 47;
   S_CHANGE_MAP = 48;
   C_END_CUT_SCENE = 49;
+  C_SKILL_ACTION = 50;
+  S_SET_MASTER_CLIENT = 51;
 }
 
 enum CreatureState {
@@ -326,6 +328,14 @@ message S_Message {
 message C_Expedition{
   int32 objectId = 1;
   int32 roomId = 2;
+}
+message C_SkillAction{
+  int32 time = 1;
+  bool isEnd = 2;
+  int32 objectId = 3;
+}
+message S_SetMasterClient{
+  int32 objectId = 1;
 }
 message C_EndCutScene{
   bool cutSceneEnd = 1;

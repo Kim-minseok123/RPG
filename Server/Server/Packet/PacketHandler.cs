@@ -287,4 +287,19 @@ class PacketHandler
 
         room.Push(room.HandleEndCutScene, player, cutScenePacket);
     }
+    public static void C_SkillActionHandler(PacketSession session, IMessage packet)
+    {
+        C_SkillAction skillActionPacket = (C_SkillAction)packet;
+        ClientSession clientSession = (ClientSession)session;
+
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+
+        room.Push(room.HandleSkillAction, player, skillActionPacket);
+    }
 }
