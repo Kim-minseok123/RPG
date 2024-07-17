@@ -5,6 +5,7 @@ using ServerCore;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 
 class PacketHandler
 {
@@ -490,6 +491,20 @@ class PacketHandler
         }
         else
             myPlayer.isMaster = false;
+    }
+    public static void S_MakeMeteorObjectHandler(PacketSession session, IMessage packet)
+    {
+        S_MakeMeteorObject meteorPakcet = (S_MakeMeteorObject)packet;
+
+        Vector3 spawnPoint = Util.PositionsToVector3(meteorPakcet.Pos);
+
+        GameObject go = Managers.Object.FindById(meteorPakcet.ObjectId);
+        if (go != null)
+        {
+            RedDragon redDragon = go.GetComponent<RedDragon>();
+            if (redDragon != null)
+                redDragon.SkillMeteor(spawnPoint);
+        }
     }
 }
 

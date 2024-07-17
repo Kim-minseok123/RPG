@@ -267,7 +267,7 @@ namespace Server.Game
                 monster.curZone.Remove(monster);
 
                 monster.Room = null;
-				if (_monsters.Count <= 0) SpawnMob();
+				if (_monsters.Count <= 0 && RoomId == 1) SpawnMob();
             }
 			else if (type == GameObjectType.Dropitem)
 			{
@@ -452,7 +452,7 @@ namespace Server.Game
                 if (moveMapPlayer[0] != null)
 				{
                     RedDragon redDragon = ObjectManager.Instance.Add<RedDragon>();
-                    redDragon.Init(2, moveMapPlayer[0]);
+                    redDragon.Init(2, moveMapPlayer[0], _players);
                     EnterGame(redDragon);
                 }
 				moveMapPlayer.Clear();
@@ -489,6 +489,9 @@ namespace Server.Game
 				{
                     foreach (var monster in _monsters.Values)
 						(monster as RedDragon).Master = player2;
+                    S_SetMasterClient setMasterClient = new S_SetMasterClient();
+					setMasterClient.ObjectId = player2.Id;
+                    Broadcast(player2.Pos,setMasterClient);
                     player2.IsMaster = true;
 					break;
 				}

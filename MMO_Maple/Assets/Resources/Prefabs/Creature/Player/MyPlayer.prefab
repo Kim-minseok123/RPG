@@ -803,10 +803,8 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  UILayerMask:
-    serializedVersion: 2
-    m_Bits: 32
   BuffDamage: 0
+  isMaster: 0
   NpcTrigger: 0
   Body: {fileID: 9116949771961835988}
   interactionCooldown: 1.5

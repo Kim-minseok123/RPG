@@ -56,6 +56,7 @@ enum MsgId {
   C_END_CUT_SCENE = 49;
   C_SKILL_ACTION = 50;
   S_SET_MASTER_CLIENT = 51;
+  S_MAKE_METEOR_OBJECT = 52;
 }
 
 enum CreatureState {
@@ -342,6 +343,10 @@ message C_EndCutScene{
 }
 message S_ChangeMap{
   string mapName = 1;
+}
+message S_MakeMeteorObject{
+  int32 objectId = 1;
+  Positions pos = 2;
 }
 message S_Ping {
 

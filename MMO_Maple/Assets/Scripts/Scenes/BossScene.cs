@@ -22,6 +22,8 @@ public class BossScene : BaseScene
         {
             Managers.Resource.Destroy(item);
         }
+
+        
     }
     public override void Clear()
     {

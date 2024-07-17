@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Google.Protobuf.Protocol;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -106,5 +107,24 @@ public class RedDragon : MonsterController
             skillActionPacket.IsEnd = false;
         skillActionPacket.ObjectId = Id;
         Managers.Network.Send(skillActionPacket);
+    }
+    public void SkillMeteor(Vector3 spawnPoint)
+    {
+        if (spawnPoint == null)
+            return;
+        StartCoroutine(MakeMeteor(spawnPoint));
+    }
+    public IEnumerator MakeMeteor(Vector3 spawnPoint)
+    {
+        yield return StartCoroutine(EffectInst("Effect/HitUIPoint", spawnPoint + new Vector3(0, 0.1f, 0), 1f));
+        GameObject go = Managers.Resource.Instantiate("Effect/MeteorEffect");
+        go.transform.position = spawnPoint;
+        go.GetComponent<PPFXMeteor>().Init();
+    }
+    public override void OnDead(GameObject attacker)
+    {
+        base.OnDead(attacker);
+        GameObject room = GameObject.Find("room1");
+        room?.SetActive(true);
     }
 }
