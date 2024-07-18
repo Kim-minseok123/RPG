@@ -162,6 +162,7 @@ public class PlayerController : CreatureController
         State = CreatureState.Dead;
         _anim.SetBool("Death", true);
         FinalAttacker = attacker;
+        StartCoroutine(DestoryObj(3.5f));
     }
     public void EquipItem(int id)
     {
@@ -261,6 +262,11 @@ public class PlayerController : CreatureController
         _anim.SetTrigger("LevelUp");
         EffectInst("LevelUpEffect", 1.2f, transform.position, new Vector3(1f, 1f, 1f));
         StartCoroutine(CoWaitForSecondsToState(1.2f, CreatureState.Idle));
+    }
+    IEnumerator DestoryObj(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Managers.Resource.Destroy(gameObject);
     }
 
 }   

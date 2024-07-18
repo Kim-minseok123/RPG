@@ -182,6 +182,7 @@ public class UI_GameScene : UI_Scene
 
         GetText((int)Texts.LevelText).text = _myPlayer.objectInfo.StatInfo.Level.ToString();
         DrawQuickSlot();
+        ChangeHpOrMp();
     }
     public void ChangeHpOrMp()
     {

@@ -39,7 +39,13 @@ public class ObjectManager
                 MyPlayer.SetPos(info.PosInfo.Pos, info.PosInfo.Rotate);
                 MyPlayer.RefreshAdditionalStat();
                 MyPlayer.GetComponent<NavMeshAgent>().enabled = true;
-                Managers.UI.ShowSceneUI<UI_GameScene>();
+                if(Managers.UI.SceneUI == null)
+                    Managers.UI.ShowSceneUI<UI_GameScene>();
+                else
+                {
+                    UI_GameScene ui = Managers.UI.SceneUI as UI_GameScene;
+                    ui.RefreshUI();
+                }
             }
             else
             {
@@ -91,7 +97,7 @@ public class ObjectManager
         }
     }
 
-    public void Remove(int id)
+    public void Remove(int id, bool isDestory = true)
     {
         if (MyPlayer != null && MyPlayer.Id == id)
             return;
@@ -103,7 +109,8 @@ public class ObjectManager
             return;
 
         _objects.Remove(id);
-        Managers.Resource.Destroy(go);
+        if(isDestory)
+            Managers.Resource.Destroy(go);
     }
 
     public GameObject FindById(int id)

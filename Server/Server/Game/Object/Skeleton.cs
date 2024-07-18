@@ -46,6 +46,7 @@ namespace Server.Game
                             if (Room != null && State == CreatureState.Skill)
                             {
                                 Target.OnDamaged(this, ((AttackSkill)skillData).skillDatas[0].damage + TotalAttack);
+                                if (Target.Hp <= 0) { Target = null; isMoving = false; };
                             }
                         }
                         int coolTick = (int)(1000 * skillData.cooldown);

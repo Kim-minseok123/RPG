@@ -79,7 +79,28 @@ namespace Server.Game
 			PosInfo.State = CreatureState.Dead;
 			if (Room == null)
 				return;
+            ReSpawn();
+        }
+        void ReSpawn()
+        {
+            Pos.PosX = 340;
+            Pos.PosY = 7.5f;
+            Pos.PosZ = 340;
+            Hp = Stat.MaxHp / 10;
+            PosInfo.State = CreatureState.Idle;
 
+            if (Room.RoomId == 2)
+            {
+                Room.RemovePlayerForMonster(this);
+                Room.ChangeTheRoom(1, this, "Game");
+                Room.PushAfter(3500, Room.SpawnPlayer, 1, this);
+                GameRoom boss = GameLogic.Instance.Find(2);
+                boss.ChangeMaster(this);
+            }
+            else
+            {
+                Room.SpawnPlayer(1, this);
+            }
         }
         public void OnLeaveGame()
 		{
@@ -96,7 +117,8 @@ namespace Server.Game
             {
                 Pos.PosX = 340;
                 Pos.PosZ = 340;
-                Pos.PosY = 8.5f;
+                Pos.PosY = 7.5f;
+                Room.RemovePlayerForMonster(this);
                 if (IsMaster)
                 {
                     Room.ChangeMaster(this);

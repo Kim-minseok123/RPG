@@ -34,8 +34,8 @@ namespace Server.Game
     }
     public class RedDragon : Monster
     {
-        SortedSet<TargetInfo> priorityTarget = new SortedSet<TargetInfo>(new DamageCompare());
-        Dictionary<int, Player> players = new Dictionary<int, Player>();
+        public SortedSet<TargetInfo> priorityTarget = new SortedSet<TargetInfo>(new DamageCompare());
+        public Dictionary<int, Player> players = new Dictionary<int, Player>();
         bool isFirstDamage = true;
         List<Area> attackArea = new List<Area>();
         Area lastArea = null;
@@ -277,6 +277,7 @@ namespace Server.Game
                     ObjectId = Id,
                     Pos = positions
                 };
+                if (Room == null) return;
                 Room.Broadcast(Pos, makeMeteorObject);
                 Room.PushAfter(2500, meteor.Update);
             }
@@ -293,6 +294,7 @@ namespace Server.Game
                     ObjectId = Id,
                     Pos = positions
                 };
+                if (Room == null) return;
                 Room.Broadcast(Pos, makeMeteorObject);
                 Room.PushAfter(2500, meteor.Update);
             }

@@ -302,4 +302,28 @@ class PacketHandler
 
         room.Push(room.HandleSkillAction, player, skillActionPacket);
     }
+    public static void C_BossItemCutSceneHandler(PacketSession session, IMessage packet)
+    {
+        ClientSession clientSession = (ClientSession)session;
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+        room.Push(room.HandleBossItemCutScene, player);
+    }
+    public static void C_EndBossItemCutSceneHandler(PacketSession session, IMessage packet)
+    {
+        ClientSession clientSession = (ClientSession)session;
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+        room.Push(room.HandleEndBossItemCutScene, player);
+    }
 }

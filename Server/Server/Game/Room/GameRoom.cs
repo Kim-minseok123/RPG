@@ -363,8 +363,7 @@ namespace Server.Game
 			if (player == null) return;
 
 			int objectId = player.Id;
-            if (_players.Remove(objectId, out player) == false)
-                return;
+			_players.Remove(objectId);
             List<Monster> monsters = _monsters.Values.ToList();
             foreach (var monster in monsters)
             {
@@ -381,7 +380,7 @@ namespace Server.Game
 			player.Room = room;
 
             room.cutSceneCount = 0;
-            if (player != null)
+            if (player != null && room.RoomId == 2)
                 room.moveMapPlayer.Add(player);
 			player.IsMaster = false;
             // 맵 이동 패킷 보내기
@@ -455,6 +454,8 @@ namespace Server.Game
                     redDragon.Init(2, moveMapPlayer[0], _players);
                     EnterGame(redDragon);
                 }
+				GameRoom room = GameLogic.Instance.Find(1);
+				if (room != null) { room.moveMapPlayer.Clear(); }
 				moveMapPlayer.Clear();
 			}
 		}
@@ -481,7 +482,9 @@ namespace Server.Game
 					
 				}
 				isRaid = false;
-				return;
+                cutSceneCount = 0;
+                endBossCutSceneCnt = 0;
+                return;
 			}
 			foreach (var player2 in _players.Values)
 			{
@@ -495,6 +498,63 @@ namespace Server.Game
                     player2.IsMaster = true;
 					break;
 				}
+			}
+		}
+		int endBossCutSceneCnt = 0;
+		public void HandleBossItemCutScene(Player player)
+		{
+			if (!player.IsMaster) return;
+			S_BossItemCutScene cutScene = new S_BossItemCutScene();
+			Broadcast(player.Pos, cutScene);
+            endBossCutSceneCnt = 0;
+
+        }
+        public void HandleEndBossItemCutScene(Player player)
+        {
+            endBossCutSceneCnt++;
+			if(endBossCutSceneCnt == _players.Count)
+			{
+				List<Player> move = _players.Values.ToList();
+				foreach (Player itemPlayer in _players.Values)
+				{
+					if (itemPlayer == null) continue;
+					C_AddItem addItem = new C_AddItem();
+					addItem.Count = 1;
+					addItem.TemplateId = 4;
+					addItem.IsBuy = false;
+					HandleAddItem(itemPlayer, addItem);
+				}
+				foreach (Player itemPlayer in move)
+				{
+					ChangeTheRoom(1, itemPlayer, "Game");
+				}
+                foreach (Player itemPlayer in move)
+                {
+					Positions positions = Utils.Vector3ToPositions(new Vector3(340, 7.5f, 340));
+					itemPlayer.Pos = positions;
+                    PushAfter(3500, SpawnPlayer, 1, itemPlayer);
+                }
+            }
+        }
+
+		public void SpawnPlayer(int roomId, Player player)
+		{
+			GameRoom findRoom = GameLogic.Instance.Find(roomId);
+			if (findRoom == null) return;
+			if(findRoom._players.ContainsKey(player.Id)) _players.Remove(player.Id);
+			findRoom.EnterGame(player);
+		}
+		public void RemovePlayerForMonster(Player player)
+		{
+			foreach (var monster in _monsters.Values)
+			{
+				RedDragon redDragon = (RedDragon)monster;
+				if (redDragon == null) continue;
+				var targetList = redDragon.priorityTarget.ToList();
+				foreach (var target  in targetList)
+					if(target.target.Id == player.Id)
+						redDragon.priorityTarget.Remove(target);
+				redDragon.players.Remove(player.Id);
 			}
 		}
     }

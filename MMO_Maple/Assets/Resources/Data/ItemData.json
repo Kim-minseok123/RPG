@@ -29,6 +29,16 @@
       "requirementLevel": "5",
       "requirementClass": "전사",
       "iconPath": "Textures/Item/nakamaki"
+    },
+    {
+      "id": "4",
+      "name": "화염의 카타나",
+      "sellGold": "2000",
+      "weaponType": "Sword",
+      "damage": "101",
+      "requirementLevel": "5",
+      "requirementClass": "초보자",
+      "iconPath": "Textures/Item/RedKatana"
     }
   ],
   "armors": [

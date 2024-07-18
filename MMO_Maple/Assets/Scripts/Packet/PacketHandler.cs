@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Diagnostics;
+using UnityEngine.Playables;
 
 class PacketHandler
 {
@@ -194,6 +195,10 @@ class PacketHandler
         if (bc == null)
             return;
         bc.OnDead(attacker);
+        if(bc.Id == Managers.Object.MyPlayer.Id)
+            Managers.Object.MyPlayer = null;
+        if (bc.GetComponent<PlayerController>() != null)
+            Managers.Object.Remove(bc.Id, false);
     }
     public static void S_ItemListHandler(PacketSession session, IMessage packet)
     {
@@ -470,10 +475,14 @@ class PacketHandler
         Managers.UI.CloseAllPopupUI();
 
         TransitionSettings ts = Managers.Resource.Load<TransitionSettings>("Trans/LinearWipe");
+        Debug.Log(changeMapPacket.MapName);
         switch (changeMapPacket.MapName)
         {
             case "Lobby":
                 TransitionManager.Instance().Transition(Define.Scene.Lobby, ts, 0);
+                break;
+            case "Game":
+                TransitionManager.Instance().Transition(Define.Scene.Game, ts, 0); 
                 break;
             case "Boss":
                 TransitionManager.Instance().Transition(Define.Scene.Boss, ts, 0);
@@ -505,6 +514,23 @@ class PacketHandler
             if (redDragon != null)
                 redDragon.SkillMeteor(spawnPoint);
         }
+    }
+    public static void S_BossItemCutSceneHandler(PacketSession session, IMessage packet)
+    {
+        Managers.Object.Clear();
+        GameObject go = GameObject.FindGameObjectWithTag("Timeline");
+        if (go != null)
+        {
+            PlayableDirector pd = go.GetComponent<PlayableDirector>();
+            if(pd != null)
+            {
+                pd.Play();
+            }
+        }
+    }
+    public static void S_EndBossItemCutSceneHandler(PacketSession session, IMessage packet)
+    {
+
     }
 }
 

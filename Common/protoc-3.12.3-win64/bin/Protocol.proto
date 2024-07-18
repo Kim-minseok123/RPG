@@ -57,6 +57,10 @@ enum MsgId {
   C_SKILL_ACTION = 50;
   S_SET_MASTER_CLIENT = 51;
   S_MAKE_METEOR_OBJECT = 52;
+  C_BOSS_ITEM_CUT_SCENE = 53;
+  S_BOSS_ITEM_CUT_SCENE = 54;
+  C_END_BOSS_ITEM_CUT_SCENE = 55;
+  S_END_BOSS_ITEM_CUT_SCENE = 56;
 }
 
 enum CreatureState {
@@ -347,6 +351,18 @@ message S_ChangeMap{
 message S_MakeMeteorObject{
   int32 objectId = 1;
   Positions pos = 2;
+}
+message C_BossItemCutScene{
+
+}
+message S_BossItemCutScene{
+
+}
+message C_EndBossItemCutScene{
+
+}
+message S_EndBossItemCutScene{
+
 }
 message S_Ping {
 

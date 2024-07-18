@@ -84,7 +84,11 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.SSetMasterClient, MakePacket<S_SetMasterClient>);
 		_handler.Add((ushort)MsgId.SSetMasterClient, PacketHandler.S_SetMasterClientHandler);		
 		_onRecv.Add((ushort)MsgId.SMakeMeteorObject, MakePacket<S_MakeMeteorObject>);
-		_handler.Add((ushort)MsgId.SMakeMeteorObject, PacketHandler.S_MakeMeteorObjectHandler);
+		_handler.Add((ushort)MsgId.SMakeMeteorObject, PacketHandler.S_MakeMeteorObjectHandler);		
+		_onRecv.Add((ushort)MsgId.SBossItemCutScene, MakePacket<S_BossItemCutScene>);
+		_handler.Add((ushort)MsgId.SBossItemCutScene, PacketHandler.S_BossItemCutSceneHandler);		
+		_onRecv.Add((ushort)MsgId.SEndBossItemCutScene, MakePacket<S_EndBossItemCutScene>);
+		_handler.Add((ushort)MsgId.SEndBossItemCutScene, PacketHandler.S_EndBossItemCutSceneHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)
