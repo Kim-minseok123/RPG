@@ -15,7 +15,6 @@ public class EndCutScene : MonoBehaviour
         C_EndCutScene endCutScene = new C_EndCutScene();
         endCutScene.CutSceneEnd = true;
         Managers.Network.Send(endCutScene);
-        gameObject.SetActive(false);
     }
     public void EndRaid()
     {

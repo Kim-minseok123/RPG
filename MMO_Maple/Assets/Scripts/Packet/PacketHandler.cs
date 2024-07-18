@@ -475,7 +475,6 @@ class PacketHandler
         Managers.UI.CloseAllPopupUI();
 
         TransitionSettings ts = Managers.Resource.Load<TransitionSettings>("Trans/LinearWipe");
-        Debug.Log(changeMapPacket.MapName);
         switch (changeMapPacket.MapName)
         {
             case "Lobby":
@@ -518,7 +517,7 @@ class PacketHandler
     public static void S_BossItemCutSceneHandler(PacketSession session, IMessage packet)
     {
         Managers.Object.Clear();
-        GameObject go = GameObject.FindGameObjectWithTag("Timeline");
+        GameObject go = GameObject.Find("EndBossController");
         if (go != null)
         {
             PlayableDirector pd = go.GetComponent<PlayableDirector>();

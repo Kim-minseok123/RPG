@@ -173,7 +173,7 @@ namespace Server.Game
 				DropItem dropItem = gameObject as DropItem;
 				_dropItem.Add(gameObject.Id, dropItem);
                 dropItem.Room = this;
-
+				
                 Zone zone = GetZone(dropItem.Pos);
                 zone.DropItems.Add(dropItem);
                 dropItem.curZone = zone;
