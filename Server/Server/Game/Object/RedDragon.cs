@@ -211,7 +211,7 @@ namespace Server.Game
                         AttackArea(lastArea.areas[1], player, 30);
                     }
                     if (isEnd)
-                        job = Room.PushAfter(5000, SelectSkillAndAttack);
+                        job = Room?.PushAfter(5000, SelectSkillAndAttack);
                     break;
                 case 2:
                     foreach (var player in players.Values)
@@ -219,7 +219,7 @@ namespace Server.Game
                         AttackArea(lastArea.areas[0], player, 50);
                     }
                     if (isEnd)
-                        job = Room.PushAfter(4000, SelectSkillAndAttack);
+                        job = Room?.PushAfter(4000, SelectSkillAndAttack);
                     break;
                 case 3:
                     foreach (var player in players.Values)
@@ -232,9 +232,9 @@ namespace Server.Game
                             AttackArea(lastArea.areas[2], player, 20);
                     }
                     if (isEnd && isflying == false)
-                        job = Room.PushAfter(5000, SelectSkillAndAttack);
+                        job = Room?.PushAfter(5000, SelectSkillAndAttack);
                     if (isEnd && isflying == true)
-                        job = Room.PushAfter(7000, SelectSkillAndAttack);
+                        job = Room?.PushAfter(7000, SelectSkillAndAttack);
                     break; 
             }
         }
@@ -242,7 +242,7 @@ namespace Server.Game
         {
             if (cnt == 4)
             {
-                job = Room.PushAfter(5000, SelectSkillAndAttack);
+                job = Room?.PushAfter(5000, SelectSkillAndAttack);
                 return;
             }
             cnt++;
@@ -254,7 +254,7 @@ namespace Server.Game
             MakeMeteor(targetObject, positions);
             MakeMeteor();
            
-            Room.PushAfter(5000, StartMeteor, cnt, targetObject);
+            Room?.PushAfter(5000, StartMeteor, cnt, targetObject);
         }
         public void MakeMeteor(GameObject targetObject = null, Positions positions = null)
         {
@@ -278,8 +278,8 @@ namespace Server.Game
                     Pos = positions
                 };
                 if (Room == null) return;
-                Room.Broadcast(Pos, makeMeteorObject);
-                Room.PushAfter(2500, meteor.Update);
+                Room?.Broadcast(Pos, makeMeteorObject);
+                Room?.PushAfter(2500, meteor.Update);
             }
             else if(targetObject != null && positions != null)
             {
@@ -295,8 +295,8 @@ namespace Server.Game
                     Pos = positions
                 };
                 if (Room == null) return;
-                Room.Broadcast(Pos, makeMeteorObject);
-                Room.PushAfter(2500, meteor.Update);
+                Room?.Broadcast(Pos, makeMeteorObject);
+                Room?.PushAfter(2500, meteor.Update);
             }
         }
         public override void OnDead(GameObject attacker)
@@ -312,13 +312,13 @@ namespace Server.Game
             S_Die diePacket = new S_Die();
             diePacket.ObjectId = Id;
             diePacket.AttackerId = attacker.Id;
-            Room.Broadcast(Pos, diePacket);
+            Room?.Broadcast(Pos, diePacket);
 
             S_Message message = new S_Message();
             message.Message = "레드 드래곤을 토벌하였습니다.\n 공대장은 위의 상자에서 보상을 획득하세요.";
-            Room.Broadcast(Pos, diePacket);
+            Room?.Broadcast(Pos, diePacket);
 
-            Room.PushAfter(5000, DieEvent);
+            Room?.PushAfter(5000, DieEvent);
         }
     }
     public struct AreaPos

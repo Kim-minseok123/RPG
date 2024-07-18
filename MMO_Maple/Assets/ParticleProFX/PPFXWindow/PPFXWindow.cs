@@ -79,8 +79,9 @@ public class PPFXWindow : EditorWindow {
 		window.autoRepaintOnSceneChange = true;
 		window.Show();
 	}
-	
-	void OnEnable(){
+
+    [System.Obsolete]
+    void OnEnable(){
 	#if UNITY_EDITOR
 	    EditorApplication.playmodeStateChanged += StateChange;
 	#endif

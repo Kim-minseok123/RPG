@@ -536,7 +536,6 @@ namespace Server.Game
                 }
             }
         }
-
 		public void SpawnPlayer(int roomId, Player player)
 		{
 			GameRoom findRoom = GameLogic.Instance.Find(roomId);

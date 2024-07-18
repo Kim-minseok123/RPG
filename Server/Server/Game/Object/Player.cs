@@ -93,7 +93,7 @@ namespace Server.Game
             {
                 Room.RemovePlayerForMonster(this);
                 Room.ChangeTheRoom(1, this, "Game");
-                Room.PushAfter(3500, Room.SpawnPlayer, 1, this);
+                Room.PushAfter(7000, Room.SpawnPlayer, 1, this);
                 GameRoom boss = GameLogic.Instance.Find(2);
                 boss.ChangeMaster(this);
             }

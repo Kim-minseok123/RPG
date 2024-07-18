@@ -482,6 +482,7 @@ class PacketHandler
                 break;
             case "Game":
                 TransitionManager.Instance().Transition(Define.Scene.Game, ts, 0); 
+                //Managers.Scene.LoadScene(Define.Scene.Game);
                 break;
             case "Boss":
                 TransitionManager.Instance().Transition(Define.Scene.Boss, ts, 0);

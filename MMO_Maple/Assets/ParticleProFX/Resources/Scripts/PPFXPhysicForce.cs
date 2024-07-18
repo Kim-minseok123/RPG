@@ -21,9 +21,9 @@ public class PPFXPhysicForce : MonoBehaviour {
 	
 	void Start () 
 	{
-		colliders = Physics.OverlapSphere(this.transform.position, radius);
+		//colliders = Physics.OverlapSphere(this.transform.position, radius);
 		
-		StartCoroutine(Explode());
+		//StartCoroutine(Explode());
 	}
 	
 	IEnumerator Explode()

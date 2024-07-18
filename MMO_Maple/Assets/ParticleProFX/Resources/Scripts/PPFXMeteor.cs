@@ -36,16 +36,13 @@ public class PPFXMeteor : MonoBehaviour {
 		psystems = GetComponentsInChildren<ParticleSystem>(); 
 		foreach(ParticleSystem _system in psystems)
 		{
-			
-			#if UNITY_5_3_4_OR_NEWER || UNITY_5_5_OR_NEWER
-			
-				#if UNITY_5_5_OR_NEWER
-					var _emission = _system.emission;
-					var _rate = _emission.rateOverTime;
-					_rate.constantMax  *= speed / 10;
-					_emission.rateOverTime = _rate;			
-				#endif
-			#endif
+            if (_system != null && _system.isPlaying)
+            {
+                var _emission = _system.emission;
+                var _rate = _emission.rateOverTime;
+                _rate.constantMax = 0f;
+                _emission.rateOverTime = _rate;
+            }
 		}
 		
 		
@@ -63,18 +60,14 @@ public class PPFXMeteor : MonoBehaviour {
         	//set emission rate to zero
 			foreach(ParticleSystem _system in psystems)
 			{
-				#if UNITY_5_3_4_OR_NEWER || UNITY_5_5_OR_NEWER
-				
-					#if UNITY_5_5_OR_NEWER
-						var _emission = _system.emission;
-						var _rate = _emission.rateOverTime;
-						_rate.constantMax  = 0f;
-						_emission.rateOverTime = _rate;		
-					#endif	
-				#endif
-				
-				
-			}
+                if (_system != null)
+                {
+                    var _emission = _system.emission;
+                    var _rate = _emission.rateOverTime;
+                    _rate.constantMax = 0f;
+                    _emission.rateOverTime = _rate;
+                }
+            }
             if (detonationPrefab != null)
             {
                 GameObject go = Instantiate(detonationPrefab, this.transform.position, detonationPrefab.transform.rotation);

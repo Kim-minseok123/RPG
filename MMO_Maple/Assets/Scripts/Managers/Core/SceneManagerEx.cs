@@ -7,12 +7,20 @@ public class SceneManagerEx
 {
     public BaseScene CurrentScene { get { return GameObject.FindObjectOfType<BaseScene>(); } }
 
-	public void LoadScene(Define.Scene type)
+    public void LoadScene(Define.Scene type)
     {
-        Managers.Clear();
+        Debug.Log("Starting LoadScene");
 
-        SceneManager.LoadScene(GetSceneName(type));
+        Managers.Clear();
+        Debug.Log("Managers cleared");
+
+        string sceneName = GetSceneName(type);
+        Debug.Log("Scene name: " + sceneName);
+
+        SceneManager.LoadScene(sceneName);
+        Debug.Log("Scene loaded");
     }
+
 
     string GetSceneName(Define.Scene type)
     {
