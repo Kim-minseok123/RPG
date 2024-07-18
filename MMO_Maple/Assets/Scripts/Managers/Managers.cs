@@ -75,6 +75,7 @@ public class Managers : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
+        if (Network.ServInfo == null) { return; }
         C_SaveQuickSlot saveSlot = new C_SaveQuickSlot();
         if ((UI.SceneUI as UI_GameScene) != null)
         {

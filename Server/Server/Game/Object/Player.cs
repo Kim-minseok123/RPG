@@ -39,7 +39,7 @@ namespace Server.Game
             if (isDamageDelay)
                 return;
             isDamageDelay = true;
-            Room.PushAfter(1500, DamageDelayEnd);
+            Room?.PushAfter(1500, DamageDelayEnd);
             damage = Math.Max(damage - (ArmorDefence + Stat.Defense), 0);
             Stat.Hp = Math.Max(Stat.Hp - damage, 0);
 
@@ -92,8 +92,10 @@ namespace Server.Game
             if (Room.RoomId == 2)
             {
                 Room.RemovePlayerForMonster(this);
+                Console.WriteLine(Room.RoomId + " 바꾸기 전 player ");
                 Room.ChangeTheRoom(1, this, "Game");
-                Room.PushAfter(7000, Room.SpawnPlayer, 1, this);
+                Console.WriteLine(Room.RoomId + " player ");
+                Room.PushAfter(5000, Room.SpawnPlayer, 1, this);
                 GameRoom boss = GameLogic.Instance.Find(2);
                 boss.ChangeMaster(this);
             }

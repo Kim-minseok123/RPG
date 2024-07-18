@@ -86,7 +86,7 @@ namespace Server.Game
                 nextPos.PosY = PosInfo.Pos.PosY + 1;
                 nextPos.PosZ = Pos.PosZ + random.Next(-5, 6);
             }
-            Console.WriteLine(nextPos.PosX + " , " + nextPos.PosZ);
+            Console.WriteLine(Room.RoomId);
             State = CreatureState.Moving;
 		}
 

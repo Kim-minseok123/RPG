@@ -363,7 +363,8 @@ namespace Server.Game
 			if (player == null) return;
 
 			int objectId = player.Id;
-			_players.Remove(objectId);
+			if(_players.Remove(objectId) == false)
+                Console.WriteLine("플레이어 삭제 실패");
             List<Monster> monsters = _monsters.Values.ToList();
             foreach (var monster in monsters)
             {
@@ -457,7 +458,7 @@ namespace Server.Game
 				GameRoom room = GameLogic.Instance.Find(1);
 				if (room != null) { room.moveMapPlayer.Clear(); }
 				moveMapPlayer.Clear();
-			}
+            }
 		}
 		public void AllPlayerEnterNextMap(int roomId, string mapName)
 		{
@@ -540,10 +541,10 @@ namespace Server.Game
 		{
 			GameRoom findRoom = GameLogic.Instance.Find(roomId);
 			if (findRoom == null) return;
-			if(findRoom._players.ContainsKey(player.Id)) _players.Remove(player.Id);
+			if(findRoom._players.ContainsKey(player.Id)) findRoom._players.Remove(player.Id);
 			findRoom.EnterGame(player);
-		}
-		public void RemovePlayerForMonster(Player player)
+        }
+        public void RemovePlayerForMonster(Player player)
 		{
 			foreach (var monster in _monsters.Values)
 			{

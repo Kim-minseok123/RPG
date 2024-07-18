@@ -21,7 +21,7 @@ namespace Server.Game
         {
             foreach (var player in this.players.Values)
             {
-                parent.AttackArea(area, player, 20);
+                parent?.AttackArea(area, player, 20);
             }
         }
     }
