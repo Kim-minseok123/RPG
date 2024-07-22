@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Playables;
 using static Define;
 
@@ -61,7 +62,9 @@ public class BaseController : MonoBehaviour
 		{
 			transform.position = Util.PositionsToVector3(pos);
 		}
-	}
+        if (gameObject.GetComponent<NavMeshAgent>() != null)
+            gameObject.GetComponent<NavMeshAgent>().enabled = true;
+    }
     public virtual void MoveTarget(Vector3 target, GameObject targetObj = null)
     {
 

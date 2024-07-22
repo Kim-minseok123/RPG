@@ -73,67 +73,69 @@ namespace Server.Game.Room
         {
             if (Owner == null || Owner.Room == null)
                 return;
-
-            HashSet<GameObject> currentObjects = GatherObjects();
-
-            List<GameObject> added = currentObjects.Except(PreviousObjects).ToList();
-
-            if(added.Count > 0)
+            if (Owner.isCanVision)
             {
-                S_Spawn spawnPacket = new S_Spawn();
+                HashSet<GameObject> currentObjects = GatherObjects();
 
-                foreach (GameObject gameObject in added)
+                List<GameObject> added = currentObjects.Except(PreviousObjects).ToList();
+
+                if (added.Count > 0)
                 {
-                    if(gameObject.ObjectType == GameObjectType.Player)
+                    S_Spawn spawnPacket = new S_Spawn();
+
+                    foreach (GameObject gameObject in added)
                     {
-                        Player player = (Player)gameObject;
-                        if (player.Session.Master == true) continue;
-                    }
-                    ObjectInfo info = new ObjectInfo();
-                    info.MergeFrom(gameObject.Info);
-                    spawnPacket.Objects.Add(info);
-                }
-                Owner.Session.Send(spawnPacket);
-                foreach(GameObject gameObject in added)
-                {
-                    if(gameObject.ObjectType == GameObjectType.Player)
-                    {
-                        Player player = (Player)gameObject;
-                        if (player.Session.Master == true) continue;
-                        S_EquipItemList equipItemLists = new S_EquipItemList();
-                        equipItemLists.ObjectId = player.Id;
-                        for (int i = 0; i < player.Inven.EquipItems.Length; i++)
+                        if (gameObject.ObjectType == GameObjectType.Player)
                         {
-                            if (player.Inven.EquipItems[i] != null)
-                                equipItemLists.TemplateIds.Add(player.Inven.EquipItems[i].TemplateId);
+                            Player player = (Player)gameObject;
+                            if (player.Session.Master == true) continue;
                         }
-                        Owner.Session.Send(equipItemLists);
+                        ObjectInfo info = new ObjectInfo();
+                        info.MergeFrom(gameObject.Info);
+                        spawnPacket.Objects.Add(info);
                     }
-                    if (gameObject.isMoving)
+                    Owner.Session.Send(spawnPacket);
+                    foreach (GameObject gameObject in added)
                     {
-                        S_Move resMovePacket = new S_Move();
-                        resMovePacket.ObjectId = gameObject.Info.ObjectId;
-                        resMovePacket.DestPosInfo = new PositionInfo();
-                        resMovePacket.DestPosInfo.Pos = gameObject.DestPos;
-                        if(gameObject.DestPos != null)
-                            Owner.Session.Send(resMovePacket);
+                        if (gameObject.ObjectType == GameObjectType.Player)
+                        {
+                            Player player = (Player)gameObject;
+                            if (player.Session.Master == true) continue;
+                            S_EquipItemList equipItemLists = new S_EquipItemList();
+                            equipItemLists.ObjectId = player.Id;
+                            for (int i = 0; i < player.Inven.EquipItems.Length; i++)
+                            {
+                                if (player.Inven.EquipItems[i] != null)
+                                    equipItemLists.TemplateIds.Add(player.Inven.EquipItems[i].TemplateId);
+                            }
+                            Owner.Session.Send(equipItemLists);
+                        }
+                        if (gameObject.isMoving)
+                        {
+                            S_Move resMovePacket = new S_Move();
+                            resMovePacket.ObjectId = gameObject.Info.ObjectId;
+                            resMovePacket.DestPosInfo = new PositionInfo();
+                            resMovePacket.DestPosInfo.Pos = gameObject.DestPos;
+                            if (gameObject.DestPos != null)
+                                Owner.Session.Send(resMovePacket);
+                        }
                     }
                 }
-            }
-            List<GameObject> removed = PreviousObjects.Except(currentObjects).ToList();
-            if(removed.Count > 0)
-            {
-                S_Despawn despawnPacket = new S_Despawn();
-
-                foreach (GameObject gameObject in removed)
+                List<GameObject> removed = PreviousObjects.Except(currentObjects).ToList();
+                if (removed.Count > 0)
                 {
-                    despawnPacket.ObjectIds.Add(gameObject.Id);
+                    S_Despawn despawnPacket = new S_Despawn();
+
+                    foreach (GameObject gameObject in removed)
+                    {
+                        despawnPacket.ObjectIds.Add(gameObject.Id);
+                    }
+                    Owner.Session.Send(despawnPacket);
                 }
-                Owner.Session.Send(despawnPacket);
+
+                PreviousObjects = currentObjects;
             }
-
-            PreviousObjects = currentObjects;
-
+           
             Owner.Room.PushAfter(100, Update);
         }
     }

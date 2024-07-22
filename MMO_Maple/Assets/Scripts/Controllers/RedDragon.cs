@@ -98,7 +98,7 @@ public class RedDragon : MonsterController
     }
     public void DamageSkill(AnimationEvent myEvent)
     {
-        if (Managers.Object.MyPlayer.isMaster == false) return;
+        if (Managers.Object.MyPlayer != null &&Managers.Object.MyPlayer.isMaster == false) return;
         C_SkillAction skillActionPacket = new C_SkillAction();
         skillActionPacket.Time = myEvent.intParameter;
         if(myEvent.floatParameter == 1)
@@ -117,7 +117,7 @@ public class RedDragon : MonsterController
     public IEnumerator MakeMeteor(Vector3 spawnPoint)
     {
         yield return StartCoroutine(EffectInst("Effect/HitUIPoint", spawnPoint + new Vector3(0, 0.1f, 0), 1f));
-        /*GameObject go = Managers.Resource.Instantiate("Effect/MeteorEffect");
+       /* GameObject go = Managers.Resource.Instantiate("Effect/MeteorEffect");
         go.transform.position = spawnPoint;*/
     }
     public override void OnDead(GameObject attacker)

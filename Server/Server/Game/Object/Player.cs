@@ -26,6 +26,7 @@ namespace Server.Game
 		public int ArmorDefence { get; private set; }
 		public Dictionary<int,int> HaveSkillData = new Dictionary<int,int>();
 		public Dictionary<string, int> QuickSlot = new Dictionary<string, int>();
+        public bool isCanVision = true;
 		public Player()
 		{
 			ObjectType = GameObjectType.Player;
@@ -92,9 +93,8 @@ namespace Server.Game
             if (Room.RoomId == 2)
             {
                 Room.RemovePlayerForMonster(this);
-                Console.WriteLine(Room.RoomId + " 바꾸기 전 player ");
+                isCanVision = false;
                 Room.ChangeTheRoom(1, this, "Game");
-                Console.WriteLine(Room.RoomId + " player ");
                 Room.PushAfter(5000, Room.SpawnPlayer, 1, this);
                 GameRoom boss = GameLogic.Instance.Find(2);
                 boss.ChangeMaster(this);

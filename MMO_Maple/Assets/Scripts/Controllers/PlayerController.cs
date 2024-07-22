@@ -84,7 +84,7 @@ public class PlayerController : CreatureController
         {
             if (Vector3.Distance(_agent.destination, transform.position) < 0.3f)
             {
-                if(Managers.Object.MyPlayer.gameObject == gameObject)
+                if(Managers.Object.MyPlayer != null && Managers.Object.MyPlayer.gameObject == gameObject)
                 {
                     C_StopMove moveStopPacket = new C_StopMove() { PosInfo = new PositionInfo() };
                     moveStopPacket.PosInfo.Pos = new Positions() { PosX = transform.position.x, PosY = transform.position.y, PosZ = transform.position.z };

@@ -152,8 +152,11 @@ namespace Server.Game
 					GetZone(player.Pos).Players.Add(player);
 					player.curZone = GetZone(player.Pos);
 					if (player.Session.Master != true)
-						player.Vision.Update();
-					else
+					{
+						player.isCanVision = true;
+                        player.Vision.Update();
+                    }
+                    else
 						SpawnMaster();
                 }
             }
@@ -363,8 +366,7 @@ namespace Server.Game
 			if (player == null) return;
 
 			int objectId = player.Id;
-			if(_players.Remove(objectId) == false)
-                Console.WriteLine("플레이어 삭제 실패");
+			_players.Remove(objectId);
             List<Monster> monsters = _monsters.Values.ToList();
             foreach (var monster in monsters)
             {

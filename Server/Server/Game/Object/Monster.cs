@@ -38,9 +38,7 @@ namespace Server.Game
 		IJob _job;
 		public override void Update()
 		{
-            //Console.WriteLine(State);
-
-            switch (State)
+			/*switch (State)
 			{
 				case CreatureState.Idle:
 					UpdateIdle();
@@ -57,9 +55,9 @@ namespace Server.Game
 				case CreatureState.Wait:
 					break;
 			}
-            // 5프레임 (0.2초마다 한번씩 Update)
-            if (Room != null)
-				_job = Room.PushAfter(200, Update);
+			// 5프레임 (0.2초마다 한번씩 Update)
+			if (Room != null)
+				_job = Room.PushAfter(200, Update);*/
 		}
 		protected Positions nextPos = new Positions();
 		public long _nextSearchTick = 0;
