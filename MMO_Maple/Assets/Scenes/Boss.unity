@@ -27498,7 +27498,7 @@ GameObject:
   - component: {fileID: 1207807059}
   m_Layer: 0
   m_Name: BossScene
-  m_TagString: Untagged
+  m_TagString: EndRoom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27521,6 +27521,7 @@ MonoBehaviour:
   - Effect/MagicEffect
   - Effect/HitUIPoint
   PD: {fileID: 1858681025}
+  room2: {fileID: 1671499892}
 --- !u!4 &1207807060
 Transform:
   m_ObjectHideFlags: 0

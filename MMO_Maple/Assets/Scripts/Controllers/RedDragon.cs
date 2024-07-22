@@ -125,6 +125,6 @@ public class RedDragon : MonsterController
         hpbarUI.gameObject.SetActive(false);
         GameObject room = GameObject.FindGameObjectWithTag("EndRoom");
         if (room != null)
-            room.SetActive(true);
+            room.GetComponent<BossScene>().DieRedDragon();
     }
 }

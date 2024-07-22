@@ -9,6 +9,7 @@ public class BossScene : BaseScene
     public string[] loading;
 
     public PlayableDirector PD;
+    public GameObject room2;
     protected override void Init()
     {
         SceneType = Define.Scene.Boss;
@@ -27,5 +28,9 @@ public class BossScene : BaseScene
     public override void Clear()
     {
 
+    }
+    public void DieRedDragon()
+    {
+        room2.SetActive(true);
     }
 }

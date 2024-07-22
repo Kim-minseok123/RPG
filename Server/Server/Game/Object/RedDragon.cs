@@ -238,6 +238,7 @@ namespace Server.Game
                     break; 
             }
         }
+        IJob meteorJob = null;
         public void StartMeteor(int cnt, GameObject targetObject)
         {
             if (cnt == 4)
@@ -253,8 +254,8 @@ namespace Server.Game
             positions.PosZ = targetObject.Pos.PosZ;
             MakeMeteor(targetObject, positions);
             MakeMeteor();
-           
-            Room?.PushAfter(5000, StartMeteor, cnt, targetObject);
+
+            meteorJob =Room?.PushAfter(5000, StartMeteor, cnt, targetObject);
         }
         public void MakeMeteor(GameObject targetObject = null, Positions positions = null)
         {
@@ -307,6 +308,11 @@ namespace Server.Game
             {
                 job.Cancel = true;
                 job = null;
+            }
+            if(meteorJob != null)
+            {
+                meteorJob.Cancel = true;
+                meteorJob = null;
             }
             State = CreatureState.Dead;
             S_Die diePacket = new S_Die();

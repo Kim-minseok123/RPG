@@ -22,4 +22,5 @@ public class EndCutScene : MonoBehaviour
             = new C_EndBossItemCutScene();
         Managers.Network.Send(c_EndBossItemCutScene);
     }
+
 }
