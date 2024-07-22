@@ -54,13 +54,16 @@ public class UI_NpcSell_Popup : UI_Popup
         foreach (Transform child in GetObject((int)GameObjects.PlayerSellContent).transform)
             Destroy(child.gameObject);
 
+        GetObject((int)GameObjects.NpcSellContent).GetComponent<RectTransform>().sizeDelta = new Vector2(0, (npcData.npcSellLists.Count + 1) * 100);
         foreach (NpcSellList item in npcData.npcSellLists)
         {
             GameObject go = Managers.Resource.Instantiate("UI/SubItem/UI_NpcSellInfo", GetObject((int)GameObjects.NpcSellContent).transform);
             go.GetComponent<UI_NpcSellInfo>().Setting(item.TemplateId, this);
         }
+
         List<Item> items = Managers.Inven.Items.Values.ToList();
         items.Sort((left, right) => { return left.Slot - right.Slot; });
+        GetObject((int)GameObjects.PlayerSellContent).GetComponent<RectTransform>().sizeDelta = new Vector2(0, (items.Count + 1) * 100);
         foreach (Item item in items)
         {
             GameObject go = Managers.Resource.Instantiate("UI/SubItem/UI_PlayerSellInfo", GetObject((int)GameObjects.PlayerSellContent).transform);

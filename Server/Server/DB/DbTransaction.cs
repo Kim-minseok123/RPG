@@ -161,6 +161,7 @@ namespace Server.DB
             ItemData itemData = null;
             if (DataManager.ItemDict.TryGetValue(rewardData.itemId, out itemData) == false) return;
             ConsumableData cmData = (ConsumableData)itemData;
+            if (rewardData.count > cmData.maxCount) return;
             int? findDbId = player.Inven.AlreadyHaveConsumable(rewardData.itemId);
 
             if (findDbId == -1)
@@ -278,8 +279,8 @@ namespace Server.DB
                     int? slot = player.Inven.GetEmptySlot();
                     if (slot == null)
                         return;
-                    curItem.Count += rewardData.count;
-                    int leaveCount = curItem.Count - cmData.maxCount;
+                    curItem.Count = cmData.maxCount;
+                    int leaveCount = newCount - cmData.maxCount;
 
                     ItemDb curitemDb = new ItemDb()
                     {

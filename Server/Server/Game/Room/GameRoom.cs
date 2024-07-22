@@ -529,6 +529,7 @@ namespace Server.Game
 				}
 				foreach (Player itemPlayer in move)
 				{
+					itemPlayer.isCanVision = false;
 					ChangeTheRoom(1, itemPlayer, "Game");
 				}
                 foreach (Player itemPlayer in move)

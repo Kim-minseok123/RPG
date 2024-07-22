@@ -44,12 +44,10 @@ public class RedDragon : MonsterController
                 var value = Mathf.Max(0f, (float)Hp / MaxHp);
                 if (value == 0f)
                 {
-                    // Á×À½ Ã³¸®
+                    _anim.SetTrigger("7");
                 }
-                else
-                {
-                    hpbarUI.ChangeHp(value);
-                }
+
+                hpbarUI.ChangeHp(value);
 
                 GameObject damageInfo = Managers.Resource.Instantiate("Effect/DamageInfo");
                 damageInfo.transform.position = transform.position + new Vector3(0, 3f, 0);
@@ -117,13 +115,16 @@ public class RedDragon : MonsterController
     public IEnumerator MakeMeteor(Vector3 spawnPoint)
     {
         yield return StartCoroutine(EffectInst("Effect/HitUIPoint", spawnPoint + new Vector3(0, 0.1f, 0), 1f));
-       /* GameObject go = Managers.Resource.Instantiate("Effect/MeteorEffect");
-        go.transform.position = spawnPoint;*/
+        GameObject go = Managers.Resource.Instantiate("Effect/MeteorEffect");
+        go.transform.position = spawnPoint;
+        yield return new WaitForSeconds(2);
+        Managers.Resource.Destroy(go);
     }
     public override void OnDead(GameObject attacker)
     {
-        base.OnDead(attacker);
-        GameObject room = GameObject.Find("room1");
-        room?.SetActive(true);
+        hpbarUI.gameObject.SetActive(false);
+        GameObject room = GameObject.FindGameObjectWithTag("EndRoom");
+        if (room != null)
+            room.SetActive(true);
     }
 }
