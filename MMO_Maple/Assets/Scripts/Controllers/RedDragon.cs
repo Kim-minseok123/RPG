@@ -110,7 +110,7 @@ public class RedDragon : MonsterController
     {
         if (spawnPoint == null)
             return;
-        StartCoroutine(MakeMeteor(spawnPoint));
+        StartCoroutine(MakeMeteor(spawnPoint + new Vector3(0, 2.5f, 0)));
     }
     public IEnumerator MakeMeteor(Vector3 spawnPoint)
     {

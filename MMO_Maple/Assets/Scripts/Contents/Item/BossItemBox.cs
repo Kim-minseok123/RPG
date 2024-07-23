@@ -7,7 +7,7 @@ public class BossItemBox : MonoBehaviour
 {
     public void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == Managers.Object.MyPlayer) 
+        if(other.gameObject == Managers.Object.MyPlayer.gameObject) 
         { 
             if (Managers.Object.MyPlayer.isMaster)
             {

@@ -280,7 +280,7 @@ namespace Server.Game
                 };
                 if (Room == null) return;
                 Room?.Broadcast(Pos, makeMeteorObject);
-                Room?.PushAfter(2500, meteor.Update);
+                Room?.PushAfter(1300, meteor.Update);
             }
             else if(targetObject != null && positions != null)
             {
@@ -322,7 +322,7 @@ namespace Server.Game
 
             S_Message message = new S_Message();
             message.Message = "레드 드래곤을 토벌하였습니다.\n 공대장은 위의 상자에서 보상을 획득하세요.";
-            Room?.Broadcast(Pos, diePacket);
+            Room?.Broadcast(Pos, message);
 
             Room?.PushAfter(5000, DieEvent);
         }

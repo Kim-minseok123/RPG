@@ -457,7 +457,7 @@ namespace Server.Game
                     redDragon.Init(2, moveMapPlayer[0], _players);
                     EnterGame(redDragon);
                 }
-				GameRoom room = GameLogic.Instance.Find(1);
+                GameRoom room = GameLogic.Instance.Find(1);
 				if (room != null) { room.moveMapPlayer.Clear(); }
 				moveMapPlayer.Clear();
             }
@@ -506,7 +506,6 @@ namespace Server.Game
 		int endBossCutSceneCnt = 0;
 		public void HandleBossItemCutScene(Player player)
 		{
-            Console.WriteLine(player.IsMaster);
             if (!player.IsMaster) return;
 			S_BossItemCutScene cutScene = new S_BossItemCutScene();
 			Broadcast(player.Pos, cutScene);

@@ -146,7 +146,7 @@ public class UI_InvenSlot : UI_Base
 
                 ClassTypes? classTypes = Item.GetItemRequiredClassType(item);
                 if (classTypes == null) return;
-
+                if (Managers.Object.MyPlayer == null) return;
                 if ((int)classTypes == Managers.Object.MyPlayer.ClassType) satisfiedClass = true;
                 else satisfiedClass = false;
                 if (item.RequirementLevel <= Managers.Object.MyPlayer.Stat.Level) satisfiedLevel = true;

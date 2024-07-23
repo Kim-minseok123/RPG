@@ -24,6 +24,7 @@ public class UI_GameScene : UI_Scene
     public Sprite Archer;
     public bool NpcTrigger = false;
     MyPlayerController _myPlayer;
+    public bool isGameQuitPopup = false;
 
     public Dictionary<int, UI_BuffSkillInfo> _buffs = new Dictionary<int, UI_BuffSkillInfo>();
     enum Images
@@ -210,7 +211,7 @@ public class UI_GameScene : UI_Scene
     }
     public void OpenUI(string uiName = null)
     {
-        if (NpcTrigger) return;
+        if (NpcTrigger || isGameQuitPopup) return;
         switch(uiName)
         {
             case "Inven":
@@ -237,7 +238,7 @@ public class UI_GameScene : UI_Scene
     }
     public void CloseUI(string uiName = null)
     {
-        if (_curPopupSortOrder <= 1)
+        if (_curPopupSortOrder <= 1 || isGameQuitPopup)
             return;
 
         if (string.IsNullOrEmpty(uiName))
@@ -249,6 +250,11 @@ public class UI_GameScene : UI_Scene
                 lastOpenedUI.gameObject.SetActive(false);
                 lastOpenedUI.GetComponent<Canvas>().sortingOrder = 0;
                 _curPopupSortOrder--;
+            }
+            else
+            {
+                isGameQuitPopup = true;
+                Managers.UI.ShowPopupUI<UI_GameEnd_Popup>();
             }
         }
         else

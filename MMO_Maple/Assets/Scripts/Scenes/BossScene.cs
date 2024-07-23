@@ -10,6 +10,7 @@ public class BossScene : BaseScene
 
     public PlayableDirector PD;
     public GameObject room2;
+    public GameObject cut;
     protected override void Init()
     {
         SceneType = Define.Scene.Boss;
@@ -32,5 +33,6 @@ public class BossScene : BaseScene
     public void DieRedDragon()
     {
         room2.SetActive(true);
+        cut.SetActive(true);
     }
 }
