@@ -506,7 +506,8 @@ namespace Server.Game
 		int endBossCutSceneCnt = 0;
 		public void HandleBossItemCutScene(Player player)
 		{
-			if (!player.IsMaster) return;
+            Console.WriteLine(player.IsMaster);
+            if (!player.IsMaster) return;
 			S_BossItemCutScene cutScene = new S_BossItemCutScene();
 			Broadcast(player.Pos, cutScene);
             endBossCutSceneCnt = 0;

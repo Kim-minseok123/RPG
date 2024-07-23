@@ -16060,7 +16060,7 @@ GameObject:
   - component: {fileID: 967029934}
   - component: {fileID: 967029933}
   - component: {fileID: 967029935}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: chest_up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21236,7 +21236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1075697256}
   - component: {fileID: 1075697257}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22177,7 +22177,7 @@ GameObject:
   - component: {fileID: 1151738201}
   - component: {fileID: 1151738203}
   - component: {fileID: 1151738202}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: chest_base
   m_TagString: Untagged
   m_Icon: {fileID: 0}

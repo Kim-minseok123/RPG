@@ -7,8 +7,8 @@ public class BossItemBox : MonoBehaviour
 {
     public void OnTriggerEnter(Collider other)
     {
-        if(other == Managers.Object.MyPlayer)
-        {
+        if(other.gameObject == Managers.Object.MyPlayer) 
+        { 
             if (Managers.Object.MyPlayer.isMaster)
             {
                 C_BossItemCutScene cutScene = new C_BossItemCutScene();

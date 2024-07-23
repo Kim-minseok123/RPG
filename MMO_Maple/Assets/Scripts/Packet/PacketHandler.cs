@@ -467,6 +467,7 @@ class PacketHandler
     {
         S_Message messagePacket = (S_Message)packet;
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        Debug.Log(messagePacket.Message);
         gameSceneUI.SetMessage(messagePacket.Message);
     }
     public static void S_ChangeMapHandler(PacketSession session, IMessage packet)
@@ -481,10 +482,12 @@ class PacketHandler
                 TransitionManager.Instance().Transition(Define.Scene.Lobby, ts, 0);
                 break;
             case "Game":
-                TransitionManager.Instance().Transition(Define.Scene.Game, ts, 0);
+                Managers.NextScene = Define.Scene.Game;
+                TransitionManager.Instance().Transition(Define.Scene.Loading, ts, 0);
                 break;
             case "Boss":
-                TransitionManager.Instance().Transition(Define.Scene.Boss, ts, 0);
+                Managers.NextScene = Define.Scene.Boss;
+                TransitionManager.Instance().Transition(Define.Scene.Loading, ts, 0);
                 break;
         }
         Managers.Object.Clear();
