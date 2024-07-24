@@ -64,6 +64,7 @@ namespace Server.Game
 			monster.isMoving = false;
             monster._nextSearchTick = Environment.TickCount64 + 7000;
             monster.DestPos = null;
+            Console.WriteLine(monster.Pos.PosX + " " + monster.Pos.PosZ);
             S_StopMove resStopMovePacket = new S_StopMove();
             resStopMovePacket.ObjectId = monster.Info.ObjectId;
             resStopMovePacket.PosOk = true;

@@ -63,7 +63,7 @@ namespace Server.Game
 		public long _nextSearchTick = 0;
 		protected virtual void UpdateIdle()
 		{
-			if (Room.PlayerCount < 1) return;
+			if (Room == null || Room.PlayerCount < 1) return;
 			if (State != CreatureState.Idle) return;
             if (_nextSearchTick == 0)
                 _nextSearchTick = Environment.TickCount64 + 7000;
@@ -84,6 +84,7 @@ namespace Server.Game
                 nextPos.PosY = PosInfo.Pos.PosY + 1;
                 nextPos.PosZ = Pos.PosZ + random.Next(-5, 6);
             }
+            Console.WriteLine("현재 위치 " +  Pos.PosX + " " + Pos.PosZ);
             State = CreatureState.Moving;
 		}
 
@@ -105,6 +106,7 @@ namespace Server.Game
 			nextPosinfo.MergeFrom(PosInfo);
 			nextPosinfo.Pos = nextPos;
 			movePacket.DestPosInfo = nextPosinfo;
+            Console.WriteLine("도착 예정 " + nextPosinfo.Pos.PosX + " " + nextPosinfo.Pos.PosZ);
 
             if (Target == null)
 				movePacket.TargetId = -1;

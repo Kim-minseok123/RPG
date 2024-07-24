@@ -151,13 +151,14 @@ namespace Server.Game
 
 					GetZone(player.Pos).Players.Add(player);
 					player.curZone = GetZone(player.Pos);
-					if (player.Session.Master != true)
+					if (player.Session.Master == true)
 					{
-						player.isCanVision = true;
-                        player.Vision.Update();
+						player.Vision.SetVisionCell(100);
                     }
-                    else
-						SpawnMaster();
+					else
+                        player.Vision.SetVisionCell(VisionCells);
+                    player.isCanVision = true;
+                    player.Vision.Update();
                 }
             }
 			else if (type == GameObjectType.Monster)

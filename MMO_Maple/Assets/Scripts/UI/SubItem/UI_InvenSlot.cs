@@ -86,9 +86,10 @@ public class UI_InvenSlot : UI_Base
             }, Define.UIEvent.Drag);
             _icon.gameObject.BindEvent((e) =>
             {
-                if (itemData == null) return;
                 if (dragObj == null) return;
-                Managers.Resource.Destroy(dragObj);
+                Managers.Resource.Destroy(dragObj); 
+                if (itemData == null) return;
+                
                 string name = e.pointerCurrentRaycast.gameObject.name;
                 if (name == null) return;
                 // 아이템 창끼리 인벤 교환

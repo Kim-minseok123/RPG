@@ -21,7 +21,8 @@ public class MonsterController : CreatureController
         _anim = GetComponent<Animator>();
         hpBar.gameObject.SetActive(true);
         _anim.SetBool("Death", false);
-        
+        State = CreatureState.Idle;
+
 #if UNITY_SERVER
         PrevPos = transform.position;
         StopCoroutine(CheckPosInfo());
@@ -62,10 +63,19 @@ public class MonsterController : CreatureController
     }
     public override void MoveTarget(Vector3 target, GameObject targetObj = null)
     {
-        if (isAttackMotion) return;
+        if (isAttackMotion) 
+        {
+#if UNITY_SERVER
+            Debug.Log("1");
+#endif
+            return; 
+        }
         TargetObj = targetObj;
         if (_agent == null)
         {
+#if UNITY_SERVER
+            Debug.Log("2");
+#endif
             return;
         }
         StopCoroutine(OnMove(target));

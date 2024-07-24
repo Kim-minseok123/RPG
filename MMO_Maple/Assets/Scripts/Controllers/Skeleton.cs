@@ -51,9 +51,23 @@ public class Skeleton : MonsterController
 
     public override IEnumerator OnMove(Vector3 target)
     {
-        if (State == CreatureState.Dead) yield break;
+        State = CreatureState.Moving;
 
-        if (isAttackMotion) yield break;
+        if (State == CreatureState.Dead) 
+        {
+#if UNITY_SERVER
+            Debug.Log("3");
+#endif
+            yield break; 
+        }
+
+        if (isAttackMotion) 
+        {
+#if UNITY_SERVER
+            Debug.Log("4");
+#endif
+            yield break;
+        }
         _agent.ResetPath();
         if (TargetObj == null || (TargetObj != null && Vector3.Distance(target, transform.position) >= 1.2f))
             _agent.SetDestination(target);

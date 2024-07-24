@@ -9,10 +9,15 @@ namespace Server.Game.Room
     public class VisionCube
     {
         public Player Owner { get; private set; }
+        public int VisionCell = 5;
         public HashSet<GameObject> PreviousObjects { get; private set; } = new HashSet<GameObject>();
         public VisionCube(Player owner)
         {
             Owner = owner;
+        }
+        public void SetVisionCell(int visionCell)
+        {
+            this.VisionCell = visionCell;
         }
         public HashSet<GameObject> GatherObjects()
         {
@@ -30,9 +35,9 @@ namespace Server.Game.Room
                 {
                     float dx = pos.PosX - player.Pos.PosX;
                     float dz = pos.PosZ - player.Pos.PosZ;
-                    if (Math.Abs(dx) > Owner.Room.VisionCells)
+                    if (Math.Abs(dx) > VisionCell)
                         continue;
-                    if (Math.Abs(dz) > Owner.Room.VisionCells)
+                    if (Math.Abs(dz) > VisionCell)
                         continue;
                     objects.Add(player);
                 }
@@ -40,9 +45,9 @@ namespace Server.Game.Room
                 {
                     float dx = pos.PosX - monster.Pos.PosX;
                     float dz = pos.PosZ - monster.Pos.PosZ;
-                    if (Math.Abs(dx) > Owner.Room.VisionCells)
+                    if (Math.Abs(dx) > VisionCell)
                         continue;
-                    if (Math.Abs(dz) > Owner.Room.VisionCells)
+                    if (Math.Abs(dz) > VisionCell)
                         continue;
                     objects.Add(monster);
                 }
@@ -50,9 +55,9 @@ namespace Server.Game.Room
                 {
                     float dx = pos.PosX - dropItem.Pos.PosX;
                     float dz = pos.PosZ - dropItem.Pos.PosZ;
-                    if (Math.Abs(dx) > Owner.Room.VisionCells)
+                    if (Math.Abs(dx) > VisionCell)
                         continue;
-                    if (Math.Abs(dz) > Owner.Room.VisionCells)
+                    if (Math.Abs(dz) > VisionCell)
                         continue;
                     objects.Add(dropItem);
                 }
@@ -60,9 +65,9 @@ namespace Server.Game.Room
                 {
                     float dx = pos.PosX - npc.Pos.PosX;
                     float dz = pos.PosZ - npc.Pos.PosZ;
-                    if (Math.Abs(dx) > Owner.Room.VisionCells)
+                    if (Math.Abs(dx) > VisionCell)
                         continue;
-                    if (Math.Abs(dz) > Owner.Room.VisionCells)
+                    if (Math.Abs(dz) > VisionCell)
                         continue;
                     objects.Add(npc);
                 }
