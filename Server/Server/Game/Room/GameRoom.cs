@@ -561,5 +561,10 @@ namespace Server.Game
 				redDragon.players.Remove(player.Id);
 			}
 		}
+		public void HandleLeaveGame(Player player, C_RequestLeaveGame leaveGamePacket)
+		{
+			if(player != null)
+				LeaveGame(leaveGamePacket.ObjectId);
+		}
     }
 }

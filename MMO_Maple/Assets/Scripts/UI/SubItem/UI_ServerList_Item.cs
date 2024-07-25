@@ -47,6 +47,9 @@ public class UI_ServerList_Item : UI_Base
     {
         if (_isClick == true) return;
         _isClick = true;
+
+        Managers.Sound.Play("ButtonClick");
+
         // 서버 접속
         Managers.Network.ConnectToGame(Info);
     }

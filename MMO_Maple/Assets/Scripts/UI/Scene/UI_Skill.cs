@@ -37,7 +37,8 @@ public class UI_Skill : UI_Base
         BindText(typeof(Texts));
         BindImage(typeof(Images));
 
-        GetButton((int)Buttons.ExitButton).gameObject.BindEvent((e) => { var ui = Managers.UI.SceneUI as UI_GameScene; ui.CloseUI("UI_Skill"); });
+        GetButton((int)Buttons.ExitButton).gameObject.BindEvent((e) => { 
+            var ui = Managers.UI.SceneUI as UI_GameScene; ui.CloseUI("UI_Skill"); });
 
         _init = true;
         RefreshUI();

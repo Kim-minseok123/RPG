@@ -54,6 +54,8 @@ public class UI_NpcSellInfo : UI_Base
                 {
                     popup.InfoRemove();
                     if (e.clickCount < 2) return;
+                    Managers.Sound.Play("ButtonClick");
+
                     Managers.UI.ShowPopupUI<UI_SelectConfirm_Popup>().Setting("몇개를 구매하시겠습니까?", true, (count) => 
                     {
                         if (count <= 0) return;
@@ -79,6 +81,8 @@ public class UI_NpcSellInfo : UI_Base
                     popup.InfoRemove();
 
                     if (e.clickCount < 2) return;
+                    Managers.Sound.Play("ButtonClick");
+
                     Managers.UI.ShowPopupUI<UI_SelectConfirm_Popup>().Setting("정말 구매하시겠습니까?", false, (count) =>
                     {
                         if (count != -1) return;
@@ -126,6 +130,9 @@ public class UI_NpcSellInfo : UI_Base
                 popup.InfoRemove();
 
                 if (e.clickCount < 2) return;
+
+                Managers.Sound.Play("ButtonClick");
+
                 Managers.UI.ShowPopupUI<UI_SelectConfirm_Popup>().Setting("정말 구매하시겠습니까?", false, (count) =>
                 {
                     if (count != -1) return;

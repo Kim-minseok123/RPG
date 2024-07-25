@@ -36,12 +36,18 @@ public class UI_Register_Popup : UI_Popup
     public void OnClickDeclineBtn(PointerEventData data)
     {
         if (_click) return;
+
+        Managers.Sound.Play("ButtonClick");
+
         _click = true;
         DestroyRegisterUI();
     }
     public void OnClickRegisterBtn(PointerEventData data)
     {
         if (_click) return;
+
+        Managers.Sound.Play("ButtonClick");
+
         _click = true;
         string account = GetObject((int)GameObjects.LoginInput).GetComponent<TMP_InputField>().text;
         string password = GetObject((int)GameObjects.PasswordInput).GetComponent<TMP_InputField>().text;

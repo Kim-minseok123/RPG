@@ -376,7 +376,6 @@ public class MyPlayerController : PlayerController
     {
         if (other == null) return;
         if (!other.gameObject.CompareTag("NPC")) return;
-        if ((Managers.UI.SceneUI as UI_GameScene).isGameQuitPopup) return;
         float currentTime = Time.time;
         if (Input.GetKeyDown(KeyCode.Space) && Managers.Object.MyPlayer.State == CreatureState.Idle)
         {

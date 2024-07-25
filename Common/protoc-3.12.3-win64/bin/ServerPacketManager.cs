@@ -70,7 +70,9 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.CBossItemCutScene, MakePacket<C_BossItemCutScene>);
 		_handler.Add((ushort)MsgId.CBossItemCutScene, PacketHandler.C_BossItemCutSceneHandler);		
 		_onRecv.Add((ushort)MsgId.CEndBossItemCutScene, MakePacket<C_EndBossItemCutScene>);
-		_handler.Add((ushort)MsgId.CEndBossItemCutScene, PacketHandler.C_EndBossItemCutSceneHandler);
+		_handler.Add((ushort)MsgId.CEndBossItemCutScene, PacketHandler.C_EndBossItemCutSceneHandler);		
+		_onRecv.Add((ushort)MsgId.CRequestLeaveGame, MakePacket<C_RequestLeaveGame>);
+		_handler.Add((ushort)MsgId.CRequestLeaveGame, PacketHandler.C_RequestLeaveGameHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

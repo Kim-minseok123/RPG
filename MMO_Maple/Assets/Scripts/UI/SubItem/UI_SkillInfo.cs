@@ -40,6 +40,9 @@ public class UI_SkillInfo : UI_Base
             e => 
             {
                 if (Managers.Object.MyPlayer.Stat.SkillPoint <= 0) return;
+
+                Managers.Sound.Play("ButtonClick");
+
                 C_SkillLevelUp skillLevelUp = new C_SkillLevelUp() { Skill = new SkillInfo() };
                 skillLevelUp.Skill.SkillId = templateId;
                 skillLevelUp.Skill.Level = 1;
@@ -84,8 +87,8 @@ public class UI_SkillInfo : UI_Base
                 if (skillData == null || skillLevel <= 0) return;
                 if (dragObj == null || templateId < 0) return; if (dragIcon == null ) return;
                 Managers.Resource.Destroy(dragObj);
-                if(e.pointerCurrentRaycast.gameObject.name != null)
-                    (Managers.UI.SceneUI as UI_GameScene).RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, templateId, true);
+                if (e.pointerCurrentRaycast.gameObject == null) return;
+                (Managers.UI.SceneUI as UI_GameScene).RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, templateId, true);
             }, Define.UIEvent.DragEnd);
         }
         _init = true;
@@ -125,5 +128,7 @@ public class UI_SkillInfo : UI_Base
     {
         if (description != null)
             Managers.Resource.Destroy(description);
+        if(dragObj != null)
+            Managers.Resource.Destroy(dragObj);
     }
 }

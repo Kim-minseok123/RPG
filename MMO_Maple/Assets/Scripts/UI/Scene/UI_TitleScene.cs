@@ -15,6 +15,10 @@ public class UI_TitleScene : UI_Scene
     {
         TouchScreenText
     }
+    enum Buttons
+    {
+        SettingBtn
+    }
     Coroutine _coTouchText { get; set; }
     public override void Init()
     {
@@ -29,14 +33,19 @@ public class UI_TitleScene : UI_Scene
 
         BindImage(typeof(Images));
         BindText(typeof(Texts));
+        BindButton(typeof(Buttons));
         _coTouchText = StartCoroutine(CoTouchTextFade());
         GetImage((int)Images.TouchImage).gameObject.BindEvent(OnClickTouchImage);
+
+        GetButton((int)Buttons.SettingBtn).gameObject.BindEvent((pointData) => { Managers.Sound.Play("ButtonClick");  Managers.Resource.Instantiate("UI/Popup/UI_Setting_Popup"); });
     }
     void OnClickTouchImage(PointerEventData data)
     {
         StopCoroutine(_coTouchText);
 
         GetImage((int)Images.TouchImage).gameObject.SetActive(false);
+
+        Managers.Sound.Play("ButtonClick");
 
         Managers.UI.ShowPopupUI<UI_Login_Popup>();
     }

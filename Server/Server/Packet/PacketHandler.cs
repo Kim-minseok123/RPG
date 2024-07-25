@@ -326,4 +326,18 @@ class PacketHandler
             return;
         room.Push(room.HandleEndBossItemCutScene, player);
     }
+    public static void C_RequestLeaveGameHandler(PacketSession session, IMessage packet)
+    {
+        C_RequestLeaveGame leaveGamePacket = (C_RequestLeaveGame)packet;
+
+        ClientSession clientSession = (ClientSession)session;
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+        room.Push(room.HandleLeaveGame, player, leaveGamePacket);
+    }
 }

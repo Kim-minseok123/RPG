@@ -89,7 +89,7 @@ public class UI_InvenSlot : UI_Base
                 if (dragObj == null) return;
                 Managers.Resource.Destroy(dragObj); 
                 if (itemData == null) return;
-                
+                if (e.pointerCurrentRaycast.gameObject == null) return;
                 string name = e.pointerCurrentRaycast.gameObject.name;
                 if (name == null) return;
                 // 아이템 창끼리 인벤 교환
@@ -159,6 +159,8 @@ public class UI_InvenSlot : UI_Base
     {
         if (description != null)
             Managers.Resource.Destroy(description);
+        if(dragObj != null)
+            Managers.Resource.Destroy(dragObj);
     }
     public void RequestChangeInvenSlot(int changeSlotNum) 
     {

@@ -24,7 +24,6 @@ public class UI_GameScene : UI_Scene
     public Sprite Archer;
     public bool NpcTrigger = false;
     MyPlayerController _myPlayer;
-    public bool isGameQuitPopup = false;
 
     public Dictionary<int, UI_BuffSkillInfo> _buffs = new Dictionary<int, UI_BuffSkillInfo>();
     enum Images
@@ -39,6 +38,10 @@ public class UI_GameScene : UI_Scene
         QuickSlotIconImage4,
         PlayerImage,
         PlayerClassImage,
+    }
+    enum Buttons
+    {
+        SettingBtn
     }
     enum Texts
     {
@@ -95,10 +98,13 @@ public class UI_GameScene : UI_Scene
 
         BindImage(typeof(Images));
         BindText(typeof(Texts));
+        BindButton(typeof(Buttons));
         Bind<Slider>(typeof(Sliders));
         BindObject(typeof(GameObjects));
 
         _myPlayer = Managers.Object.MyPlayer;
+
+        GetButton((int)Buttons.SettingBtn).gameObject.BindEvent((pointData) => { Managers.Sound.Play("ButtonClick"); Managers.Resource.Instantiate("UI/Popup/UI_Setting_Popup"); });
 
         GetText((int)Texts.PlayerNameText).text = _myPlayer.objectInfo.Name.ToString();
 
@@ -155,7 +161,7 @@ public class UI_GameScene : UI_Scene
             Managers.Resource.Destroy(dragObj);
             var quickSlot = isSkill ? QuickSlotSkill : QuickSlotItem;
             if (quickSlot.TryGetValue(str, out int templateId) == false) return;
-            if (e.pointerCurrentRaycast.gameObject.name == null) return;
+            if (e.pointerCurrentRaycast.gameObject == null) return;
             RequestQuickSlotUI(e.pointerCurrentRaycast.gameObject.name, templateId, isSkill);
         }, Define.UIEvent.DragEnd);
     }
@@ -211,8 +217,9 @@ public class UI_GameScene : UI_Scene
     }
     public void OpenUI(string uiName = null)
     {
-        if (NpcTrigger || isGameQuitPopup) return;
-        switch(uiName)
+        if (NpcTrigger) return;
+        Managers.Sound.Play("ButtonClick");
+        switch (uiName)
         {
             case "Inven":
                 InvenUI.gameObject.GetComponent<Canvas>().sortingOrder = _curPopupSortOrder++;
@@ -238,9 +245,9 @@ public class UI_GameScene : UI_Scene
     }
     public void CloseUI(string uiName = null)
     {
-        if (_curPopupSortOrder <= 1 || isGameQuitPopup)
+        if (_curPopupSortOrder <= 1)
             return;
-
+        Managers.Sound.Play("ButtonClick");
         if (string.IsNullOrEmpty(uiName))
         {
             UI_Base lastOpenedUI = _playerPopup.FirstOrDefault(ui => ui.gameObject.activeSelf && ui.GetComponent<Canvas>().sortingOrder == _curPopupSortOrder - 1);
@@ -250,11 +257,6 @@ public class UI_GameScene : UI_Scene
                 lastOpenedUI.gameObject.SetActive(false);
                 lastOpenedUI.GetComponent<Canvas>().sortingOrder = 0;
                 _curPopupSortOrder--;
-            }
-            else
-            {
-                isGameQuitPopup = true;
-                Managers.UI.ShowPopupUI<UI_GameEnd_Popup>();
             }
         }
         else

@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Serialization;
 using UnityEngine;
 
@@ -76,6 +77,7 @@ public class Managers : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
+        SaveGameData();
         if (Network.ServInfo == null) { return; }
         C_SaveQuickSlot saveSlot = new C_SaveQuickSlot();
         if ((UI.SceneUI as UI_GameScene) != null)
@@ -115,7 +117,6 @@ public class Managers : MonoBehaviour
         audioSource.Stop();
         audioSource.volume = startVolume;  // reset volume
     }
-
     IEnumerator FadeInNewBGM(AudioSource audioSource, AudioClip newClip, float pitch = 1.0f, float fadeTime = 1.0f)
     {
         yield return StartCoroutine(FadeOutOldBGM(audioSource, fadeTime));
@@ -128,9 +129,30 @@ public class Managers : MonoBehaviour
         for (float t = 0; t < fadeTime; t += Time.deltaTime)
         {
             audioSource.volume = t / fadeTime;
+            if (audioSource.volume >= data.bgmVolume)
+                break;
             yield return null;
         }
 
-        audioSource.volume = 1.0f;  
+        audioSource.volume = data.bgmVolume;  
+    }
+
+    string GameDataFileName = "SoundData.json";
+    public SoundData data = new SoundData();
+    public void LoadGameData()
+    {
+        string filePath = Application.persistentDataPath + "/" + GameDataFileName;
+        if (File.Exists(filePath))
+        {
+            string FromJsonData = File.ReadAllText(filePath);
+            data = JsonUtility.FromJson<SoundData>(FromJsonData);
+        }
+    }
+    public void SaveGameData()
+    {
+        string ToJsonData = JsonUtility.ToJson(data, true);
+        string filePath = Application.persistentDataPath + "/" + GameDataFileName;
+
+        File.WriteAllText(filePath, ToJsonData);
     }
 }

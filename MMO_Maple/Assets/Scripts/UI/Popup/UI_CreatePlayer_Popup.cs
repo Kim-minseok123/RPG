@@ -53,8 +53,8 @@ public class UI_CreatePlayer_Popup : UI_Popup
         GetButton((int)Buttons.CreatePlayerMaleBtn).gameObject.BindEvent(OnClickCreatePlayerMaleBtn);
         GetButton((int)Buttons.CreatePlayerFeMaleBtn).gameObject.BindEvent(OnClickCreatePlayerFeMaleBtn);
         GetButton((int)Buttons.BackLoginBtn).gameObject.BindEvent(OnClickBackLoginBtn);
-        
-        
+
+
         ServerInfo info = Managers.Network.ServInfo;
         GetText((int)Texts.ServerNameText).text = info.Name;
         GetImage((int)Images.ServerIconImage).sprite = Managers.Resource.Load<Sprite>($"UI/ServerIcon/{info.Name}");
@@ -66,18 +66,25 @@ public class UI_CreatePlayer_Popup : UI_Popup
     {
         if (isClick) return;
         isClick = true;
+
+        Managers.Sound.Play("ButtonClick");
+
         CreatePlayer(isMale: true);
     }
     public void OnClickCreatePlayerFeMaleBtn(PointerEventData data)
     {
         if (isClick) return;
         isClick = true;
+        Managers.Sound.Play("ButtonClick");
+
         Managers.UI.ShowPopupUI<UI_Confirm_Popup>().Setting("현재는 남성 캐릭터만 생성 가능합니다.", () => { isClick = false; });
         //CreatePlayer(isMale: false);
     }
     public void OnClickBackLoginBtn(PointerEventData data)
     {
         if (isClick) return;
+
+        Managers.Sound.Play("ButtonClick");
 
         // 캐릭터 선택 화면으로
         StartCoroutine(FadeAndChagneSelectUI());

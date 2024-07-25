@@ -16,6 +16,7 @@ public class UI_SelectPlayer_Popup : UI_Popup
     {
         CreatePlayerBtn,
         BackLoginBtn,
+        SettingBtn
     }
     enum Images
     {
@@ -46,6 +47,7 @@ public class UI_SelectPlayer_Popup : UI_Popup
 
         GetButton((int)Buttons.BackLoginBtn).gameObject.BindEvent(OnClickBackLoginBtn);
         GetButton((int)Buttons.CreatePlayerBtn).gameObject.BindEvent(OnClickCreatePlayerBtn);
+        GetButton((int)Buttons.SettingBtn).gameObject.BindEvent((pointData) => { Managers.Sound.Play("ButtonClick"); Managers.Resource.Instantiate("UI/Popup/UI_Setting_Popup"); });
 
         lobbyPlayers.Clear();
         for (int i = 0; i < 3; i++)
@@ -66,12 +68,18 @@ public class UI_SelectPlayer_Popup : UI_Popup
     public void OnClickCreatePlayerBtn(PointerEventData data)
     {
         if (isClick) return;
+
+        Managers.Sound.Play("ButtonClick");
+
         isClick = true;
         StartCoroutine(FadeAndChagneCreateUI());
     }
     public void OnClickBackLoginBtn(PointerEventData data)
     {
         if (isClick) return;
+
+        Managers.Sound.Play("ButtonClick");
+
         isClick = true;
 
         Managers.Network._session.Disconnect();

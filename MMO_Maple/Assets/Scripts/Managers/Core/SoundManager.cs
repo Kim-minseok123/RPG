@@ -90,4 +90,20 @@ public class SoundManager
 
 		return audioClip;
     }
+    public void SetAudioVolume(Define.Sound type, float volume) 
+    {
+        AudioSource audioSource = null;
+        if (type == Define.Sound.Bgm)
+        {
+            audioSource = _audioSources[(int)Define.Sound.Bgm];
+            Managers.Instance.data.bgmVolume = volume;
+        }
+        else if(type == Define.Sound.Effect)
+        {
+            audioSource = _audioSources[(int)Define.Sound.Effect];
+            Managers.Instance.data.eftVolume = volume;
+        }
+        if (audioSource != null) 
+            audioSource.volume = volume;
+    }
 }

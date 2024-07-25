@@ -37,6 +37,8 @@ public class UI_Login_Popup : UI_Popup
     {
         if (_click == true) return;
         _click = true;
+        
+        Managers.Sound.Play("ButtonClick");
 
         string account = GetObject((int)GameObjects.LoginInput).GetComponent<TMP_InputField>().text;
         string password = GetObject((int)GameObjects.PasswordInput).GetComponent<TMP_InputField>().text;
@@ -72,6 +74,7 @@ public class UI_Login_Popup : UI_Popup
     }
     public void OnClickRegisterBtn(PointerEventData data)
     {
+        Managers.Sound.Play("ButtonClick");
         StartCoroutine(FadeDestroy());
     }
     IEnumerator FadeDestroy()

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,4 +31,10 @@ public class Define
         PointerEnter,
         PointerExit,
     }
+}
+[Serializable]
+public class SoundData
+{
+    public float bgmVolume = 1f;
+    public float eftVolume = 1f;
 }

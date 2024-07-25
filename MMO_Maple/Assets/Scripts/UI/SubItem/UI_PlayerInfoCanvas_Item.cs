@@ -73,6 +73,8 @@ public class UI_PlayerInfoCanvas_Item : UI_Base
     }
     public void EnterGame(PointerEventData data)
     {
+        Managers.Sound.Play("ButtonClick");
+
         TransitionSettings ts = Managers.Resource.Load<TransitionSettings>("Trans/LinearWipe");
         TransitionManager.Instance().Transition(Define.Scene.Game, ts, 0, () => {
             C_EnterGame enterGamePacket = new C_EnterGame();

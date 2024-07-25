@@ -14,6 +14,10 @@ public class LoginScene : BaseScene
 
         SceneType = Define.Scene.Login;
 
+        Managers.Instance.LoadGameData();
+
+        Managers.Sound.SetAudioVolume(Define.Sound.Bgm, Managers.Instance.data.bgmVolume);
+        Managers.Sound.SetAudioVolume(Define.Sound.Effect, Managers.Instance.data.eftVolume);
         Managers.Sound.Play("LoginBgm", Define.Sound.Bgm);
 
         Managers.Web.BaseUrl = "https://localhost:5001/api";

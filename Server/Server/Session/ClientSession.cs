@@ -118,7 +118,8 @@ namespace Server
 					return;
 
 				GameRoom room = MyPlayer.Room;
-				room.Push(room.LeaveGame, MyPlayer.Info.ObjectId);
+				if(room != null)
+					room.Push(room.LeaveGame, MyPlayer.Info.ObjectId);
 			});
 
 			SessionManager.Instance.Remove(this);

@@ -61,6 +61,7 @@ enum MsgId {
   S_BOSS_ITEM_CUT_SCENE = 54;
   C_END_BOSS_ITEM_CUT_SCENE = 55;
   S_END_BOSS_ITEM_CUT_SCENE = 56;
+  C_REQUEST_LEAVE_GAME = 57;
 }
 
 enum CreatureState {
@@ -364,12 +365,16 @@ message C_EndBossItemCutScene{
 message S_EndBossItemCutScene{
 
 }
+message C_RequestLeaveGame{
+  int32 objectId = 1;
+}
 message S_Ping {
 
 }
 message C_Pong {
 
 }
+
 message LobbyPlayer {
   LobbyPlayerInfo player = 1;
   repeated LobbyPlayerItemInfo item = 2;
