@@ -33,10 +33,10 @@ public class SoundManager
 
     public void Clear()
     {
-        foreach (AudioSource audioSource in _audioSources)
+        for(int i = 1; i < (int)Define.Sound.MaxCount; i++)
         {
-            audioSource.clip = null;
-            audioSource.Stop();
+            _audioSources[i].clip = null;
+            _audioSources[i].Stop();
         }
         _audioClips.Clear();
     }
@@ -55,12 +55,7 @@ public class SoundManager
 		if (type == Define.Sound.Bgm)
 		{
 			AudioSource audioSource = _audioSources[(int)Define.Sound.Bgm];
-			if (audioSource.isPlaying)
-				audioSource.Stop();
-
-			audioSource.pitch = pitch;
-			audioSource.clip = audioClip;
-			audioSource.Play();
+            Managers.Instance.BgmSoundChange(audioSource, audioClip, pitch, 1);
 		}
 		else
 		{

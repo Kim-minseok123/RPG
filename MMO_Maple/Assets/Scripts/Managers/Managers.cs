@@ -98,4 +98,39 @@ public class Managers : MonoBehaviour
         }
         Network._session.Disconnect();
     }
+    public void BgmSoundChange(AudioSource audioSource, AudioClip newClip, float pitch = 1.0f, float fadeTime = 1.0f)
+    {
+        StartCoroutine(FadeInNewBGM(audioSource, newClip, pitch, fadeTime));
+    }
+    IEnumerator FadeOutOldBGM(AudioSource audioSource, float fadeTime = 1.0f)
+    {
+        float startVolume = audioSource.volume;
+
+        for (float t = 0; t < fadeTime; t += Time.deltaTime)
+        {
+            audioSource.volume = startVolume * (1 - t / fadeTime);
+            yield return null;
+        }
+
+        audioSource.Stop();
+        audioSource.volume = startVolume;  // reset volume
+    }
+
+    IEnumerator FadeInNewBGM(AudioSource audioSource, AudioClip newClip, float pitch = 1.0f, float fadeTime = 1.0f)
+    {
+        yield return StartCoroutine(FadeOutOldBGM(audioSource, fadeTime));
+
+        audioSource.clip = newClip;
+        audioSource.pitch = pitch;
+        audioSource.Play();
+        audioSource.volume = 0;
+
+        for (float t = 0; t < fadeTime; t += Time.deltaTime)
+        {
+            audioSource.volume = t / fadeTime;
+            yield return null;
+        }
+
+        audioSource.volume = 1.0f;  
+    }
 }

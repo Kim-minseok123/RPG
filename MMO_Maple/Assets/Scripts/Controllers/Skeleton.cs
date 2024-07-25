@@ -72,13 +72,14 @@ public class Skeleton : MonsterController
         if (TargetObj == null || (TargetObj != null && Vector3.Distance(target, transform.position) >= 1.2f))
             _agent.SetDestination(target);
         State = CreatureState.Moving;
-
+        int cnt = 0;
         while (true)
         {
+            cnt++;
             if (TargetObj == null)
             {
-
-                if (Vector3.Distance(_agent.destination, transform.position) < 0.3f)
+                // || _agent.isStopped
+                if (Vector3.Distance(_agent.destination, transform.position) < 0.3f || (cnt >= 5 && _agent.velocity == Vector3.zero))
                 {
 #if UNITY_SERVER
                     C_StopMove moveStopPacket = new C_StopMove() { PosInfo = new PositionInfo() };
@@ -93,7 +94,6 @@ public class Skeleton : MonsterController
                     break;
 #endif
                 }
-
             }
             else
             {

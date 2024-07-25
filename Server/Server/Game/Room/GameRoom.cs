@@ -73,7 +73,7 @@ namespace Server.Game
 			}
 			if(mapId == 1)
 			{
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     SpawnMob();
                 }
@@ -271,7 +271,7 @@ namespace Server.Game
                 monster.curZone.Remove(monster);
 
                 monster.Room = null;
-				if (_monsters.Count <= 0 && RoomId == 1) SpawnMob();
+				if (_monsters.Count <= 3 && RoomId == 1) SpawnMob();
             }
 			else if (type == GameObjectType.Dropitem)
 			{

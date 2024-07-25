@@ -10,6 +10,8 @@ public class GameScene : BaseScene
         base.Init();
 
         SceneType = Define.Scene.Game;
+        Managers.Sound.Play("MainBgm", Define.Sound.Bgm);
+
         List<GameObject> list = new List<GameObject>();
         foreach (string name in loading)
         {

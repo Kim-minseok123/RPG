@@ -467,7 +467,6 @@ class PacketHandler
     {
         S_Message messagePacket = (S_Message)packet;
         UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
-        Debug.Log(messagePacket.Message);
         gameSceneUI.SetMessage(messagePacket.Message);
     }
     public static void S_ChangeMapHandler(PacketSession session, IMessage packet)

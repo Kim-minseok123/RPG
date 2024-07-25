@@ -14,6 +14,8 @@ public class LoginScene : BaseScene
 
         SceneType = Define.Scene.Login;
 
+        Managers.Sound.Play("LoginBgm", Define.Sound.Bgm);
+
         Managers.Web.BaseUrl = "https://localhost:5001/api";
 
         Screen.SetResolution(1920, 1080, false);

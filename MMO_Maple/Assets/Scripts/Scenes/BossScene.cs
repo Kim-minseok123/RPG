@@ -15,6 +15,7 @@ public class BossScene : BaseScene
     {
         SceneType = Define.Scene.Boss;
         PD.Play();
+        Managers.Sound.Play("BossBgm", Define.Sound.Bgm);
         List<GameObject> list = new List<GameObject>();
         foreach (string name in loading)
         {
