@@ -83781,6 +83781,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 1
     messageOptions: 0
+  - time: 0.6666667
+    functionName: SfxSoundPlay
+    data: DragonFire
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.4
     functionName: DamageSkill
     data: 

@@ -16,7 +16,7 @@ namespace Server
 	{
 		public int AccountDbId { get; private set; }
 		public List<LobbyPlayerInfo> LobbyPlayers { get; set; } = new List<LobbyPlayerInfo>();
-
+		public Dictionary<string, List<LobbyPlayerItemInfo>> LobbyPlayerItem = new Dictionary<string, List<LobbyPlayerItemInfo>>();
 		public void HandleLogin(C_Login loginPacket)
 		{
 			// 현재 플레이어가 로그인 상태에서만 로그인하는지 확인
@@ -84,7 +84,7 @@ namespace Server
                         }
                         // 메모리에도 들고 있다
                         LobbyPlayers.Add(lobbyPlayer);
-
+						LobbyPlayerItem.Add(LP.Player.Name, LP.Item.ToList());
 						// 패킷에 넣어준다
 						loginOk.Players.Add(LP);
 					}
@@ -225,7 +225,7 @@ namespace Server
 		public void HandleCreatePlayer(C_CreatePlayer createPacket)
 		{
 			// TODO : 이런 저런 보안 체크
-			if (ServerState != PlayerServerState.ServerStateLobby)
+			if (ServerState != PlayerServerState.ServerStateLobby || LobbyPlayers.Count >= 3)
 				return;
 
 			using (AppDbContext db = new AppDbContext())
@@ -307,6 +307,8 @@ namespace Server
 					newPlayer.Player.Item.Add(lobbyPlayerItemInfo);
 					newPlayer.Player.Player = lobbyPlayerInfo;
 					Send(newPlayer);
+					//메모리에도 들고있다.
+					LobbyPlayerItem.Add(lobbyPlayer.Name, newPlayer.Player.Item.ToList());
 				}
 			}
 		}

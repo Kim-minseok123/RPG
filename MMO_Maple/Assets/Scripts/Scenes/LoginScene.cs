@@ -12,22 +12,11 @@ public class LoginScene : BaseScene
     {
         base.Init();
 
+        Screen.SetResolution(1920, 1080, false);
+
         SceneType = Define.Scene.Login;
 
-        Managers.Instance.LoadGameData();
-
-        Managers.Sound.SetAudioVolume(Define.Sound.Bgm, Managers.Instance.data.bgmVolume);
-        Managers.Sound.SetAudioVolume(Define.Sound.Effect, Managers.Instance.data.eftVolume);
-        Managers.Sound.Play("LoginBgm", Define.Sound.Bgm);
-
-        Managers.Web.BaseUrl = "https://localhost:5001/api";
-
-        Screen.SetResolution(1920, 1080, false);
-#if UNITY_SERVER
-        Managers.Network.Master = true;
-        LoginMaster();
-#endif
-        Managers.UI.ShowSceneUI<UI_TitleScene>();
+        StartCoroutine(Loading());
     }
 
     public override void Clear()
@@ -83,4 +72,34 @@ public class LoginScene : BaseScene
         });
     }
 #endif
+    IEnumerator Loading()
+    {
+        List<string> path = new List<string>();
+        path.Add("Sounds/LoginBgm");
+        path.Add("Sounds/MainBgm");
+        path.Add("Sounds/BossBgm");
+        foreach (string s in path)
+        {
+            ResourceRequest request = Resources.LoadAsync<AudioClip>(s);
+            while (!request.isDone)
+            {
+                yield return null;
+            }
+            AudioClip loadedAudioClip = request.asset as AudioClip;
+            Managers.Sound.SetBgmLoading(s, loadedAudioClip);
+        }
+        Managers.Instance.LoadGameData();
+
+        Managers.Sound.SetAudioVolume(Define.Sound.Bgm, Managers.Instance.data.bgmVolume);
+        Managers.Sound.SetAudioVolume(Define.Sound.Effect, Managers.Instance.data.eftVolume);
+        Managers.Sound.Play("LoginBgm", Define.Sound.Bgm);
+
+        Managers.Web.BaseUrl = "https://localhost:5001/api";
+
+#if UNITY_SERVER
+        Managers.Network.Master = true;
+        LoginMaster();
+#endif
+        Managers.UI.ShowSceneUI<UI_TitleScene>();
+    }
 }

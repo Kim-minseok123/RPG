@@ -32,7 +32,7 @@ public class UI_InvenSlot : UI_Base
             if (e.clickCount < 2) return;
             if (_icon.color.a == 0f)
                 return;
-
+            Managers.Sound.Play("ItemSwap");
             if (itemData == null)
                 return;
             

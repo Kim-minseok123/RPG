@@ -71,6 +71,7 @@ public class UI_PlayerSellInfo : UI_Base
                             Managers.UI.ShowPopupUI<UI_Confirm_Popup>().Setting("판매할 개수보다 가지고 있는 아이템의 개수가 적습니다.");
                             return;
                         }
+                        Managers.Sound.Play("ItemGet");
                         C_RemoveItem removeItemPacket = new C_RemoveItem();
                         removeItemPacket.TemplateId = itemData.id;
                         removeItemPacket.ItemDbId = itemDbId;
@@ -97,6 +98,7 @@ public class UI_PlayerSellInfo : UI_Base
                         if (count != -1) return;
                         Item item = Managers.Inven.Get(itemDbId);
                         if (item == null) return;
+                        Managers.Sound.Play("ItemGet");
                         C_RemoveItem removeItemPacket = new C_RemoveItem();
                         removeItemPacket.TemplateId = itemData.id;
                         removeItemPacket.ItemDbId = itemDbId;
@@ -144,6 +146,7 @@ public class UI_PlayerSellInfo : UI_Base
                     if (count != -1) return;
                     Item item = Managers.Inven.Get(itemDbId);
                     if (item == null) return;
+                    Managers.Sound.Play("ItemGet");
                     C_RemoveItem removeItemPacket = new C_RemoveItem();
                     removeItemPacket.TemplateId = itemData.id;
                     removeItemPacket.ItemDbId = itemDbId;

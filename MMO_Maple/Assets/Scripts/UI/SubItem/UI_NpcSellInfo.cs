@@ -65,6 +65,7 @@ public class UI_NpcSellInfo : UI_Base
                             Managers.UI.ShowPopupUI<UI_Confirm_Popup>().Setting("골드가 부족합니다.");
                             return;
                         }
+                        Managers.Sound.Play("ItemGet");
                         C_AddItem addItemPacket = new C_AddItem();
                         addItemPacket.TemplateId = itemData.id;
                         addItemPacket.Count = count;
@@ -92,6 +93,7 @@ public class UI_NpcSellInfo : UI_Base
                             Managers.UI.ShowPopupUI<UI_Confirm_Popup>().Setting("골드가 부족합니다.");
                             return;
                         }
+                        Managers.Sound.Play("ItemGet");
                         C_AddItem addItemPacket = new C_AddItem();
                         addItemPacket.TemplateId = itemData.id;
                         addItemPacket.Count = 1;
@@ -142,6 +144,7 @@ public class UI_NpcSellInfo : UI_Base
                         Managers.UI.ShowPopupUI<UI_Confirm_Popup>().Setting("골드가 부족합니다.");
                         return;
                     }
+                    Managers.Sound.Play("ItemGet");
                     C_AddItem addItemPacket = new C_AddItem();
                     addItemPacket.TemplateId = itemData.id;
                     addItemPacket.Count = 1;

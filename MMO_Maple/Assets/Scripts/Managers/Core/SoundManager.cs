@@ -6,6 +6,7 @@ public class SoundManager
 {
     AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
     Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
+    Dictionary<string, AudioClip> _audioBgms = new Dictionary<string, AudioClip>();
 
     // MP3 Player   -> AudioSource
     // MP3 음원     -> AudioClip
@@ -41,13 +42,13 @@ public class SoundManager
         _audioClips.Clear();
     }
 
-    public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
+    public void Play(string path, Define.Sound type = Define.Sound.Effect, AudioSource objectAudio = null ,float pitch = 1.0f)
     {
         AudioClip audioClip = GetOrAddAudioClip(path, type);
-        Play(audioClip, type, pitch);
+        Play(audioClip, type, objectAudio, pitch);
     }
 
-	public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
+	public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, AudioSource objectAudio = null, float pitch = 1.0f)
 	{
         if (audioClip == null)
             return;
@@ -55,13 +56,23 @@ public class SoundManager
 		if (type == Define.Sound.Bgm)
 		{
 			AudioSource audioSource = _audioSources[(int)Define.Sound.Bgm];
+            if (audioSource.clip != null && audioSource.clip.name.Equals(audioClip.name) == true)
+                return;
             Managers.Instance.BgmSoundChange(audioSource, audioClip, pitch, 1);
 		}
 		else
 		{
-			AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
-			audioSource.pitch = pitch;
-			audioSource.PlayOneShot(audioClip);
+            if(objectAudio == null)
+            {
+                AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
+                audioSource.pitch = pitch;
+                audioSource.PlayOneShot(audioClip);
+            }
+			else
+            {
+                objectAudio.pitch = pitch;
+                objectAudio.PlayOneShot(audioClip);
+            }
 		}
 	}
 
@@ -74,8 +85,12 @@ public class SoundManager
 
 		if (type == Define.Sound.Bgm)
 		{
-			audioClip = Managers.Resource.Load<AudioClip>(path);
-		}
+            if (_audioBgms.TryGetValue(path, out audioClip) == false)
+            {
+                audioClip = Managers.Resource.Load<AudioClip>(path);
+                _audioBgms.Add(path, audioClip);
+            }
+        }
 		else
 		{
 			if (_audioClips.TryGetValue(path, out audioClip) == false)
@@ -105,5 +120,10 @@ public class SoundManager
         }
         if (audioSource != null) 
             audioSource.volume = volume;
+    }
+    public void SetBgmLoading(string path, AudioClip audioClip)
+    {
+        if(_audioBgms.ContainsKey(path) == false)
+            _audioBgms.Add(path, audioClip);
     }
 }

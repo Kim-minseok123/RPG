@@ -22,7 +22,6 @@ public class MonsterController : CreatureController
         hpBar.gameObject.SetActive(true);
         _anim.SetBool("Death", false);
         State = CreatureState.Idle;
-
 #if UNITY_SERVER
         PrevPos = transform.position;
         StopCoroutine(CheckPosInfo());

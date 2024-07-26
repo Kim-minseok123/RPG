@@ -31,7 +31,7 @@ class PacketHandler
 	{
 		S_Login loginPacket = (S_Login)packet;
 		Debug.Log($"LoginOk({loginPacket.LoginOk})");
-
+        Managers.Network.LobbyPlayerInfos.Clear();
         var lobbyPlayers = loginPacket.Players;
 
         foreach (var player in lobbyPlayers)
@@ -278,7 +278,6 @@ class PacketHandler
                 gameSceneUI.InvenUI.RefreshUI();
                 gameSceneUI.StatUI.RefreshUI();
                 gameSceneUI.EquipUI.RefreshUI();
-
                 
             }
             pc.EquipItem(equipItem.TemplateId);
@@ -478,6 +477,7 @@ class PacketHandler
         switch (changeMapPacket.MapName)
         {
             case "Lobby":
+                Managers.Sound.Play("LoginBgm", Define.Sound.Bgm);
                 TransitionManager.Instance().Transition(Define.Scene.Lobby, ts, 0);
                 break;
             case "Game":

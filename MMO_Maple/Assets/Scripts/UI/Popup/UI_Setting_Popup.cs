@@ -58,8 +58,6 @@ public class UI_Setting_Popup : MonoBehaviour
             C_RequestLeaveGame leaveGame = new C_RequestLeaveGame();
             leaveGame.ObjectId = Managers.Object.MyPlayer.Id;
             Managers.Network.Send(leaveGame);
-            TransitionSettings ts = Managers.Resource.Load<TransitionSettings>("Trans/LinearWipe");
-            TransitionManager.Instance().Transition(Define.Scene.Lobby, ts, 0);
         }
         else
         {

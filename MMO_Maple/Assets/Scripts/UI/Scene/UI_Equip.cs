@@ -139,27 +139,35 @@ public class UI_Equip : UI_Base
             }, Define.UIEvent.PointerExit);
         }
         GetImage((int)Images.HelmetIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; 
+            Managers.Sound.Play("ItemSwap");
             if (Managers.Object.MyPlayer.State != CreatureState.Idle) return;
             NonEquipItem(0); });
         GetImage((int)Images.ArmorIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return;
+            Managers.Sound.Play("ItemSwap");
             if (Managers.Object.MyPlayer.State != CreatureState.Idle) return;
             NonEquipItem(1); });
         GetImage((int)Images.ShieldIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; 
+            Managers.Sound.Play("ItemSwap");
             if (Managers.Object.MyPlayer.State != CreatureState.Idle) return;
             NonEquipItem(2); });
         GetImage((int)Images.BootsIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; 
+            Managers.Sound.Play("ItemSwap");
             if (Managers.Object.MyPlayer.State != CreatureState.Idle) return;
             NonEquipItem(3); });
         GetImage((int)Images.CapeIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; 
+            Managers.Sound.Play("ItemSwap");
             if (Managers.Object.MyPlayer.State != CreatureState.Idle) return;
             NonEquipItem(4); });
         GetImage((int)Images.WeaponIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; 
+            Managers.Sound.Play("ItemSwap");
             if (Managers.Object.MyPlayer.State != CreatureState.Idle) return;
             NonEquipItem(5); });
         GetImage((int)Images.GlovesIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; 
+            Managers.Sound.Play("ItemSwap");
             if (Managers.Object.MyPlayer.State != CreatureState.Idle) return;
             NonEquipItem(6); });
         GetImage((int)Images.AssistanceWeaponIcon).gameObject.BindEvent((e) => { if (e.clickCount < 2) return; 
+            Managers.Sound.Play("ItemSwap");
             if (Managers.Object.MyPlayer.State != CreatureState.Idle) return;
             NonEquipItem(7); });
 

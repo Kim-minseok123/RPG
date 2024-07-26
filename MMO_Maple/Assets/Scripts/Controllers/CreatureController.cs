@@ -39,4 +39,5 @@ public class CreatureController : BaseController
         yield return new WaitForSeconds(time);
         Managers.Resource.Destroy(effect);
     }
+
 }

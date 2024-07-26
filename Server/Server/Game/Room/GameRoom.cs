@@ -563,8 +563,48 @@ namespace Server.Game
 		}
 		public void HandleLeaveGame(Player player, C_RequestLeaveGame leaveGamePacket)
 		{
-			if(player != null)
+			List<LobbyPlayerInfo> lobbyPlayers = player.Session.LobbyPlayers;
+            
+			S_Login loginOk = new S_Login() { LoginOk = 1 };
+
+            foreach (var curPlayer in lobbyPlayers)
+			{
+				LobbyPlayer lp = new LobbyPlayer();
+                if (curPlayer.Name.Equals(player.Info.Name))
+				{
+                    curPlayer.Level = player.Stat.Level;
+					curPlayer.ClassType = (int)player.classType;
+					foreach (var item in player.Inven.EquipItems)
+					{
+						if (item == null || item.Equipped == false) continue;
+                        LobbyPlayerItemInfo itemInfo = new LobbyPlayerItemInfo();
+                        itemInfo.TemplateId = item.TemplateId;
+                        itemInfo.Slot = item.Slot;
+						lp.Item.Add(itemInfo);
+                    }
+                }
+				else
+				{
+					player.Session.LobbyPlayerItem.TryGetValue(curPlayer.Name, out List<LobbyPlayerItemInfo> itemList);
+					foreach (var item in itemList)
+					{
+						lp.Item.Add(item);
+					}
+
+                }
+                lp.Player = curPlayer;
+				loginOk.Players.Add(lp);
+            }
+			player.Session.LobbyPlayers = lobbyPlayers;
+
+			player.Session.Send(loginOk);
+			player.Session.ServerState = PlayerServerState.ServerStateLobby;
+            if (player != null)
 				LeaveGame(leaveGamePacket.ObjectId);
+
+			S_ChangeMap changeMap = new S_ChangeMap();
+			changeMap.MapName = "Lobby";
+			player.Session.Send(changeMap);
 		}
     }
 }
