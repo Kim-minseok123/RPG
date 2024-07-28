@@ -79,7 +79,7 @@ public class Skeleton : MonsterController
             if (TargetObj == null)
             {
                 // || _agent.isStopped
-                if (Vector3.Distance(_agent.destination, transform.position) < 0.3f || (cnt >= 5 && _agent.velocity == Vector3.zero))
+                if (Vector3.Distance(_agent.destination, transform.position) < 0.3f || (cnt >= 100 && _agent.velocity.sqrMagnitude <= 0.1 * 0.1))
                 {
 #if UNITY_SERVER
                     C_StopMove moveStopPacket = new C_StopMove() { PosInfo = new PositionInfo() };

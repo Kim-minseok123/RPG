@@ -160,6 +160,11 @@ public class PlayerController : CreatureController
     public override void OnDead(GameObject attacker)
     {
         State = CreatureState.Dead;
+        AudioListener audioListener = GetComponent<AudioListener>();
+        if(audioListener != null)
+        {
+            audioListener.enabled = false;
+        }
         _anim.SetBool("Death", true);
         FinalAttacker = attacker;
         StartCoroutine(DestoryObj(3.5f));

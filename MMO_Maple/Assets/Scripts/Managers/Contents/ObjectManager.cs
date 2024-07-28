@@ -45,6 +45,11 @@ public class ObjectManager
                     UI_GameScene ui = Managers.UI.SceneUI as UI_GameScene;
                     ui.RefreshUI();
                 }
+                MyPlayer.GetComponent<AudioListener>().enabled = true;
+                if (Camera.main.GetComponent<AudioListener>() != null)
+                {
+                    Camera.main.GetComponent<AudioListener>().enabled = false;
+                }
             }
             else
             {
@@ -148,5 +153,9 @@ public class ObjectManager
             Managers.Resource.Destroy(obj);
         _objects.Clear();
         MyPlayer = null;
+        if (Camera.main.GetComponent<AudioListener>() != null)
+        {
+            Camera.main.GetComponent<AudioListener>().enabled = true;
+        }
     }
 }

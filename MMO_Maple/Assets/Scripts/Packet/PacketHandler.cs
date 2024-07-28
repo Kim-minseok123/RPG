@@ -196,7 +196,15 @@ class PacketHandler
             return;
         bc.OnDead(attacker);
         if(bc.Id == Managers.Object.MyPlayer.Id)
+        {
+            if (Camera.main.GetComponent<AudioListener>() != null)
+            {
+                Camera.main.GetComponent<AudioListener>().enabled = true;
+            }
+            Managers.Object.MyPlayer.GetComponent<AudioListener>().enabled = false;
             Managers.Object.MyPlayer = null;
+        }
+           
         if (bc.GetComponent<PlayerController>() != null)
             Managers.Object.Remove(bc.Id, false);
     }

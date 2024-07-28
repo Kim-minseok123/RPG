@@ -644,6 +644,7 @@ GameObject:
   - component: {fileID: 4657663149315412706}
   - component: {fileID: 5424639425917255140}
   - component: {fileID: -7172948266473541704}
+  - component: {fileID: 2877430072795313882}
   - component: {fileID: 3942452236228599387}
   m_Layer: 2
   m_Name: MyPlayer
@@ -875,7 +876,7 @@ AudioSource:
   MinDistance: 0.5
   MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 2
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -957,6 +958,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &2877430072795313882
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253086935255656}
+  m_Enabled: 0
 --- !u!114 &3942452236228599387
 MonoBehaviour:
   m_ObjectHideFlags: 0
