@@ -39,7 +39,7 @@ public class RedDragon : MonsterController
             else
             {
                
-                // Ã¼·Â¹Ù µî ÀÛ¾÷
+                // Ã¼ï¿½Â¹ï¿½ ï¿½ï¿½ ï¿½Û¾ï¿½
                 Hp = hp;
                 var value = Mathf.Max(0f, (float)Hp / MaxHp);
                 if (value == 0f)
@@ -110,13 +110,13 @@ public class RedDragon : MonsterController
     {
         if (spawnPoint == null)
             return;
-        StartCoroutine(MakeMeteor(spawnPoint + new Vector3(0, 2.5f, 0)));
+        StartCoroutine(MakeMeteor(spawnPoint));
     }
     public IEnumerator MakeMeteor(Vector3 spawnPoint)
     {
         yield return StartCoroutine(EffectInst("Effect/HitUIPoint", spawnPoint + new Vector3(0, 0.1f, 0), 1f));
         GameObject go = Managers.Resource.Instantiate("Effect/MeteorEffect");
-        go.transform.position = spawnPoint;
+        go.transform.position = spawnPoint + new Vector3(0, 1.5f, 0);
         yield return new WaitForSeconds(2);
         Managers.Resource.Destroy(go);
     }

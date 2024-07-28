@@ -73,7 +73,7 @@ namespace Server.Game
 			}
 			if(mapId == 1)
 			{
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     SpawnMob();
                 }
@@ -153,7 +153,7 @@ namespace Server.Game
 					player.curZone = GetZone(player.Pos);
 					if (player.Session.Master == true)
 					{
-						player.Vision.SetVisionCell(100);
+						player.Vision.SetVisionCell(1000);
                     }
 					else
                         player.Vision.SetVisionCell(VisionCells);

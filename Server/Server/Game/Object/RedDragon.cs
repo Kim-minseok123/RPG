@@ -280,7 +280,7 @@ namespace Server.Game
                 };
                 if (Room == null) return;
                 Room?.Broadcast(Pos, makeMeteorObject);
-                Room?.PushAfter(1300, meteor.Update);
+                Room?.PushAfter(1000, meteor.Update);
             }
             else if(targetObject != null && positions != null)
             {
@@ -297,7 +297,7 @@ namespace Server.Game
                 };
                 if (Room == null) return;
                 Room?.Broadcast(Pos, makeMeteorObject);
-                Room?.PushAfter(2500, meteor.Update);
+                Room?.PushAfter(1000, meteor.Update);
             }
         }
         public override void OnDead(GameObject attacker)
