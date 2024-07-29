@@ -26,7 +26,7 @@ namespace Server
 
 		static void GameLogicTask()
 		{
-            string relativePath = "../../../../../MMO_Maple/Builds/Win64/DedicatedServer/DedicatedServer.exe";
+            string relativePath = "../../../../../RPG/Builds/Win64/DedicatedServer/DedicatedServer.exe";
             string fullPath = Path.GetFullPath(relativePath, Environment.CurrentDirectory);
             Thread.Sleep(5000);
             StartExternalProgram(fullPath);

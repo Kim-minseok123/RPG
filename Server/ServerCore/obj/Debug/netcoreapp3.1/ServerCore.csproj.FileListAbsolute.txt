@@ -84,3 +84,16 @@ C:\Users\chaos\바탕 화면\Git\MMO_Maple\Server\ServerCore\obj\Debug\netcoreap
 C:\Users\chaos\바탕 화면\Git\MMO_Maple\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.dll
 C:\Users\chaos\바탕 화면\Git\MMO_Maple\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.pdb
 C:\Users\chaos\바탕 화면\Git\MMO_Maple\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.genruntimeconfig.cache
+E:\GitHub\RPG\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.deps.json
+E:\GitHub\RPG\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.runtimeconfig.json
+E:\GitHub\RPG\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.runtimeconfig.dev.json
+E:\GitHub\RPG\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.dll
+E:\GitHub\RPG\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.pdb
+E:\GitHub\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.csproj.AssemblyReference.cache
+E:\GitHub\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.GeneratedMSBuildEditorConfig.editorconfig
+E:\GitHub\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.AssemblyInfoInputs.cache
+E:\GitHub\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.AssemblyInfo.cs
+E:\GitHub\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.csproj.CoreCompileInputs.cache
+E:\GitHub\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.dll
+E:\GitHub\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.pdb
+E:\GitHub\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.genruntimeconfig.cache

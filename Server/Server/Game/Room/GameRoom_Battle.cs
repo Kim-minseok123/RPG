@@ -57,14 +57,14 @@ namespace Server.Game
         {
 			Monster monster = null;
 			_monsters.TryGetValue(stopMovePacket.ObjectId, out monster);
-			if (monster == null) return;
+            if (monster == null) { Console.WriteLine("몬스터가 없음"); return; }
             monster.Info.PosInfo.State = stopMovePacket.PosInfo.State;
             monster.Pos = stopMovePacket.PosInfo.Pos;
             monster.Ratate = stopMovePacket.PosInfo.Rotate;
 			monster.isMoving = false;
             monster._nextSearchTick = Environment.TickCount64 + 7000;
             monster.DestPos = null;
-            Console.WriteLine(monster.Pos.PosX + " " + monster.Pos.PosZ);
+            Console.WriteLine(monster.Id % 10 + " is receive Stop Pacekt");
             S_StopMove resStopMovePacket = new S_StopMove();
             resStopMovePacket.ObjectId = monster.Info.ObjectId;
             resStopMovePacket.PosOk = true;
@@ -101,7 +101,7 @@ namespace Server.Game
             {
                 Monster monster = null;
                 _monsters.TryGetValue(posPacket.ObjectId, out monster);
-                if (monster == null) return;
+                if (monster == null) { Console.WriteLine("몬스터가 없음"); return; }
                 Positions monsterPos = monster.Pos;
                 if (monsterPos.PosX != posPacket.CurPosInfo.Pos.PosX || monsterPos.PosY != posPacket.CurPosInfo.Pos.PosY || monsterPos.PosZ != posPacket.CurPosInfo.Pos.PosZ)
                 {

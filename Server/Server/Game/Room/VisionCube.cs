@@ -26,7 +26,7 @@ namespace Server.Game.Room
 
             HashSet<GameObject> objects = new HashSet<GameObject>();
 
-            List<Zone> zones = Owner.Room.GetAdjacentZones(Owner.Pos);
+            List<Zone> zones = Owner.Room.GetAdjacentZones(Owner.Pos, Owner.Session.Master);
 
             Positions pos = Owner.Pos;
             foreach (Zone zone in zones)

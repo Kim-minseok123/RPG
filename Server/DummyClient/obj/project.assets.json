@@ -6141,19 +6141,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\chaos\\.nuget\\packages\\": {}
+    "C:\\Users\\chaos\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\chaos\\바탕 화면\\Git\\MMO_Maple\\Server\\DummyClient\\DummyClient.csproj",
+      "projectUniqueName": "E:\\GitHub\\RPG\\Server\\DummyClient\\DummyClient.csproj",
       "projectName": "DummyClient",
-      "projectPath": "C:\\Users\\chaos\\바탕 화면\\Git\\MMO_Maple\\Server\\DummyClient\\DummyClient.csproj",
+      "projectPath": "E:\\GitHub\\RPG\\Server\\DummyClient\\DummyClient.csproj",
       "packagesPath": "C:\\Users\\chaos\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\chaos\\바탕 화면\\Git\\MMO_Maple\\Server\\DummyClient\\obj\\",
+      "outputPath": "E:\\GitHub\\RPG\\Server\\DummyClient\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\chaos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6161,15 +6166,14 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\chaos\\바탕 화면\\Git\\MMO_Maple\\Server\\ServerCore\\ServerCore.csproj": {
-              "projectPath": "C:\\Users\\chaos\\바탕 화면\\Git\\MMO_Maple\\Server\\ServerCore\\ServerCore.csproj"
+            "E:\\GitHub\\RPG\\Server\\ServerCore\\ServerCore.csproj": {
+              "projectPath": "E:\\GitHub\\RPG\\Server\\ServerCore\\ServerCore.csproj"
             }
           }
         }
@@ -6178,11 +6182,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -6222,7 +6221,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

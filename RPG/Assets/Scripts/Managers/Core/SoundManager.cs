@@ -8,10 +8,6 @@ public class SoundManager
     Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
     Dictionary<string, AudioClip> _audioBgms = new Dictionary<string, AudioClip>();
 
-    // MP3 Player   -> AudioSource
-    // MP3 음원     -> AudioClip
-    // 관객(귀)     -> AudioListener
-
     public void Init()
     {
         GameObject root = GameObject.Find("@Sound");

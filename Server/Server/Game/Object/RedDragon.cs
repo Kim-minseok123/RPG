@@ -26,7 +26,6 @@ namespace Server.Game
     }
     public class DamageCompare : IComparer<TargetInfo>
     {
-        // 문자열의 길이에 따라 오름차순
         public int Compare(TargetInfo x, TargetInfo y)
         {
             return y.totalDamage - x.totalDamage;

@@ -73,7 +73,7 @@ namespace Server.Game
 			}
 			if(mapId == 1)
 			{
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 1; i++)
                 {
                     SpawnMob();
                 }
@@ -153,7 +153,7 @@ namespace Server.Game
 					player.curZone = GetZone(player.Pos);
 					if (player.Session.Master == true)
 					{
-						player.Vision.SetVisionCell(1000);
+						player.Vision.SetVisionCell(100);
                     }
 					else
                         player.Vision.SetVisionCell(VisionCells);
@@ -326,7 +326,7 @@ namespace Server.Game
             List<Zone> zones = GetAdjacentZones(pos);
             return zones.SelectMany(z => z.Players).ToList();
         }
-        public List<Zone> GetAdjacentZones(Positions pos)
+        public List<Zone> GetAdjacentZones(Positions pos, bool isMaster = false)
         {
             HashSet<Zone> zones = new HashSet<Zone>();
 
@@ -334,7 +334,13 @@ namespace Server.Game
             int minZ = (int)(pos.PosZ - VisionCells);
             int maxX = (int)(pos.PosX + VisionCells);
             int minX = (int)(pos.PosX - VisionCells);
-
+			if (isMaster == true)
+			{
+                maxZ = (int)(pos.PosZ + 100);
+                minZ = (int)(pos.PosZ - 100);
+                maxX = (int)(pos.PosX + 100);
+                minX = (int)(pos.PosX - 100);
+            }
             int leftTopIndexY = (int)((mapMaxZ - maxZ) / ZoneCells);
             int leftTopIndexX = (int)((minX - mapMinX) / ZoneCells);
             int rightBotIndexY = (int)((mapMaxZ - minZ) / ZoneCells);

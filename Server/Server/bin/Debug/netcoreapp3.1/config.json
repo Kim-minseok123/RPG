@@ -1,4 +1,4 @@
 {
-	"dataPath": "../../../../../MMO_Maple/Assets/Resources/Data",
+	"dataPath": "../../../../../RPG/Assets/Resources/Data",
 	"connectionString": "Data Source=(localdb)\\ProjectModels;Initial Catalog=GameDB;"
 }

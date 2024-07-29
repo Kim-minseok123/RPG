@@ -52,7 +52,6 @@ public class Skeleton : MonsterController
     public override IEnumerator OnMove(Vector3 target)
     {
         State = CreatureState.Moving;
-
         if (State == CreatureState.Dead) 
         {
 #if UNITY_SERVER
@@ -79,7 +78,7 @@ public class Skeleton : MonsterController
             if (TargetObj == null)
             {
                 // || _agent.isStopped
-                if (Vector3.Distance(_agent.destination, transform.position) < 0.3f || (cnt >= 100 && _agent.velocity.sqrMagnitude <= 0.1 * 0.1))
+                if (!_agent.pathPending && _agent.remainingDistance < 0.3f)
                 {
 #if UNITY_SERVER
                     C_StopMove moveStopPacket = new C_StopMove() { PosInfo = new PositionInfo() };
@@ -89,6 +88,7 @@ public class Skeleton : MonsterController
                     moveStopPacket.IsMonster = true;
                     moveStopPacket.ObjectId = Id;
                     Managers.Network.Send(moveStopPacket);
+                    Debug.Log(Id % 10 + " is send StopPacket");
                     break;
 #else
                     break;
@@ -97,7 +97,7 @@ public class Skeleton : MonsterController
             }
             else
             {
-                if (Vector3.Distance(_agent.destination, transform.position) < 1.2f)
+                if (!_agent.pathPending &&  _agent.remainingDistance < 1.2f)
                 {
 #if UNITY_SERVER
                     transform.LookAt(TargetObj.transform);
