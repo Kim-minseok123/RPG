@@ -26,90 +26,106 @@ namespace Server
 				Send(banPacket);
 				return;
 			}
-			// 로그인 토큰 확인
-			using (SharedDbContext db = new SharedDbContext())
-			{
-				TokenDb findToken = db.Tokens.Where(a => a.AccountDbId == loginPacket.AccountId).FirstOrDefault();
-				if(findToken == null)
-				{
-                    S_Banish banPacket = new S_Banish();
-                    Send(banPacket);
+            //더미 클라이언트 테스트용
+            {
+                if (loginPacket.AccountId >= 1000)
+                {
+                    Console.WriteLine(loginPacket.AccountId);
+                    S_Login loginOk = new S_Login() { LoginOk = 1 };
+                    Send(loginOk);
+                    // 로비로 이동
+                    ServerState = PlayerServerState.ServerStateLobby;
                     return;
                 }
-				else
-				{
-					if(DateTime.Compare(DateTime.UtcNow, findToken.Expired) > 0)
-					{
+            }
+            //일반 유저용
+            {
+                // 로그인 토큰 확인
+                using (SharedDbContext db = new SharedDbContext())
+                {
+                    TokenDb findToken = db.Tokens.Where(a => a.AccountDbId == loginPacket.AccountId).FirstOrDefault();
+                    if (findToken == null)
+                    {
                         S_Banish banPacket = new S_Banish();
                         Send(banPacket);
                         return;
                     }
-				}
-			}
-
-			LobbyPlayers.Clear();
-
-			using (AppDbContext db = new AppDbContext())
-			{
-				// 이 서버에 계정이 있는지 확인
-				AccountDb findAccount = db.Accounts
-					.Include(a => a.Players)
-					.ThenInclude(p => p.Items)
-					.Where(a => a.AccountLoginId == loginPacket.AccountId).FirstOrDefault();
-				// 계정이 있다.
-				if (findAccount != null)
-				{
-					// AccountDbId 메모리에 기억
-					AccountDbId = findAccount.AccountDbId;
-
-					S_Login loginOk = new S_Login() { LoginOk = 1 };
-					foreach (PlayerDb playerDb in findAccount.Players)
-					{
-						LobbyPlayerInfo lobbyPlayer = new LobbyPlayerInfo()
-						{
-							PlayerDbId = playerDb.PlayerDbId,
-							Name = playerDb.PlayerName,
-							Level = playerDb.Level,
-							ClassType = (int)playerDb.PlayerClass,
-						};
-						LobbyPlayer LP = new LobbyPlayer();
-						LP.Player = lobbyPlayer;
-						foreach (var item in playerDb.Items)
-						{
-							if (item.Equipped == false) continue;
-							LobbyPlayerItemInfo itemInfo = new LobbyPlayerItemInfo();
-							itemInfo.TemplateId = item.TemplateId;
-							itemInfo.Slot = item.Slot;
-							LP.Item.Add(itemInfo);
+                    else
+                    {
+                        if (DateTime.Compare(DateTime.UtcNow, findToken.Expired) > 0)
+                        {
+                            S_Banish banPacket = new S_Banish();
+                            Send(banPacket);
+                            return;
                         }
-                        // 메모리에도 들고 있다
-                        LobbyPlayers.Add(lobbyPlayer);
-						LobbyPlayerItem.Add(LP.Player.Name, LP.Item.ToList());
-						// 패킷에 넣어준다
-						loginOk.Players.Add(LP);
-					}
+                    }
+                }
 
-					Send(loginOk);
-					// 로비로 이동
-					ServerState = PlayerServerState.ServerStateLobby;
-				}
-				else
-				{
-					AccountDb newAccount = new AccountDb() { AccountLoginId = loginPacket.AccountId };
-					db.Accounts.Add(newAccount);
-					bool success = db.SaveChangesEx();
-					if (success == false)
-						return;
+                LobbyPlayers.Clear();
 
-					// AccountDbId 메모리에 기억
-					AccountDbId = newAccount.AccountDbId;
+                using (AppDbContext db = new AppDbContext())
+                {
+                    // 이 서버에 계정이 있는지 확인
+                    AccountDb findAccount = db.Accounts
+                        .Include(a => a.Players)
+                        .ThenInclude(p => p.Items)
+                        .Where(a => a.AccountLoginId == loginPacket.AccountId).FirstOrDefault();
+                    // 계정이 있다.
+                    if (findAccount != null)
+                    {
+                        // AccountDbId 메모리에 기억
+                        AccountDbId = findAccount.AccountDbId;
 
-					S_Login loginOk = new S_Login() { LoginOk = 1 };
-					Send(loginOk);
-					// 로비로 이동
-					ServerState = PlayerServerState.ServerStateLobby;
-				}
-			}
+                        S_Login loginOk = new S_Login() { LoginOk = 1 };
+                        foreach (PlayerDb playerDb in findAccount.Players)
+                        {
+                            LobbyPlayerInfo lobbyPlayer = new LobbyPlayerInfo()
+                            {
+                                PlayerDbId = playerDb.PlayerDbId,
+                                Name = playerDb.PlayerName,
+                                Level = playerDb.Level,
+                                ClassType = (int)playerDb.PlayerClass,
+                            };
+                            LobbyPlayer LP = new LobbyPlayer();
+                            LP.Player = lobbyPlayer;
+                            foreach (var item in playerDb.Items)
+                            {
+                                if (item.Equipped == false) continue;
+                                LobbyPlayerItemInfo itemInfo = new LobbyPlayerItemInfo();
+                                itemInfo.TemplateId = item.TemplateId;
+                                itemInfo.Slot = item.Slot;
+                                LP.Item.Add(itemInfo);
+                            }
+                            // 메모리에도 들고 있다
+                            LobbyPlayers.Add(lobbyPlayer);
+                            LobbyPlayerItem.Add(LP.Player.Name, LP.Item.ToList());
+                            // 패킷에 넣어준다
+                            loginOk.Players.Add(LP);
+                        }
+
+                        Send(loginOk);
+                        // 로비로 이동
+                        ServerState = PlayerServerState.ServerStateLobby;
+                    }
+                    else
+                    {
+                        AccountDb newAccount = new AccountDb() { AccountLoginId = loginPacket.AccountId };
+                        db.Accounts.Add(newAccount);
+                        bool success = db.SaveChangesEx();
+                        if (success == false)
+                            return;
+
+                        // AccountDbId 메모리에 기억
+                        AccountDbId = newAccount.AccountDbId;
+
+                        S_Login loginOk = new S_Login() { LoginOk = 1 };
+                        Send(loginOk);
+                        // 로비로 이동
+                        ServerState = PlayerServerState.ServerStateLobby;
+                    }
+                }
+            }
+			
 		}
 
 		public void HandleEnterGame(C_EnterGame enterGamePacket)
@@ -120,106 +136,133 @@ namespace Server
 			{
 				Master = true;
             }
-			
-            LobbyPlayerInfo playerInfo = LobbyPlayers.Find(p => p.Name == enterGamePacket.Name);
-            if (playerInfo == null)
-                return;
-			if(playerInfo.ClassType == (int)ClassTypes.Beginner)
-			{
-                MyPlayer = ObjectManager.Instance.Add<Beginner>();
-				MyPlayer.classType = ClassTypes.Beginner;
-            }
-			else if (playerInfo.ClassType == (int)ClassTypes.Warrior)
-			{
-                MyPlayer = ObjectManager.Instance.Add<Warrior>();
-				MyPlayer.classType = ClassTypes.Warrior;
-            }
-
+            //더미 클라이언트 테스트용
             {
-                MyPlayer.PlayerDbId = playerInfo.PlayerDbId;
-                MyPlayer.Info.Name = playerInfo.Name;
-                MyPlayer.Info.PosInfo.State = CreatureState.Idle;
-
-                MyPlayer.Session = this;
-
-                //S_ItemList itemListPacket = new S_ItemList();
-
-                // 아이템 목록을 갖고 온다
-                using (AppDbContext db = new AppDbContext())
+                if (enterGamePacket.Name.Contains("Dummy_"))
                 {
-                    PlayerDb findPlayerDb = db.Players.Where(p => p.PlayerName == playerInfo.Name).FirstOrDefault();
-                    MyPlayer.Info.PosInfo.Rotate.RotateY = findPlayerDb.rotateY;
-                    MyPlayer.Info.PosInfo.Pos.PosX = findPlayerDb.posX;
-                    MyPlayer.Info.PosInfo.Pos.PosY = findPlayerDb.posY;
-                    MyPlayer.Info.PosInfo.Pos.PosZ = findPlayerDb.posZ;
-					MyPlayer.Inven.Money = findPlayerDb.Money;
+                    MyPlayer = ObjectManager.Instance.Add<Beginner>();
+                    MyPlayer.classType = ClassTypes.Beginner;
+                    MyPlayer.Info.Name = enterGamePacket.Name;
+                    MyPlayer.Info.PosInfo.State = CreatureState.Idle;
+                    MyPlayer.Session = this;
+                    MyPlayer.Info.PosInfo.Rotate.RotateY = 0;
+                    Random rand = new Random();
+                    float posX = rand.Next(-70, 71);
+                    float posZ = rand.Next(-55, 56);
+                    MyPlayer.Info.PosInfo.Pos.PosX = 375 + posX;
+                    MyPlayer.Info.PosInfo.Pos.PosY = 7.5f;
+                    MyPlayer.Info.PosInfo.Pos.PosZ = 330 + posZ;
+
+                    ServerState = PlayerServerState.ServerStateGame;
+
+                    GameLogic.Instance.Push(() =>
                     {
-                        MyPlayer.Stat.Level = findPlayerDb.Level;
-                        MyPlayer.Stat.Hp = findPlayerDb.Hp;
-                        MyPlayer.Stat.MaxHp = findPlayerDb.MaxHp;
-                        MyPlayer.Stat.Mp = findPlayerDb.Mp;
-                        MyPlayer.Stat.MaxMp = findPlayerDb.MaxMp;
-                        MyPlayer.Stat.Defense = findPlayerDb.Defense;
-                        MyPlayer.Stat.Speed = findPlayerDb.Speed;
-                        MyPlayer.Stat.Str = findPlayerDb.Str;
-                        MyPlayer.Stat.Dex = findPlayerDb.Dex;
-                        MyPlayer.Stat.Luk = findPlayerDb.Luk;
-                        MyPlayer.Stat.Int = findPlayerDb.Int;
-                        MyPlayer.Stat.Exp = findPlayerDb.Exp;
-                        MyPlayer.Stat.StatPoint = findPlayerDb.StatPoint;
-						MyPlayer.Stat.SkillPoint = findPlayerDb.SkillPoint;
-                    }
-
-					List<ItemDb> items = db.Items
-						.Where(i => i.OwnerDbId == playerInfo.PlayerDbId)
-						.ToList();
-					S_ItemList itemListPacket = new S_ItemList();
-
-                    foreach (ItemDb itemDb in items)
-					{
-						Item item = Item.MakeItem(itemDb);
-						if (item != null)
-						{
-							if(item.Equipped == true)
-							{
-								MyPlayer.Inven.EquipAdd(item.Slot, item);
-							}
-							else
-							{
-                                MyPlayer.Inven.Add(item);
-                            }
-                            ItemInfo info = new ItemInfo();
-							info.MergeFrom(item.Info);
-							itemListPacket.Items.Add(info);
-						}
-					}
-					itemListPacket.Money = findPlayerDb.Money;
-                    Send(itemListPacket);
-					List<SkillDb> skills = db.Skills
-						.Where(s => s.PlayerDbId == playerInfo.PlayerDbId)
-						.ToList();
-					foreach (SkillDb skillDb in skills)
-					{
-						MyPlayer.HaveSkillData.Add(skillDb.TemplateId, skillDb.SkillLevel);
-					}
-					List<QuickSlotDb> quickSlots = db.QuickSlots
-						.Where(q => q.PlayerDbId == playerInfo.PlayerDbId).ToList();
-					foreach (QuickSlotDb slot in quickSlots)
-					{
-						MyPlayer.QuickSlot.Add(slot.Slot, slot.TemplateId);
-					}
+                        GameRoom room = GameLogic.Instance.Find(1);
+                        room.Push(room.EnterGame, MyPlayer);
+                    });
+                    return;
                 }
             }
-
-			MyPlayer.RefreshAdditionalStat();
-
-            ServerState = PlayerServerState.ServerStateGame;
-
-			GameLogic.Instance.Push(() =>
+            //일반 유저용
 			{
-				GameRoom room = GameLogic.Instance.Find(1);
-				room.Push(room.EnterGame, MyPlayer);
-			});
+                LobbyPlayerInfo playerInfo = LobbyPlayers.Find(p => p.Name == enterGamePacket.Name);
+                if (playerInfo == null)
+                    return;
+                if (playerInfo.ClassType == (int)ClassTypes.Beginner)
+                {
+                    MyPlayer = ObjectManager.Instance.Add<Beginner>();
+                    MyPlayer.classType = ClassTypes.Beginner;
+                }
+                else if (playerInfo.ClassType == (int)ClassTypes.Warrior)
+                {
+                    MyPlayer = ObjectManager.Instance.Add<Warrior>();
+                    MyPlayer.classType = ClassTypes.Warrior;
+                }
+
+                {
+                    MyPlayer.PlayerDbId = playerInfo.PlayerDbId;
+                    MyPlayer.Info.Name = playerInfo.Name;
+                    MyPlayer.Info.PosInfo.State = CreatureState.Idle;
+
+                    MyPlayer.Session = this;
+
+                    // 아이템 목록을 갖고 온다
+                    using (AppDbContext db = new AppDbContext())
+                    {
+                        PlayerDb findPlayerDb = db.Players.Where(p => p.PlayerName == playerInfo.Name).FirstOrDefault();
+                        MyPlayer.Info.PosInfo.Rotate.RotateY = findPlayerDb.rotateY;
+                        MyPlayer.Info.PosInfo.Pos.PosX = findPlayerDb.posX;
+                        MyPlayer.Info.PosInfo.Pos.PosY = findPlayerDb.posY;
+                        MyPlayer.Info.PosInfo.Pos.PosZ = findPlayerDb.posZ;
+                        MyPlayer.Inven.Money = findPlayerDb.Money;
+                        {
+                            MyPlayer.Stat.Level = findPlayerDb.Level;
+                            MyPlayer.Stat.Hp = findPlayerDb.Hp;
+                            MyPlayer.Stat.MaxHp = findPlayerDb.MaxHp;
+                            MyPlayer.Stat.Mp = findPlayerDb.Mp;
+                            MyPlayer.Stat.MaxMp = findPlayerDb.MaxMp;
+                            MyPlayer.Stat.Defense = findPlayerDb.Defense;
+                            MyPlayer.Stat.Speed = findPlayerDb.Speed;
+                            MyPlayer.Stat.Str = findPlayerDb.Str;
+                            MyPlayer.Stat.Dex = findPlayerDb.Dex;
+                            MyPlayer.Stat.Luk = findPlayerDb.Luk;
+                            MyPlayer.Stat.Int = findPlayerDb.Int;
+                            MyPlayer.Stat.Exp = findPlayerDb.Exp;
+                            MyPlayer.Stat.StatPoint = findPlayerDb.StatPoint;
+                            MyPlayer.Stat.SkillPoint = findPlayerDb.SkillPoint;
+                        }
+
+                        List<ItemDb> items = db.Items
+                            .Where(i => i.OwnerDbId == playerInfo.PlayerDbId)
+                            .ToList();
+                        S_ItemList itemListPacket = new S_ItemList();
+
+                        foreach (ItemDb itemDb in items)
+                        {
+                            Item item = Item.MakeItem(itemDb);
+                            if (item != null)
+                            {
+                                if (item.Equipped == true)
+                                {
+                                    MyPlayer.Inven.EquipAdd(item.Slot, item);
+                                }
+                                else
+                                {
+                                    MyPlayer.Inven.Add(item);
+                                }
+                                ItemInfo info = new ItemInfo();
+                                info.MergeFrom(item.Info);
+                                itemListPacket.Items.Add(info);
+                            }
+                        }
+                        itemListPacket.Money = findPlayerDb.Money;
+                        Send(itemListPacket);
+                        List<SkillDb> skills = db.Skills
+                            .Where(s => s.PlayerDbId == playerInfo.PlayerDbId)
+                            .ToList();
+                        foreach (SkillDb skillDb in skills)
+                        {
+                            MyPlayer.HaveSkillData.Add(skillDb.TemplateId, skillDb.SkillLevel);
+                        }
+                        List<QuickSlotDb> quickSlots = db.QuickSlots
+                            .Where(q => q.PlayerDbId == playerInfo.PlayerDbId).ToList();
+                        foreach (QuickSlotDb slot in quickSlots)
+                        {
+                            MyPlayer.QuickSlot.Add(slot.Slot, slot.TemplateId);
+                        }
+                    }
+                }
+
+                MyPlayer.RefreshAdditionalStat();
+
+                ServerState = PlayerServerState.ServerStateGame;
+
+                GameLogic.Instance.Push(() =>
+                {
+                    GameRoom room = GameLogic.Instance.Find(1);
+                    room.Push(room.EnterGame, MyPlayer);
+                });
+            }
 		}
 
 		public void HandleCreatePlayer(C_CreatePlayer createPacket)

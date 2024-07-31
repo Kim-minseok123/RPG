@@ -14,12 +14,13 @@ namespace Server.Game
 {
 	public partial class GameRoom : JobSerializer
 	{
-		public int VisionCells = 5;
+		public int VisionCells = 7;
 
 		public int RoomId { get; set; }
 		public int mapId { get; set; }
 
 		Dictionary<int, Player> _players = new Dictionary<int, Player>();
+		Dictionary<int, Player> _dummys = new Dictionary<int, Player>();
 		Dictionary<int, Monster> _monsters = new Dictionary<int, Monster>();
 		Dictionary<int, DropItem> _dropItem = new Dictionary<int, DropItem>();
 		Dictionary<int, Npc> _npc = new Dictionary<int, Npc>();
@@ -73,7 +74,7 @@ namespace Server.Game
 			}
 			if(mapId == 1)
 			{
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     SpawnMob();
                 }
@@ -112,8 +113,27 @@ namespace Server.Game
 				{
 					MasterPlayer = player;
 				}
+				if (gameObject.Info.Name.Contains("Dummy_"))
+				{
+					_dummys.Add(gameObject.Id, player);
+                    S_EnterGame enterPacket = new S_EnterGame();
+                    enterPacket.Player = player.Info;
+                    player.Session.Send(enterPacket);
 
+                    GetZone(player.Pos).Players.Add(player);
+                    player.curZone = GetZone(player.Pos);
+                    if (player.Session.Master == true)
+                    {
+                        player.Vision.SetVisionCell(150);
+                    }
+                    else
+                        player.Vision.SetVisionCell(VisionCells);
+                    player.isCanVision = true;
+                    player.Vision.Update();
+					player.DummyUpdate();
+                }
                 // 본인한테 정보 전송
+                else
                 {
                     S_EnterGame enterPacket = new S_EnterGame();
 					enterPacket.Player = player.Info;
@@ -153,7 +173,7 @@ namespace Server.Game
 					player.curZone = GetZone(player.Pos);
 					if (player.Session.Master == true)
 					{
-						player.Vision.SetVisionCell(100);
+						player.Vision.SetVisionCell(300);
                     }
 					else
                         player.Vision.SetVisionCell(VisionCells);
@@ -336,10 +356,10 @@ namespace Server.Game
             int minX = (int)(pos.PosX - VisionCells);
 			if (isMaster == true)
 			{
-                maxZ = (int)(pos.PosZ + 100);
-                minZ = (int)(pos.PosZ - 100);
-                maxX = (int)(pos.PosX + 100);
-                minX = (int)(pos.PosX - 100);
+                maxZ = (int)(pos.PosZ + 200);
+                minZ = (int)(pos.PosZ - 200);
+                maxX = (int)(pos.PosX + 300);
+                minX = (int)(pos.PosX - 300);
             }
             int leftTopIndexY = (int)((mapMaxZ - maxZ) / ZoneCells);
             int leftTopIndexX = (int)((minX - mapMinX) / ZoneCells);
@@ -569,6 +589,11 @@ namespace Server.Game
 		}
 		public void HandleLeaveGame(Player player, C_RequestLeaveGame leaveGamePacket)
 		{
+			if(_players.TryGetValue(leaveGamePacket.ObjectId, out player) == false)
+			{
+                Console.WriteLine("플레이어 찾기 실패");
+				return;
+            }
 			List<LobbyPlayerInfo> lobbyPlayers = player.Session.LobbyPlayers;
             
 			S_Login loginOk = new S_Login() { LoginOk = 1 };

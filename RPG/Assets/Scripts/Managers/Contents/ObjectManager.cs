@@ -61,7 +61,17 @@ public class ObjectManager
                 pc.Id = info.ObjectId;
                 pc.SetInfo(info);
                 pc.SetPos(info.PosInfo.Pos, info.PosInfo.Rotate);
-                pc.GetComponent<NavMeshAgent>().enabled = true;
+                NavMeshAgent agent = pc.GetComponent<NavMeshAgent>();
+#if UNITY_SERVER
+                if(!agent.isOnNavMesh)
+                {
+                    C_RequestLeaveGame requestLeaveGame = new C_RequestLeaveGame();
+                    requestLeaveGame.ObjectId = info.ObjectId;
+                    Managers.Network.Send(requestLeaveGame);
+                    return;
+                }
+#endif
+                agent.enabled = true;
             }
         }
         else if (objectType == GameObjectType.Monster)
@@ -101,7 +111,7 @@ public class ObjectManager
         }
     }
 
-    public void Remove(int id, bool isDestory = true)
+    public void Remove(int id, bool isDestroy = true)
     {
         if (MyPlayer != null && MyPlayer.Id == id)
             return;
@@ -113,7 +123,7 @@ public class ObjectManager
             return;
 
         _objects.Remove(id);
-        if(isDestory)
+        if(isDestroy)
             Managers.Resource.Destroy(go);
     }
 

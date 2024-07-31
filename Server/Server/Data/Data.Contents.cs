@@ -73,9 +73,10 @@ namespace Server.Data
 		public string name;
         public int sellGold;
 		public ItemType itemType;
+        public string description;
     }
 
-	public class WeaponData : ItemData
+    public class WeaponData : ItemData
 	{
 		public WeaponType weaponType;
 		public int damage;
@@ -96,7 +97,6 @@ namespace Server.Data
 		public ConsumableType consumableType;
 		public int maxCount;
         public int healVal;
-        public string description;
     }
 
 

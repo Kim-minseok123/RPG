@@ -496,5 +496,21 @@ namespace Server.Game
         {
             State = state;
         }
+        public void DummyUpdate()
+        {
+            Room.PushAfter(10000, DummyMove);
+        }
+        void DummyMove()
+        {
+            S_Move move = new S_Move() { DestPosInfo = new PositionInfo() };
+            move.DestPosInfo.Pos = new Positions();
+            move.ObjectId = Id;
+            Vector3 movePos = new Vector3(random.Next(-4, 5) + Pos.PosX, 6.24f, random.Next(-4, 5) + Pos.PosZ);
+            Positions position = Utils.Vector3ToPositions(movePos);
+            move.DestPosInfo.Pos.MergeFrom(position);
+            move.DestPosInfo.State = CreatureState.Moving;
+            Room?.Broadcast(Pos, move);
+            Room?.PushAfter(5000, DummyMove);
+        }
     }
 }

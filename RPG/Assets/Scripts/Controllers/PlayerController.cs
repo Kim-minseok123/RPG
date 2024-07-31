@@ -3,6 +3,7 @@ using DG.Tweening;
 using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,6 +17,7 @@ public class PlayerController : CreatureController
     public GameObject RightHand;
     public GameObject LeftHand;
     public GameObject Head;
+    public TextMeshProUGUI NickName;
     protected GameObject curRightWeapon;
     GameObject curLeftWeapon;
     GameObject curHeadItem;
@@ -25,6 +27,7 @@ public class PlayerController : CreatureController
         _agent = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
         _anim.SetBool("Death", false);
+        NickName.text = objectInfo.Name;
     }
     // Update is called once per frame
     protected virtual void Update()
@@ -94,6 +97,19 @@ public class PlayerController : CreatureController
                     moveStopPacket.ObjectId = Id;
                     Managers.Network.Send(moveStopPacket);
                 }
+
+#if UNITY_SERVER
+                if (name.Contains("Dummy_"))
+                {
+                    C_StopMove moveStopPacket = new C_StopMove() { PosInfo = new PositionInfo() };
+                    moveStopPacket.PosInfo.Pos = new Positions() { PosX = transform.position.x, PosY = transform.position.y, PosZ = transform.position.z };
+                    Vector3 rotationEuler = transform.rotation.eulerAngles;
+                    moveStopPacket.PosInfo.Rotate = new RotateInfo() { RotateX = rotationEuler.x, RotateY = rotationEuler.y, RotateZ = rotationEuler.z };
+                    moveStopPacket.IsMonster = false;
+                    moveStopPacket.ObjectId = Id;
+                    Managers.Network.Send(moveStopPacket);
+                }
+#endif
                 break;
             }
             yield return null;
@@ -167,7 +183,7 @@ public class PlayerController : CreatureController
         }
         _anim.SetBool("Death", true);
         FinalAttacker = attacker;
-        StartCoroutine(DestoryObj(3.5f));
+        StartCoroutine(DestroyObj(3.5f));
     }
     public void EquipItem(int id)
     {
@@ -268,7 +284,7 @@ public class PlayerController : CreatureController
         EffectInst("LevelUpEffect", 1.2f, transform.position, new Vector3(1f, 1f, 1f));
         StartCoroutine(CoWaitForSecondsToState(1.2f, CreatureState.Idle));
     }
-    IEnumerator DestoryObj(float time)
+    IEnumerator DestroyObj(float time)
     {
         yield return new WaitForSeconds(time);
         Managers.Resource.Destroy(gameObject);

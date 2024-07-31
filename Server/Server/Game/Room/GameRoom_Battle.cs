@@ -41,6 +41,12 @@ namespace Server.Game
 				player.Session.Send(banPacket);
 				return;
 			}
+            if(player.Id != stopMovePacket.ObjectId)
+                if(_players.TryGetValue(stopMovePacket.ObjectId,out player) == false)
+                {
+                    Console.WriteLine("멈출 플레이어를 찾지 못함");
+                    return;
+                }
 			player.Info.PosInfo.State = stopMovePacket.PosInfo.State;
 			player.Pos = stopMovePacket.PosInfo.Pos;
 			player.Ratate = stopMovePacket.PosInfo.Rotate;

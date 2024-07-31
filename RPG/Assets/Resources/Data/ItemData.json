@@ -8,17 +8,19 @@
       "damage": "17",
       "requirementLevel": "1",
       "requirementClass": "초보자",
-      "iconPath": "Textures/Item/sword"
+      "iconPath": "Textures/Item/sword",
+      "description": "모험을 처음 시작한 모험가에게 주어지는 검이다.\n낡은 탓에 오래 사용하진 못할 것 같다.\n\n<color=green>"
     },
     {
       "id": "2",
-      "name": "도끼",
+      "name": "나무군의 도끼",
       "sellGold": "200",
       "weaponType": "Axe",
       "damage": "30",
       "requirementLevel": "5",
       "requirementClass": "초보자",
-      "iconPath": "Textures/Item/axe"
+      "iconPath": "Textures/Item/axe",
+      "description": "\"나무\"라는 남자의 잃어버린 도끼이다.\n왜인지 모르겠지만 산신령을 찾아가야만 할 것 같다.\n\n<color=green>"
     },
     {
       "id": "3",
@@ -28,7 +30,8 @@
       "damage": "32",
       "requirementLevel": "5",
       "requirementClass": "전사",
-      "iconPath": "Textures/Item/nakamaki"
+      "iconPath": "Textures/Item/nakamaki",
+      "description": "일본식 장병기의 일종이다. 무엇이든 뚫을 수 있는 칼 끝이 특징이다.\n\n<color=green>"
     },
     {
       "id": "4",
@@ -38,7 +41,8 @@
       "damage": "101",
       "requirementLevel": "5",
       "requirementClass": "초보자",
-      "iconPath": "Textures/Item/RedKatana"
+      "iconPath": "Textures/Item/RedKatana",
+      "description": "레드 드래곤이 지키고 있던 보검이다. 주 재료는 쉽게 얻을 수 없는 드래곤의 비늘로, 매우 단단한 칼이다.\n\n<color=green>"
     }
   ],
   "armors": [
@@ -50,7 +54,8 @@
       "defence": "3",
       "requirementLevel": "1",
       "requirementClass": "초보자",
-      "iconPath": "Textures/Item/armor"
+      "iconPath": "Textures/Item/armor",
+      "description": "스켈레톤의 뼈로 만든 갑옷으로 쉽게 얻을 수 없다.\n\n<color=green>"
     },
     {
       "id": "101",
@@ -60,7 +65,8 @@
       "defence": "1",
       "requirementLevel": "1",
       "requirementClass": "초보자",
-      "iconPath": "Textures/Item/helmet"
+      "iconPath": "Textures/Item/helmet",
+      "description": "누구나 착용할 수 있는 투구이다. 가볍지만 단단하진 않아 많은 도움이 되지 않는다.\n\n<color=green>"
     }
   ],
   "consumables": [
@@ -72,7 +78,7 @@
       "maxCount": "100",
       "iconPath": "Textures/Item/redPotion",
       "healVal": "50",
-      "description": "빨간 꽃을 달여 만든 영약이다.\n체력을 50만큼 회복한다."
+      "description": "빨간 꽃을 달여 만든 영약이다.\n\n체력을 50만큼 회복한다."
     },
     {
       "id": "201",
@@ -82,7 +88,7 @@
       "maxCount": "100",
       "iconPath": "Textures/Item/bluePotion",
       "healVal": "50",
-      "description": "파란 광석을 잘게 다져 만든 영약이다.\n마나를 50만큼 회복한다."
+      "description": "파란 광석을 잘게 다져 만든 영약이다.\n\n마나를 50만큼 회복한다."
     }
   ]
 } 

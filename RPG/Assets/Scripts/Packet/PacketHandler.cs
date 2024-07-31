@@ -45,6 +45,7 @@ class PacketHandler
         Managers.Network.Send(createPlayerPacket);
 
 #else
+        if (Managers.Network.Master == true) return;
         TransitionSettings ts = Managers.Resource.Load<TransitionSettings>("Trans/LinearWipe");
         TransitionManager.Instance().Transition(Define.Scene.Lobby, ts, 0);
         Managers.UI.CloseAllPopupUI();

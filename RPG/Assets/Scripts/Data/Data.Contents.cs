@@ -75,9 +75,10 @@ namespace Data
 		public ItemType itemType;
 		public string iconPath;
         public int sellGold;
-	}
+        public string description;
+    }
 
-	[Serializable]
+    [Serializable]
 	public class WeaponData : ItemData
 	{
 		public WeaponType weaponType;
@@ -101,7 +102,6 @@ namespace Data
 		public ConsumableType consumableType;
 		public int maxCount;
         public int healVal;
-        public string description;
     }
 
 

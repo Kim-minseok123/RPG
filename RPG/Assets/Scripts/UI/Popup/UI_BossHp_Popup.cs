@@ -16,10 +16,15 @@ public class UI_BossHp_Popup : UI_Popup
     {
         NameText
     }
+    enum Images
+    {
+        MonsterImage
+    }
     public override void Init()
     {
         Bind<Slider>(typeof(Sliders));
         BindText(typeof(Texts));
+        BindImage(typeof(Images));
 
         _init = true;
         RefreshUI();
@@ -33,8 +38,9 @@ public class UI_BossHp_Popup : UI_Popup
     {
         if (_init == false || boss == null)
             return;
-
-        GetText((int)Texts.NameText).text = boss.name;
+        MonsterController monsterController = boss.GetComponent<MonsterController>();
+        GetText((int)Texts.NameText).text = "LV. " + monsterController.Stat.Level + " " + boss.name;
+        GetImage((int)Images.MonsterImage).sprite = Managers.Resource.Load<Sprite>($"Textures/{boss.name}");
     }
     public void ChangeHp(float hp)
     {

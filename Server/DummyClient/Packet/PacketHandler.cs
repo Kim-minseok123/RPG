@@ -17,6 +17,7 @@ public class PacketHandler
     public static void S_LeaveGameHandler(PacketSession session, IMessage packet)
     {
         S_LeaveGame leaveGameHandler = packet as S_LeaveGame;
+        session.Disconnect();
     }
 
     public static void S_SpawnHandler(PacketSession session, IMessage packet)
@@ -53,6 +54,7 @@ public class PacketHandler
         C_Login loginPacket = new C_Login();
 
         ServerSession serverSession = (ServerSession)session;
+        loginPacket.AccountId = 1000 + serverSession.DummyId;
         //loginPacket.UniqueId = $"DummyClient_{serverSession.DummyId.ToString("0000")}";
         serverSession.Send(loginPacket);
     }
@@ -64,19 +66,11 @@ public class PacketHandler
         ServerSession serverSession = (ServerSession)session;
 
         // TODO : 로비 UI에서 캐릭터 보여주고, 선택할 수 있도록
-        if (loginPacket.Players == null || loginPacket.Players.Count == 0)
+        if (loginPacket.LoginOk == 1)
         {
-            C_CreatePlayer createPacket = new C_CreatePlayer();
-            createPacket.Name = $"Player_{serverSession.DummyId.ToString("0000")}";
-            serverSession.Send(createPacket);
-        }
-        else
-        {
-            // 무조건 첫번째 로그인
-            LobbyPlayerInfo info = loginPacket.Players[0].Player;
-            C_EnterGame enterGamePacket = new C_EnterGame();
-            enterGamePacket.Name = info.Name;
-            serverSession.Send(enterGamePacket);
+            C_EnterGame enterDummy = new C_EnterGame();
+            enterDummy.Name = $"Dummy_{serverSession.DummyId.ToString("0000")}";
+            serverSession.Send(enterDummy);
         }
     }
     
@@ -179,5 +173,28 @@ public class PacketHandler
     {
 
     }
+    public static void S_MessageHandler(PacketSession session, IMessage packet)
+    {
 
+    }
+    public static void S_ChangeMapHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+    public static void S_SetMasterClientHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+    public static void S_MakeMeteorObjectHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+    public static void S_BossItemCutSceneHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+    public static void S_EndBossItemCutSceneHandler(PacketSession session, IMessage packet)
+    {
+
+    }
 }

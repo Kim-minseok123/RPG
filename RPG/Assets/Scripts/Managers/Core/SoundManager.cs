@@ -58,15 +58,16 @@ public class SoundManager
 		}
 		else
 		{
+            AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
             if(objectAudio == null)
             {
-                AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
                 audioSource.pitch = pitch;
                 audioSource.PlayOneShot(audioClip);
             }
 			else
             {
                 objectAudio.pitch = pitch;
+                objectAudio.volume = audioSource.volume;
                 objectAudio.PlayOneShot(audioClip);
             }
 		}

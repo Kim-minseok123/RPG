@@ -28,9 +28,9 @@ namespace Server
 		{
             string relativePath = "../../../../../RPG/Builds/Win64/DedicatedServer/DedicatedServer.exe";
             string fullPath = Path.GetFullPath(relativePath, Environment.CurrentDirectory);
-            Thread.Sleep(5000);
-            StartExternalProgram(fullPath);
-            while (true)
+			Thread.Sleep(5000);
+			StartExternalProgram(fullPath);
+			while (true)
 			{
 				GameLogic.Instance.Update();
 				Thread.Sleep(0);
@@ -100,7 +100,7 @@ namespace Server
 
             GameLogic.Instance.Push(() =>
             {
-                GameRoom room = GameLogic.Instance.Add(1 , 30 , 300, 300, 390, 390, 7);
+                GameRoom room = GameLogic.Instance.Add(1 , 30 , 300, 270, 450, 390, 7);
                 GameRoom boss = GameLogic.Instance.Add(2 , 100 , 40, 25, 140, 125, 100);
             });
 

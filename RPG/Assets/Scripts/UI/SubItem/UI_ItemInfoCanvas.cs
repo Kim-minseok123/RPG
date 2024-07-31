@@ -61,13 +61,13 @@ public class UI_ItemInfoCanvas : UI_Base
                 WeaponData weapon = (WeaponData)itemData;
                 GetText((int)Texts.RequirementLevelText).text = $"<color={levelColor}>REQ LEV :\t{weapon.requirementLevel}</color>";
                 GetText((int)Texts.RequirementClassText).text = $"<color={classColor}>REQ ClS :\t{weapon.requirementClass}</color>";
-                GetText((int)Texts.DescriptionText).text = "공격력 : +" + weapon.damage;
+                GetText((int)Texts.DescriptionText).text = weapon.description +"공격력 : +" + weapon.damage;
                 break;
             case ItemType.Armor:
                 ArmorData armor = (ArmorData)itemData;
                 GetText((int)Texts.RequirementLevelText).text = $"<color={levelColor}>REQ LEV :\t{armor.requirementLevel}</color>";
                 GetText((int)Texts.RequirementClassText).text = $"<color={classColor}>REQ ClS :\t{armor.requirementClass}</color>";
-                GetText((int)Texts.DescriptionText).text = "방어력 : +" + armor.defence;
+                GetText((int)Texts.DescriptionText).text = armor.description + "방어력 : +" + armor.defence;
                 break;
             case ItemType.Consumable:
                 ConsumableData consumable = (ConsumableData)itemData;

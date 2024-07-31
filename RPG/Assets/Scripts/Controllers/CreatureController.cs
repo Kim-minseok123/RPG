@@ -32,9 +32,9 @@ public class CreatureController : BaseController
         GameObject effect = Managers.Resource.Instantiate($"Effect/{name}", transform);
         effect.transform.position = pos;
         effect.transform.localScale = scale;
-        StartCoroutine(CoWaitForSecondsDestory(effect, time));
+        StartCoroutine(CoWaitForSecondsDestroy(effect, time));
     }
-    IEnumerator CoWaitForSecondsDestory(GameObject effect, float time)
+    IEnumerator CoWaitForSecondsDestroy(GameObject effect, float time)
     {
         yield return new WaitForSeconds(time);
         Managers.Resource.Destroy(effect);

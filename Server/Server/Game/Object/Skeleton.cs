@@ -12,7 +12,7 @@ namespace Server.Game
         public override void Init(int templateId)
         {
             base.Init(templateId);
-            SpawnPos = new Vector3(340f, 7.5f, 340f);
+            SpawnPos = new Vector3(400f, 7.5f, 340f);
 
             PosInfo.Pos.PosX = SpawnPos.x;
             PosInfo.Pos.PosY = SpawnPos.y;

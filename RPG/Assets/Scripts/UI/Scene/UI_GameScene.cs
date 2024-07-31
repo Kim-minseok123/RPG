@@ -458,14 +458,14 @@ public class UI_GameScene : UI_Scene
             Managers.Resource.Destroy(buffUI.gameObject);
         }
     }
-    Coroutine MessageTextDestory;
+    Coroutine MessageTextDestroy;
     public void SetMessage(string str)
     {
         GetText((int)Texts.MessageText).text = str;
-        if(MessageTextDestory != null) StopCoroutine(MessageTextDestory);
-        MessageTextDestory = StartCoroutine(CoMessageDestory());
+        if(MessageTextDestroy != null) StopCoroutine(MessageTextDestroy);
+        MessageTextDestroy = StartCoroutine(CoMessageDestroy());
     }
-    IEnumerator CoMessageDestory()
+    IEnumerator CoMessageDestroy()
     {
         yield return new WaitForSeconds(5f);
         GetText((int)Texts.MessageText).text = "";
