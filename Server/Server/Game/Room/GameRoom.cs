@@ -113,7 +113,9 @@ namespace Server.Game
 				{
 					MasterPlayer = player;
 				}
-				if (gameObject.Info.Name.Contains("Dummy_"))
+				// 더미 클라이언트 용
+                #region DummmyClient
+                if (gameObject.Info.Name.Contains("Dummy_"))
 				{
 					_dummys.Add(gameObject.Id, player);
                     S_EnterGame enterPacket = new S_EnterGame();
@@ -132,6 +134,7 @@ namespace Server.Game
                     player.Vision.Update();
 					player.DummyUpdate();
                 }
+                #endregion
                 // 본인한테 정보 전송
                 else
                 {
@@ -179,6 +182,13 @@ namespace Server.Game
                         player.Vision.SetVisionCell(VisionCells);
                     player.isCanVision = true;
                     player.Vision.Update();
+					// 테스트
+					Quest quest = Quest.MakeQuest(1);
+					if(quest != null)
+					{
+						player.QuestInven.AddQuest(quest);
+					}
+
                 }
             }
 			else if (type == GameObjectType.Monster)

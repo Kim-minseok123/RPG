@@ -20,6 +20,7 @@ namespace Server.Game
         public VisionCube Vision { get; private set; }
         public bool IsMaster { get; set; }
         public Inventory Inven { get; private set; } = new Inventory();
+        public QuestInventory QuestInven { get; private set; } = new QuestInventory();
 		public ClassTypes classType { get; set; }
 		public int BuffDamage { get; set; }
 		public int WeaponDamage { get; private set; }
@@ -496,6 +497,8 @@ namespace Server.Game
         {
             State = state;
         }
+        //더미클라이언트 전용
+        #region DummyClient
         public void DummyUpdate()
         {
             Room.PushAfter(10000, DummyMove);
@@ -512,5 +515,6 @@ namespace Server.Game
             Room?.Broadcast(Pos, move);
             Room?.PushAfter(5000, DummyMove);
         }
+        #endregion
     }
 }

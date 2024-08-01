@@ -1,0 +1,110 @@
+{
+  "battles": [
+    {
+      "id": "1",
+      "questTitle": "무서운 스켈레톤",
+      "demandLevel": "1",
+      "demandQuest": "0",
+      "questSummary": "스켈레톤 처치",
+      "isRepeqted": "false",
+      "reward": {
+        "exp": "5",
+        "money": "0",
+        "itemId": "-1"
+      },
+      "questDescription": [
+        "오, 자네 이 근방에서 처음보는 얼굴이군.",
+        "반갑게 맞이하고 싶으나,\n마을 밖에 <color=red>스켈레톤</color> 무리들이 말썽을 부리는 중이라...",
+        "무기를 가지고 있는걸로 보아 모험가 같은데 내 부탁을 들어주겠나?"
+      ],
+      "questAcceptString": "역시! 내 눈은 틀리지 않았군.\n<color=red>스켈레톤</color> <color=green>3</color>마리를 처치하고 와주게.",
+      "questRefuseString": "자네 생각보다 겁쟁이구만... 하지만 위험한 일이니 존중하겠네.\n일을 어쩐담 이러다 우리 마을은 무너지고 말거야.",
+      "questClearString": "고맙네, 덕분에 한 시름 놓았구만.",
+      "goals": [
+        {
+          "enemyId": "1",
+          "count": "3"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "questTitle": "미궁의 깊은 곳, 레드 드래곤을 무찔러라",
+      "demandLevel": "5",
+      "demandQuest": "1",
+      "questSummary": "레드 드래곤 처치",
+      "isRepeqted": "false",
+      "reward": {
+        "exp": "20",
+        "money": "0",
+        "itemId": "-1"
+      },
+      "questDescription": [
+        "어엿한 모험가 티가 나는군. 그래서 말인데 제안을 하나 하지.",
+        "우리는 계속 몬스터로부터 위협을 받으며 살고 있지.\n 그래서 안전한 삶을 살기 위해서는 몬스터들의 왕 <color=red>레드 드래곤</color>을 무찔러야한다네.",
+        "<color=red>레드드래곤</color>은 미궁 속 깊은 곳에 자리를 잡고 살고있지. 보물도 지키고 있다는 얘기가 있다네.",
+        "내 부탁을 들어주겠나?"
+      ],
+      "questAcceptString": "이미 가봤을 수도 있지만, 마을에 <color=red>로빈</color>이라는 자를 찾아가면 미궁 속으로 안내해줄 걸세.",
+      "questRefuseString": "<color=red>레드 드래곤</color>은 몬스터를 계속 만들겠지...",
+      "questClearString": "자네가 우리 마을의 평화를 불러왔어.",
+      "goals": [
+        {
+          "enemyId": "2",
+          "count": "1"
+        }
+      ]
+    }
+  ],
+  "collections": [
+    {
+      "id": "101",
+      "questTitle": "화염의 카타나를 강화하라",
+      "demandLevel": "5",
+      "demandQuest": "2",
+      "questSummary": "화염의 카타나 획득",
+      "isRepeqted": "true",
+      "reward": {
+        "exp": "0",
+        "money": "0",
+        "itemId": "4"
+      },
+      "questDescription": [
+        "자네, 레드 드래곤을 무찔렀군. 그 드래곤의 비늘로 만들었다는 명검을 혹시 가지고 있나?",
+        "만약 가지고 있다면 내게 가져다 주게. 내가 칼날을 아주 시원하게 갈아줍세.(이 퀘스트는 반복 퀘스트입니다.)"
+      ],
+      "questAcceptString": "좋아. 나도 명검을 다뤄볼 기회라니, 매우 신나는구만.",
+      "questRefuseString": "어렵게 얻은 검을 못 믿는 나에게 주지 않는 것도 이해가 가지.",
+      "questClearString": "이렇게 하고... 저렇게 하면...",
+      "goals": [
+        {
+          "collectionId": "4",
+          "count": "1"
+        }
+      ]
+    }
+  ],
+  "enters": [
+    {
+      "id": "201",
+      "questTitle": "미궁 속 깊은 곳 탐사하기",
+      "demandLevel": "5",
+      "demandQuest": "1",
+      "questSummary": "미궁 입장",
+      "isRepeqted": "false",
+      "reward": {
+        "exp": "0",
+        "money": "1000",
+        "itemId": "-1"
+      },
+      "questDescription": [
+        "요즘들어 마을의 몬스터가 늘어나고 있는데, 아마 원인은 미궁 안 레드 드래곤에 있는 것 같네.",
+        "미궁 속에 <color=red>들어가</color> 레드 드래곤의 생사를 확인해주게."
+      ],
+      "questAcceptString": "부탁하네.",
+      "questRefuseString": "미궁이 무서운 곳이긴 하지.",
+      "questClearString": "역시나 소문은 틀리지 않았어. 고맙네",
+      "goals": "2"
+    }
+  ]
+} 

@@ -214,4 +214,84 @@ namespace Server.Data
         }
     }
     #endregion
+    #region Quest
+    [Serializable]
+    public class QuestData
+    {
+        public int id;
+        public QuestType questType;
+        public string questTitle;
+        public int demandLevel;
+        public int demandQuest;
+        public string questSummary;
+        public bool isRepeated;
+        public QuestReward reward;
+        public List<string> questDescription;
+        public string questAcceptString;
+        public string questRefuseString;
+        public string questClearString;
+    }
+    [Serializable]
+    public class QuestReward
+    {
+        public int exp;
+        public int money;
+        public int itemId;
+    }
+    [Serializable]
+    public class BattleQuestData : QuestData
+    {
+        public List<BattleQuestGoals> goals;
+    }
+    [Serializable]
+    public class BattleQuestGoals
+    {
+        public int enemyId;
+        public int count;
+    }
+    [Serializable]
+    public class CollectionQuestData : QuestData
+    {
+        public List<CollectionQuestGoals> goals;
+    }
+    [Serializable]
+    public class CollectionQuestGoals
+    {
+        public int collectionId;
+        public int count;
+    }
+    [Serializable]
+    public class EnterQuestData : QuestData
+    {
+        public int goals;
+    }
+    [Serializable]
+    public class QuestLoader : ILoader<int, QuestData>
+    {
+        public List<BattleQuestData> battles = new List<BattleQuestData>();
+        public List<CollectionQuestData> collections = new List<CollectionQuestData>();
+        public List<EnterQuestData> enters = new List<EnterQuestData>();
+
+        public Dictionary<int, QuestData> MakeDict()
+        {
+            Dictionary<int, QuestData> dict = new Dictionary<int, QuestData>();
+            foreach (QuestData quest in battles)
+            {
+                quest.questType = QuestType.Battle;
+                dict.Add(quest.id, quest);
+            }
+            foreach (QuestData quest in collections)
+            {
+                quest.questType = QuestType.Collection;
+                dict.Add(quest.id, quest);
+            }
+            foreach (QuestData quest in enters)
+            {
+                quest.questType = QuestType.Enter;
+                dict.Add(quest.id, quest);
+            }
+            return dict;
+        }
+    }
+    #endregion
 }

@@ -22,7 +22,19 @@
     },
     {
       "level": "6",
-      "requiredExp": "11"
+      "requiredExp": "55"
+    },
+    {
+      "level": "7",
+      "requiredExp": "80"
+    },
+    {
+      "level": "8",
+      "requiredExp": "99"
+    },
+    {
+      "level": "9",
+      "requiredExp": "122"
     }
   ]
 } 

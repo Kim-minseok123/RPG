@@ -134,6 +134,12 @@ enum ClassTypes{
   WARRIOR = 1;
   ARCHER = 2;
 }
+enum QuestType{
+  BATTLE = 0;
+  COLLECTION = 1;
+  ENTER = 2;
+  MAX_COUNT = 3;
+}
 message S_EnterGame {
   ObjectInfo player = 1;
 }

@@ -84,6 +84,12 @@ namespace Server.Game
             diePacket.AttackerId = attacker.Id;
             Room.Broadcast(Pos, diePacket);
 
+            Player player = attacker as Player;
+            if (player != null)
+            {
+                player.QuestInven.UpdateQuestProgress(QuestType.Battle, new BattleQuestGoals { enemyId = TemplateId, count = 1 });
+            }
+
             ItemDrop(attacker);
             attacker.RewardExp(Stat.Exp);
 

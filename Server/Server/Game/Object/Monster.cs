@@ -166,7 +166,13 @@ namespace Server.Game
 
 			base.OnDead(attacker);
 			if (attacker == null) return;
-			ItemDrop(attacker);
+
+            Player player = attacker as Player;
+			if (player != null)
+			{
+				player.QuestInven.UpdateQuestProgress(QuestType.Battle, new BattleQuestGoals { enemyId = TemplateId, count = 1 });
+            }
+            ItemDrop(attacker);
 			attacker.RewardExp(Stat.Exp);
         }
 
