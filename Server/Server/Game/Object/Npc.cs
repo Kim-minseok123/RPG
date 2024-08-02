@@ -15,7 +15,7 @@ namespace Server.Game
         {
             ObjectType = GameObjectType.Npc;
         }
-        public void Init(int templateId)
+        public virtual void Init(int templateId)
         {
             if (DataManager.NpcDict.TryGetValue(templateId, out npcData) == false) return;
             Info.Name = npcData.name;

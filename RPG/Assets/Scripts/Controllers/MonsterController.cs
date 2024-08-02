@@ -1,3 +1,4 @@
+using Data;
 using DG.Tweening;
 using Google.Protobuf.Protocol;
 using System.Collections;

@@ -38,8 +38,6 @@ public class RedDragon : MonsterController
             }
             else
             {
-               
-                // ü�¹� �� �۾�
                 Hp = hp;
                 var value = Mathf.Max(0f, (float)Hp / MaxHp);
                 if (value == 0f)

@@ -84,6 +84,12 @@ namespace Server.Game
                 Npc Robin = ObjectManager.Instance.Add<Npc>();
                 Robin.Init(2);
                 EnterGame(Robin);
+				Npc stom = ObjectManager.Instance.Add<Npc>();
+				stom.Init(3);
+				EnterGame(stom);
+				Npc Smith = ObjectManager.Instance.Add<Npc>();
+				Smith.Init(4);
+				EnterGame(Smith);
             }	
 		}
 		public void SpawnMob()
@@ -196,7 +202,6 @@ namespace Server.Game
 				Monster monster = gameObject as Monster;
 				_monsters.Add(gameObject.Id, monster);
 				monster.Room = this;
-
 				Zone zone = GetZone(monster.Pos);
 				zone.Monsters.Add(monster);
 				monster.curZone = zone;

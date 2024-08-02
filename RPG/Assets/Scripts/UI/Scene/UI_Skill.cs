@@ -1,3 +1,4 @@
+using Data;
 using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
@@ -53,7 +54,6 @@ public class UI_Skill : UI_Base
 
         MyPlayerController myPlayer = Managers.Object.MyPlayer;
         if (myPlayer == null) return;
-        
 
         if (myPlayer.ClassType == (int)ClassTypes.Beginner)
         {

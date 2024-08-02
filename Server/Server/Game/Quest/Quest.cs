@@ -14,7 +14,7 @@ namespace Server.Game
         public int DemandQuest { get; private set; }
         public bool IsRepeated { get; private set; }
         public QuestReward Reward { get; private set; }
-        public bool IsClear { get; protected set; }
+        public bool IsFinish { get; protected set; }
         public Quest(QuestType questType)
         {
             QuestType = questType;
@@ -43,7 +43,7 @@ namespace Server.Game
                 quest.DemandQuest = questData.demandQuest;
                 quest.DemandLevel = questData.demandLevel;
                 quest.Reward = questData.reward;
-                quest.IsClear = false;
+                quest.IsFinish = false;
             }
             return quest;
         }
@@ -61,17 +61,19 @@ namespace Server.Game
             foreach (var goal in goals)
                 countDict.Add(goal.enemyId, 0);
         }
-        public void Update(BattleQuestGoals questGoals)
+        public bool Update(BattleQuestGoals questGoals)
         {
             foreach (var goal in goals)
             {
                 if(goal.enemyId == questGoals.enemyId)
                 {
-                    if (!countDict.ContainsKey(goal.enemyId)) return;
+                    if (!countDict.ContainsKey(goal.enemyId)) return false;
                     countDict[goal.enemyId] += questGoals.count;
+                    CheckQuestClear();
+                    return true;
                 }
             }
-            CheckQuestClear();
+            return false;
         }
         public void CheckQuestClear()
         {
@@ -79,12 +81,12 @@ namespace Server.Game
             {
                 if (!countDict.ContainsKey(goal.enemyId)) return;
                 if (goal.count > countDict[goal.enemyId]) 
-                { 
-                    IsClear = false;
+                {
+                    IsFinish = false;
                     return;
                 }
             }
-            IsClear = true;
+            IsFinish = true;
         } 
     }
     public class CollectionQuest : Quest
@@ -100,17 +102,19 @@ namespace Server.Game
             foreach (var goal in goals)
                 countDict.Add(goal.collectionId, 0);
         }
-        public void Update(CollectionQuestGoals questGoals)
+        public bool Update(CollectionQuestGoals questGoals)
         {
             foreach (var goal in goals)
             {
                 if (goal.collectionId == questGoals.collectionId)
                 {
-                    if (!countDict.ContainsKey(goal.collectionId)) return;
+                    if (!countDict.ContainsKey(goal.collectionId)) return false;
                     countDict[goal.collectionId] += questGoals.count;
+                    CheckQuestClear();
+                    return true;
                 }
             }
-            CheckQuestClear();
+            return false;
         }
         public void CheckQuestClear()
         {
@@ -119,11 +123,11 @@ namespace Server.Game
                 if (!countDict.ContainsKey(goal.collectionId)) return;
                 if (goal.count > countDict[goal.collectionId])
                 {
-                    IsClear = false;
+                    IsFinish = false;
                     return;
                 }
             }
-            IsClear = true;
+            IsFinish = true;
         }
     }
     public class EnterQuest : Quest
@@ -136,16 +140,18 @@ namespace Server.Game
                 return;
             goals = ((EnterQuestData)questData).goals;
         }
-        public void Update(int goal)
+        public bool Update(int goal)
         {
             cur = goal;
+            CheckQuestClear();
+            return true;
         }
         public void CheckQuestClear()
         {
             if (cur == goals)
-                IsClear = true;
+                IsFinish = true;
             else
-                IsClear = false;
+                IsFinish = false;
         }
     }
 }

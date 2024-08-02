@@ -16,10 +16,12 @@ public class Managers : MonoBehaviour
     NetworkManager _network = new NetworkManager();
     WebManager _web = new WebManager();
     ObjectManager _obj = new ObjectManager();
+    QuestManager _qst = new QuestManager();
     public static InventoryManager Inven { get { return Instance._inven; } }
     public static NetworkManager Network { get { return Instance._network; } }
 	public static WebManager Web { get { return Instance._web; } }
     public static ObjectManager Object { get { return Instance._obj; } }
+    public static QuestManager Quest { get { return Instance._qst; } }
     #endregion
 
     #region Core

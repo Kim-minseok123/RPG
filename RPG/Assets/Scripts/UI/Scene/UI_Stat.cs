@@ -64,10 +64,10 @@ public class UI_Stat : UI_Base
         else
             GetText((int)Texts.AttackText).text = $"°ø°Ý·Â\t: <color=#F3E3AE>{myPlayer.MinAttack}</color> ~ <color=#F3E3AE>{myPlayer.MaxAttack}</color>";
         GetText((int)Texts.RemainPointText).text = $"³²Àº ½ºÅÝ Æ÷ÀÎÆ® : <color=#F3E3AE>{myPlayer.Stat.StatPoint}</color>";
-        GetText((int)Texts.StrText).text = $"Str\t: <color=#F3E3AE>{myPlayer.Stat.Str}</color>";
-        GetText((int)Texts.DexText).text = $"Dex\t: <color=#F3E3AE>{myPlayer.Stat.Dex}</color>";
-        GetText((int)Texts.LukText).text = $"Luk\t: <color=#F3E3AE>{myPlayer.Stat.Luk}</color>";
-        GetText((int)Texts.IntText).text = $"Int\t: <color=#F3E3AE>{myPlayer.Stat.Int}</color>";
+        GetText((int)Texts.StrText).text = $"Èû\t: <color=#F3E3AE>{myPlayer.Stat.Str}</color>";
+        GetText((int)Texts.DexText).text = $"¹ÎÃ¸\t: <color=#F3E3AE>{myPlayer.Stat.Dex}</color>";
+        GetText((int)Texts.LukText).text = $"Çà¿î\t: <color=#F3E3AE>{myPlayer.Stat.Luk}</color>";
+        GetText((int)Texts.IntText).text = $"Áö·Â\t: <color=#F3E3AE>{myPlayer.Stat.Int}</color>";
 
     }
 }

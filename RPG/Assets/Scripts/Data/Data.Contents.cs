@@ -234,6 +234,10 @@ namespace Data
         public string questAcceptString;
         public string questRefuseString;
         public string questClearString;
+        public string questDetailString;
+        public string questNpcIconPath;
+        public string questItemIconPath;
+        public string questLocationString;
     }
     [Serializable]
     public class QuestReward

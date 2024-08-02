@@ -9,6 +9,7 @@ namespace Server.Game
     public class QuestInventory
     {
         Dictionary<int, Quest>[] QuestList = new Dictionary<int, Quest>[(int)QuestType.MaxCount];
+        Dictionary<int, Quest> FinishedQuest = new Dictionary<int, Quest>();
         public QuestInventory()
         {
             for (int i = 0; i < QuestList.Length; i++)
@@ -18,7 +19,7 @@ namespace Server.Game
         }
         public void AddQuest(Quest quest)
         {
-            QuestList[(int)quest.QuestType].Add(quest.TemplateId, quest);
+            QuestList[(int)quest.QuestType].TryAdd(quest.TemplateId, quest);
         }
 
         public void RemoveQuest(Quest quest)
@@ -38,25 +39,45 @@ namespace Server.Game
 
             foreach (var quest in list.Values)
             {
-                if (quest.IsClear) continue;
+                if (quest.IsFinish) continue;
 
                 switch (quest)
                 {
                     case BattleQuest battleQuest when questGoals is BattleQuestGoals battleGoals:
-                        battleQuest.Update(battleGoals);
+                        if (battleQuest.Update(battleGoals))
+                        {
+
+                        }
                         break;
                     case CollectionQuest collectionQuest when questGoals is CollectionQuestGoals collectionGoals:
-                        collectionQuest.Update(collectionGoals);
+                        if (collectionQuest.Update(collectionGoals))
+                        {
+
+                        }
                         break;
                     case EnterQuest enterQuest when questGoals is int enterGoals:
-                        enterQuest.Update(enterGoals);
+                        if (enterQuest.Update(enterGoals))
+                        {
+
+                        }
                         break;
                 }
             }
         }
         public bool CheckQuestClear(int id, QuestType questType)
         {
-            return QuestList[(int)questType].TryGetValue(id, out Quest quest) && quest.IsClear;
+            return QuestList[(int)questType].TryGetValue(id, out Quest quest) && quest.IsFinish;
+        }
+        public void Clear()
+        {
+            foreach (var quest in QuestList)
+            {
+                quest.Clear();
+            }
+        }
+        public void FinishQuest(Quest quest)
+        {
+            FinishedQuest.TryAdd(quest.TemplateId, quest);
         }
     }
 }

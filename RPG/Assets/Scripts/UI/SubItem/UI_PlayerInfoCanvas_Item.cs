@@ -77,6 +77,7 @@ public class UI_PlayerInfoCanvas_Item : UI_Base
 
         TransitionSettings ts = Managers.Resource.Load<TransitionSettings>("Trans/LinearWipe");
         TransitionManager.Instance().Transition(Define.Scene.Game, ts, 0, () => {
+            Managers.Quest.Init();
             C_EnterGame enterGamePacket = new C_EnterGame();
             enterGamePacket.Name = playerInfo.Name;
             Managers.Network.Send(enterGamePacket);

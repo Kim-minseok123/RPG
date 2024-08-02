@@ -230,6 +230,9 @@ namespace Server.Data
         public string questAcceptString;
         public string questRefuseString;
         public string questClearString;
+        public string questDetailString;
+        public string questNpcIconPath;
+        public string questItemIconPath;
     }
     [Serializable]
     public class QuestReward
