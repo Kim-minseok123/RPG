@@ -855,6 +855,7 @@ GameObject:
   - component: {fileID: 6822453928273549694}
   - component: {fileID: 7331556495156898235}
   - component: {fileID: 363382950928862256}
+  - component: {fileID: 4460875468432865805}
   m_Layer: 5
   m_Name: UI_Quest
   m_TagString: Untagged
@@ -879,7 +880,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 532, y: -10}
+  m_AnchoredPosition: {x: 360, y: -10}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!223 &6822453928273549694
@@ -903,7 +904,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_TargetDisplay: 0
 --- !u!114 &7331556495156898235
 MonoBehaviour:
@@ -927,7 +928,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &363382950928862256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -945,6 +946,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4460875468432865805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2734866141458873813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28b17221e1b2c5468789f05f329ce82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3128711173251862720
 GameObject:
   m_ObjectHideFlags: 0

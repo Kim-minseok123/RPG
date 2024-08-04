@@ -84,12 +84,15 @@ namespace Server.Game
                 Npc Robin = ObjectManager.Instance.Add<Npc>();
                 Robin.Init(2);
                 EnterGame(Robin);
-				Npc stom = ObjectManager.Instance.Add<Npc>();
+				Npc stom = ObjectManager.Instance.Add<QuestNpc>();
 				stom.Init(3);
 				EnterGame(stom);
-				Npc Smith = ObjectManager.Instance.Add<Npc>();
+				Npc Smith = ObjectManager.Instance.Add<QuestNpc>();
 				Smith.Init(4);
 				EnterGame(Smith);
+                Npc Laine = ObjectManager.Instance.Add<QuestNpc>();
+                Laine.Init(5);
+                EnterGame(Laine);
             }	
 		}
 		public void SpawnMob()
