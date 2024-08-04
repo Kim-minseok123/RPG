@@ -97,3 +97,17 @@ E:\GitHub\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.csproj.CoreCo
 E:\GitHub\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.dll
 E:\GitHub\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.pdb
 E:\GitHub\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.genruntimeconfig.cache
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.deps.json
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.runtimeconfig.json
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.runtimeconfig.dev.json
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.dll
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\bin\Debug\netcoreapp3.1\ServerCore.pdb
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.csproj.AssemblyReference.cache
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.AssemblyInfoInputs.cache
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.AssemblyInfo.cs
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.csproj.CoreCompileInputs.cache
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.sourcelink.json
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.dll
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.pdb
+C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\obj\Debug\netcoreapp3.1\ServerCore.genruntimeconfig.cache

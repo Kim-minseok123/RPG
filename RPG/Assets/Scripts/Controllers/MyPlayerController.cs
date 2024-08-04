@@ -187,6 +187,20 @@ public class MyPlayerController : PlayerController
                 gameSceneUI.OpenUI("Skill");
             }
         }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+            UI_Quest questUI = gameSceneUI.QuestUI;
+
+            if (questUI.gameObject.activeSelf)
+            {
+                gameSceneUI.CloseUI("UI_Quest");
+            }
+            else
+            {
+                gameSceneUI.OpenUI("Quest");
+            }
+        }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;

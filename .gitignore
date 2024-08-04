@@ -217,3 +217,4 @@ Server/SharedDB/obj/project.assets.json
 Server/SharedDB/obj/project.nuget.cache
 Server/SharedDB/obj/SharedDB.csproj.nuget.dgspec.json
 Server/SharedDB/obj/SharedDB.csproj.nuget.g.props
+RPG/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json

@@ -50,7 +50,7 @@ public class Quest
 public class BattleQuest : Quest
 {
     public List<BattleQuestGoals> goals;
-    Dictionary<int, int> countDict = new Dictionary<int, int>();
+    public Dictionary<int, int> countDict = new Dictionary<int, int>();
     public BattleQuest(QuestData questData) : base(QuestType.Battle)
     {
         if (questData == null)
@@ -91,7 +91,7 @@ public class BattleQuest : Quest
 public class CollectionQuest : Quest
 {
     public List<CollectionQuestGoals> goals;
-    Dictionary<int, int> countDict = new Dictionary<int, int>();
+    public Dictionary<int, int> countDict = new Dictionary<int, int>();
     public CollectionQuest(QuestData questData) : base(QuestType.Collection)
     {
         if (questData == null)

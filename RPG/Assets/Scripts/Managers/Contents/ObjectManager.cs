@@ -62,7 +62,7 @@ public class ObjectManager
                 pc.SetInfo(info);
                 pc.SetPos(info.PosInfo.Pos, info.PosInfo.Rotate);
                 NavMeshAgent agent = pc.GetComponent<NavMeshAgent>();
-#if UNITY_SERVER
+
                 if(!agent.isOnNavMesh)
                 {
                     C_RequestLeaveGame requestLeaveGame = new C_RequestLeaveGame();
@@ -70,7 +70,7 @@ public class ObjectManager
                     Managers.Network.Send(requestLeaveGame);
                     return;
                 }
-#endif
+
                 agent.enabled = true;
             }
         }

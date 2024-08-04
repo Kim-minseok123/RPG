@@ -1,3 +1,5 @@
 is_global = true
 build_property.RootNamespace = PacketGenerator
-build_property.ProjectDir = E:\GitHub\RPG\Server\PacketGenerator\
+build_property.ProjectDir = C:\Users\chaos\바탕 화면\Git\RPG\Server\PacketGenerator\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

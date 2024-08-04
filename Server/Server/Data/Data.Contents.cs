@@ -233,6 +233,7 @@ namespace Server.Data
         public string questDetailString;
         public string questNpcIconPath;
         public string questItemIconPath;
+        public string goalText;
     }
     [Serializable]
     public class QuestReward

@@ -8,6 +8,10 @@ namespace Server.Game
 {
     public class QuestNpc : Npc
     {
+        public QuestNpc()
+        {
+            ObjectType = GameObjectType.Npc;
+        }
         public override void Init(int templateId)
         {
             if (DataManager.NpcDict.TryGetValue(templateId, out npcData) == false) return;

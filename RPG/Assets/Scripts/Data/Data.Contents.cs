@@ -238,6 +238,7 @@ namespace Data
         public string questNpcIconPath;
         public string questItemIconPath;
         public string questLocationString;
+        public string goalText;
     }
     [Serializable]
     public class QuestReward
