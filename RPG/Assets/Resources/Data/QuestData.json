@@ -59,7 +59,7 @@
       "questNpcIconPath": "Textures/Quest/라이네",
       "questItemIconPath;": "",
       "questLocationString": "안토니오",
-      "goalText":"레드 드래곤",
+      "goalText": "레드 드래곤",
       "goals": [
         {
           "enemyId": "2",
@@ -92,7 +92,7 @@
       "questNpcIconPath": "Textures/Quest/스미스",
       "questItemIconPath": "Textures/Item/RedKatana",
       "questLocationString": "안토니오",
-      "goalText":"화염의 카타나",
+      "goalText": "화염의 카타나",
       "goals": [
         {
           "collectionId": "4",
@@ -126,7 +126,7 @@
       "questItemIconPath;": "",
       "questLocationString": "안토니오",
       "goals": "2",
-      "goalText" : "미궁 깊은 곳 입장"
+      "goalText": "미궁 깊은 곳 입장"
     }
   ]
 } 

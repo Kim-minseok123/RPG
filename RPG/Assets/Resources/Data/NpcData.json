@@ -32,15 +32,28 @@
     },
     {
       "id": "3",
-      "name": "스톰"
+      "name": "스톰",
+      "npcQuestLists": [
+        "1"
+      ],
+      "questNonString": "날씨가 정말 괜찮은거 같지 않아?"
     },
     {
       "id": "4",
-      "name": "스미스"
+      "name": "스미스",
+      "npcQuestLists": [
+        "101"
+      ],
+      "questNonString": "어이. 지금은 바쁘니까 나중에 오라고. 그 땐 내가 서비스 해주지."
     },
     {
       "id": "5",
-      "name": "라이네"
+      "name": "라이네",
+      "npcQuestLists": [
+        "2",
+        "201"
+      ],
+      "questNonString": "장로로서, 마을에 신경을 쓰는건 당연한 일이지."
     }
   ]
 } 

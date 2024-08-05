@@ -101,7 +101,7 @@ public class UI_Quest : UI_Base
         {
             GameObject go = Managers.Resource.Instantiate("UI/SubItem/UI_Quest_Item", parent);
             UI_Quest_Item questItem = go.GetComponent<UI_Quest_Item>();
-            questItem.Settting(quest, this);
+            questItem.Setting(quest, this);
             questItems.Add(questItem);
             if (currentItem != null && questItem._quest.TemplateId == currentItem._quest.TemplateId)
                 currentItem = questItem;

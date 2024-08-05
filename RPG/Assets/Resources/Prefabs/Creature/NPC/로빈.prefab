@@ -3033,6 +3033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NameTag: {fileID: 0}
+  NpcName: {fileID: 2756499268687024453}
   templateId: 2
 --- !u!114 &-2320410939433518671
 MonoBehaviour:

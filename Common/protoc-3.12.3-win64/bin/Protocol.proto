@@ -62,6 +62,12 @@ enum MsgId {
   C_END_BOSS_ITEM_CUT_SCENE = 55;
   S_END_BOSS_ITEM_CUT_SCENE = 56;
   C_REQUEST_LEAVE_GAME = 57;
+  C_ADD_QUEST = 58;
+  S_ADD_QUEST = 59;
+  C_CLEAR_QUEST = 60;
+  S_CLEAR_QUEST = 61;
+  S_QUEST_CHANGE_VALUE = 62;
+  S_ALL_QUEST_LIST = 63;
 }
 
 enum CreatureState {
@@ -369,6 +375,24 @@ message C_EndBossItemCutScene{
 
 }
 message S_EndBossItemCutScene{
+
+}
+message C_AddQuest {
+
+}
+message S_AddQuest {
+
+}
+message C_ClearQuest {
+
+}
+message S_ClearQuest {
+
+}
+message S_QuestChangeValue {
+
+}
+message S_AllQuestList {
 
 }
 message C_RequestLeaveGame{

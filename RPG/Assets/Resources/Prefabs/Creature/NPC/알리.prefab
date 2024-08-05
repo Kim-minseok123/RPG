@@ -1693,6 +1693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NameTag: {fileID: 4483947635387743656}
+  NpcName: {fileID: 9015218604763933003}
   templateId: 1
   animator: {fileID: 95455848339679364}
 --- !u!136 &9146079426951236320

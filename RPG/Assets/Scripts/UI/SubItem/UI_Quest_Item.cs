@@ -49,7 +49,7 @@ public class UI_Quest_Item : UI_Base
         GetButton((int)Buttons.QuestDetailBtn).GetComponent<Image>().color = Util.HexColor("#262021");
         Debug.Log("asd");
     }
-    public void Settting(Quest quest, UI_Quest uiQuest)
+    public void Setting(Quest quest, UI_Quest uiQuest)
     {
         if (Managers.Data.QuestDict.TryGetValue(quest.TemplateId, out QuestData questData) == false) return;
         _quest = quest;

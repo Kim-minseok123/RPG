@@ -200,6 +200,8 @@ namespace Data
         public int id;
         public string name;
         public List<NpcSellList> npcSellLists;
+        public List<int> npcQuestLists;
+        public string questNonString;
     }
 
     [Serializable]

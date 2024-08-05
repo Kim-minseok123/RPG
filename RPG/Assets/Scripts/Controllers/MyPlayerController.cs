@@ -40,6 +40,7 @@ public class MyPlayerController : PlayerController
         }
     }
     public bool NpcTrigger = false;
+    public bool QuestTrigger = false;
     public GameObject Body;
     protected override void Init()
     {
@@ -395,6 +396,7 @@ public class MyPlayerController : PlayerController
         {
             if (currentTime - lastInteractionTime < interactionCooldown)
                 return;
+            if (QuestTrigger == true) return;
             NPCController npcController = other.gameObject.GetComponent<NPCController>();
             lastInteractionTime = currentTime;
             if(npcController != null && NpcTrigger == false)

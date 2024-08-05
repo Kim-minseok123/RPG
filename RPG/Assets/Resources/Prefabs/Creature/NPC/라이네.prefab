@@ -819,9 +819,10 @@ GameObject:
   - component: {fileID: 7855633141151207079}
   - component: {fileID: 7855633141151207081}
   - component: {fileID: -3736223200358660156}
+  - component: {fileID: 5695722392697967313}
   m_Layer: 0
   m_Name: "\uB77C\uC774\uB124"
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -935,7 +936,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NameTag: {fileID: 2190415573270198880}
+  NpcName: {fileID: 5336551592154969016}
   templateId: 5
+  SetCmPos: {x: 0, y: 1, z: -2.2}
+  SetCmRot: {x: 0, y: 0, z: 0}
+--- !u!136 &5695722392697967313
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7855633141151207080}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.8
+  m_Height: 4
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.64, z: 0}
 --- !u!1 &7855633141162791014
 GameObject:
   m_ObjectHideFlags: 0

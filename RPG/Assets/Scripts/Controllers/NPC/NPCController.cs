@@ -1,13 +1,15 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class NPCController : BaseController
 {
     public GameObject NameTag;
+    public TextMeshProUGUI NpcName;
     [SerializeField]
-    int templateId = 1;
+    protected int templateId = 1;
     public virtual void OpenNpc()
     {
         NpcOpenTrigger();
