@@ -50,6 +50,9 @@ public class ObjectManager
                 {
                     Camera.main.GetComponent<AudioListener>().enabled = false;
                 }
+#if UNITY_SERVER
+                Managers.Quest.Init();
+#endif
             }
             else
             {

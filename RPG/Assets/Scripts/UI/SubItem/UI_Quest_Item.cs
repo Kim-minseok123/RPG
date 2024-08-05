@@ -2,6 +2,7 @@ using Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UI_Quest_Item : UI_Base
@@ -28,21 +29,25 @@ public class UI_Quest_Item : UI_Base
         BindText(typeof(Texts));
         BindButton(typeof(Buttons));
 
-        GetButton((int)Buttons.QuestDetailBtn).gameObject.BindEvent(
-            (e) => {
-                //391010
-                //262021
-                if(parent != null)
-                    parent.QuestDetailUI(_questData, this);
-                GetButton((int)Buttons.QuestDetailBtn).GetComponent<Image>().color = Util.HexColor("#391010");
-            });
+        GetButton((int)Buttons.QuestDetailBtn).gameObject.BindEvent(ClickQuest);
 
         _init = true;
         RefesthUI();
     }
+    public void ClickQuest(PointerEventData data)
+    {
+        if (parent != null)
+            parent.OpenQuestDetailUI(_questData, this);
+        Managers.Sound.Play("ButtonClick");
+    }
+    public void SetColor()
+    {
+        GetButton((int)Buttons.QuestDetailBtn).GetComponent<Image>().color = Util.HexColor("#391010");
+    }
     public void ResetColor()
     {
         GetButton((int)Buttons.QuestDetailBtn).GetComponent<Image>().color = Util.HexColor("#262021");
+        Debug.Log("asd");
     }
     public void Settting(Quest quest, UI_Quest uiQuest)
     {

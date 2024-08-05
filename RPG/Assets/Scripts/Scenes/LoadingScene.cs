@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LoadingScene : BaseScene
 {
-    WaitForSeconds delay = new WaitForSeconds(0.5f);
+    WaitForSeconds delay = new WaitForSeconds(1f);
     public override void Clear()
     {
         
@@ -25,6 +25,6 @@ public class LoadingScene : BaseScene
         yield return delay; 
         if (Managers.NextScene == Define.Scene.Unknown) Debug.LogError("잘못된 씬으로 이동 요청");
         TransitionSettings ts = Managers.Resource.Load<TransitionSettings>("Trans/LinearWipe");
-        TransitionManager.Instance().Transition(Managers.NextScene, ts, 0);
+        TransitionManager.Instance().Transition(Managers.NextScene, ts, 0, Managers.NextAction);
     }
 }

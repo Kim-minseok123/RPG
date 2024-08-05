@@ -76,14 +76,16 @@ public class UI_PlayerInfoCanvas_Item : UI_Base
         Managers.Sound.Play("ButtonClick");
 
         TransitionSettings ts = Managers.Resource.Load<TransitionSettings>("Trans/LinearWipe");
-        TransitionManager.Instance().Transition(Define.Scene.Game, ts, 0, () => {
+        Managers.NextAction = () => {
             Managers.Quest.Init();
             C_EnterGame enterGamePacket = new C_EnterGame();
             enterGamePacket.Name = playerInfo.Name;
             Managers.Network.Send(enterGamePacket);
             Managers.Object.ClassType = playerInfo.ClassType;
             Managers.UI.CloseAllPopupUI();
-        });
+        };
+        Managers.NextScene = Define.Scene.Game;
+        TransitionManager.Instance().Transition(Define.Scene.Loading, ts, 0);
        
     }
 }

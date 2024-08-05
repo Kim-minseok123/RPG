@@ -1,7 +1,9 @@
 using Data;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,6 +13,7 @@ public class UI_Quest : UI_Base
     bool _init = false;
     List<UI_Quest_Item> questItems = new List<UI_Quest_Item>();
     UI_Quest_Item currentItem = null;
+    bool currentTab = true;
     enum GameObjects
     {
         DetailBackground,
@@ -33,7 +36,8 @@ public class UI_Quest : UI_Base
     {
         ProgressBtn,
         FinishBtn,
-        ExitButton
+        ExitButton,
+        CloseDetailBtn,
     }
     public override void Init()
     {
@@ -50,8 +54,11 @@ public class UI_Quest : UI_Base
         GetButton((int)Buttons.ExitButton).gameObject.BindEvent((e) => {
             var ui = Managers.UI.SceneUI as UI_GameScene; ui.CloseUI("UI_Quest");
         });
+        GetButton((int)Buttons.CloseDetailBtn).gameObject.BindEvent((e) => {
+            Managers.Sound.Play("ButtonClick");
+            CloseQuestDetailUI();
+        });
         questItems.Clear();
-        ViewProgressQuest(null);
         _init = true;
         RefreshUI();
     }
@@ -59,19 +66,29 @@ public class UI_Quest : UI_Base
     {
         GetButton((int)Buttons.ProgressBtn).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Content/name_bar2");
         GetButton((int)Buttons.FinishBtn).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Content/name_bar3");
-        GetObject((int)GameObjects.DetailBackground).SetActive(false);
+        if (currentTab == false)
+        {
+            CloseQuestDetailUI(); Managers.Sound.Play("ButtonClick");
+        }
 
         List<Quest> quests = Managers.Quest.GetAllQuest();
+        GetObject((int)GameObjects.QuestContent).GetComponent<RectTransform>().sizeDelta = new Vector2(0, (quests.Count + 1) * 40);
         QuestListUI(quests);
+        currentTab = true;
     }
     public void ViewFinishQuest(PointerEventData point)
     {
         GetButton((int)Buttons.FinishBtn).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Content/name_bar2");
         GetButton((int)Buttons.ProgressBtn).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("UI/Content/name_bar3");
-        GetObject((int)GameObjects.DetailBackground).SetActive(false);
+        if (currentTab == true)
+        {
+            CloseQuestDetailUI(); Managers.Sound.Play("ButtonClick");
+        }
 
         List<Quest> quests = Managers.Quest.GetAllFinishQuest();
+        GetObject((int)GameObjects.QuestContent).GetComponent<RectTransform>().sizeDelta = new Vector2(0, (quests.Count + 1) * 40);
         QuestListUI(quests);
+        currentTab = false;
     }
     public void QuestListUI(List<Quest> quests)
     {
@@ -86,13 +103,16 @@ public class UI_Quest : UI_Base
             UI_Quest_Item questItem = go.GetComponent<UI_Quest_Item>();
             questItem.Settting(quest, this);
             questItems.Add(questItem);
+            if (currentItem != null && questItem._quest.TemplateId == currentItem._quest.TemplateId)
+                currentItem = questItem;
         }
     }
-    public void QuestDetailUI(QuestData questData, UI_Quest_Item item)
+    public void OpenQuestDetailUI(QuestData questData, UI_Quest_Item item)
     {
-        if (currentItem != null)
+        if (currentItem != null && currentItem != item)
             currentItem.ResetColor();
         currentItem = item;
+        currentItem.SetColor();
         GetText((int)Texts.QuestFullNameText).text = questData.questTitle;
         GetText((int)Texts.QuestDemandLevelText).text = $"레벨 {questData.demandLevel}이상";
         GetText((int)Texts.QuestLocationText).text = questData.questLocationString;
@@ -129,10 +149,37 @@ public class UI_Quest : UI_Base
                 break;
         }
         GetObject((int)GameObjects.DetailBackground).SetActive(true);
+
+        //Dotween
+        GetObject((int)GameObjects.DetailBackground).transform.DOLocalMoveX(435f, 0.15f).SetEase(Ease.OutExpo);
+    }
+    public void CloseQuestDetailUI()
+    {
+        if (currentItem != null)
+            currentItem.ResetColor();
+        currentItem = null;
+        GetObject((int)GameObjects.DetailBackground).transform.DOLocalMoveX(65f, 0.15f)
+            .SetEase(Ease.OutExpo)
+            .OnComplete(
+            () => { GetObject((int)GameObjects.DetailBackground).SetActive(false); }
+            );
     }
     public void RefreshUI()
     {
         if (_init == false) return;
-
+        if (currentItem != null )
+        {
+            if(currentTab == true)
+                ViewProgressQuest(null);
+            else
+                ViewFinishQuest(null);
+            currentItem.ClickQuest(null);
+            currentItem.SetColor();
+        }
+        else
+            if (currentTab == true)
+                ViewProgressQuest(null);
+            else
+                ViewFinishQuest(null);
     }
 }

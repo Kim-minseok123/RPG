@@ -54,7 +54,7 @@ public class UI_Skill : UI_Base
 
         MyPlayerController myPlayer = Managers.Object.MyPlayer;
         if (myPlayer == null) return;
-
+        grid.GetComponent<RectTransform>().sizeDelta = new Vector2(0, (Managers.Data.BeginnerSkillData.Count + 1) * 80);
         if (myPlayer.ClassType == (int)ClassTypes.Beginner)
         {
             for (int i = 0; i < Managers.Data.BeginnerSkillData.Count; i++)

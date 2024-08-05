@@ -1,4 +1,5 @@
 ﻿using Google.Protobuf.Protocol;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ public class Managers : MonoBehaviour
 {
     static Managers s_instance; // 유일성이 보장된다
     public static Define.Scene NextScene = Define.Scene.Unknown;
+    public static Action NextAction = null;
     public static Managers Instance { get { Init(); return s_instance; } } // 유일한 매니저를 갖고온다
 
     #region Contents
