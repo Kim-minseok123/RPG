@@ -13,7 +13,8 @@ public class Quest
     public int DemandQuest { get; private set; }
     public bool IsRepeated { get; private set; }
     public QuestReward Reward { get; private set; }
-    public bool IsFinish { get; protected set; }
+    public string QuestName { get; private set; }   
+    public bool IsFinish { get; set; }
     public Quest(QuestType questType)
     {
         QuestType = questType;
@@ -42,6 +43,7 @@ public class Quest
             quest.DemandQuest = questData.demandQuest;
             quest.DemandLevel = questData.demandLevel;
             quest.Reward = questData.reward;
+            quest.QuestName = questData.questTitle;
             quest.IsFinish = false;
         }
         return quest;

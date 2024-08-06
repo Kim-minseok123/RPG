@@ -12,7 +12,7 @@ public class UI_Quest : UI_Base
 {
     bool _init = false;
     List<UI_Quest_Item> questItems = new List<UI_Quest_Item>();
-    UI_Quest_Item currentItem = null;
+    public UI_Quest_Item currentItem = null;
     bool currentTab = true;
     enum GameObjects
     {
@@ -181,5 +181,10 @@ public class UI_Quest : UI_Base
                 ViewProgressQuest(null);
             else
                 ViewFinishQuest(null);
+    }
+    public void ResetCurrentItem(Quest quest)
+    {
+        if (currentItem._quest.TemplateId == quest.TemplateId)
+            CloseQuestDetailUI();
     }
 }

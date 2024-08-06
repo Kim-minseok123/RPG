@@ -63,7 +63,14 @@ namespace Server.Game
         public void HandleAddItem(Player player, C_AddItem addItemPacket)
         {
             if (player == null) return;
-
+            if(addItemPacket.TemplateId == 1000)
+            {
+                RewardData rewardData = new RewardData();
+                rewardData.itemId = 1000;
+                rewardData.count = addItemPacket.Count;
+                DbTransaction.GetItemPlayer(player, rewardData, this);
+                return;
+            }
             ItemData itemData;
             if (DataManager.ItemDict.TryGetValue(addItemPacket.TemplateId, out itemData) == false) return;
             if(itemData.itemType == ItemType.Consumable)

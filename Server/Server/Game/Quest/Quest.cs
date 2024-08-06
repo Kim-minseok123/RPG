@@ -14,7 +14,7 @@ namespace Server.Game
         public int DemandQuest { get; private set; }
         public bool IsRepeated { get; private set; }
         public QuestReward Reward { get; private set; }
-        public bool IsFinish { get; protected set; }
+        public bool IsFinish { get; set; }
         public Quest(QuestType questType)
         {
             QuestType = questType;
@@ -51,7 +51,7 @@ namespace Server.Game
     public class BattleQuest : Quest
     {
         public List<BattleQuestGoals> goals;
-        Dictionary<int, int> countDict = new Dictionary<int, int>();
+        public Dictionary<int, int> countDict = new Dictionary<int, int>();
         public BattleQuest(QuestData questData) : base(QuestType.Battle)
         {
             if (questData == null)
@@ -92,7 +92,7 @@ namespace Server.Game
     public class CollectionQuest : Quest
     {
         public List<CollectionQuestGoals> goals;
-        Dictionary<int, int> countDict = new Dictionary<int, int>();
+        public Dictionary<int, int> countDict = new Dictionary<int, int>();
         public CollectionQuest(QuestData questData) : base(QuestType.Collection)
         {
             if (questData == null)

@@ -88,7 +88,15 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.SBossItemCutScene, MakePacket<S_BossItemCutScene>);
 		_handler.Add((ushort)MsgId.SBossItemCutScene, PacketHandler.S_BossItemCutSceneHandler);		
 		_onRecv.Add((ushort)MsgId.SEndBossItemCutScene, MakePacket<S_EndBossItemCutScene>);
-		_handler.Add((ushort)MsgId.SEndBossItemCutScene, PacketHandler.S_EndBossItemCutSceneHandler);
+		_handler.Add((ushort)MsgId.SEndBossItemCutScene, PacketHandler.S_EndBossItemCutSceneHandler);		
+		_onRecv.Add((ushort)MsgId.SAddQuest, MakePacket<S_AddQuest>);
+		_handler.Add((ushort)MsgId.SAddQuest, PacketHandler.S_AddQuestHandler);		
+		_onRecv.Add((ushort)MsgId.SClearQuest, MakePacket<S_ClearQuest>);
+		_handler.Add((ushort)MsgId.SClearQuest, PacketHandler.S_ClearQuestHandler);		
+		_onRecv.Add((ushort)MsgId.SQuestChangeValue, MakePacket<S_QuestChangeValue>);
+		_handler.Add((ushort)MsgId.SQuestChangeValue, PacketHandler.S_QuestChangeValueHandler);		
+		_onRecv.Add((ushort)MsgId.SAllQuestList, MakePacket<S_AllQuestList>);
+		_handler.Add((ushort)MsgId.SAllQuestList, PacketHandler.S_AllQuestListHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

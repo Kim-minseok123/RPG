@@ -8,6 +8,7 @@ namespace Server.Game
 {
     public class QuestNpc : Npc
     {
+        public List<int> QuestList { get; private set; } = new List<int>();
         public QuestNpc()
         {
             ObjectType = GameObjectType.Npc;
@@ -16,7 +17,7 @@ namespace Server.Game
         {
             if (DataManager.NpcDict.TryGetValue(templateId, out npcData) == false) return;
             Info.Name = npcData.name;
-
+            QuestList = npcData.npcQuestLists;
             ObjectType = GameObjectType.Npc;
             if (npcData.id == 3)
             {

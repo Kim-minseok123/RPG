@@ -378,19 +378,27 @@ message S_EndBossItemCutScene{
 
 }
 message C_AddQuest {
-
+  int32 npcId = 1;
+  int32 questId = 2;
 }
 message S_AddQuest {
-
+  int32 questId = 1;
 }
 message C_ClearQuest {
-
+  int32 npcId = 1;
+  int32 questId = 2;
+  QuestType questType = 3;
 }
 message S_ClearQuest {
-
+  int32 questId = 1;
+  QuestType questType = 2;
 }
 message S_QuestChangeValue {
-
+  int32 questId = 1;
+  QuestType questType = 2;
+  int32 templateId = 3;
+  int32 count = 4;
+  bool isFinish = 5;
 }
 message S_AllQuestList {
 

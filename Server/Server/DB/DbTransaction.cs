@@ -85,8 +85,16 @@ namespace Server.DB
 			{
                 playerDb.PlayerDbId = player.PlayerDbId;
                 Random random = new Random();
-                int randVal = rewardData.count / 10;
-                playerDb.Money = player.Inven.Money + rewardData.count + random.Next(-randVal, randVal + 1);
+                if(dropItem != null)
+                {
+                    int randVal = rewardData.count / 10;
+                    playerDb.Money = player.Inven.Money + rewardData.count + random.Next(-randVal, randVal + 1);
+                }
+                else
+                {
+                    playerDb.Money = player.Inven.Money + rewardData.count;
+                }
+                
             }
                 
             // You
@@ -110,6 +118,7 @@ namespace Server.DB
 									itemPacket.Money = itemDb.Count;
 									player.Session.Send(itemPacket);
 									dropItem?.DisappearItem();
+                                    player.QuestInven.UpdateQuestProgress(QuestType.Collection, new CollectionQuestGoals { collectionId = 1000, count = itemDb.Count });
 								}
 							});
                         }
@@ -144,7 +153,7 @@ namespace Server.DB
                                     }
                                     player.Session.Send(itemPacket);
                                     Console.WriteLine("플레이어 " + player.Id + " 소지한 골드 : " + player.Inven.Money);
-
+                                    player.QuestInven.UpdateQuestProgress(QuestType.Collection, new CollectionQuestGoals { collectionId = newItem.TemplateId, count = itemDb.Count });
                                     dropItem?.DisappearItem();
                                 }
                             });
@@ -211,6 +220,8 @@ namespace Server.DB
                                     }
                                     player.Session.Send(itemPacket);
                                     dropItem?.DisappearItem();
+                                    player.QuestInven.UpdateQuestProgress(QuestType.Collection, new CollectionQuestGoals { collectionId = rewardData.itemId, count = rewardData.count });
+
                                     Console.WriteLine("플레이어 " + player.Id + " 소지한 골드 : " + player.Inven.Money);
 
 
@@ -268,6 +279,7 @@ namespace Server.DB
                                         player.Session.Send(itemPacket);
                                         Console.WriteLine("플레이어 " + player.Id + " 소지한 골드 : " + player.Inven.Money);
                                     }
+                                    player.QuestInven.UpdateQuestProgress(QuestType.Collection, new CollectionQuestGoals { collectionId = rewardData.itemId, count = rewardData.count });
                                     dropItem?.DisappearItem();
                                 });
                             }
@@ -336,6 +348,8 @@ namespace Server.DB
                                             player.Inven.Money -= minusMoney;
                                         }
                                         player.Session.Send(itemPacket);
+
+                                        player.QuestInven.UpdateQuestProgress(QuestType.Collection, new CollectionQuestGoals { collectionId = rewardData.itemId, count = rewardData.count });
                                         Console.WriteLine("플레이어 " + player.Id + " 소지한 골드 : " + player.Inven.Money);
 
 

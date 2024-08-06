@@ -47,6 +47,10 @@ public class QuestManager
         
         return quests;
     }
+    public bool CheckClearQuest(int id, QuestType questType)
+    {
+        return QuestList[(int)questType].TryGetValue(id, out Quest quest) && quest.IsFinish;
+    }
     public bool CheckIsFinishQuest(int id)
     {
         return FinishedQuest.TryGetValue(id,out Quest value);

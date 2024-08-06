@@ -32,7 +32,6 @@ public class UI_InvenSlot : UI_Base
             if (e.clickCount < 2) return;
             if (_icon.color.a == 0f)
                 return;
-            Managers.Sound.Play("ItemSwap");
             if (itemData == null)
                 return;
             
@@ -42,13 +41,24 @@ public class UI_InvenSlot : UI_Base
                 useItemPacket.ItemDbId = ItemDbID;
                 useItemPacket.Count = 1;
                 Managers.Network.Send(useItemPacket);
+                //Managers.Sound.Play("ItemSwap");
                 return;
             }
             if (!satisfiedClass || !satisfiedLevel)
+            {
+                UI_SceneConfirm_Popup go = Managers.Resource.Instantiate("UI/Popup/UI_SceneConfirm_Popup").GetComponent<UI_SceneConfirm_Popup>();
+                go.Setting($"<color=green>(상태)</color>\n\n착용할 수 없는 장비입니다.");
                 return;
+            }
             if (description != null)
                 Managers.Resource.Destroy(description);
-            if (Managers.Object.MyPlayer.State != CreatureState.Idle) return;
+            if (Managers.Object.MyPlayer.State != CreatureState.Idle) 
+            {
+                UI_SceneConfirm_Popup go = Managers.Resource.Instantiate("UI/Popup/UI_SceneConfirm_Popup").GetComponent<UI_SceneConfirm_Popup>();
+                go.Setting($"<color=green>(상태)</color>\n\n전투 중엔 착용할 수 없습니다.");
+                return; 
+            }
+            Managers.Sound.Play("ItemSwap");
             C_EquipItem equipPacket = new C_EquipItem();
             equipPacket.ItemDbId = ItemDbID;
             equipPacket.Equipped = true;

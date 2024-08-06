@@ -542,6 +542,76 @@ class PacketHandler
     {
 
     }
+    public static void S_AddQuestHandler(PacketSession session, IMessage packet)
+    {
+        S_AddQuest addQuestPacket = (S_AddQuest)packet;
+        Quest quest = Quest.MakeQuest(addQuestPacket.QuestId);
+        if (quest == null) return;
+        Managers.Quest.AddQuest(quest);
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        if (gameSceneUI != null)
+        {
+            gameSceneUI.QuestUI.RefreshUI();
+        }
+    }
+    public static void S_ClearQuestHandler(PacketSession session, IMessage packet)
+    {
+        S_ClearQuest clearQuestPacket = (S_ClearQuest)packet;
+        Quest quest = Managers.Quest.GetQuest(clearQuestPacket.QuestId, clearQuestPacket.QuestType);
+        if (quest == null) return;
+        Managers.Quest.RemoveQuest(quest);
+        Managers.Quest.FinishQuest(quest);
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        if (gameSceneUI != null)
+        {
+            gameSceneUI.QuestUI.ResetCurrentItem(quest);
+            gameSceneUI.QuestUI.RefreshUI();
+        }
+    }
+    public static void S_QuestChangeValueHandler(PacketSession session, IMessage packet)
+    {
+        S_QuestChangeValue questChangeValue = (S_QuestChangeValue)packet;
+        Quest quest = Managers.Quest.GetQuest(questChangeValue.QuestId, questChangeValue.QuestType);
+        if (quest == null) return;
+
+        switch (quest.QuestType)
+        {
+            case QuestType.Battle:
+                {
+                    BattleQuest battleQuest = (BattleQuest)quest;
+                    battleQuest?.Update(new Data.BattleQuestGoals() { enemyId = questChangeValue.TemplateId, count = questChangeValue.Count });
+                    battleQuest.IsFinish = questChangeValue.IsFinish;
+                }
+                break;
+            case QuestType.Collection:
+                {
+                    CollectionQuest collectionQuest = (CollectionQuest)quest;
+                    collectionQuest?.Update(new Data.CollectionQuestGoals() { collectionId = questChangeValue.TemplateId, count = questChangeValue.Count });
+                    collectionQuest.IsFinish = questChangeValue.IsFinish;
+                }
+                break;
+            case QuestType.Enter:
+                {
+                    EnterQuest enterQuest = (EnterQuest)quest;
+                    enterQuest.IsFinish = questChangeValue.IsFinish;
+                }
+                break;
+        }
+        if(quest.IsFinish == true)
+        {
+            UI_SceneConfirm_Popup go = Managers.Resource.Instantiate("UI/Popup/UI_SceneConfirm_Popup").GetComponent<UI_SceneConfirm_Popup>();
+            go.Setting($"<color=green>(퀘스트)</color>\n\n{quest.QuestName} <color=green>완료</color>");
+        }
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        if (gameSceneUI != null)
+        {
+            gameSceneUI.QuestUI.RefreshUI();
+        }
+    }
+    public static void S_AllQuestListHandler(PacketSession session, IMessage packet)
+    {
+
+    }
 }
 
 

@@ -191,13 +191,6 @@ namespace Server.Game
                         player.Vision.SetVisionCell(VisionCells);
                     player.isCanVision = true;
                     player.Vision.Update();
-					// 테스트
-					Quest quest = Quest.MakeQuest(1);
-					if(quest != null)
-					{
-						player.QuestInven.AddQuest(quest);
-					}
-
                 }
             }
 			else if (type == GameObjectType.Monster)
@@ -494,6 +487,7 @@ namespace Server.Game
                     player.Pos.PosY = 0.5f;
                     EnterGame(player);
 					player.Session.Send(setMasterClient);
+					player.QuestInven.UpdateQuestProgress(QuestType.Enter, 2);
                 }
                 // 드래곤 소환
                 if (moveMapPlayer[0] != null)

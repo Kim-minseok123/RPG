@@ -340,4 +340,32 @@ class PacketHandler
             return;
         room.Push(room.HandleLeaveGame, player, leaveGamePacket);
     }
+    public static void C_AddQuestHandler(PacketSession session, IMessage packet)
+    {
+        C_AddQuest addQuestPacket = (C_AddQuest)packet;
+
+        ClientSession clientSession = (ClientSession)session;
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+        room.Push(room.HandleAddQuest, player, addQuestPacket);
+    }
+    public static void C_ClearQuestHandler(PacketSession session, IMessage packet)
+    {
+        C_ClearQuest clearQuest = (C_ClearQuest)packet;
+
+        ClientSession clientSession = (ClientSession)session;
+        Player player = clientSession.MyPlayer;
+        if (player == null)
+            return;
+
+        GameRoom room = player.Room;
+        if (room == null)
+            return;
+        room.Push(room.HandleClearQuest, player, clearQuest);
+    }
 }

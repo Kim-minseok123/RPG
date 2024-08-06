@@ -10,12 +10,14 @@ namespace Server.Game
     {
         Dictionary<int, Quest>[] QuestList = new Dictionary<int, Quest>[(int)QuestType.MaxCount];
         Dictionary<int, Quest> FinishedQuest = new Dictionary<int, Quest>();
-        public QuestInventory()
+        Player player = null;
+        public QuestInventory(Player player)
         {
             for (int i = 0; i < QuestList.Length; i++)
             {
                 QuestList[i] = new Dictionary<int, Quest>();
             }
+            this.player = player;
         }
         public void AddQuest(Quest quest)
         {
@@ -46,19 +48,35 @@ namespace Server.Game
                     case BattleQuest battleQuest when questGoals is BattleQuestGoals battleGoals:
                         if (battleQuest.Update(battleGoals))
                         {
-
+                            S_QuestChangeValue changeValue = new S_QuestChangeValue();
+                            changeValue.QuestId = battleQuest.TemplateId;
+                            changeValue.QuestType = QuestType.Battle;
+                            changeValue.TemplateId = battleGoals.enemyId;
+                            changeValue.Count = battleGoals.count;
+                            changeValue.IsFinish = battleQuest.IsFinish;
+                            player?.Session.Send(changeValue);
                         }
                         break;
                     case CollectionQuest collectionQuest when questGoals is CollectionQuestGoals collectionGoals:
                         if (collectionQuest.Update(collectionGoals))
                         {
-
+                            S_QuestChangeValue changeValue = new S_QuestChangeValue();
+                            changeValue.QuestId = collectionQuest.TemplateId;
+                            changeValue.QuestType = QuestType.Collection;
+                            changeValue.TemplateId = collectionGoals.collectionId;
+                            changeValue.Count = collectionGoals.count;
+                            changeValue.IsFinish = collectionQuest.IsFinish;
+                            player?.Session.Send(changeValue);
                         }
                         break;
                     case EnterQuest enterQuest when questGoals is int enterGoals:
                         if (enterQuest.Update(enterGoals))
                         {
-
+                            S_QuestChangeValue changeValue = new S_QuestChangeValue();
+                            changeValue.QuestId = enterQuest.TemplateId;
+                            changeValue.QuestType = QuestType.Enter;
+                            changeValue.IsFinish = enterQuest.IsFinish;
+                            player?.Session.Send(changeValue);
                         }
                         break;
                 }

@@ -1,5 +1,6 @@
 ﻿using Data;
 using DG.Tweening;
+using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,6 +15,7 @@ public class UI_QuestDialogue_Popup : UI_Popup
     Tweener tweener = null;
     bool _init = false;
     bool QuestTrigger = false;
+    bool QuestEnd = false;
     enum GameObjects
     {
         Content,
@@ -46,23 +48,24 @@ public class UI_QuestDialogue_Popup : UI_Popup
 
         RefreshUI();
     }
+    bool QuestAccept = false;
     public void AcceptQuest()
     {
-
+        GetText((int)Texts.DialogueText).text = "";
+        GetButton((int)Buttons.YesBtn).gameObject.SetActive(false);
+        GetButton((int)Buttons.NoBtn).gameObject.SetActive(false);
+        QuestTrigger = false;
+        QuestEnd = false;
+        QuestAccept = false;
+        GetText((int)Texts.DialogueText).DOText(selectQuest.questAcceptString, selectQuest.questAcceptString.Length * 0.02f).OnComplete(() => { QuestEnd = true; QuestAccept = true; });
     }
     public void DeclineQuest()
     {
         GetText((int)Texts.DialogueText).text = "";
         GetButton((int)Buttons.YesBtn).gameObject.SetActive(false);
         GetButton((int)Buttons.NoBtn).gameObject.SetActive(false);
-        GetText((int)Texts.DialogueText).DOText(selectQuest.questRefuseString, selectQuest.questRefuseString.Length * 0.02f).OnComplete(() => { StartCoroutine(CoEndDialogue()); });
-    }
-    IEnumerator CoEndDialogue()
-    {
-        yield return new WaitForSeconds(2f);
         QuestTrigger = false;
-        Managers.Object.MyPlayer.QuestTrigger = false;
-        npc.CloseNpc();
+        GetText((int)Texts.DialogueText).DOText(selectQuest.questRefuseString, selectQuest.questRefuseString.Length * 0.02f).OnComplete(() => { QuestEnd = true; });
     }
     public void Setting(QuestNpc questNpc, List<QuestData> questDatas)
     {
@@ -114,6 +117,29 @@ public class UI_QuestDialogue_Popup : UI_Popup
         {
             ShowText(count++);
         }
+        else if(QuestEnd == true && Input.GetKeyDown(KeyCode.Space))
+        {
+            QuestEnd = false;
+            if(QuestClear == true)
+            {
+                // 클리어 패킷
+                C_ClearQuest clearQuestPacket = new C_ClearQuest();
+                clearQuestPacket.NpcId = npc.Id;
+                clearQuestPacket.QuestId = selectQuest.id;
+                clearQuestPacket.QuestType = selectQuest.questType;
+                Managers.Network.Send(clearQuestPacket);
+            }
+            else if(QuestAccept == true)
+            {
+                // 퀘스트 수락 패킷
+                C_AddQuest addQuestPacekt = new C_AddQuest();
+                addQuestPacekt.NpcId = npc.Id;
+                addQuestPacekt.QuestId = selectQuest.id;
+                Managers.Network.Send(addQuestPacekt);
+            }
+            Managers.Object.MyPlayer.QuestTrigger = false;
+            npc.CloseNpc();
+        }
     }
     public void ShowText(int cnt)
     {
@@ -136,6 +162,34 @@ public class UI_QuestDialogue_Popup : UI_Popup
                 GetButton((int)Buttons.NoBtn).gameObject.SetActive(true);
             }
         });
+    }
+    bool QuestClear = false;
+    public void QuestFinish(QuestData quest)
+    {
+        GetText((int)Texts.DialogueText).text = ""; QuestList.Clear();
+        foreach (Transform child in GetObject((int)GameObjects.Content).transform)
+            Destroy(child.gameObject);
+        Managers.Object.MyPlayer.QuestTrigger = true;
+        GetObject((int)GameObjects.ScrollView).SetActive(false);
+        GetButton((int)Buttons.YesBtn).gameObject.SetActive(false);
+        GetButton((int)Buttons.NoBtn).gameObject.SetActive(false);
+        selectQuest = quest;
+        QuestTrigger = false;
+        QuestEnd = false;
+        QuestClear = false;
+        GetText((int)Texts.DialogueText).DOText(quest.questClearString, quest.questClearString.Length * 0.02f).OnComplete(() => { QuestEnd = true; QuestClear = true; });
+    }
+    public void QuestNotYetFinish(QuestData quest)
+    {
+        GetText((int)Texts.DialogueText).text = ""; QuestList.Clear();
+        foreach (Transform child in GetObject((int)GameObjects.Content).transform)
+            Destroy(child.gameObject);
+        Managers.Object.MyPlayer.QuestTrigger = true;
+        GetObject((int)GameObjects.ScrollView).SetActive(false);
+        GetButton((int)Buttons.YesBtn).gameObject.SetActive(false);
+        GetButton((int)Buttons.NoBtn).gameObject.SetActive(false);
+        QuestTrigger = false;
+        GetText((int)Texts.DialogueText).DOText(quest.questNonClearString, quest.questNonClearString.Length * 0.02f).OnComplete(() => { QuestEnd = true; });
     }
 }
 

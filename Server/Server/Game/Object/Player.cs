@@ -20,7 +20,7 @@ namespace Server.Game
         public VisionCube Vision { get; private set; }
         public bool IsMaster { get; set; }
         public Inventory Inven { get; private set; } = new Inventory();
-        public QuestInventory QuestInven { get; private set; } = new QuestInventory();
+        public QuestInventory QuestInven { get; private set; }
 		public ClassTypes classType { get; set; }
 		public int BuffDamage { get; set; }
 		public int WeaponDamage { get; private set; }
@@ -32,6 +32,7 @@ namespace Server.Game
 		{
 			ObjectType = GameObjectType.Player;
             Vision = new VisionCube(this);
+            QuestInven = new QuestInventory(this);
         }
         bool isDamageDelay = false;
         public override void OnDamaged(GameObject attacker, int damage)

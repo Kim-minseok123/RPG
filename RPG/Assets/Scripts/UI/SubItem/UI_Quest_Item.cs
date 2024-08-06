@@ -42,12 +42,13 @@ public class UI_Quest_Item : UI_Base
     }
     public void SetColor()
     {
-        GetButton((int)Buttons.QuestDetailBtn).GetComponent<Image>().color = Util.HexColor("#391010");
+        if (GetButton((int)Buttons.QuestDetailBtn) != null)
+            GetButton((int)Buttons.QuestDetailBtn).GetComponent<Image>().color = Util.HexColor("#391010");
     }
     public void ResetColor()
     {
-        GetButton((int)Buttons.QuestDetailBtn).GetComponent<Image>().color = Util.HexColor("#262021");
-        Debug.Log("asd");
+        if (GetButton((int)Buttons.QuestDetailBtn) != null) 
+            GetButton((int)Buttons.QuestDetailBtn).GetComponent<Image>().color = Util.HexColor("#262021");
     }
     public void Setting(Quest quest, UI_Quest uiQuest)
     {

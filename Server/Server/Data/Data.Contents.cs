@@ -233,6 +233,7 @@ namespace Server.Data
         public string questRefuseString;
         public string questClearString;
         public string questDetailString;
+        public string questNonClearString;
         public string questNpcIconPath;
         public string questItemIconPath;
         public string goalText;

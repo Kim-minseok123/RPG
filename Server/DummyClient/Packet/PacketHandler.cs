@@ -197,4 +197,20 @@ public class PacketHandler
     {
 
     }
+    public static void S_AddQuestHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+    public static void S_ClearQuestHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+    public static void S_QuestChangeValueHandler(PacketSession session, IMessage packet)
+    {
+
+    }
+    public static void S_AllQuestListHandler(PacketSession session, IMessage packet)
+    {
+
+    }
 }

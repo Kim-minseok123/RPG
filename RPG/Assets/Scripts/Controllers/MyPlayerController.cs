@@ -379,7 +379,11 @@ public class MyPlayerController : PlayerController
     }
     public void QuickAction(Skill skill)
     {
-        if (Stat.Mp - skill.mpConsume < 0) { Debug.Log("마나 없음"); return; }
+        int mp =  skill.mpConsume - Stat.Mp;
+        if (mp > 0) { Debug.Log("마나 없음");
+            UI_SceneConfirm_Popup go = Managers.Resource.Instantiate("UI/Popup/UI_SceneConfirm_Popup").GetComponent<UI_SceneConfirm_Popup>();
+            go.Setting($"<color=green>(상태)</color>\n\n마나 {mp} 부족");
+            return; }
         C_SkillMotion skillMotion = new C_SkillMotion() { Info = new SkillInfo() };
         skillMotion.Info.SkillId = skill.id;
         Managers.Network.Send(skillMotion);
