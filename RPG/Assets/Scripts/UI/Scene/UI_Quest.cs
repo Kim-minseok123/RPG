@@ -113,7 +113,10 @@ public class UI_Quest : UI_Base
             currentItem.ResetColor();
         currentItem = item;
         currentItem.SetColor();
-        GetText((int)Texts.QuestFullNameText).text = questData.questTitle;
+        string title = questData.questTitle;
+        if (questData.isRepeated == true)
+            title += "(반복)";
+        GetText((int)Texts.QuestFullNameText).text = title;
         GetText((int)Texts.QuestDemandLevelText).text = $"레벨 {questData.demandLevel}이상";
         GetText((int)Texts.QuestLocationText).text = questData.questLocationString;
         GetImage((int)Images.QuestNpcImage).sprite = Managers.Resource.Load<Sprite>(questData.questNpcIconPath);
@@ -184,7 +187,7 @@ public class UI_Quest : UI_Base
     }
     public void ResetCurrentItem(Quest quest)
     {
-        if (currentItem._quest.TemplateId == quest.TemplateId)
+        if (currentItem != null && currentItem._quest.TemplateId == quest.TemplateId)
             CloseQuestDetailUI();
     }
 }

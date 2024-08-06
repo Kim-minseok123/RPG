@@ -37,7 +37,18 @@ namespace Server.Game
 
 			return null;
 		}
+		public List<Item> FindAll(Func<Item, bool> condition)
+		{
+            List<Item> items = new List<Item>();
+            foreach (Item item in Items.Values)
+                if (condition(item))
+                    items.Add(item);
 
+            foreach (Item item in EquipItems)
+                if (item != null && condition(item))
+                    items.Add(item);
+            return items;
+        }
 		public int? GetEmptySlot()
 		{
 			for (int slot = 0; slot < 24; slot++)

@@ -6,7 +6,7 @@
       "demandLevel": "1",
       "demandQuest": "0",
       "questSummary": "스켈레톤 처치",
-      "isRepeqted": "false",
+      "isRepeated": "false",
       "reward": {
         "exp": "5",
         "money": "0",
@@ -40,7 +40,7 @@
       "demandLevel": "5",
       "demandQuest": "1",
       "questSummary": "레드 드래곤 처치",
-      "isRepeqted": "false",
+      "isRepeated": "false",
       "reward": {
         "exp": "20",
         "money": "0",
@@ -77,7 +77,7 @@
       "demandLevel": "5",
       "demandQuest": "2",
       "questSummary": "화염의 카타나 획득",
-      "isRepeqted": "true",
+      "isRepeated": "true",
       "reward": {
         "exp": "0",
         "money": "0",
@@ -111,7 +111,7 @@
       "demandLevel": "5",
       "demandQuest": "0",
       "questSummary": "미궁 입장",
-      "isRepeqted": "false",
+      "isRepeated": "false",
       "reward": {
         "exp": "0",
         "money": "1000",

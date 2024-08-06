@@ -363,18 +363,17 @@ namespace Server.DB
                 }
             }
         }
-        public static void RemoveItem(Player player, GameRoom room, C_RemoveItem removeItem, int plusMoney = 0)
+        public static void RemoveItem(Player player, GameRoom room, Item item, int count, int plusMoney = 0)
         {
             if (player == null) return;
-            Item item = player.Inven.Get(removeItem.ItemDbId);
             if (item == null)
                 return;
-            int remainCount = item.Count - removeItem.Count;
+            int remainCount = item.Count - count;
 
             Instance.Push(() => {
                 using (AppDbContext db = new AppDbContext())
                 { 
-                    if(item.Count - removeItem.Count > 0)
+                    if(item.Count - count > 0)
                     {
                         ItemDb itemDb = new ItemDb()
                         {

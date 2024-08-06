@@ -21,6 +21,7 @@ public class MonsterController : CreatureController
         _agent = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
         hpBar.gameObject.SetActive(true);
+        hpBar.value = Mathf.Max(0f, (float)Hp / MaxHp);
         _anim.SetBool("Death", false);
         State = CreatureState.Idle;
 #if UNITY_SERVER

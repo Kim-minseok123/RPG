@@ -120,10 +120,19 @@ namespace Server.Game
             Item item = player.Inven.Get(removeItemPacket.ItemDbId);
             if (item == null) return;
             if (item.Count - removeItemPacket.Count < 0) return;
-            if(removeItemPacket.IsSell)
-                DbTransaction.RemoveItem(player, this, removeItemPacket, plusMoney:(itemData.sellGold /2) * removeItemPacket.Count);
+            if (removeItemPacket.IsSell)
+                RemoveItem(player, item, removeItemPacket.Count, itemData);
             else
-                DbTransaction.RemoveItem(player, this, removeItemPacket);
+                RemoveItem(player, item, removeItemPacket.Count);
+        }
+        public void RemoveItem(Player player, Item item, int count, ItemData itemData = null)
+        {
+            if (player == null) return;
+            if (item == null) return;
+            if(itemData != null)
+                DbTransaction.RemoveItem(player, this, item, count, plusMoney: (itemData.sellGold / 2) * count);
+            else
+                DbTransaction.RemoveItem(player, this, item, count);
         }
     }
 }

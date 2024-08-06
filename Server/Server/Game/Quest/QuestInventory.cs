@@ -86,6 +86,10 @@ namespace Server.Game
         {
             return QuestList[(int)questType].TryGetValue(id, out Quest quest) && quest.IsFinish;
         }
+        public bool CheckIsFinishQuest(int id)
+        {
+            return FinishedQuest.TryGetValue(id, out Quest value);
+        }
         public void Clear()
         {
             foreach (var quest in QuestList)

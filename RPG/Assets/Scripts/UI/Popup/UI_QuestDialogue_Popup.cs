@@ -84,8 +84,9 @@ public class UI_QuestDialogue_Popup : UI_Popup
         
         foreach (var quest in QuestDatas)
         {
-            if ((quest.demandQuest != 0 && Managers.Quest.CheckIsFinishQuest(quest.demandQuest) == false) || 
-                quest.demandLevel > Managers.Object.MyPlayer.Stat.Level) continue;
+            if ((quest.demandQuest != 0 && Managers.Quest.CheckIsFinishQuest(quest.demandQuest) == false) 
+                || quest.demandLevel > Managers.Object.MyPlayer.Stat.Level
+                || (quest.isRepeated == false && Managers.Quest.CheckIsFinishQuest(quest.id) == true)) continue;
             GameObject go = Managers.Resource.Instantiate("UI/SubItem/UI_QuestList_Item", GetObject((int)GameObjects.Content).transform);
             UI_QuestList_Item questItem = go.GetComponent<UI_QuestList_Item>();
             questItem.Setting(quest, this);

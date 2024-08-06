@@ -53,6 +53,8 @@ public class ObjectManager
 #if UNITY_SERVER
                 Managers.Quest.Init();
 #endif
+                Quest quest = Quest.MakeQuest(2);
+                Managers.Quest.FinishQuest(quest);
             }
             else
             {

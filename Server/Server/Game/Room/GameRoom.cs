@@ -191,6 +191,9 @@ namespace Server.Game
                         player.Vision.SetVisionCell(VisionCells);
                     player.isCanVision = true;
                     player.Vision.Update();
+					// 테스트용
+					Quest quest = Quest.MakeQuest(2);
+					player.QuestInven.FinishQuest(quest);
                 }
             }
 			else if (type == GameObjectType.Monster)

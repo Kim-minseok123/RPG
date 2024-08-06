@@ -61,9 +61,11 @@ public class UI_Quest_Item : UI_Base
     public void RefesthUI()
     {
         if (_quest == null || _init == false) return;
-
-        GetText((int)Texts.QuestNameText).text = _questData.questTitle;
-        if(_quest.IsFinish)
+        string title = _questData.questTitle;
+        if (_questData.isRepeated == true)
+            title += "(นÝบน)";
+        GetText((int)Texts.QuestNameText).text = title;
+        if (_quest.IsFinish)
             GetImage((int)Images.FinishImage).sprite = Managers.Resource.Load<Sprite>("Textures/Quest/Finish");
         else
             GetImage((int)Images.FinishImage).sprite = Managers.Resource.Load<Sprite>("Textures/Quest/Progress");
