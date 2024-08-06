@@ -11,10 +11,12 @@ public class UI_SceneConfirm_Popup : UI_Popup
 
     public void Setting(string str)
     {
+        Canvas canvas = GetComponent<Canvas>();
+        canvas.sortingOrder = 1000;
         Content.text = str;
         Sequence sq = DOTween.Sequence();
         sq.Append(MovingGo.transform.DOLocalMoveX(755f, 0.35f).SetEase(Ease.OutExpo))
-            .AppendInterval(1.5f)
-            .Append(MovingGo.transform.DOLocalMoveX(1165f, 0.35f).SetEase(Ease.OutExpo));
+            .AppendInterval(2.5f)
+            .Append(MovingGo.transform.DOLocalMoveX(1165f, 0.35f).SetEase(Ease.OutExpo).OnComplete(() => { Destroy(gameObject); }));
     }
 }
