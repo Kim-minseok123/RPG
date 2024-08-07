@@ -53,6 +53,25 @@ public class UI_Setting_Popup : MonoBehaviour
     {
         if(SceneName.Equals("Game") || SceneName.Equals("Boss"))
         {
+            C_SaveQuickSlot saveSlot = new C_SaveQuickSlot();
+            if ((Managers.UI.SceneUI as UI_GameScene) != null)
+            {
+                foreach (var slot in (Managers.UI.SceneUI as UI_GameScene).QuickSlotSkill)
+                {
+                    QuickSlotInfo info = new QuickSlotInfo();
+                    info.SlotName = slot.Key;
+                    info.TemplateId = slot.Value;
+                    saveSlot.Info.Add(info);
+                }
+                foreach (var slot in (Managers.UI.SceneUI as UI_GameScene).QuickSlotItem)
+                {
+                    QuickSlotInfo info = new QuickSlotInfo();
+                    info.SlotName = slot.Key;
+                    info.TemplateId = slot.Value;
+                    saveSlot.Info.Add(info);
+                }
+                Managers.Network.Send(saveSlot);
+            }
             C_RequestLeaveGame leaveGame = new C_RequestLeaveGame();
             leaveGame.ObjectId = Managers.Object.MyPlayer.Id;
             Managers.Network.Send(leaveGame);

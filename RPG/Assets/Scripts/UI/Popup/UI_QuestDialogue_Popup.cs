@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_QuestDialogue_Popup : UI_Popup
 {
@@ -19,7 +20,9 @@ public class UI_QuestDialogue_Popup : UI_Popup
     enum GameObjects
     {
         Content,
-        ScrollView
+        ScrollView,
+        RewardPos,
+        SpawnPos
     }
     enum Texts
     {
@@ -45,6 +48,7 @@ public class UI_QuestDialogue_Popup : UI_Popup
 
         _init = true;
         selectQuest = null;
+        GetObject((int)GameObjects.RewardPos).SetActive(false);
 
         RefreshUI();
     }
@@ -178,6 +182,33 @@ public class UI_QuestDialogue_Popup : UI_Popup
         QuestTrigger = false;
         QuestEnd = false;
         QuestClear = false;
+        GetObject((int)GameObjects.RewardPos).SetActive(true);
+        Transform parent = GetObject((int)GameObjects.SpawnPos).transform;
+        QuestReward qr = quest.reward;
+        
+        if(qr.exp > 0)
+        {
+            GameObject go = Managers.Resource.Instantiate("Reward_SubItem",parent);
+            go.GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("Textures/Item/exp");
+            go.GetComponentInChildren<TextMeshProUGUI>().text = $"{qr.exp} 경험치";
+        }
+        if (qr.money > 0)
+        {
+            GameObject go = Managers.Resource.Instantiate("Reward_SubItem", parent);
+            go.GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>("Textures/Item/coin");
+            go.GetComponentInChildren<TextMeshProUGUI>().text = $"{qr.money} 골드";
+        }
+        if (qr.itemId > 0)
+        {
+            GameObject go = Managers.Resource.Instantiate("Reward_SubItem", parent);
+            Managers.Data.ItemDict.TryGetValue(qr.itemId, out ItemData itemData);
+            if(itemData != null)
+            {
+                go.GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>(itemData.iconPath);
+                go.GetComponentInChildren<TextMeshProUGUI>().text = $"{itemData.name}";
+            }
+        }
+
         GetText((int)Texts.DialogueText).DOText(quest.questClearString, quest.questClearString.Length * 0.02f).OnComplete(() => { QuestEnd = true; QuestClear = true; });
     }
     public void QuestNotYetFinish(QuestData quest)

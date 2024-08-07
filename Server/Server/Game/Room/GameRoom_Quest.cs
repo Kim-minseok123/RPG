@@ -30,7 +30,17 @@ namespace Server.Game
             }
             if(quest.DemandQuest != 0 && player.QuestInven.CheckIsFinishQuest(quest.DemandQuest) == false)
             {
-                Console.WriteLine("선행 퀘스트를 클리어하지 않았습니다..");
+                Console.WriteLine("선행 퀘스트를 클리어하지 않았습니다.");
+                return;
+            }
+            if (quest.IsRepeated == false  && player.QuestInven.CheckIsFinishQuest(quest.TemplateId) == true)
+            {
+                Console.WriteLine("반복퀘스트가 아닌 일반퀘스트를 이미 수행하셨습니다.");
+                return;
+            }
+            if (player.QuestInven.GetQuest(quest.TemplateId, quest.QuestType) != null)
+            {
+                Console.WriteLine("이미 퀘스트를 수행중입니다.");
                 return;
             }
             player.QuestInven.AddQuest(quest);

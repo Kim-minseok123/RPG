@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class CreatureController : BaseController
 {
-    public virtual int MaxHp { get { return Stat.MaxHp; }  set { Stat.MaxHp = value; } }
+    public virtual int MaxHp { get { if (Stat == null) return 0; return Stat.MaxHp; }  set { Stat.MaxHp = value; } }
     public virtual int MaxMp { get { return Stat.MaxMp; }  set { Stat.MaxMp = value; } }
-    public virtual int Hp { get { return Stat.Hp; } set { Stat.Hp = value; } }
+    public virtual int Hp { get { if (Stat == null) return 0; return Stat.Hp; } set { Stat.Hp = value; } }
     public virtual int Mp { get { return Stat.Mp; } set { Stat.Mp = value; } }
     public virtual int WeaponDamage { get; protected set; }
     public virtual int ArmorDefence { get; protected set; }

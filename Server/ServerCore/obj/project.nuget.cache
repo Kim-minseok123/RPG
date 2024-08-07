@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uxglh20+/D4=",
+  "dgSpecHash": "aebGIpzRLfMhLZIwcfVFshaCq3DlTeXAj7WQkx0eDmvYBJlM+EPqN9owi/cUVa7O/taUZbqkDxdWAGFVrINWBA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\chaos\\바탕 화면\\Git\\RPG\\Server\\ServerCore\\ServerCore.csproj",
+  "projectFilePath": "E:\\GitHub\\RPG\\Server\\ServerCore\\ServerCore.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\chaos\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\chaos\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.1\\microsoft.bcl.hashcode.1.1.1.nupkg.sha512",

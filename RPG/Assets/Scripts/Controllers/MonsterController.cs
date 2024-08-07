@@ -67,7 +67,6 @@ public class MonsterController : CreatureController
         if (isAttackMotion) 
         {
 #if UNITY_SERVER
-            Debug.Log("1");
 #endif
             return; 
         }
