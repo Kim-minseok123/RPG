@@ -2,6 +2,7 @@
 using Server.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Server.Game
@@ -34,7 +35,21 @@ namespace Server.Game
             QuestList[(int)questType].TryGetValue(id, out Quest quest);
             return quest;
         }
+        public List<Quest> GetAllQuest()
+        {
+            List<Quest> quests = new List<Quest>();
+            foreach (var quest in QuestList)
+            {
+                quests.AddRange(quest.Values.ToList());
+            }
+            return quests;
+        }
+        public List<Quest> GetAllFinishQuest()
+        {
+            List<Quest> quests = FinishedQuest.Values.ToList();
 
+            return quests;
+        }
         public void UpdateQuestProgress<T>(QuestType questType, T questGoals)
         {
             var list = QuestList[(int)questType];

@@ -45,7 +45,7 @@ namespace Server.Game
             }
             player.QuestInven.AddQuest(quest);
             // DB에도 저장해야함.
-            
+            DbTransaction.AddQuestNoti(player, quest);
             // 클라 통보
             S_AddQuest addQuestOk = new S_AddQuest();
             addQuestOk.QuestId = addQuestPacket.QuestId;
@@ -160,6 +160,7 @@ namespace Server.Game
                         HandleAddItem(player, addItem);
                     }
                 }
+                DbTransaction.ClearQuestNoti(player, quest);
                 S_ClearQuest clearQuestOk = new S_ClearQuest();
                 clearQuestOk.QuestId = quest.TemplateId;
                 clearQuestOk.QuestType = quest.QuestType;

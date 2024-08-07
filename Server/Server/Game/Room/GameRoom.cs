@@ -179,7 +179,63 @@ namespace Server.Game
 							quickSlotPacket.Info.Add(quickSlotInfo);
 						}
 						player.Session.Send(quickSlotPacket);
-					}
+
+						S_AllQuestList allQuestList = new S_AllQuestList();
+						List<Quest> allQuest = player.QuestInven.GetAllQuest();
+						{
+                            foreach (var quest in allQuest)
+                            {
+								QuestInfo questInfo = new QuestInfo
+								{
+									QuestId = quest.TemplateId,
+									QuestType = quest.QuestType,
+									IsFinish = quest.IsFinish,
+									IsCleared = false
+                                };
+
+                                if (quest.QuestType == QuestType.Battle || quest.QuestType == QuestType.Collection)
+                                {
+                                    Dictionary<int, int> countDict = quest.QuestType == QuestType.Battle
+                                        ? ((BattleQuest)quest).countDict
+                                        : ((CollectionQuest)quest).countDict;
+                                    foreach (var key in countDict.Keys)
+                                    {
+                                        questInfo.QuestGoal.Add(new QuestGoal { Id = key, Count = countDict[key] });
+                                    }
+                                }
+								allQuestList.QuestList.Add(questInfo);
+                            }
+                            player.Session.Send(allQuestList);
+                        }
+                        allQuestList = new S_AllQuestList();
+                        allQuest = player.QuestInven.GetAllFinishQuest();
+                        {
+                            foreach (var quest in allQuest)
+                            {
+                                QuestInfo questInfo = new QuestInfo
+                                {
+                                    QuestId = quest.TemplateId,
+                                    QuestType = quest.QuestType,
+                                    IsFinish = quest.IsFinish,
+                                    IsCleared = true
+                                };
+
+                                if (quest.QuestType == QuestType.Battle || quest.QuestType == QuestType.Collection)
+                                {
+                                    Dictionary<int, int> countDict = quest.QuestType == QuestType.Battle
+                                        ? ((BattleQuest)quest).countDict
+                                        : ((CollectionQuest)quest).countDict;
+                                    foreach (var key in countDict.Keys)
+                                    {
+                                        questInfo.QuestGoal.Add(new QuestGoal { Id = key, Count = countDict[key] });
+                                    }
+                                }
+                                allQuestList.QuestList.Add(questInfo);
+                            }
+                            player.Session.Send(allQuestList);
+                        }
+
+                    }
 
 					GetZone(player.Pos).Players.Add(player);
 					player.curZone = GetZone(player.Pos);
@@ -191,9 +247,6 @@ namespace Server.Game
                         player.Vision.SetVisionCell(VisionCells);
                     player.isCanVision = true;
                     player.Vision.Update();
-					// 테스트용
-					Quest quest = Quest.MakeQuest(2);
-					player.QuestInven.FinishQuest(quest);
                 }
             }
 			else if (type == GameObjectType.Monster)

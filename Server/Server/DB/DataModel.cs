@@ -81,4 +81,28 @@ namespace Server.DB
         public int PlayerDbId { get; set; }
         public PlayerDb Player { get; set; }
     }
+	[Table("Quest")]
+	public class QuestDb
+	{
+		public int QuestDbId { get; set; }
+		public int TemplateId { get; set; }
+		public bool IsFinish { get; set; }
+		public bool IsCleard{ get; set; }
+		public int QuestType { get; set; }
+		public ICollection<QuestGoalDb> Goals { get; set; }
+        [ForeignKey("Player")]
+        public int PlayerDbId { get; set; }
+        public PlayerDb Player { get; set; }
+    }
+	[Table("QuestGoal")]
+	public class QuestGoalDb
+	{
+		public int QuestGoalDbId { get; set; }
+		[ForeignKey("Quest")]
+		public int OnwerQuestDbId { get; set; }
+		public QuestDb Quest { get; set; }
+
+		public int TemplateId { get; set; }
+		public int Count { get; set; }
+	}
 }

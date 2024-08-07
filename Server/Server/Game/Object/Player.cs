@@ -134,7 +134,16 @@ namespace Server.Game
 			{
 				job.Cancel = true;
 			}
+            QuestSave();
 		}
+        public void QuestSave()
+        {
+            List<Quest> allQuest = QuestInven.GetAllQuest();
+            foreach (var quest in allQuest)
+            {
+                DbTransaction.UpdateQuest(this, quest);
+            }
+        }
 		public void HandleEquipItem(C_EquipItem equipPacket)
 		{
 			// 착용 요청이라면, 겹치는 부위 해제

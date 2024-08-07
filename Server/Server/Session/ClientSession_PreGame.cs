@@ -237,6 +237,7 @@ namespace Server
                         }
                         itemListPacket.Money = findPlayerDb.Money;
                         Send(itemListPacket);
+                        // 스킬
                         List<SkillDb> skills = db.Skills
                             .Where(s => s.PlayerDbId == playerInfo.PlayerDbId)
                             .ToList();
@@ -244,11 +245,51 @@ namespace Server
                         {
                             MyPlayer.HaveSkillData.Add(skillDb.TemplateId, skillDb.SkillLevel);
                         }
+                        // 퀵슬롯
                         List<QuickSlotDb> quickSlots = db.QuickSlots
                             .Where(q => q.PlayerDbId == playerInfo.PlayerDbId).ToList();
                         foreach (QuickSlotDb slot in quickSlots)
                         {
                             MyPlayer.QuickSlot.Add(slot.Slot, slot.TemplateId);
+                        }
+                        // 퀘스트
+                        List<QuestDb> quests = db.Quests
+                            .Where(q => q.PlayerDbId == playerInfo.PlayerDbId)
+                            .Include(q => q.Goals)
+                            .ToList();
+                        foreach (QuestDb questDB in quests)
+                        {
+                            Quest quest = Quest.MakeQuest(questDB.TemplateId);
+                            if (quest == null) return;
+                            switch (quest.QuestType)
+                            {
+                                case QuestType.Battle:
+                                    BattleQuest battleQuest = (BattleQuest)quest;
+                                    foreach (var goal in questDB.Goals)
+                                    {
+                                        battleQuest.Update(new BattleQuestGoals() { enemyId = goal.TemplateId, count = goal.Count });
+                                    }
+                                    battleQuest.IsFinish = questDB.IsFinish;
+                                    break;
+                                case QuestType.Collection:
+                                    CollectionQuest collectionQuest = (CollectionQuest)quest;
+                                    foreach (var goal in questDB.Goals)
+                                    {
+                                        collectionQuest.Update(new CollectionQuestGoals() { collectionId = goal.TemplateId, count = goal.Count });
+                                    }
+                                    collectionQuest.IsFinish = questDB.IsFinish;
+                                    break;
+                                case QuestType.Enter:
+                                    EnterQuest enterQuest = (EnterQuest)quest;
+                                    foreach (var goal in questDB.Goals)
+                                        enterQuest.Update(goal.TemplateId);
+                                    quest.IsFinish = questDB.IsFinish;
+                                    break;
+                            }
+                            if(questDB.IsCleard == false)
+                                MyPlayer.QuestInven.AddQuest(quest);
+                            else
+                                MyPlayer.QuestInven.FinishQuest(quest);
                         }
                     }
                 }

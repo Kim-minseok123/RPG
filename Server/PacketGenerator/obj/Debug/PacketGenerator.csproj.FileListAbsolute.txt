@@ -97,3 +97,20 @@ C:\Users\chaos\바탕 화면\Git\MMO_Maple\Server\PacketGenerator\obj\Debug\Pack
 C:\Users\chaos\바탕 화면\Git\MMO_Maple\Server\PacketGenerator\obj\Debug\PacketGenerator.dll
 C:\Users\chaos\바탕 화면\Git\MMO_Maple\Server\PacketGenerator\obj\Debug\PacketGenerator.pdb
 C:\Users\chaos\바탕 화면\Git\MMO_Maple\Server\PacketGenerator\obj\Debug\PacketGenerator.genruntimeconfig.cache
+E:\GitHub\RPG\Server\PacketGenerator\bin\PacketGenerator.exe
+E:\GitHub\RPG\Server\PacketGenerator\bin\PacketGenerator.deps.json
+E:\GitHub\RPG\Server\PacketGenerator\bin\PacketGenerator.runtimeconfig.json
+E:\GitHub\RPG\Server\PacketGenerator\bin\PacketGenerator.runtimeconfig.dev.json
+E:\GitHub\RPG\Server\PacketGenerator\bin\PacketGenerator.dll
+E:\GitHub\RPG\Server\PacketGenerator\bin\PacketGenerator.pdb
+E:\GitHub\RPG\Server\PacketGenerator\bin\Google.Protobuf.dll
+E:\GitHub\RPG\Server\PacketGenerator\bin\System.Runtime.CompilerServices.Unsafe.dll
+E:\GitHub\RPG\Server\PacketGenerator\obj\Debug\PacketGenerator.csproj.AssemblyReference.cache
+E:\GitHub\RPG\Server\PacketGenerator\obj\Debug\PacketGenerator.GeneratedMSBuildEditorConfig.editorconfig
+E:\GitHub\RPG\Server\PacketGenerator\obj\Debug\PacketGenerator.AssemblyInfoInputs.cache
+E:\GitHub\RPG\Server\PacketGenerator\obj\Debug\PacketGenerator.AssemblyInfo.cs
+E:\GitHub\RPG\Server\PacketGenerator\obj\Debug\PacketGenerator.csproj.CoreCompileInputs.cache
+E:\GitHub\RPG\Server\PacketGenerator\obj\Debug\PacketGenerator.csproj.CopyComplete
+E:\GitHub\RPG\Server\PacketGenerator\obj\Debug\PacketGenerator.dll
+E:\GitHub\RPG\Server\PacketGenerator\obj\Debug\PacketGenerator.pdb
+E:\GitHub\RPG\Server\PacketGenerator\obj\Debug\PacketGenerator.genruntimeconfig.cache

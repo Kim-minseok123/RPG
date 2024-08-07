@@ -256,5 +256,161 @@ namespace Server.DB
                 }
             });
         }
+        public static void AddQuestNoti(Player player, Quest quest)
+        {
+            if (quest == null || player == null)
+                return;
+            var questGoals = new List<QuestGoalDb>();
+            
+            switch (quest.QuestType)
+            {
+                case QuestType.Battle:
+                    BattleQuest battleQuest = (BattleQuest)quest;
+                    foreach (var key in battleQuest.countDict.Keys)
+                        questGoals.Add(new QuestGoalDb { TemplateId = key, Count = battleQuest.countDict[key] });
+                    break;
+                case QuestType.Collection:
+                    CollectionQuest collectionQuest = (CollectionQuest)quest;
+                    foreach (var key in collectionQuest.countDict.Keys)
+                        questGoals.Add(new QuestGoalDb { TemplateId = key, Count = collectionQuest.countDict[key] });
+                    break;
+                case QuestType.Enter:
+                    EnterQuest enterQuest = (EnterQuest)quest;
+                    questGoals.Add(new QuestGoalDb { TemplateId = enterQuest.cur, Count = 1 });
+                    break;
+            }
+
+            QuestDb questDb = new QuestDb()
+            {
+                TemplateId = quest.TemplateId,
+                QuestType = (int)quest.QuestType,
+                IsFinish = quest.IsFinish,
+                PlayerDbId = player.PlayerDbId,
+                IsCleard = false,
+                Goals = questGoals
+            };
+            foreach (var goal in questGoals)
+            {
+                goal.Quest = questDb;
+            }
+            Instance.Push(() => {
+                using (AppDbContext db = new AppDbContext())
+                {
+                    db.Quests.Add(questDb);
+                    bool success = db.SaveChangesEx();
+                    if (!success)
+                    {
+
+                    }
+                }
+            });
+        }
+        public static void ClearQuestNoti(Player player, Quest quest)
+        {
+            if (quest == null || player == null)
+                return;
+            var questGoals = new List<QuestGoalDb>();
+
+            switch (quest.QuestType)
+            {
+                case QuestType.Battle:
+                    BattleQuest battleQuest = (BattleQuest)quest;
+                    foreach (var key in battleQuest.countDict.Keys)
+                        questGoals.Add(new QuestGoalDb { TemplateId = key, Count = battleQuest.countDict[key] });
+                    break;
+                case QuestType.Collection:
+                    CollectionQuest collectionQuest = (CollectionQuest)quest;
+                    foreach (var key in collectionQuest.countDict.Keys)
+                        questGoals.Add(new QuestGoalDb { TemplateId = key, Count = collectionQuest.countDict[key] });
+                    break;
+                case QuestType.Enter:
+                    EnterQuest enterQuest = (EnterQuest)quest;
+                    questGoals.Add(new QuestGoalDb { TemplateId = enterQuest.cur, Count = 1 });
+                    break;
+            }
+
+            Instance.Push(() => {
+                using (AppDbContext db = new AppDbContext())
+                {
+                    QuestDb qdb = db.Quests
+                    .Include(q => q.Goals)
+                    .Where(q => q.TemplateId == quest.TemplateId && !q.IsCleard && q.PlayerDbId == player.PlayerDbId)
+                    .FirstOrDefault();
+
+                    if (qdb != null)
+                    {
+                        qdb.IsCleard = true;
+                        qdb.IsFinish = quest.IsFinish;
+
+                        db.QuestGoals.RemoveRange(qdb.Goals);
+
+                        foreach (var goal in questGoals)
+                        {
+                            goal.OnwerQuestDbId = qdb.QuestDbId;  
+                            db.QuestGoals.Add(goal);
+                        }
+                        db.Entry(qdb).State = EntityState.Modified;
+
+                        bool success = db.SaveChangesEx();
+                        if (!success)
+                        {
+                        }
+                    }
+                }
+            });
+        }
+        public static void UpdateQuest(Player player, Quest quest)
+        {
+            if (quest == null || player == null)
+                return;
+            var questGoals = new List<QuestGoalDb>();
+
+            switch (quest.QuestType)
+            {
+                case QuestType.Battle:
+                    BattleQuest battleQuest = (BattleQuest)quest;
+                    foreach (var key in battleQuest.countDict.Keys)
+                        questGoals.Add(new QuestGoalDb { TemplateId = key, Count = battleQuest.countDict[key] });
+                    break;
+                case QuestType.Collection:
+                    CollectionQuest collectionQuest = (CollectionQuest)quest;
+                    foreach (var key in collectionQuest.countDict.Keys)
+                        questGoals.Add(new QuestGoalDb { TemplateId = key, Count = collectionQuest.countDict[key] });
+                    break;
+                case QuestType.Enter:
+                    EnterQuest enterQuest = (EnterQuest)quest;
+                    questGoals.Add(new QuestGoalDb { TemplateId = enterQuest.cur, Count = 1 });
+                    break;
+            }
+            Instance.Push(() => {
+                using (AppDbContext db = new AppDbContext())
+                {
+                    QuestDb qdb = db.Quests
+                    .Include(q => q.Goals)
+                    .Where(q => q.TemplateId == quest.TemplateId && !q.IsCleard && q.PlayerDbId == player.PlayerDbId)
+                    .FirstOrDefault();
+
+                    if (qdb != null)
+                    {
+                        qdb.IsFinish = quest.IsFinish;
+
+                        db.QuestGoals.RemoveRange(qdb.Goals);
+
+                        foreach (var goal in questGoals)
+                        {
+                            goal.OnwerQuestDbId = qdb.QuestDbId;
+                        }
+
+                        db.QuestGoals.AddRange(questGoals); 
+                        db.Entry(qdb).State = EntityState.Modified;
+
+                        bool success = db.SaveChangesEx();
+                        if (!success)
+                        {
+                        }
+                    }
+                }
+            });
+        }
     }
 }

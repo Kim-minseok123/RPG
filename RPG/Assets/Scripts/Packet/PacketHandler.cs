@@ -610,7 +610,41 @@ class PacketHandler
     }
     public static void S_AllQuestListHandler(PacketSession session, IMessage packet)
     {
+        S_AllQuestList allQuestList = (S_AllQuestList)packet;
 
+        foreach (var info in allQuestList.QuestList)
+        {
+            Quest quest = Quest.MakeQuest(info.QuestId);
+            if (quest == null)
+                return;
+            
+            switch (quest.QuestType)
+            {
+                case QuestType.Battle:
+                    BattleQuest battleQuest = (BattleQuest)quest;
+                    foreach (var goal in info.QuestGoal)
+                        battleQuest.Update(new Data.BattleQuestGoals() { enemyId = goal.Id, count = goal.Count });
+                    break;
+                case QuestType.Collection:
+                    CollectionQuest collectionQuest = (CollectionQuest)quest;
+                    foreach (var goal in info.QuestGoal)
+                        collectionQuest.Update(new Data.CollectionQuestGoals() { collectionId = goal.Id, count = goal.Count });
+                    break;
+                case QuestType.Enter:
+                    break;
+            }
+            quest.IsFinish = info.IsFinish;
+            if(info.IsCleared == true)
+                Managers.Quest.FinishQuest(quest);
+            else
+                Managers.Quest.AddQuest(quest);
+        }
+        List<Quest> all = Managers.Quest.GetAllQuest();
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        if (gameSceneUI != null)
+        {
+            gameSceneUI.QuestUI.RefreshUI();
+        }
     }
 }
 

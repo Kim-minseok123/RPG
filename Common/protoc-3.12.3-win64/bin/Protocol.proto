@@ -401,7 +401,7 @@ message S_QuestChangeValue {
   bool isFinish = 5;
 }
 message S_AllQuestList {
-
+  repeated QuestInfo questList = 1;
 }
 message C_RequestLeaveGame{
   int32 objectId = 1;
@@ -412,7 +412,17 @@ message S_Ping {
 message C_Pong {
 
 }
-
+message QuestInfo{
+  int32 questId = 1;
+  QuestType questType = 2;
+  bool isFinish = 3;
+  bool isCleared = 4;
+  repeated QuestGoal questGoal = 5;
+}
+message QuestGoal{
+  int32 id = 1;
+  int32 count = 2;
+}
 message LobbyPlayer {
   LobbyPlayerInfo player = 1;
   repeated LobbyPlayerItemInfo item = 2;

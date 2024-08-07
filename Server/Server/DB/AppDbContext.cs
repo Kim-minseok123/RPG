@@ -18,6 +18,8 @@ namespace Server.DB
 		public DbSet<ItemDb> Items { get; set; }
 		public DbSet<SkillDb> Skills { get; set; }
 		public DbSet<QuickSlotDb> QuickSlots { get; set; }
+		public DbSet<QuestDb> Quests { get; set; }
+		public DbSet<QuestGoalDb> QuestGoals { get; set; }
 
 		static readonly ILoggerFactory _logger = LoggerFactory.Create(builder => { builder.AddConsole(); });
 
@@ -44,6 +46,8 @@ namespace Server.DB
 
             builder.Entity<QuickSlotDb>()
 				.HasAlternateKey(q => new { q.PlayerDbId, q.Slot });
+            builder.Entity<QuestDb>()
+				.HasAlternateKey(q => new { q.PlayerDbId, q.TemplateId });
         }
 	}
 }
