@@ -21,6 +21,8 @@ public class PlayerController : CreatureController
     protected GameObject curRightWeapon;
     GameObject curLeftWeapon;
     GameObject curHeadItem;
+    public GameObject TextObject;
+    public TextMeshProUGUI ChatText;
     protected override void Init()
     {
         base.Init();
@@ -28,6 +30,7 @@ public class PlayerController : CreatureController
         _anim = GetComponent<Animator>();
         _anim.SetBool("Death", false);
         NickName.text = objectInfo.Name;
+        TextObject.SetActive(false);
     }
     // Update is called once per frame
     protected virtual void Update()
@@ -288,6 +291,30 @@ public class PlayerController : CreatureController
     {
         yield return new WaitForSeconds(time);
         Managers.Resource.Destroy(gameObject);
+    }
+    Coroutine Chatting;
+    public void MarkOutChat(string chat)
+    {
+        chat = InsertLineBreaks(chat, 15); 
+        TextObject.SetActive(true);
+        ChatText.text = chat;
+        if (Chatting != null)
+            StopCoroutine(Chatting);
+        Chatting = StartCoroutine(DestroyChat());
+    }
+
+    private string InsertLineBreaks(string text, int lineLength)
+    {
+        for (int i = lineLength; i < text.Length; i += lineLength + 1)
+        {
+            text = text.Insert(i, "\n");
+        }
+        return text;
+    }
+    IEnumerator DestroyChat()
+    {
+        yield return new WaitForSeconds(3f);
+        TextObject.SetActive(false);
     }
 
 }   

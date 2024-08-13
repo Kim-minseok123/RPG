@@ -7,6 +7,7 @@ using Server.Game.Room;
 using ServerCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
@@ -20,6 +21,7 @@ namespace Server.Game
         public VisionCube Vision { get; private set; }
         public bool IsMaster { get; set; }
         public Inventory Inven { get; private set; } = new Inventory();
+        public HashSet<Quest> UpdateQuestSet = new HashSet<Quest>();
         public QuestInventory QuestInven { get; private set; }
 		public ClassTypes classType { get; set; }
 		public int BuffDamage { get; set; }
@@ -138,7 +140,7 @@ namespace Server.Game
 		}
         public void QuestSave()
         {
-            List<Quest> allQuest = QuestInven.GetAllQuest();
+            List<Quest> allQuest = UpdateQuestSet.ToList();
             foreach (var quest in allQuest)
             {
                 DbTransaction.UpdateQuest(this, quest);

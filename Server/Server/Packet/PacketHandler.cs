@@ -368,4 +368,14 @@ class PacketHandler
             return;
         room.Push(room.HandleClearQuest, player, clearQuest);
     }
+    public static void C_ChattingHandler(PacketSession session, IMessage packet)
+    {
+        C_Chatting chatPacket = (C_Chatting)packet;
+        ClientSession clientSession = (ClientSession)session;
+        Player player = clientSession.MyPlayer;
+        if (player == null) return;
+        GameRoom room = player.Room;
+        if (room == null) return;
+        room.Push(room.HandleChat, player, chatPacket);
+    }
 }

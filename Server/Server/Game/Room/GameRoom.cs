@@ -490,14 +490,14 @@ namespace Server.Game
 			if(GameLogic.Instance.Find(expeditionPacket.RoomId).isRaid)
 			{
                 S_Message message = new S_Message();
-                message.Message = $"누군가 레드 드래곤 토벌 중 입니다.";
+                message.Message = $"(전투)\n\n누군가 레드 드래곤 토벌 중 입니다.";
 				player.Session.Send(message);
 				return;
             }
 			if(moveMapPlayer.Count == 0)
 			{
 				S_Message message = new S_Message();
-				message.Message = $"누군가 레드 드래곤 원정대를 생성했습니다.\n 5분뒤 원정대가 출발합니다.";
+				message.Message = $"(전투)\n\n누군가 레드 드래곤 원정대를 생성했습니다.\n<color=green>5</color>분뒤 원정대가 출발합니다.";
 				foreach (Player players in _players.Values)
 				{
 					players.Session.Send(message);
@@ -509,12 +509,12 @@ namespace Server.Game
 				if (moveMapPlayer.Find(p => p.Info.Name == player.Info.Name) != null)
 				{
                     S_Message messages = new S_Message();
-                    messages.Message = "이미 원정대에 가입했습니다.";
+                    messages.Message = "(전투)\n\n이미 원정대에 가입했습니다.";
                     player.Session.Send(messages);
 					return;
                 }
                 S_Message message = new S_Message();
-                message.Message = "누군가 레드 드래곤 원정대에 참여했습니다.";
+                message.Message = "(전투)\n\n누군가 레드 드래곤 원정대에 참여했습니다.";
                 foreach (Player players in _players.Values)
                 {
                     players.Session.Send(message);

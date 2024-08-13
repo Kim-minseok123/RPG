@@ -79,62 +79,56 @@ public class MyPlayerController : PlayerController
     private void KeyInputEvent()
     {
         // ½ºÅ³
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        if (gameSceneUI.IsFocused() == true)
+            return;
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (curRightWeapon == null) return;
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeSkillQuickSlot("Q");
         }
         else if (Input.GetKeyDown(KeyCode.W))
         {
             if (curRightWeapon == null) return;
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeSkillQuickSlot("W");
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {
             if (curRightWeapon == null) return;
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeSkillQuickSlot("E");
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
             if (curRightWeapon == null) return;
             if (State != CreatureState.Idle || State == CreatureState.Moving || State == CreatureState.Skill || State == CreatureState.Dead || State == CreatureState.Wait) return;
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeSkillQuickSlot("R");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             if (State == CreatureState.Dead || State == CreatureState.Wait) return;
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeItemQuickSlot("1");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             if (State == CreatureState.Dead || State == CreatureState.Wait) return;
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeItemQuickSlot("2");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             if (State == CreatureState.Dead || State == CreatureState.Wait) return;
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeItemQuickSlot("3");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             if (State == CreatureState.Dead || State == CreatureState.Wait) return;
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.InvokeItemQuickSlot("4");
         }
         // UI
         else if(Input.GetKeyDown(KeyCode.I))
         {
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             UI_Inventory invenUI = gameSceneUI.InvenUI;
 
             if (invenUI.gameObject.activeSelf)
@@ -148,7 +142,6 @@ public class MyPlayerController : PlayerController
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             UI_Stat statUI = gameSceneUI.StatUI;
 
             if (statUI.gameObject.activeSelf)
@@ -162,7 +155,6 @@ public class MyPlayerController : PlayerController
         }
         else if (Input.GetKeyDown(KeyCode.U))
         {
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             UI_Equip equipUI = gameSceneUI.EquipUI;
 
             if (equipUI.gameObject.activeSelf)
@@ -176,7 +168,6 @@ public class MyPlayerController : PlayerController
         }
         else if (Input.GetKeyDown(KeyCode.K))
         {
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             UI_Skill skillUI = gameSceneUI.SkillUI;
 
             if (skillUI.gameObject.activeSelf)
@@ -190,7 +181,6 @@ public class MyPlayerController : PlayerController
         }
         else if (Input.GetKeyDown(KeyCode.O))
         {
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             UI_Quest questUI = gameSceneUI.QuestUI;
 
             if (questUI.gameObject.activeSelf)
@@ -204,7 +194,6 @@ public class MyPlayerController : PlayerController
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
             gameSceneUI.CloseUI();
         }
         else if (Input.GetKeyDown(KeyCode.A))

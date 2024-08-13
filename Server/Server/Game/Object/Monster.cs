@@ -85,7 +85,6 @@ namespace Server.Game
                 nextPos.PosZ = Pos.PosZ + random.Next(-5, 6);
             }
 
-            Console.WriteLine(Id % 10 + " is send Move Packet");
             State = CreatureState.Moving;
 		}
 
@@ -107,7 +106,6 @@ namespace Server.Game
 			nextPosinfo.MergeFrom(PosInfo);
 			nextPosinfo.Pos = nextPos;
 			movePacket.DestPosInfo = nextPosinfo;
-            Console.WriteLine(Id % 10 + " will arrive " + nextPosinfo.Pos.PosX + " " + nextPosinfo.Pos.PosZ);
 
             if (Target == null)
 				movePacket.TargetId = -1;

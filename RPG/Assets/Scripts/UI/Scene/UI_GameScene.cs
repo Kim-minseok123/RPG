@@ -4,8 +4,11 @@ using Google.Protobuf.Protocol;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.WebRequestMethods;
+using static UnityEngine.Rendering.DebugUI;
 
 public class UI_GameScene : UI_Scene
 {
@@ -26,6 +29,12 @@ public class UI_GameScene : UI_Scene
     public bool NpcTrigger = false;
     MyPlayerController _myPlayer;
 
+    public TMP_InputField ChatField;
+    private Queue<string> chatLines = new Queue<string>();
+    private Queue<string> backupChatLines = new Queue<string>();
+    private int maxLines = 9;
+    bool isFull = true;
+
     public Dictionary<int, UI_BuffSkillInfo> _buffs = new Dictionary<int, UI_BuffSkillInfo>();
     enum Images
     {
@@ -39,10 +48,14 @@ public class UI_GameScene : UI_Scene
         QuickSlotIconImage4,
         PlayerImage,
         PlayerClassImage,
+        ChatBackground,
     }
     enum Buttons
     {
-        SettingBtn
+        SettingBtn,
+        ChatSendBtn,
+        ChatModeBtn,
+        ChatSizeBtn
     }
     enum Texts
     {
@@ -53,7 +66,8 @@ public class UI_GameScene : UI_Scene
         QuickSlotNumText2,
         QuickSlotNumText3,
         QuickSlotNumText4,
-        MessageText,
+        ChatText,
+        ChatTestText,
     }
     enum Sliders
     {
@@ -73,7 +87,9 @@ public class UI_GameScene : UI_Scene
         QuickSlotSet4,
         PlayerInfo,
         QuickSlot,
-        BuffState
+        BuffState,
+        ChatTextInput,
+        ChatBackground
     }
 
     public override void Init()
@@ -110,6 +126,9 @@ public class UI_GameScene : UI_Scene
 
         GetButton((int)Buttons.SettingBtn).gameObject.BindEvent((pointData) => { Managers.Sound.Play("ButtonClick"); Managers.Resource.Instantiate("UI/Popup/UI_Setting_Popup"); });
 
+        GetButton((int)Buttons.ChatSendBtn).gameObject.BindEvent((pointData) => { OnEnterChat(); });
+        GetButton((int)Buttons.ChatSizeBtn).gameObject.BindEvent((pointData) => { ChangeChatSize(); });
+
         GetText((int)Texts.PlayerNameText).text = _myPlayer.objectInfo.Name.ToString();
 
         switch (_myPlayer.ClassType)
@@ -139,6 +158,97 @@ public class UI_GameScene : UI_Scene
         QuickSlotChange(7, false, "4");
         ChangeHpOrMp();
         ChangeExp();
+
+        ChatField.onEndEdit.AddListener(INPUTFIELD_SendChat);
+    }
+    public void INPUTFIELD_SendChat(string input)
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            OnEnterChat();
+    }
+    public void OnEnterChat()
+    {
+        string chatting = ChatField.text;
+        if (chatting.Equals(""))
+            return;
+        ChatField.text = "";
+        C_Chatting chattingPacekt = new C_Chatting();
+        chattingPacekt.Content = chatting;
+        Managers.Network.Send(chattingPacekt);
+    }
+    string lastchat = "";
+    public void ChangeChatSize()
+    {
+        if (isFull)
+        {
+            isFull = false;
+            string lastMessage = lastchat;
+            chatLines.Clear();
+            chatLines.Enqueue(lastMessage);
+
+            GetText((int)Texts.ChatText).text = "";
+            GetObject((int)GameObjects.ChatBackground).transform.DOLocalMoveY(-105f, 0.3f).SetEase(Ease.OutExpo);
+            GetObject((int)GameObjects.ChatBackground).GetComponent<RectTransform>().DOSizeDelta(new Vector2(600, 80), 0.3f).SetEase(Ease.OutExpo);
+            GetText((int)Texts.ChatText).GetComponent<RectTransform>().DOSizeDelta(new Vector2(580, 30), 0.3f).SetEase(Ease.OutExpo).OnComplete(
+                () => {
+                    GetText((int)Texts.ChatText).overflowMode = TextOverflowModes.Ellipsis;
+                    GetText((int)Texts.ChatText).text = lastMessage;
+                });
+
+
+        }
+        else
+        {
+            isFull = true;
+
+            chatLines = new Queue<string>(backupChatLines);
+            GetText((int)Texts.ChatText).text = "";
+
+            GetObject((int)GameObjects.ChatBackground).transform.DOLocalMoveY(0, 0.3f).SetEase(Ease.OutExpo);
+            GetObject((int)GameObjects.ChatBackground).GetComponent<RectTransform>().DOSizeDelta(new Vector2(600, 300), 0.3f).SetEase(Ease.OutExpo);
+            GetText((int)Texts.ChatText).GetComponent<RectTransform>().DOSizeDelta(new Vector2(580, 240), 0.3f).SetEase(Ease.OutExpo).OnComplete(
+                () => {
+                    GetText((int)Texts.ChatText).overflowMode = TextOverflowModes.Overflow;
+                    GetText((int)Texts.ChatTestText).overflowMode = TextOverflowModes.Overflow;
+                    GetText((int)Texts.ChatText).text = string.Join("\n", chatLines); 
+                });
+        }
+    
+    }
+    public void AddChatMessage(string message)
+    {
+        backupChatLines.Enqueue(message);
+        GetText((int)Texts.ChatTestText).text = string.Join("\n", backupChatLines);
+        Canvas.ForceUpdateCanvases();
+
+        while (GetText((int)Texts.ChatTestText).textInfo.lineCount > maxLines)
+        {
+            backupChatLines.Dequeue();
+            GetText((int)Texts.ChatTestText).text = string.Join("\n", backupChatLines);
+            Canvas.ForceUpdateCanvases();
+        }
+
+        if (!isFull)
+        {
+            chatLines.Clear();
+            chatLines.Enqueue(message);
+        }
+        else
+        {
+            chatLines = new Queue<string>(backupChatLines);
+        }
+        lastchat = message;
+        GetText((int)Texts.ChatText).text = string.Join("\n", chatLines);
+    }
+
+    public void Update()
+    {
+        if((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)) && ChatField.isFocused == false)
+            ChatField.ActivateInputField();
+    }
+    public bool IsFocused()
+    {
+        return ChatField.isFocused;
     }
     void QuickSlotChange(int i, bool isSkill, string str)
     {
@@ -466,17 +576,5 @@ public class UI_GameScene : UI_Scene
             _buffs.Remove(buffId);
             Managers.Resource.Destroy(buffUI.gameObject);
         }
-    }
-    Coroutine MessageTextDestroy;
-    public void SetMessage(string str)
-    {
-        GetText((int)Texts.MessageText).text = str;
-        if(MessageTextDestroy != null) StopCoroutine(MessageTextDestroy);
-        MessageTextDestroy = StartCoroutine(CoMessageDestroy());
-    }
-    IEnumerator CoMessageDestroy()
-    {
-        yield return new WaitForSeconds(5f);
-        GetText((int)Texts.MessageText).text = "";
     }
 }

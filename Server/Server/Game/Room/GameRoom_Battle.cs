@@ -70,7 +70,6 @@ namespace Server.Game
 			monster.isMoving = false;
             monster._nextSearchTick = Environment.TickCount64 + 7000;
             monster.DestPos = null;
-            Console.WriteLine(monster.Id % 10 + " is receive Stop Pacekt");
             S_StopMove resStopMovePacket = new S_StopMove();
             resStopMovePacket.ObjectId = monster.Info.ObjectId;
             resStopMovePacket.PosOk = true;
@@ -337,6 +336,15 @@ namespace Server.Game
                 }
                 redDragon.AttackAction(actionPacket.Time, actionPacket.IsEnd);
             }
+        }
+        public void HandleChat(Player player, C_Chatting chatPacket)
+        {
+            if (player == null)
+                return;
+            S_Chatting chat = new S_Chatting();
+            chat.ObjectId = player.Id;
+            chat.Content = chatPacket.Content;
+            Broadcast(player.Pos, chat, includeMaster: false);
         }
     }
 }

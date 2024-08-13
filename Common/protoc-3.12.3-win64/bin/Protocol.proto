@@ -68,6 +68,8 @@ enum MsgId {
   S_CLEAR_QUEST = 61;
   S_QUEST_CHANGE_VALUE = 62;
   S_ALL_QUEST_LIST = 63;
+  C_CHATTING = 64;
+  S_CHATTING = 65;
 }
 
 enum CreatureState {
@@ -405,6 +407,13 @@ message S_AllQuestList {
 }
 message C_RequestLeaveGame{
   int32 objectId = 1;
+}
+message C_Chatting{
+  string content = 1;
+}
+message S_Chatting{
+  int32 objectId = 1;
+  string content = 2;
 }
 message S_Ping {
 

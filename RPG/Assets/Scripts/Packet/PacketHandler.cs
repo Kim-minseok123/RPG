@@ -474,8 +474,8 @@ class PacketHandler
     public static void S_MessageHandler(PacketSession session, IMessage packet)
     {
         S_Message messagePacket = (S_Message)packet;
-        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
-        gameSceneUI.SetMessage(messagePacket.Message);
+        UI_SceneConfirm_Popup go = Managers.Resource.Instantiate("UI/Popup/UI_SceneConfirm_Popup").GetComponent<UI_SceneConfirm_Popup>();
+        go.Setting(messagePacket.Message);
     }
     public static void S_ChangeMapHandler(PacketSession session, IMessage packet)
     {
@@ -644,6 +644,20 @@ class PacketHandler
         if (gameSceneUI != null)
         {
             gameSceneUI.QuestUI.RefreshUI();
+        }
+    }
+    public static void S_ChattingHandler(PacketSession session, IMessage packet)
+    {
+        S_Chatting chatPacekt = (S_Chatting)packet;
+        GameObject go = Managers.Object.FindById(chatPacekt.ObjectId);
+        PlayerController pc = go.GetComponent<PlayerController>();
+        if (pc == null) return;
+        pc.MarkOutChat(chatPacekt.Content);
+
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
+        if (gameSceneUI != null)
+        {
+            gameSceneUI.AddChatMessage($"{pc.objectInfo.Name} : {chatPacekt.Content}");
         }
     }
 }

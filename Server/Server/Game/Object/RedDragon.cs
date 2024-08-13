@@ -320,7 +320,7 @@ namespace Server.Game
             Room?.Broadcast(Pos, diePacket);
 
             S_Message message = new S_Message();
-            message.Message = "레드 드래곤을 토벌하였습니다.\n 공대장은 위의 상자에서 보상을 획득하세요.";
+            message.Message = "(전투)\n\n레드 드래곤을 토벌하였습니다.\n공대장은 위의 상자에서 <color=green>보상</color>을 획득하세요.";
             Room?.Broadcast(Pos, message);
 
             Room?.PushAfter(5000, DieEvent);

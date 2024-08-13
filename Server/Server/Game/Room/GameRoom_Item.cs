@@ -24,7 +24,14 @@ namespace Server.Game
             DropItem dropItem = null;
             if (_dropItem.TryGetValue(dropItemPacket.DropItemId, out dropItem) == false) return;
 
-            if (dropItem.Owner != null && dropItem.Owner != player) return;
+            if (dropItem.Owner != null && dropItem.Owner != player)
+            {
+                S_Message messagePacket = new S_Message();
+                messagePacket.Message = "(전투)\n\n해당 아이템의 소유권이 없습니다.";
+                player.Session.Send(messagePacket);
+                return;
+            }
+
             // 템 자석핵 견제
             Vector3 dropItemPos = Utils.PositionsToVector3(dropItem.Pos);
             Vector3 playerPos = Utils.PositionsToVector3(player.Pos);

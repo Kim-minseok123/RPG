@@ -76,7 +76,9 @@ class PacketManager
 		_onRecv.Add((ushort)MsgId.CAddQuest, MakePacket<C_AddQuest>);
 		_handler.Add((ushort)MsgId.CAddQuest, PacketHandler.C_AddQuestHandler);		
 		_onRecv.Add((ushort)MsgId.CClearQuest, MakePacket<C_ClearQuest>);
-		_handler.Add((ushort)MsgId.CClearQuest, PacketHandler.C_ClearQuestHandler);
+		_handler.Add((ushort)MsgId.CClearQuest, PacketHandler.C_ClearQuestHandler);		
+		_onRecv.Add((ushort)MsgId.CChatting, MakePacket<C_Chatting>);
+		_handler.Add((ushort)MsgId.CChatting, PacketHandler.C_ChattingHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

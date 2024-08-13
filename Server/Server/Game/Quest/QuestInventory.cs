@@ -63,6 +63,7 @@ namespace Server.Game
                     case BattleQuest battleQuest when questGoals is BattleQuestGoals battleGoals:
                         if (battleQuest.Update(battleGoals))
                         {
+                            player.UpdateQuestSet.Add(quest);
                             S_QuestChangeValue changeValue = new S_QuestChangeValue();
                             changeValue.QuestId = battleQuest.TemplateId;
                             changeValue.QuestType = QuestType.Battle;
@@ -75,6 +76,7 @@ namespace Server.Game
                     case CollectionQuest collectionQuest when questGoals is CollectionQuestGoals collectionGoals:
                         if (collectionQuest.Update(collectionGoals))
                         {
+                            player.UpdateQuestSet.Add(quest);
                             S_QuestChangeValue changeValue = new S_QuestChangeValue();
                             changeValue.QuestId = collectionQuest.TemplateId;
                             changeValue.QuestType = QuestType.Collection;
@@ -87,6 +89,7 @@ namespace Server.Game
                     case EnterQuest enterQuest when questGoals is int enterGoals:
                         if (enterQuest.Update(enterGoals))
                         {
+                            player.UpdateQuestSet.Add(quest);
                             S_QuestChangeValue changeValue = new S_QuestChangeValue();
                             changeValue.QuestId = enterQuest.TemplateId;
                             changeValue.QuestType = QuestType.Enter;
