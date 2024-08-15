@@ -88,7 +88,7 @@ public class Skeleton : MonsterController
                     moveStopPacket.IsMonster = true;
                     moveStopPacket.ObjectId = Id;
                     Managers.Network.Send(moveStopPacket);
-                    Debug.Log($"{gameObject.name} {Id % 10} is send StopPacket");
+                    Debug.Log($"Skeleton {Id % 10} is send StopPacket");
                     break;
 #else
                     break;

@@ -38,11 +38,22 @@
       "name": "화염의 카타나",
       "sellGold": "2000",
       "weaponType": "Sword",
-      "damage": "101",
+      "damage": "55",
       "requirementLevel": "5",
       "requirementClass": "초보자",
       "iconPath": "Textures/Item/RedKatana",
       "description": "레드 드래곤이 지키고 있던 보검이다. 주 재료는 쉽게 얻을 수 없는 드래곤의 비늘로, 매우 단단한 칼이다.\n\n<color=green>"
+    },
+    {
+      "id": "5",
+      "name": "화염의 카타나(+1)",
+      "sellGold": "3000",
+      "weaponType": "Sword",
+      "damage": "101",
+      "requirementLevel": "5",
+      "requirementClass": "초보자",
+      "iconPath": "Textures/Item/RedKatana",
+      "description": "레드 드래곤이 지키고 있던 보검이다. 대장장이의 기술로 칼 끝이 날카롭게 제련되어 있다.\n\n<color=green>"
     }
   ],
   "armors": [

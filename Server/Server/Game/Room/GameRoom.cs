@@ -502,7 +502,7 @@ namespace Server.Game
 				{
 					players.Session.Send(message);
 				}
-				PushAfter(3000, AllPlayerEnterNextMap, expeditionPacket.RoomId, "Boss");
+				PushAfter(90000, AllPlayerEnterNextMap, expeditionPacket.RoomId, "Boss");
 			}
 			else
 			{

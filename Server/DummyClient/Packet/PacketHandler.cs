@@ -213,4 +213,8 @@ public class PacketHandler
     {
 
     }
+    public static void S_ChattingHandler(PacketSession session, IMessage packet)
+    {
+
+    }
 }
