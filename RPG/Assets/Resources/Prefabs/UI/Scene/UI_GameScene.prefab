@@ -2534,12 +2534,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -8056,8 +8056,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9022193058451282324, guid: 66115b7cf2edadb44a8102d81a46b973, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9022193058451282324, guid: 66115b7cf2edadb44a8102d81a46b973, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9022193058451282324, guid: 66115b7cf2edadb44a8102d81a46b973, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9022193058451282324, guid: 66115b7cf2edadb44a8102d81a46b973, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 9022193058451282324, guid: 66115b7cf2edadb44a8102d81a46b973, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8086,8 +8102,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7331556495156898235, guid: 23a0ff45c70c98f4aaaa8dce0472f8db, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7331556495156898235, guid: 23a0ff45c70c98f4aaaa8dce0472f8db, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7331556495156898235, guid: 23a0ff45c70c98f4aaaa8dce0472f8db, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7331556495156898235, guid: 23a0ff45c70c98f4aaaa8dce0472f8db, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 7331556495156898235, guid: 23a0ff45c70c98f4aaaa8dce0472f8db, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 8747019789702174355, guid: 23a0ff45c70c98f4aaaa8dce0472f8db, type: 3}
       propertyPath: m_Pivot.x
@@ -8204,8 +8236,24 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5808592511896750294, guid: 8b092b14f3838eb41a03868d4d10cf50, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808592511896750294, guid: 8b092b14f3838eb41a03868d4d10cf50, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808592511896750294, guid: 8b092b14f3838eb41a03868d4d10cf50, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808592511896750294, guid: 8b092b14f3838eb41a03868d4d10cf50, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808592511896750294, guid: 8b092b14f3838eb41a03868d4d10cf50, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 7733655039244191154, guid: 8b092b14f3838eb41a03868d4d10cf50, type: 3}
       propertyPath: m_Pivot.x
@@ -8714,8 +8762,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 5714568436648408867}
     m_Modifications:
     - target: {fileID: 135619688784979199, guid: 07dcd417b76c71140acc7a1b20d415d9, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 135619688784979199, guid: 07dcd417b76c71140acc7a1b20d415d9, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 135619688784979199, guid: 07dcd417b76c71140acc7a1b20d415d9, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 135619688784979199, guid: 07dcd417b76c71140acc7a1b20d415d9, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 135619688784979199, guid: 07dcd417b76c71140acc7a1b20d415d9, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 2106719860503976919, guid: 07dcd417b76c71140acc7a1b20d415d9, type: 3}
       propertyPath: m_Pivot.x
@@ -8973,8 +9037,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7497971607918860771, guid: 9c8117c67fe723140896e059f1ace065, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7497971607918860771, guid: 9c8117c67fe723140896e059f1ace065, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7497971607918860771, guid: 9c8117c67fe723140896e059f1ace065, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7497971607918860771, guid: 9c8117c67fe723140896e059f1ace065, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 7497971607918860771, guid: 9c8117c67fe723140896e059f1ace065, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 8048318952981957853, guid: 9c8117c67fe723140896e059f1ace065, type: 3}
       propertyPath: m_Name

@@ -12,7 +12,7 @@ public class LoginScene : BaseScene
     {
         base.Init();
 
-        Screen.SetResolution(1920, 1080, false);
+        Screen.SetResolution(1600, 900, false);
 
         SceneType = Define.Scene.Login;
 

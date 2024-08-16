@@ -89,7 +89,8 @@ public class UI_GameScene : UI_Scene
         QuickSlot,
         BuffState,
         ChatTextInput,
-        ChatBackground
+        ChatBackground,
+        Chatting
     }
 
     public override void Init()
@@ -554,11 +555,13 @@ public class UI_GameScene : UI_Scene
     {
         GetObject((int)GameObjects.PlayerInfo).SetActive(false);
         GetObject((int)GameObjects.QuickSlot).SetActive(false);
+        GetObject((int)GameObjects.Chatting).SetActive(false);
     }
     public void OpenInfoAndSlot()
     {
         GetObject((int)GameObjects.PlayerInfo).SetActive(true);
         GetObject((int)GameObjects.QuickSlot).SetActive(true);
+        GetObject((int)GameObjects.Chatting).SetActive(true);
     }
 
     public void RegisterBuff(BuffSkill buff, BuffSkillAbility ability, int duration)
