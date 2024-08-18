@@ -660,6 +660,15 @@ class PacketHandler
             gameSceneUI.AddChatMessage($"{pc.objectInfo.Name} : {chatPacekt.Content}");
         }
     }
+    public static void S_LookHandler(PacketSession session, IMessage packet)
+    {
+        S_Look look = (S_Look)packet;
+        GameObject go = Managers.Object.FindById(look.ObjectId);
+        if(go == null) return;
+        BaseController bc = go.GetComponent<BaseController>();
+        if (bc == null) return;
+        bc.SetPos(rotate: look.Rotate);
+    }
 }
 
 

@@ -223,7 +223,11 @@ public class MyPlayerController : PlayerController
         if (enemy != null)
         {
             transform.LookAt(enemy.transform);
-            MakePosPacket();
+            Vector3 rotationEuler = transform.rotation.eulerAngles;
+            C_Look look = new C_Look();
+            look.ObjectId = Id;
+            look.Rotate = new RotateInfo() { RotateX = rotationEuler.x, RotateY = rotationEuler.y, RotateZ = rotationEuler.z };
+            Managers.Network.Send(look);
         }
     }
     public void OnClickMouseInputEvent()

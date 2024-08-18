@@ -54,9 +54,15 @@ public class BaseController : MonoBehaviour
 	{
 
 	}
-	public void SetPos(Positions pos, RotateInfo rotate = null)
+	public void SetPos(Positions pos = null, RotateInfo rotate = null)
 	{
-		if(rotate != null) 
+		if (pos == null && rotate != null)
+		{
+			transform.rotation = Quaternion.Euler(rotate.RotateX, rotate.RotateY, rotate.RotateZ);
+            return;
+		}
+
+		if(rotate != null && pos != null) 
 			transform.SetPositionAndRotation(new Vector3(pos.PosX, pos.PosY, pos.PosZ), Quaternion.Euler(rotate.RotateX, rotate.RotateY, rotate.RotateZ));
 		else
 		{

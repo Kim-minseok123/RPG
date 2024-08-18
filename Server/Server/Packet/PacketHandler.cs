@@ -378,4 +378,14 @@ class PacketHandler
         if (room == null) return;
         room.Push(room.HandleChat, player, chatPacket);
     }
+    public static void C_LookHandler(PacketSession session, IMessage packet)
+    {
+        C_Look look = (C_Look)packet;
+        ClientSession clientSession = (ClientSession)session;
+        Player player = clientSession.MyPlayer;
+        if (player == null) return;
+        GameRoom room = player.Room;
+        if (room == null) return;
+        room.Push(room.HandleLook, player, look);
+    }
 }

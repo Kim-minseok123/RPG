@@ -13,7 +13,17 @@ namespace Server.Game
 {
 	public partial class GameRoom : JobSerializer
 	{
-		public void HandleMove(Player player, C_Move movePacket)
+        public void HandleLook(Player player, C_Look look)
+        {
+            if (player == null)
+                return;
+            S_Look s_Look = new S_Look();
+            s_Look.ObjectId = look.ObjectId;
+            s_Look.Rotate = new RotateInfo(look.Rotate);
+            Broadcast(player.Pos, s_Look);
+        }
+
+        public void HandleMove(Player player, C_Move movePacket)
 		{
 			if (player == null)
 				return;

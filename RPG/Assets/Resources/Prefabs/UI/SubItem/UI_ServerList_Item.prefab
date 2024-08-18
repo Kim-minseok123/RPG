@@ -199,7 +199,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB370\uD3EC\uB974\uC96C"
+  m_text: '
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 683257caa76d65e43b43a299ff9ca71a, type: 2}
   m_sharedMaterial: {fileID: 2129934157675390201, guid: 683257caa76d65e43b43a299ff9ca71a, type: 2}
@@ -226,7 +228,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33.7
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

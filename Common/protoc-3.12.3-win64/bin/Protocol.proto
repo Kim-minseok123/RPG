@@ -70,6 +70,8 @@ enum MsgId {
   S_ALL_QUEST_LIST = 63;
   C_CHATTING = 64;
   S_CHATTING = 65;
+  C_LOOK = 66;
+  S_LOOK = 67;
 }
 
 enum CreatureState {
@@ -414,6 +416,14 @@ message C_Chatting{
 message S_Chatting{
   int32 objectId = 1;
   string content = 2;
+}
+message C_Look{
+  int32 objectId =1;
+  RotateInfo rotate = 2;
+}
+message S_Look{
+  int32 objectId =1;
+  RotateInfo rotate = 2;
 }
 message S_Ping {
 

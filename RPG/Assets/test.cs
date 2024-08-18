@@ -6,18 +6,27 @@ using UnityEngine.AI;
 
 public class test : MonoBehaviour
 {
-    public TextMeshProUGUI chatText; // TextMeshPro »ç¿ë½Ã
+    public float aspectWidth = 16f;
+    public float aspectHeight = 9f;
 
     void Start()
     {
+        UpdateResolution();
     }
-    public void Update()
+
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Screen.width != (int)(Screen.height * (aspectWidth / aspectHeight)))
         {
-            Debug.Log(chatText.textInfo.lineCount);
+            UpdateResolution();
         }
-        
     }
-    
+
+    void UpdateResolution()
+    {
+        int width = Screen.width;
+        int height = (int)(width / (aspectWidth / aspectHeight));
+        Screen.SetResolution(width, height, false);
+    }
+
 }

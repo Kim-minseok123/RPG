@@ -40,16 +40,29 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static UIManager UI { get { return Instance._ui; } }
-	#endregion
+    #endregion
+    public float aspectWidth = 16f;
+    public float aspectHeight = 9f;
 
-	void Start()
+    void UpdateResolution()
+    {
+        int width = Screen.width;
+        int height = (int)(width / (aspectWidth / aspectHeight));
+        Screen.SetResolution(width, height, false);
+    }
+    void Start()
     {
         Init();
-	}
+        UpdateResolution();
+    }
 
     void Update()
     {
         _network.Update();
+        if (Screen.width != (int)(Screen.height * (aspectWidth / aspectHeight)))
+        {
+            UpdateResolution();
+        }
     }
 
     static void Init()

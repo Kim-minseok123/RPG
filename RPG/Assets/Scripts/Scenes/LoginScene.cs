@@ -12,8 +12,6 @@ public class LoginScene : BaseScene
     {
         base.Init();
 
-        Screen.SetResolution(1600, 900, false);
-
         SceneType = Define.Scene.Login;
 
         StartCoroutine(Loading());

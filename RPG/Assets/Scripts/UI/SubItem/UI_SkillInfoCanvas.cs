@@ -68,8 +68,8 @@ public class UI_SkillInfoCanvas : UI_Base
         Vector2 movePos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform.parent as RectTransform, mousePosition, null, out movePos);
 
-        float halfScreenWidth = Screen.width / 2f;
-        float halfScreenHeight = Screen.height / 2f;
+        float halfScreenWidth = 1920f / 2f;
+        float halfScreenHeight = 1080f / 2f;
 
         movePos.x = Mathf.Clamp(movePos.x, -halfScreenWidth, halfScreenWidth - backgroundSize.x);
         movePos.y = Mathf.Clamp(movePos.y, -halfScreenHeight + backgroundSize.y, halfScreenHeight);
