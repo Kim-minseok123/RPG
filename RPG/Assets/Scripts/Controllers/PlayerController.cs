@@ -171,7 +171,7 @@ public class PlayerController : CreatureController
             }
         }
     }
-    IEnumerator CoWaitForSecondsToState(float time, CreatureState state)
+    public IEnumerator CoWaitForSecondsToState(float time, CreatureState state)
     {
         yield return new WaitForSecondsRealtime(time);
         State = state;

@@ -16,6 +16,7 @@ public class DropItem : BaseController
             if (Input.GetKeyDown(KeyCode.Z) && Managers.Object.MyPlayer.State == CreatureState.Idle)
             {
                 Managers.Object.MyPlayer.State = CreatureState.Wait;
+                StartCoroutine(Managers.Object.MyPlayer.CoWaitForSecondsToState(1f, CreatureState.Idle));
                 C_GetDropItem getDropItemPacket = new C_GetDropItem();
                 getDropItemPacket.DropItemId = Id;
                 Managers.Network.Send(getDropItemPacket);

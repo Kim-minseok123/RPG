@@ -30,7 +30,6 @@ namespace Server
             {
                 if (loginPacket.AccountId >= 1000)
                 {
-                    Console.WriteLine(loginPacket.AccountId);
                     S_Login loginOk = new S_Login() { LoginOk = 1 };
                     Send(loginOk);
                     // 로비로 이동

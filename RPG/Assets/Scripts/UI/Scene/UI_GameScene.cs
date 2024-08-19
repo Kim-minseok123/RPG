@@ -159,7 +159,22 @@ public class UI_GameScene : UI_Scene
         QuickSlotChange(7, false, "4");
         ChangeHpOrMp();
         ChangeExp();
-
+        if (Managers.UI.QuickSlotSkill.Count > 0)
+        {
+            foreach (var slot in Managers.UI.QuickSlotSkill)
+            {
+                RegisterQuickSlot(slot.Key, slot.Value, true);
+            }
+            Managers.UI.QuickSlotSkill.Clear();
+        }
+        if (Managers.UI.QuickSlotItem.Count > 0)
+        {
+            foreach (var slot in Managers.UI.QuickSlotItem)
+            {
+                RegisterQuickSlot(slot.Key, slot.Value, false);
+            }
+            Managers.UI.QuickSlotItem.Clear();
+        }
         ChatField.onEndEdit.AddListener(INPUTFIELD_SendChat);
     }
     public void INPUTFIELD_SendChat(string input)
@@ -306,22 +321,7 @@ public class UI_GameScene : UI_Scene
         DrawQuickSlot();
         ChangeHpOrMp();
 
-        if (Managers.UI.QuickSlotSkill.Count > 0)
-        {
-            foreach (var slot in Managers.UI.QuickSlotSkill)
-            {
-                RegisterQuickSlot(slot.Key, slot.Value, true);
-            }
-            Managers.UI.QuickSlotSkill.Clear();
-        }
-        if (Managers.UI.QuickSlotItem.Count > 0)
-        {
-            foreach (var slot in Managers.UI.QuickSlotItem)
-            {
-                RegisterQuickSlot(slot.Key, slot.Value, false);
-            }
-            Managers.UI.QuickSlotItem.Clear();
-        }
+        
     }
     public void ChangeHpOrMp()
     {
@@ -599,13 +599,15 @@ public class UI_GameScene : UI_Scene
     }
     public void SaveQuick()
     {
+        Managers.UI.QuickSlotSkill.Clear();
+        Managers.UI.QuickSlotItem.Clear();
         foreach (var slot in QuickSlotSkill)
         {
             Managers.UI.QuickSlotSkill.Add(slot.Key, slot.Value);
         }
         foreach (var slot in QuickSlotItem)
         {
-            Managers.UI.QuickSlotSkill.Add(slot.Key, slot.Value);
+            Managers.UI.QuickSlotItem.Add(slot.Key, slot.Value);
         }
     }
 }

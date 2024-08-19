@@ -9,6 +9,10 @@ using static System.Net.Mime.MediaTypeNames;
 
 public class PacketHandler
 {
+    public static void S_LookHandler(PacketSession session, IMessage packet) 
+    {
+    
+    }
     public static void S_EnterGameHandler(PacketSession session, IMessage packet)
     {
         S_EnterGame enterGamePacket = packet as S_EnterGame;
