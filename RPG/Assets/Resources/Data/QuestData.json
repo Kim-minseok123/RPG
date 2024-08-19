@@ -81,7 +81,7 @@
       "reward": {
         "exp": "0",
         "money": "0",
-        "itemId": "4"
+        "itemId": "5"
       },
       "questDescription": [
         "자네, 레드 드래곤을 무찔렀군. 그 드래곤의 비늘로 만들었다는 명검을 혹시 가지고 있나?",
@@ -98,7 +98,7 @@
       "goalText": "화염의 카타나",
       "goals": [
         {
-          "collectionId": "5",
+          "collectionId": "4",
           "count": "1"
         }
       ]

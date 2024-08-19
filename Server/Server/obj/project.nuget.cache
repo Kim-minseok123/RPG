@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UjXU8EVejxYGkI51RfIYAOKfAJECuPsIx+U8/hKOwHQ75JGH6OaaruZB0BMtVzDWuVFhiwRZ9lhlR94VYhWshg==",
+  "dgSpecHash": "3mqpZVPHk1g=",
   "success": true,
-  "projectFilePath": "E:\\GitHub\\RPG\\Server\\Server\\Server.csproj",
+  "projectFilePath": "C:\\Users\\chaos\\바탕 화면\\Git\\RPG\\Server\\Server\\Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\chaos\\.nuget\\packages\\google.protobuf\\3.26.0\\google.protobuf.3.26.0.nupkg.sha512",
     "C:\\Users\\chaos\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

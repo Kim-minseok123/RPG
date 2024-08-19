@@ -76,6 +76,8 @@ public class UI_Setting_Popup : MonoBehaviour
             leaveGame.ObjectId = Managers.Object.MyPlayer.Id;
             Managers.Network.Send(leaveGame);
             Managers.Quest.Clear();
+            Managers.UI.QuickSlotItem.Clear();
+            Managers.UI.QuickSlotSkill.Clear();
         }
         else
         {

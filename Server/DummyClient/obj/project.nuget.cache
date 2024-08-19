@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6OtdkT0G54g+yJj9hx0WKGlS2+jx1khzkF9lA7ky/NAJYu925XpudqUCz5MV0I9yV5px9Ty1JFktkG2I3UPfdA==",
+  "dgSpecHash": "jbMC9IHh3HE=",
   "success": true,
-  "projectFilePath": "E:\\GitHub\\RPG\\Server\\DummyClient\\DummyClient.csproj",
+  "projectFilePath": "C:\\Users\\chaos\\바탕 화면\\Git\\RPG\\Server\\DummyClient\\DummyClient.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\chaos\\.nuget\\packages\\google.protobuf\\3.26.0\\google.protobuf.3.26.0.nupkg.sha512",
     "C:\\Users\\chaos\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

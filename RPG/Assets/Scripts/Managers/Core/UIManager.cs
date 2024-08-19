@@ -9,7 +9,8 @@ public class UIManager
 
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
     public UI_Scene SceneUI { get; private set; }
-
+    public Dictionary<string, int> QuickSlotSkill = new();
+    public Dictionary<string, int> QuickSlotItem = new();
     public GameObject Root
     {
         get

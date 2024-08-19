@@ -481,7 +481,7 @@ class PacketHandler
     {
         S_ChangeMap changeMapPacket = (S_ChangeMap)packet;
         Managers.UI.CloseAllPopupUI();
-
+        UI_GameScene gameSceneUI = Managers.UI.SceneUI as UI_GameScene;
         TransitionSettings ts = Managers.Resource.Load<TransitionSettings>("Trans/LinearWipe");
         switch (changeMapPacket.MapName)
         {
@@ -491,10 +491,14 @@ class PacketHandler
                 break;
             case "Game":
                 Managers.NextScene = Define.Scene.Game;
+                if(gameSceneUI != null)
+                    gameSceneUI.SaveQuick();
                 TransitionManager.Instance().Transition(Define.Scene.Loading, ts, 0);
                 break;
             case "Boss":
                 Managers.NextScene = Define.Scene.Boss;
+                if (gameSceneUI != null)
+                    gameSceneUI.SaveQuick();
                 TransitionManager.Instance().Transition(Define.Scene.Loading, ts, 0);
                 break;
         }
