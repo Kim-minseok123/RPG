@@ -12,7 +12,7 @@ public class UI_SceneConfirm_Popup : UI_Popup
     public void Setting(string str)
     {
         Canvas canvas = GetComponent<Canvas>();
-        canvas.sortingOrder = 1000;
+        canvas.sortingOrder = Managers.UI.ConfirmOrder++;
         Content.text = str;
         Sequence sq = DOTween.Sequence();
         sq.Append(MovingGo.transform.DOLocalMoveX(755f, 0.35f).SetEase(Ease.OutExpo))

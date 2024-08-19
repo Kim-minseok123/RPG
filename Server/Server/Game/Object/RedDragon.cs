@@ -1,4 +1,5 @@
 ﻿using Google.Protobuf.Protocol;
+using Server.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,12 +126,16 @@ namespace Server.Game
         }
         public void SelectSkillAndAttack()
         {
-            if (priorityTarget.Count <= 0)
+            if (players.Count <= 0)
                 return;
             isflying = false; isDefend = false;
             currentSkill  = -1;
             lastArea = null;
-            GameObject targetObject = priorityTarget.First().target;
+            GameObject targetObject = null;
+            if (priorityTarget.Count > 0)
+                targetObject = priorityTarget.First().target;
+            else
+                targetObject = players.Values.First();
             int attackNum = -1;
             foreach (var area in attackArea)
             {
@@ -139,7 +144,7 @@ namespace Server.Game
                 if (attackNum != -1)
                     break;
             }
-            S_SkillMotion skillMotion = new S_SkillMotion() { Info = new SkillInfo() };
+            S_SkillMotion skillMotion = new S_SkillMotion() { Info = new SkillInfo() }; 
             Random random = new Random();
             int defend = random.Next(0,10);
             if (defend == 0) attackNum = 5;
@@ -318,6 +323,13 @@ namespace Server.Game
             diePacket.ObjectId = Id;
             diePacket.AttackerId = attacker.Id;
             Room?.Broadcast(Pos, diePacket);
+            foreach (var player in players.Values)
+            {
+                if (player != null)
+                {
+                    player.QuestInven.UpdateQuestProgress(QuestType.Battle, new BattleQuestGoals { enemyId = TemplateId, count = 1 });
+                }
+            }
 
             S_Message message = new S_Message();
             message.Message = "(전투)\n\n레드 드래곤을 토벌하였습니다.\n공대장은 위의 상자에서 <color=green>보상</color>을 획득하세요.";

@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager
 {
     int _order = 10;
+    public int ConfirmOrder = 1000;
 
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
     public UI_Scene SceneUI { get; private set; }

@@ -70584,7 +70584,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
+  m_LookAt: {fileID: 1151738198}
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60.000004
@@ -70832,6 +70832,8 @@ PlayableDirector:
     value: {fileID: 8164683289609370718}
   - key: {fileID: -4350583607018587670, guid: 2ccf2feb792b1e34fa3958038892d716, type: 2}
     value: {fileID: 4716371661370513689}
+  - key: {fileID: 7221509903800519522, guid: 2ccf2feb792b1e34fa3958038892d716, type: 2}
+    value: {fileID: 8164683289609370718}
   m_ExposedReferences:
     m_References:
     - 30d25492cd05660469c68dd13f6a04ed: {fileID: 999757922183342908}

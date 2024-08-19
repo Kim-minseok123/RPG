@@ -502,7 +502,7 @@ namespace Server.Game
 				{
 					players.Session.Send(message);
 				}
-				PushAfter(90000, AllPlayerEnterNextMap, expeditionPacket.RoomId, "Boss");
+				PushAfter(10000, AllPlayerEnterNextMap, expeditionPacket.RoomId, "Boss");
 			}
 			else
 			{
@@ -594,7 +594,8 @@ namespace Server.Game
 					setMasterClient.ObjectId = player2.Id;
                     Broadcast(player2.Pos,setMasterClient);
                     player2.IsMaster = true;
-					break;
+					Console.WriteLine($"Master is {player2.Info.Name}");
+                    break;
 				}
 			}
 		}
