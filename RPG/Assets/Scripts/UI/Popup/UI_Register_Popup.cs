@@ -56,6 +56,8 @@ public class UI_Register_Popup : UI_Popup
         if(password.Equals(passwordCheck) == false)
         {
             Managers.UI.ShowPopupUI<UI_Confirm_Popup>().Setting("비밀번호가 다릅니다.");
+            GetObject((int)GameObjects.PasswordInput).GetComponent<TMP_InputField>().text = "";
+            GetObject((int)GameObjects.PasswordCheckInput).GetComponent<TMP_InputField>().text = "";
             _click = false;
         }
         else if (account == "" || password == "")
@@ -66,6 +68,8 @@ public class UI_Register_Popup : UI_Popup
         else if (password.Length < 8)
         {
             Managers.UI.ShowPopupUI<UI_Confirm_Popup>().Setting("비밀번호는 8자리 이상으로 입력하세요.");
+            GetObject((int)GameObjects.PasswordInput).GetComponent<TMP_InputField>().text = "";
+            GetObject((int)GameObjects.PasswordCheckInput).GetComponent<TMP_InputField>().text = "";
             _click = false;
         }
         else
@@ -83,6 +87,9 @@ public class UI_Register_Popup : UI_Popup
                 else
                 {
                     Managers.UI.ShowPopupUI<UI_Confirm_Popup>().Setting("중복된 아이디입니다.");
+                    GetObject((int)GameObjects.LoginInput).GetComponent<TMP_InputField>().text = "";
+                    GetObject((int)GameObjects.PasswordInput).GetComponent<TMP_InputField>().text = "";
+                    GetObject((int)GameObjects.PasswordCheckInput).GetComponent<TMP_InputField>().text = "";
                     _click = false;
                 }
             });

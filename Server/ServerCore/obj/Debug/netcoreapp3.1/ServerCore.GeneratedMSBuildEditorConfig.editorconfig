@@ -1,5 +1,3 @@
 is_global = true
 build_property.RootNamespace = ServerCore
-build_property.ProjectDir = C:\Users\chaos\바탕 화면\Git\RPG\Server\ServerCore\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.ProjectDir = E:\GitHub\RPG\Server\ServerCore\

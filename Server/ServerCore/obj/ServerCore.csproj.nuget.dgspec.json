@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\chaos\\바탕 화면\\Git\\RPG\\Server\\ServerCore\\ServerCore.csproj": {}
+    "E:\\GitHub\\RPG\\Server\\ServerCore\\ServerCore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\chaos\\바탕 화면\\Git\\RPG\\Server\\ServerCore\\ServerCore.csproj": {
+    "E:\\GitHub\\RPG\\Server\\ServerCore\\ServerCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\chaos\\바탕 화면\\Git\\RPG\\Server\\ServerCore\\ServerCore.csproj",
+        "projectUniqueName": "E:\\GitHub\\RPG\\Server\\ServerCore\\ServerCore.csproj",
         "projectName": "ServerCore",
-        "projectPath": "C:\\Users\\chaos\\바탕 화면\\Git\\RPG\\Server\\ServerCore\\ServerCore.csproj",
+        "projectPath": "E:\\GitHub\\RPG\\Server\\ServerCore\\ServerCore.csproj",
         "packagesPath": "C:\\Users\\chaos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\chaos\\바탕 화면\\Git\\RPG\\Server\\ServerCore\\obj\\",
+        "outputPath": "E:\\GitHub\\RPG\\Server\\ServerCore\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\chaos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -35,11 +38,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -77,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

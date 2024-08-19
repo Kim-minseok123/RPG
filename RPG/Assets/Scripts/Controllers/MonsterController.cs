@@ -21,7 +21,7 @@ public class MonsterController : CreatureController
         _agent = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
         hpBar.gameObject.SetActive(true);
-        hpBar.value = Mathf.Max(0f, (float)Hp / MaxHp);
+        StartCoroutine(HpSet());
         _anim.SetBool("Death", false);
         State = CreatureState.Idle;
 #if UNITY_SERVER
@@ -29,6 +29,16 @@ public class MonsterController : CreatureController
         StopCoroutine(CheckPosInfo());
         StartCoroutine(CheckPosInfo());
 #endif
+    }
+    IEnumerator HpSet()
+    {
+        while (Hp <= 0)
+        {
+            hpBar.value = Mathf.Max(0f, (float)Hp / MaxHp);
+            yield return null;
+        }
+        hpBar.value = Mathf.Max(0f, (float)Hp / MaxHp);
+
     }
     protected virtual void Update()
     {
@@ -49,7 +59,6 @@ public class MonsterController : CreatureController
             case CreatureState.Dead:
                 break;
         }
-        
     }
     protected override void UpdateIdle()
     {

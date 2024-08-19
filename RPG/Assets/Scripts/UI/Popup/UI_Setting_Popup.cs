@@ -75,6 +75,7 @@ public class UI_Setting_Popup : MonoBehaviour
             C_RequestLeaveGame leaveGame = new C_RequestLeaveGame();
             leaveGame.ObjectId = Managers.Object.MyPlayer.Id;
             Managers.Network.Send(leaveGame);
+            Managers.Quest.Clear();
         }
         else
         {

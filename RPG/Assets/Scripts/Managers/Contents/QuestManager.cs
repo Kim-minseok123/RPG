@@ -61,9 +61,11 @@ public class QuestManager
         {
             quest.Clear();
         }
+        FinishedQuest.Clear();
     }
     public void FinishQuest(Quest quest)
     {
         FinishedQuest.TryAdd(quest.TemplateId, quest);
     }
+
 }
