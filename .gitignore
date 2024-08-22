@@ -51,7 +51,7 @@ RPG/*.opendb
 RPG/*.VC.db
 RPG/Assets/EasyTransitions
 RPG/Assets/DragonKnife
-RPG/Assets/Blink
+RPG/Assets/Blink/
 RPG/Assets/Editor
 RPG/Assets/etc
 RPG/Assets/Libs
