@@ -49,22 +49,21 @@ RPG/*.pdb
 RPG/*.mdb
 RPG/*.opendb
 RPG/*.VC.db
-RPG/Assets/EasyTransitions
-RPG/Assets/DragonKnife
+
+# Ignore specific directories and files in the Assets folder
+RPG/Assets/EasyTransitions/
+RPG/Assets/DragonKnife/
 RPG/Assets/Blink/
-RPG/Assets/Editor
-RPG/Assets/etc
-RPG/Assets/Libs
-RPG/Assets/Plugins
-RPG/Assets/Resources
-RPG/Assets/Scenes
-RPG/Assets/Swordsman
-RPG/Assets/TextMesh Pro
-RPG/Assets/UnityTechnologies
-RPG/Assets/Warrior 3
-RPG/Packages
-PRG/ProjectSettings
-PRG/*.vsconfig
+RPG/Assets/Editor/
+RPG/Assets/etc/
+RPG/Assets/Libs/
+RPG/Assets/Plugins/
+RPG/Assets/Resources/
+RPG/Assets/Scenes/
+RPG/Assets/Swordsman/
+RPG/Assets/TextMesh Pro/
+RPG/Assets/UnityTechnologies/
+RPG/Assets/Warrior 3/
 
 # Unity3D generated meta files
 *.pidb.meta
