@@ -99,7 +99,7 @@ update-database -Context AppDbContext 를 입력해주시고 Server와 AccountSe
 
 클라이언트 :
 
-https://drive.google.com/file/d/1bIrViEHBqXo03z9_S6dCmvzg8yTxIS3_/view?usp=sharing
+https://drive.google.com/file/d/1U-A1EGjOkhm6TIK7ZkcOVJpIIPz8axiZ/view?usp=sharing
 링크에서 다운 받은 후 압축을 풀고 RPG 폴더 안(Assets와 같은 위치)에 Builds 폴더를 넣으면 됩니다.(이 후 서버를 열어야 정상작동합니다.) Buils안 RPG1이나 RPG2를 실행하시면됩니다.
 
 
