@@ -6,7 +6,7 @@
   - [개발 과정](#개발-과정)
   - [플레이영상](#플레이영상)
   - [게임 다운로드](#게임-다운로드)
-## 1. 소개
+## 소개
 <div align="center">
 
 <img alt="Title" src="https://github.com/user-attachments/assets/65954443-6ff9-4f11-a493-ebea7f529c03" width="49%" height="230"/>
@@ -33,7 +33,7 @@
 
 <br>
 
-## 2. 개발 동기
+## 개발 동기
 게임 클라이언트 프로그래머가 되기 위해 꾸준히 공부하던 중, 온라인 게임이 주류를 이루는 게임 시장의 특성을 깨달았다. 
 
 이에 따라 클라이언트와 서버 간의 협업이 필수적이며, 이를 위해서는 두 영역에 대한 상호 지식이 필요하다는 결론에 도달했다. 
@@ -43,7 +43,7 @@
 
 <br>
 
-## 3. 개발 환경
+## 개발 환경
 + Unity 22022.3.38f1 LTS
 
 + C# Console
@@ -54,7 +54,7 @@
 
 <br>
 
-## 4. 개발 과정
+## 개발 과정
 
 + 블로그 개발 과정
 https://toward-mainobject.tistory.com/category/Unity/%EC%98%A8%EB%9D%BC%EC%9D%B8%20RPG
@@ -84,10 +84,10 @@ https://toward-mainobject.tistory.com/category/Unity/%EC%98%A8%EB%9D%BC%EC%9D%B8
 
 <br>
 
-## 5. 플레이영상
+## 플레이영상
 https://www.youtube.com/watch?v=Ayq_w8Nptmc
 
-## 6. 게임 다운로드
+## 게임 다운로드
 현재는 서버를 배포하지 않은 상태이기 때문에 로컬 서버에서만 플레이 가능합니다.
 
 서버 :
