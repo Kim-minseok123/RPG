@@ -47,7 +47,7 @@
 <br>
 
 ## 개발 환경
-+ Unity 22022.3.38f1 LTS
++ Unity 2022.3.38f1 LTS
 
 + C# Console
 
